@@ -58,3 +58,6 @@ always returns a <http_response_code>, if its not 200 there was an error
     },
     "score": 14
   }```
+- SSE `/updates`
+  returns
+    "event: quizStarted\nendsAt: <ISO timestamp>\n\n" | "event: quizEnded\nnextQuizAt: <ISO timestamp>\n\n" | "event: resultsReady\nnextQuizAt: <ISO timestamp>\n\n"
