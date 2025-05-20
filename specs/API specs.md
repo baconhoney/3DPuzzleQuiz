@@ -8,12 +8,15 @@ missing means expects `null` / returns <http_response_code>
 always returns a <http_response_code>, if its not 200 there was an error
 
 - GET `/`
+  
   returns `index.html`
 
 - GET `/admin`
+  
   returns `admin.html`
 
 - GET `/login`
+  
   returns ```json
   {
     "uid": "<10 digit random number>",
