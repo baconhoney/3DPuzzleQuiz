@@ -17,16 +17,23 @@ always returns a <http_response_code>, if its not 200 there was an error
 
 - GET `/login`
   
-  returns ```json
+  returns
+
+  ```json
   {
     "uid": "<10 digit random number>",
     "startTime": "<ISO timestamp>",
     "quizIsRunning": <bool>
-  }```
+  }
+  ```
 
 - GET `/getQuestions`
+  
   expects `lang=hu|en`
-  returns ```json
+  
+  returns
+
+  ```json
   {
     "quizNumber": 5,
     "quizdata": {
@@ -36,10 +43,14 @@ always returns a <http_response_code>, if its not 200 there was an error
         "19": {"name": "Kölni dóm", "country": "Németország", "city": "Köln", "flag": "de_flag"}
     },
     "endTime": "<ISO timestamp>"
-  }```
+  }
+  ```
 
 - POST `/uploadAnswers`
-  expects ```json
+  
+  expects
+
+  ```json
   {
     "answers": {
         "0": {"id": 2000, "num": 1},
@@ -47,11 +58,16 @@ always returns a <http_response_code>, if its not 200 there was an error
         ...
         "19": {"id": 2020, "num": 39}
     }
-  }```
+  }
+  ```
 
 - GET `/getAnswers`
+  
   expects `uid=<uniqueIdentifier>`
-  returns ```json
+  
+  returns
+
+  ```json
   {
     "results": {
         "0": {"name": "Fehér Ház", "country": "Egyesült Államok", "city": "Washington", "flag": "us_flag", "num": 1, "correct": true},
@@ -60,7 +76,9 @@ always returns a <http_response_code>, if its not 200 there was an error
         "19": {"name": "Kölni dóm", "country": "Németország", "city": "Köln", "flag": "de_flag", "num": 39, "correct": false}
     },
     "score": 14
-  }```
+  }
+  ```
+  
 - SSE `/updates`
   returns
     "event: quizStarted\nendsAt: <ISO timestamp>\n\n" | "event: quizEnded\nnextQuizAt: <ISO timestamp>\n\n" | "event: resultsReady\nnextQuizAt: <ISO timestamp>\n\n"
