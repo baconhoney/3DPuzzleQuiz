@@ -71,7 +71,7 @@ always returns a <http_response_code>, if its not 200 there was an error
   {
     "results": {
         "0": {"name": "Fehér Ház", "country": "Egyesült Államok", "city": "Washington", "flag": "us_flag", "num": 1, "correct": true},
-        "1": {"name": "Szent István bazilika", "country": "Magyarország", "city": "Budapest", "flag": "hu_flag", "num": 41", "correct": true},
+        "1": {"name": "Szent István bazilika", "country": "Magyarország", "city": "Budapest", "flag": "hu_flag", "num": 41, "correct": true},
         ...
         "19": {"name": "Kölni dóm", "country": "Németország", "city": "Köln", "flag": "de_flag", "num": 39, "correct": false}
     },
