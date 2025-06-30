@@ -6,6 +6,7 @@ import { initReactI18next } from "react-i18next";
 import translationHU from "./locales/hu/translation.json";
 import translationEN from "./locales/en/translation.json";
 import Register from './Register';
+import Quiz from './Quiz';
 
 const resources = {
 	hu: {
@@ -60,6 +61,7 @@ function App() {
 	return (
 		<LanguageContext.Provider value={contextValue}>
 			<Register />
+			{/* <Quiz /> */}
 		</LanguageContext.Provider>
 	)
 }
