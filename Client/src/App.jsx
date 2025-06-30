@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { createContext, useState, useContext } from 'react'
 import { useTranslation } from "react-i18next";
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import translationHU from "./locales/hu/translation.json";
 import translationEN from "./locales/en/translation.json";
+import Register from './Register';
 
 const resources = {
 	hu: {
@@ -24,35 +25,42 @@ i18n.use(initReactI18next).init({
 	},
 })
 
+// Create a context for language management
+const LanguageContext = createContext();
+
+// Custom hook to use the language context
+export const useLanguage = () => {
+	const context = useContext(LanguageContext);
+	if (!context) {
+		throw new Error('useLanguage must be used within a LanguageProvider');
+	}
+	return context;
+}
+
 function App() {
 	const { i18n, t } = useTranslation();
 	const [language, setLanguage] = useState('hu');
 
-	const handleButtonClick = (lng) => {
+	/**
+	 * Change the language of the application
+	 * @param {string} lng - The language code to change to (e.g., 'hu' for Hungarian, 'en' for English)
+	 */
+	const changeLng = (lng) => {
 		i18n.changeLanguage(lng);
 		setLanguage(lng);
 	}
 
-	const isLanguageSelected = (lng) => {
-		return language === lng ? "btn-active" : "";
-	}
+	const contextValue = {
+		language,
+		changeLng,
+		t,
+		i18n
+	};
 
 	return (
-		<>
-			<div className="flex flex-col items-center justify-center min-h-screen gap-16 w-full">
-				<div className="flex items-center gap-2 ">
-					<button className={"btn btn-info btn-outline" + isLanguageSelected("hu")} onClick={() => handleButtonClick("hu")}>🇭🇺 Magyar</button>
-					<button className={"btn btn-info btn-outline" + isLanguageSelected("en")} onClick={() => handleButtonClick("en")}>🇬🇧 English</button>
-				</div>
-				<div className="flex flex-col items-center gap-5 w-2/3">
-					<fieldset className="fieldset w-full">
-						<legend className="fieldset-legend">{t("team_name")}</legend>
-						<input type="text" className="input" placeholder={t("type_here")} />
-					</fieldset>
-					<button className="btn btn-primary btn-wide">{t("continue")}</button>
-				</div>
-			</div>
-		</>
+		<LanguageContext.Provider value={contextValue}>
+			<Register />
+		</LanguageContext.Provider>
 	)
 }
 
