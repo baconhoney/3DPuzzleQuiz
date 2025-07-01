@@ -32,9 +32,31 @@ const Quiz = () => {
 
     const { t, teamName } = useLanguage();
 
-    const isQuizActive = false;
+    const isQuizActive = true;
 
     const formattedTime = data.endTime.split(':').slice(0, 2).join(':');
+
+    function sendQuiz(e) {
+        e.preventDefault();
+        const form = document.getElementById('quiz-form');
+        const inputs = form.querySelectorAll('input[type="number"]');
+        const answers = {};
+
+        inputs.forEach((input, index) => {
+            const value = input.value ? parseInt(input.value, 10) : 0;
+            answers[index.toString()] = {
+                "id": parseInt(input.id, 10),
+                "num": value
+            };
+        });
+
+        const formattedAnswers = {
+            "answers": answers
+        };
+
+        // Here you would typically send the answers to the server
+        console.log(formattedAnswers);
+    }
 
     return (
         <>
@@ -43,7 +65,7 @@ const Quiz = () => {
                 <p className='text-lg'>{isQuizActive ? formattedTime : ''}</p>
             </div>
             {isQuizActive ? (
-                <div>
+                <form id='quiz-form'>
                     <div className='grid grid-cols-1 gap-2 p-3'>
                         {Object.entries(data.quizdata).map(([key, value]) => (
                             <div key={key} className="card bg-base-100 shadow-xl">
@@ -56,15 +78,15 @@ const Quiz = () => {
                                             <p>{value.city}, {value.country}</p>
                                         )}
                                     </div>
-                                    <input type="number" className="input validator input-sm w-12" required min={1} max={100} />
+                                    <input id={value.id} type="number" className="input validator input-sm w-12" min={1} max={100} />
                                 </div>
                             </div>
                         ))}
                     </div>
                     <div className='flex justify-center p-5'>
-                        <button className="btn btn-primary btn-wide">{t("finish")}</button>
+                        <button className="btn btn-primary btn-wide" onClick={sendQuiz}>{t("finish")}</button>
                     </div>
-                </div>
+                </form>
             ) : (
                 <div className="flex justify-center items-center p-10">
                     <p className="text-2xl font-bold">{t("quiz_not_started")}</p>
