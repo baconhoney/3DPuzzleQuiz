@@ -5,7 +5,7 @@
 `(value1|value2)`: alternate
 
 Request specifying nothing expect nothing on request.
-All requests return `<http_response_code>` and `error message` (MIME:"text/plain") if exists.
+All requests return `<http_response_code>` and `error message` (MIME:"text/plain") if exists, alongside the below specified.
 
 
 ### GET `/`
@@ -19,7 +19,7 @@ All requests return `<http_response_code>` and `error message` (MIME:"text/plain
 ```json
 {
     "uid": 1234567890, (random number from 1e9, to but not including 1e10)
-    "startTime": "<HH:mm>",
+    "startTime": "<YYYY-MM-DDTHH:MM:SS.sss>",
     "quizIsRunning": false
 }
 ```
@@ -36,7 +36,7 @@ All requests return `<http_response_code>` and `error message` (MIME:"text/plain
         ...
         "19": {"name": "Kölni dóm", "country": "Németország", "city": "Köln", "flag": "flag_de", "id": 2019}
     },
-    "endTime": "<HH:mm>"
+    "endTime": "<YYYY-MM-DDTHH:MM:SS.sss>"
 }
 ```
 
@@ -46,10 +46,10 @@ All requests return `<http_response_code>` and `error message` (MIME:"text/plain
 ```json
 {
     "answers": {
-        "0": {"id": 2000, "num": 1},
-        "1": {"id": 2001, "num": 41},
+        "0": {"id": 2000, "number": 1},
+        "1": {"id": 2001, "number": 41},
         ...
-        "19": {"id": 2019, "num": 39}
+        "19": {"id": 2019, "number": 39}
     }
 }
 ```
@@ -60,10 +60,10 @@ All requests return `<http_response_code>` and `error message` (MIME:"text/plain
 ```json
 {
     "results": {
-        "0": {"name": "Fehér Ház", "country": "Egyesült Államok", "city": "Washington", "flag": "flag_us", "num": 1, "correct": true},
-        "1": {"name": "Szent István bazilika", "country": "Magyarország", "city": "Budapest", "flag": "flag_hu", "num": 41, "correct": true},
+        "0": {"name": "Fehér Ház", "country": "Egyesült Államok", "city": "Washington", "flag": "flag_us", "number": 1, "correct": true},
+        "1": {"name": "Szent István bazilika", "country": "Magyarország", "city": "Budapest", "flag": "flag_hu", "number": 41, "correct": true},
         ...
-        "19": {"name": "Kölni dóm", "country": "Németország", "city": "Köln", "flag": "flag_de", "num": 39, "correct": false}
+        "19": {"name": "Kölni dóm", "country": "Németország", "city": "Köln", "flag": "flag_de", "number": 39, "correct": false}
     },
     "score": 14
 }
@@ -73,7 +73,7 @@ All requests return `<http_response_code>` and `error message` (MIME:"text/plain
 - returns
 ```
 ONE OF:
-"event: quizStarted\nendsAt: <HH:mm>\n\n"
-"event: quizEnded\nresultsReadyAt: <HH:mm>\n\n"
-"event: resultsReady\nnextQuizAt: <HH:mm>\n\n"
+"event: quizStarted\nendsAt: <YYYY-MM-DDTHH:MM:SS.sss>\n\n"
+"event: quizEnded\nresultsReadyAt: <YYYY-MM-DDTHH:MM:SS.sss>\n\n"
+"event: resultsReady\nnextQuizAt: <YYYY-MM-DDTHH:MM:SS.sss>\n\n"
 ```
