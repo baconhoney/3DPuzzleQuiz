@@ -41,6 +41,8 @@ export const useLanguage = () => {
 function App() {
 	const { i18n, t } = useTranslation();
 	const [language, setLanguage] = useState('hu');
+	const [isSet, setIsSet] = useState(false);
+	const [teamName, setTeamName] = useState('');
 
 	/**
 	 * Change the language of the application
@@ -51,16 +53,25 @@ function App() {
 		setLanguage(lng);
 	}
 
+	function toQuiz() {
+		// API magic goes here
+		setIsSet(true);
+	}
+
 	const contextValue = {
 		language,
 		changeLng,
+		toQuiz,
+		teamName,
+		setTeamName,
 		t,
 		i18n
 	};
 
 	return (
 		<LanguageContext.Provider value={contextValue}>
-			<Register />
+			{isSet ? <Quiz /> : <Register />}
+			{/* <Register /> */}
 			{/* <Quiz /> */}
 		</LanguageContext.Provider>
 	)

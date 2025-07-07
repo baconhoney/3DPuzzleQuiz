@@ -2,5 +2,7 @@
     "team_name": "Csapatnév",
     "type_here": "Írj ide...",
     "continue": "Folytatás",
-    "finish": "Kvíz befejezése"
+    "finish": "Kvíz befejezése",
+    "quiz_not_started": "A kvíz még nem kezdődött el",
+    "team_name_required": "A csapatnév megadása kötelező"
 }
