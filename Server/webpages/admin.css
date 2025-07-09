@@ -21,7 +21,6 @@ table, tr, td {
 
 td {
     border: 1px solid red;
-    vertical-align: top;
 }
 
 div {
@@ -42,13 +41,13 @@ div {
     flex-wrap: nowrap;
 }
 
-.flexSized {
-    flex-grow: 1;
-}
-
-.centeredDiv {
+.centered {
     margin-left: auto;
     margin-right: auto;
+}
+
+.top-aligned {
+    vertical-align: top;
 }
 
 .button {

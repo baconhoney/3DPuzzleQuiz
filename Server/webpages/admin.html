@@ -8,43 +8,11 @@
     <link rel="stylesheet" href="admin.css">
 </head>
 
-<body style="height: 100vh; width: 100vw;" id="root" class="horiz-stack centeredDiv">
-    <!--div class="flexSized padded">
-        <div id="saveButtonContainer" style="float: right;">
-            <div class="button">Mentés</div>
-        </div>
-        <div id="testDisplayRoot" style="width: 80%;" class="centeredDiv">
-            <span id="testTitle">Hello World!</span>
-            <div style="float: right;">
-                <span id="testLang">HU</span>
-                <span id="testResult">14/20</span>
-            </div>
-        </div>
-    </div>
-    <div id="sidebarMenuRoot" style="width: 500px;" class="vert-stack">
-        <div id="resultsContainer" class="flexSized padded">
-            sdhfbj
-        </div>
-        <div id="controlPanelContainer" style="height: 500px;" class="vert-stack">
-            <div class="horiz-stack">
-                <div>
-                    <span style="margin-right: 5px;">Idő lejár:</span>
-                    <span id="timeLeft">HH:mm</span>
-                </div>
-                <div class="vert-stack">
-                    <button style="width: 50px; height: 50px;">+</button>
-                    <button style="width: 50px; height: 50px;">-</button>
-                </div>
-                <button style="width: 100px; height: 50px;">Beállít</button>
-            </div>
-            <button style="width: 200px; height: 120px;">Send</button>
-        </div>
-    </div-->
-
-    <table style="height: 100vh; width: 100vw;">
+<body class="horiz-stack centeredDiv" id="root" style="height: 100vh; width: 100vw; padding: 20px;">
+    <table style="height: 100%; width: 100%;">
         <tr>
-            <td rowspan="2">
-                <table style="width: 80%;" class="centeredDiv">
+            <td rowspan="2" class="top-aligned" style="position: relative;">
+                <table style="width: 80%;" class="centered">
                     <tr>
                         <td style="width: 100%;">
                             <span id="testGroupName" style="font-size: 1.5rem;">Csapatnév</span>
@@ -57,33 +25,39 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3">
+                        <td id="testContentContainer" colspan="4">
                             test content
                         </td>
                     </tr>
                 </table>
+                <div class="vert-stack" style="position: absolute; top: 0; right: 0;">
+                    <button>Mentés</button>
+                    <button>Törlés</button>
+                </div>
             </td>
-            <td>
+            <td class="top-aligned" id="testResultsContainer">
                 test data
             </td>
         </tr>
         <tr>
-            <td style="width: 500px; height: 500px;">
+            <td class="top-aligned" style="width: 500px; height: 500px;">
                 <table>
                     <tr>
                         <td>
-                            idő
+                            <span style="margin-right: 5px;">Idő lejár:</span>
+                            <span id="timeLeft">HH:mm</span>
+                        </td>
+                        <td class="vert-stack">
+                            <button style="width: 50px; height: 50px;">+</button>
+                            <button style="width: 50px; height: 50px;">-</button>
                         </td>
                         <td>
-                            +/-
-                        </td>
-                        <td>
-                            set
+                            <button style="width: 100px; height: 50px;">Beállít</button>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="3">
-                            next phase
+                            <button style="width: 200px; height: 120px;">next phase</button>
                         </td>
                     </tr>
                 </table>
