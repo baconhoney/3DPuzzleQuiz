@@ -1,0 +1,72 @@
+:root {
+    --backroundColor: #222;
+    --foregroundColor: #fff;
+    --raisedBorderColor: #444;
+    --raisedBGColor: #333;
+}
+
+* {
+    background-color: var(--backroundColor);
+    color: var(--foregroundColor);
+    padding: 0px;
+    margin: 0px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+table, tr, td {
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px solid red;
+    vertical-align: top;
+}
+
+div {
+    border: 1px solid red;
+    min-width: 10px;
+    min-height: 10px;
+}
+
+.horiz-stack {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.vert-stack {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.flexSized {
+    flex-grow: 1;
+}
+
+.centeredDiv {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button {
+    padding: 15px;
+    background-color: var(--raisedBGColor);
+    border: 1px solid var(--raisedBorderColor);
+    border-style: outset;
+    border-radius: 10px;
+    display: inline-block;
+    text-align: center;
+    align-content: center;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: var(--raisedBorderColor);
+}
+
+.padded {
+    padding: 10px;
+}

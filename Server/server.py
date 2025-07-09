@@ -9,8 +9,8 @@ elif sys.platform == "linux":
     # we are on linux, loading real code for the scanner monitoring
     pass
 
-# ---------------- DATA ----------------
 
+# ---------------- DATA ----------------
 rawTestData: list[dict[list, int|str|dict[str, int|str]]] = []
 with open("test_sheets.json", encoding="utf-8") as f:
     raw: list[list[dict]] = json.load(f)
@@ -24,8 +24,8 @@ with open("test_sheets.json", encoding="utf-8") as f:
         rawTestData.append(d)
 rawTestData.sort(key=lambda i: (-i["score"], i["timestamp"]))
 
-# ---------------- EVENT HANDLER FUNCTIONS ----------------
 
+# ---------------- EVENT HANDLER FUNCTIONS ----------------
 def onTestResultsRowClick(event):
     region = testResultsData.identify("region", event.x, event.y)
     if region != "cell":
@@ -48,7 +48,6 @@ def onTestResultsRowClick(event):
 
 
 # ---------------- OTHER FUNCTIONS ----------------
-
 def setTreeviewHeadings(treeview: ttk.Treeview, columnData: dict[str, dict[str, str|dict[str, str]]]):
     """Applies the name and kw options in `columnData` to each column in `treeview`, and sets its name.
     Data is `internalName: {"name": "<display name>", "opts": {<kw options>}}` for each column"""

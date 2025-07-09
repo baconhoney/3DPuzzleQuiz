@@ -5,80 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - 3D Puzzle Quiz</title>
-    <style>
-        :root {
-            --backroundColor: #222;
-            --foregroundColor: #fff;
-            --raisedBorderColor: #444;
-            --raisedBGColor: #333;
-        }
-
-        * {
-            background-color: var(--backroundColor);
-            color: var(--foregroundColor);
-            padding: 0px;
-            margin: 0px;
-            font-size: 20px;
-            box-sizing: border-box;
-        }
-
-        div {
-            border: 1px solid red;
-            min-width: 50px;
-            min-height: 50px;
-        }
-
-        .horiz-stack {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-        }
-
-        .vert-stack {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: nowrap;
-        }
-
-        .flexSized {
-            flex-grow: 1;
-        }
-
-        .centeredDiv {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .button {
-            padding: 15px;
-            background-color: var(--raisedBGColor);
-            border: 1px solid var(--raisedBorderColor);
-            border-style: outset;
-            border-radius: 10px;
-            display: inline-block;
-            text-align: center;
-            align-content: center;
-            cursor: pointer;
-        }
-
-        .button:hover {
-            background-color: var(--raisedBorderColor);
-        }
-
-        .padded {
-            padding: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="admin.css">
 </head>
 
 <body style="height: 100vh; width: 100vw;" id="root" class="horiz-stack centeredDiv">
-    <div class="flexSized padded"">
-        <div id=" saveButtonContainer" style="float: right;">
-        <div class="button">Mentés</div>
-    </div>
-    <div id="testDisplayRoot" style="width: 80%;" class="centeredDiv">
-        fgcvxf
-    </div>
+    <!--div class="flexSized padded">
+        <div id="saveButtonContainer" style="float: right;">
+            <div class="button">Mentés</div>
+        </div>
+        <div id="testDisplayRoot" style="width: 80%;" class="centeredDiv">
+            <span id="testTitle">Hello World!</span>
+            <div style="float: right;">
+                <span id="testLang">HU</span>
+                <span id="testResult">14/20</span>
+            </div>
+        </div>
     </div>
     <div id="sidebarMenuRoot" style="width: 500px;" class="vert-stack">
         <div id="resultsContainer" class="flexSized padded">
@@ -86,16 +27,69 @@
         </div>
         <div id="controlPanelContainer" style="height: 500px;" class="vert-stack">
             <div class="horiz-stack">
-                Idő lejár: <span id="timeLeft">HH:mm</span>
-                <div class="vert-stack">
-                    <div class="button">+</div>
-                    <div class="button">-</div>
+                <div>
+                    <span style="margin-right: 5px;">Idő lejár:</span>
+                    <span id="timeLeft">HH:mm</span>
                 </div>
-                <div class="button">Beállít</div>
+                <div class="vert-stack">
+                    <button style="width: 50px; height: 50px;">+</button>
+                    <button style="width: 50px; height: 50px;">-</button>
+                </div>
+                <button style="width: 100px; height: 50px;">Beállít</button>
             </div>
-            <div class="button" style="width: 200px; height: 120px;">Send</div>
+            <button style="width: 200px; height: 120px;">Send</button>
         </div>
-    </div>
+    </div-->
+
+    <table style="height: 100vh; width: 100vw;">
+        <tr>
+            <td rowspan="2">
+                <table style="width: 80%;" class="centeredDiv">
+                    <tr>
+                        <td style="width: 100%;">
+                            <span id="testGroupName" style="font-size: 1.5rem;">Csapatnév</span>
+                        </td>
+                        <td>
+                            <span id="testLang">HU</span>
+                        </td>
+                        <td>
+                            <span id="testScore" style="font-size: 2rem;">14/20</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            test content
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                test data
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 500px; height: 500px;">
+                <table>
+                    <tr>
+                        <td>
+                            idő
+                        </td>
+                        <td>
+                            +/-
+                        </td>
+                        <td>
+                            set
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            next phase
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>
