@@ -15,7 +15,9 @@
     box-sizing: border-box;
 }
 
-table, tr, td {
+table,
+tr,
+td {
     border-collapse: collapse;
 }
 
@@ -41,6 +43,10 @@ div {
     flex-wrap: nowrap;
 }
 
+.padded {
+    padding: 10px;
+}
+
 .centered {
     margin-left: auto;
     margin-right: auto;
@@ -64,8 +70,4 @@ div {
 
 .button:hover {
     background-color: var(--raisedBorderColor);
-}
-
-.padded {
-    padding: 10px;
 }

@@ -6,41 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - 3D Puzzle Quiz</title>
     <link rel="stylesheet" href="admin.css">
+    <script>
+        const testData = fetch("test_sheets.json");
+        console.log(testData);
+    </script>
 </head>
 
-<body class="horiz-stack centeredDiv" id="root" style="height: 100vh; width: 100vw; padding: 20px;">
+<body class="horiz-stack centeredDiv" id="root" style="height: 100vh; width: 100vw; min-width: 1400px; min-height: 800px; padding: 20px;">
     <table style="height: 100%; width: 100%;">
         <tr>
-            <td rowspan="2" class="top-aligned" style="position: relative;">
+            <td rowspan="2" class="top-aligned padded" style="position: relative;">
                 <table style="width: 80%;" class="centered">
                     <tr>
                         <td style="width: 100%;">
-                            <span id="testGroupName" style="font-size: 1.5rem;">Csapatnév</span>
+                            <span id="testGroupName" style="padding: 0px 5px; font-size: 1.5rem;">Csapatnév</span>
                         </td>
                         <td>
-                            <span id="testLang">HU</span>
+                            <span id="testLang" style="padding: 0px 5px;">HU</span>
                         </td>
                         <td>
-                            <span id="testScore" style="font-size: 2rem;">14/20</span>
+                            <span id="testScore" style="padding: 0px 5px; font-size: 2rem;">14/20</span>
                         </td>
                     </tr>
                     <tr>
-                        <td id="testContentContainer" colspan="4">
+                        <td id="testContent" colspan="4">
                             test content
                         </td>
                     </tr>
                 </table>
-                <div class="vert-stack" style="position: absolute; top: 0; right: 0;">
+                <div class="vert-stack" style="position: absolute; top: 10px; right: 10px;">
                     <button>Mentés</button>
                     <button>Törlés</button>
                 </div>
             </td>
-            <td class="top-aligned" id="testResultsContainer">
+            <td class="top-aligned padded" id="testResults">
                 test data
             </td>
         </tr>
         <tr>
-            <td class="top-aligned" style="width: 500px; height: 500px;">
+            <td class="top-aligned padded" style="width: 500px; height: 500px;">
                 <table>
                     <tr>
                         <td>
@@ -65,5 +69,6 @@
         </tr>
     </table>
 </body>
+<script src="admin.js"></script>
 
 </html>
