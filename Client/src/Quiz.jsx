@@ -36,6 +36,11 @@ const Quiz = () => {
 
     const formattedTime = data.endTime.split(':').slice(0, 2).join(':');
 
+    function openModal(e) {
+        e.preventDefault();
+        document.getElementById('quiz_finish_modal').showModal();
+    }
+
     function sendQuiz(e) {
         e.preventDefault();
         const form = document.getElementById('quiz-form');
@@ -65,28 +70,48 @@ const Quiz = () => {
                 <p className='text-lg'>{isQuizActive ? formattedTime : ''}</p>
             </div>
             {isQuizActive ? (
-                <form id='quiz-form'>
-                    <div className='grid grid-cols-1 gap-2 p-3'>
-                        {Object.entries(data.quizdata).map(([key, value]) => (
-                            <div key={key} className="card bg-base-100 shadow-xl">
-                                <div className="flex flex-row justify-between items-center p-5 card-body">
-                                    <div>
-                                        <h2 className="card-title">{value.name}</h2>
-                                        {value.city === "-" ? (
-                                            <p>{value.country}</p>
-                                        ) : (
-                                            <p>{value.city}, {value.country}</p>
-                                        )}
+                <>
+                    <form id='quiz-form'>
+                        <div className='grid grid-cols-1 gap-1 p-3'>
+                            {Object.entries(data.quizdata).map(([key, value]) => (
+                                <div key={key} className="card bg-base-100 shadow-xl h-28">
+                                    <div className="flex flex-row justify-between items-center p-5 card-body">
+                                        <div>
+                                            <h2 className="card-title">{value.name}</h2>
+                                            {value.city === "-" ? (
+                                                <p>{value.country}</p>
+                                            ) : (
+                                                <p>{value.city}, {value.country}</p>
+                                            )}
+                                        </div>
+                                        <input id={value.id} type="number" className="input validator input-md w-18 text-xl" min={1} max={100} onInput={(e) => {
+                                            if (e.target.value.length > 3) {
+                                                e.target.value = e.target.value.slice(0, 3);
+                                            }
+                                        }} />
                                     </div>
-                                    <input id={value.id} type="number" className="input validator input-sm w-12" min={1} max={100} />
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                    <div className='flex justify-center p-5'>
-                        <button className="btn btn-primary btn-wide" onClick={sendQuiz}>{t("finish")}</button>
-                    </div>
-                </form>
+                            ))}
+                        </div>
+                        <div className='flex flex-col gap-3 justify-center sticky bottom-0'>
+                            <button className="btn btn-primary btn-wide self-center" onClick={(e) => openModal(e)}>{t("finish")}</button>
+                            <progress className="progress progress-primary w-full sticky bottom-0" value="40" max="100"></progress>
+                        </div>
+                    </form>
+                    <dialog id="quiz_finish_modal" className="modal">
+                        <div className="modal-box">
+                            <h3 className="font-bold text-lg">{t("finish")}</h3>
+                            <p className="py-4">{t("finish_modal_message")}</p>
+                            <form method="dialog" className="modal-action justify-around">
+                                <button className="btn btn-soft btn-error">{t("cancel")}</button>
+                                <button className="btn btn-success" onClick={sendQuiz}>{t("continue")}</button>
+                            </form>
+                        </div>
+                        <form method="dialog" className="modal-backdrop">
+                            <button>close</button>
+                        </form>
+                    </dialog>
+                </>
             ) : (
                 <div className="flex justify-center items-center p-10">
                     <p className="text-2xl font-bold">{t("quiz_not_started")}</p>
