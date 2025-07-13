@@ -30,6 +30,8 @@ const Quiz = () => {
         "endTime": "13:55:00"
     }
 
+    const evalData = {}
+
     const { t, teamName } = useLanguage();
 
     const isQuizActive = true;
