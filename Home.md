@@ -8,39 +8,36 @@ Request specifying nothing expect nothing on request.
 All requests return `<http_response_code>` and `error message` (MIME:"text/plain") if exists, alongside the below specified.
 
 
-### GET `/`
-- returns `index.html`
+### GET `*`
+Excluding `api/*`
+- returns file `*` (if existing)
 
-### GET `/admin`
-- returns `admin.html`
-
-### GET `/login`
+### GET `/api/login`
 - returns
 ```json
 {
-    "uid": 1234567890, (random number from 1e9, to but not including 1e10)
+    "uid": 1234567890, (random number from 1e9, up to but not including 1e10)
     "startTime": "<YYYY-MM-DDTHH:MM:SS.sss>",
     "quizIsRunning": false
 }
 ```
 
-### GET `/getQuestions`
+### GET `/api/getQuestions`
 - expects `lang=hu` (`hu` or `en`, defaults to `hu`)
 - returns
 ```json
 {
-    "quizNumber": 5,
     "quizdata": {
-        "0": {"name": "Fehér Ház", "country": "Egyesült Államok", "city": "Washington", "flag": "flag_us", "id": 2000},
-        "1": {"name": "Szent István bazilika", "country": "Magyarország", "city": "Budapest", "flag": "flag_hu", "id": 2001},
+        "0": {"name": "Fehér Ház", "country": "Egyesült Államok", "city": "Washington", "id": 2000},
+        "1": {"name": "Szent István bazilika", "country": "Magyarország", "city": "Budapest", "id": 2001},
         ...
-        "19": {"name": "Kölni dóm", "country": "Németország", "city": "Köln", "flag": "flag_de", "id": 2019}
+        "19": {"name": "Kölni dóm", "country": "Németország", "city": "Köln", "id": 2019}
     },
     "endTime": "<YYYY-MM-DDTHH:MM:SS.sss>"
 }
 ```
 
-### POST `/uploadAnswers`
+### POST `/api/uploadAnswers`
 
 - expects
 ```json
@@ -54,22 +51,22 @@ All requests return `<http_response_code>` and `error message` (MIME:"text/plain
 }
 ```
 
-### GET `/getAnswers`
+### GET `/api/getAnswers`
 - expects `uid=1234567890` (the returned uid value from `/login`)
 - returns
 ```json
 {
-    "results": {
-        "0": {"name": "Fehér Ház", "country": "Egyesült Államok", "city": "Washington", "flag": "flag_us", "number": 1, "correct": true},
-        "1": {"name": "Szent István bazilika", "country": "Magyarország", "city": "Budapest", "flag": "flag_hu", "number": 41, "correct": true},
+    "quizdata": {
+        "0": {"name": "Fehér Ház", "country": "Egyesült Államok", "city": "Washington", "number": 1, "correct": true},
+        "1": {"name": "Szent István bazilika", "country": "Magyarország", "city": "Budapest", "number": 41, "correct": true},
         ...
-        "19": {"name": "Kölni dóm", "country": "Németország", "city": "Köln", "flag": "flag_de", "number": 39, "correct": false}
+        "19": {"name": "Kölni dóm", "country": "Németország", "city": "Köln", "number": 39, "correct": false}
     },
     "score": 14
 }
 ```
 
-### SSE `/updates`
+### SSE `/api/updates`
 - returns
 ```
 ONE OF:
