@@ -21,14 +21,9 @@ td {
     border-collapse: collapse;
 }
 
+th,
 td {
     border: 1px solid red;
-}
-
-div {
-    border: 1px solid red;
-    min-width: 10px;
-    min-height: 10px;
 }
 
 .horiz-stack {
@@ -56,18 +51,28 @@ div {
     vertical-align: top;
 }
 
-.button {
-    padding: 15px;
+#testResults table tr:hover {
     background-color: var(--raisedBGColor);
-    border: 1px solid var(--raisedBorderColor);
-    border-style: outset;
-    border-radius: 10px;
-    display: inline-block;
-    text-align: center;
-    align-content: center;
-    cursor: pointer;
+}
+#testResults table tr:hover td {
+    background-color: #0000;
 }
 
-.button:hover {
-    background-color: var(--raisedBorderColor);
+
+#testResults table th,
+#testResults table td {
+    padding: 1px 5px;
 }
+
+#testResults table th {
+    font-size: 16px;
+}
+
+#testResults table th.groupname {
+    width: 100%;
+}
+#testResults table td.lang,
+#testResults table td.score {
+    text-align: center;
+}
+
