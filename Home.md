@@ -8,9 +8,9 @@ Request specifying nothing expect nothing on request.
 All requests return `<http_response_code>` and `error message` (MIME:"text/plain") if exists, alongside the below specified.
 
 
-### GET `*`
+### GET `/*`
 Excluding `api/*`
-- returns file `*` (if existing)
+- returns file `/*` (if existing)
 
 ### GET `/api/login`
 - returns
