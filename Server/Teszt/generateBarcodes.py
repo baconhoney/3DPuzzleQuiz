@@ -1,10 +1,8 @@
-import io, json, pathlib, math
+import json, pathlib, math
 from unidecode import unidecode
 from PIL import Image
 from ppf.datamatrix.datamatrix import DataMatrix
 
-# from pprint import pprint
-# from cairosvg import svg2png
 
 # ------ CONSTANTS ------
 #DMCCONTENT = "{idx}|{box}|{name}"  # format string for the DataMatrix content
@@ -73,11 +71,13 @@ for i, dmc in enumerate(dmcCodes):
     y = (i // CODESPERLINE) * (dmcSize + SPACING) + SPACING
     outputImage.paste(dmcToPng(dmc, bg=BGCOLOR, fg=FGCOLOR, border=BORDER), (x, y))
 
-outputImage.show()
-outputImage.save(cwd / "dmcs.png")
+outputImage = outputImage.convert("L")
+# Resize image cuz Word is stupid and cannot handle pixels
+outputImage.resize((totalWidth * 100, totalHeight * 100), resample=Image.Resampling.NEAREST).save(cwd / "dmcs.png")
 print(f"\nImage width: {totalWidth}px, DMC width: {dmcRawSize}px\nImage sizes:")
 for ps in PIXELSIZES:
     print(f"- 1 px is {ps:.4f}cm: {totalWidth * ps:.4f}cm")
 for cs in CODESIZES:
     print(f"- DMC is {cs}cm: {totalWidth * cs / dmcRawSize:.4f}cm")
+outputImage.show()
 
