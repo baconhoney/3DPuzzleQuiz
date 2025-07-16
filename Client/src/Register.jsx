@@ -38,14 +38,17 @@ const Register = () => {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen gap-16 w-full">
-            <div className="flex flex-col items-center gap-2">
+            <div className="absolute top-4 right-4 z-50">
+                <button className="btn btn-info btn-outline w-10" onClick={toggleTheme}>
+                    {theme === 'light' ? t("🌙") : t("☀️")}
+                </button>
+            </div>
+
+            <div className="flex flex-col items-center gap-2 mt-4">
                 <div className="flex items-center gap-2">
                     <button className={"btn btn-info btn-outline" + isLanguageSelected("hu")} onClick={() => changeLng("hu")}>🇭🇺 Magyar</button>
                     <button className={"btn btn-info btn-outline" + isLanguageSelected("en")} onClick={() => changeLng("en")}>🇬🇧 English</button>
                 </div>
-                <button className="btn btn-info btn-outline w-40" onClick={toggleTheme}>
-                    {theme === 'light' ? t("theme_dark") : t("theme_light")}
-                </button>
             </div>
 
             <form onSubmit={handleButtonClick} className="flex flex-col items-center content-center gap-5 w-2/3">
