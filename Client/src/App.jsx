@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from 'react'
+import { createContext, useState, useContext, useEffect } from 'react'
 import { useTranslation } from "react-i18next";
 
 import i18n from "i18next";
@@ -41,20 +41,26 @@ export const useLanguage = () => {
 function App() {
 	const { i18n, t } = useTranslation();
 	const [language, setLanguage] = useState('hu');
-	const [isSet, setIsSet] = useState(false);
-	const [teamName, setTeamName] = useState('');
 
-	/**
-	 * Change the language of the application
-	 * @param {string} lng - The language code to change to (e.g., 'hu' for Hungarian, 'en' for English)
-	 */
+	// Load team name from localStorage
+	const [teamName, setTeamName] = useState(() => localStorage.getItem("teamName") || "");
+	const [isSet, setIsSet] = useState(() => !!localStorage.getItem("teamName"));
+
+	// Persist team name changes
+	useEffect(() => {
+		if (teamName) {
+			localStorage.setItem("teamName", teamName);
+		}
+	}, [teamName]);
+
+	// Change language
 	const changeLng = (lng) => {
 		i18n.changeLanguage(lng);
 		setLanguage(lng);
 	}
 
+	// Called when the team has registered and the quiz should be shown
 	function toQuiz() {
-		// API magic goes here
 		setIsSet(true);
 	}
 
@@ -71,10 +77,8 @@ function App() {
 	return (
 		<LanguageContext.Provider value={contextValue}>
 			{isSet ? <Quiz /> : <Register />}
-			{/* <Register /> */}
-			{/* <Quiz /> */}
 		</LanguageContext.Provider>
 	)
 }
 
-export default App
+export default App;

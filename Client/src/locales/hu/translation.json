@@ -6,5 +6,6 @@
     "quiz_not_started": "A kvíz még nem kezdődött el",
     "team_name_required": "A csapatnév megadása kötelező",
     "finish_modal_message": "Biztos, hogy beküldi a kvízt? Erre csak egyszer van lehetősége és a válaszok utána nem módosíthatók!",
-    "cancel": "Mégsem"
+    "cancel": "Mégsem",
+    "back": "Vissza"
 }

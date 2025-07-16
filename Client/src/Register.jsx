@@ -3,14 +3,13 @@ import { useLanguage } from './App';
 
 const Register = () => {
     const { language, changeLng, t, toQuiz, teamName, setTeamName } = useLanguage();
-
     const [nameError, setNameError] = useState(false);
     const [theme, setTheme] = useState('light');
 
-    // Detect browser preference on first load
     useEffect(() => {
+        const savedTheme = localStorage.getItem("theme");
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initialTheme = prefersDark ? 'dark' : 'light';
+        const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
         setTheme(initialTheme);
         document.documentElement.setAttribute('data-theme', initialTheme);
     }, []);
@@ -18,23 +17,25 @@ const Register = () => {
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
+        localStorage.setItem("theme", newTheme);
         document.documentElement.setAttribute('data-theme', newTheme);
     };
 
     const isLanguageSelected = (lng) => language === lng ? " btn-active" : "";
 
-    function handleInputChange(e) {
+    const handleInputChange = (e) => {
         setTeamName(e.target.value);
-    }
+    };
 
-    function handleButtonClick(e) {
-        e.preventDefault(); // important to prevent form submission
+    const handleButtonClick = (e) => {
+        e.preventDefault();
         if (teamName.trim() === "") {
             setNameError(true);
             return;
         }
+        localStorage.setItem("teamName", teamName);
         toQuiz();
-    }
+    };
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen gap-16 w-full">
