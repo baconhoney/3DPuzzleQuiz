@@ -6,5 +6,6 @@
     "quiz_not_started": "The quiz has not started yet",
     "team_name_required": "Team name is required",
     "finish_modal_message": "Are you sure you want to submit the quiz? You can only do this once, and the answers cannot be changed afterwards!",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "back": "Back"
 }
