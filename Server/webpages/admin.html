@@ -8,39 +8,41 @@
     <link rel="stylesheet" href="admin.css">
 </head>
 
-<body id="root" style="height: 100vh; width: 100vw; min-width: 1400px; min-height: 800px; padding: 20px;">
-    <table style="height: 100%; width: 100%;">
-        <tr>
-            <td rowspan="2" class="top-aligned padded" style="position: relative;">
-                <table style="width: 80%;" class="centered">
-                    <tr>
-                        <td style="width: 100%;">
-                            <span id="testGroupName" style="padding: 0px 5px; font-size: 1.5rem;">Csapatnév</span>
-                        </td>
-                        <td>
-                            <span id="testLang" style="padding: 0px 5px;">HU</span>
-                        </td>
-                        <td>
-                            <span id="testScore" style="padding: 0px 5px; font-size: 2rem;">14/20</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="testContent" colspan="4">
-                            test content
-                        </td>
-                    </tr>
-                </table>
-                <div class="vert-stack" style="position: absolute; top: 10px; right: 10px;">
-                    <button>Mentés</button>
-                    <button>Törlés</button>
+<body>
+    <div id="main-cell">
+        <div id="main-left-cell" style="position: relative;">
+            <table style="width: 80%; max-width: 1200px;" class="centered">
+                <tr>
+                    <td style="width: auto;">
+                        <span id="testGroupName" style="padding: 0px 5px; font-size: 1.5rem;">Csapatnév</span>
+                    </td>
+                    <td style="width: 45px; text-align: center;">
+                        <span id="testLang" style="padding: 0px 5px;">HU</span>
+                    </td>
+                    <td style="padding: 0px 5px; width: 120px; text-align: center;">
+                        <span id="testScore" style="font-size: 2rem;">14</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="testContent" colspan="3">
+                        test content
+                    </td>
+                </tr>
+            </table>
+            <div class="vert-stack" style="position: absolute; top: 10px; right: 10px;">
+                <button>Mentés</button>
+                <button>Törlés</button>
+            </div>
+        </div>
+        <div id="main-right-cell">
+            <div id="main-top-right-cell">
+                <div style="display: flex; flex-direction: column; height: 500px;">
+                    <div id="testResults" style="overflow: auto;">
+                        Test results are loading...
+                    </div>
                 </div>
-            </td>
-            <td class="top-aligned padded" id="testResults">
-                Test results are loading...
-            </td>
-        </tr>
-        <tr>
-            <td class="top-aligned padded" style="width: 500px; height: 500px;">
+            </div>
+            <div id="main-bottom-right-cell">
                 <table>
                     <tr>
                         <td>
@@ -61,9 +63,9 @@
                         </td>
                     </tr>
                 </table>
-            </td>
-        </tr>
-    </table>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="admin.js"></script>
 
