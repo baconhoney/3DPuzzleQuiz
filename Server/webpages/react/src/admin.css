@@ -1,0 +1,86 @@
+:root {
+    --backroundColor: #222;
+    --foregroundColor: #fff;
+    --raisedBorderColor: #444;
+    --raisedBGColor: #333;
+}
+
+* {
+    background-color: var(--backroundColor);
+    color: var(--foregroundColor);
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+table, tr, td {
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid red;
+}
+
+body, #root {
+    min-width: 1400px;
+    min-height: 800px;
+    width: 100vw;
+    height: 100vh;
+}
+
+#main-cell {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#main-left-cell {
+    flex-grow: 1;
+    border: 1px solid red;
+    padding: 10px;
+}
+
+#main-right-cell {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+#main-top-right-cell {
+    min-height: 0;
+    flex-grow: 1;
+    border: 1px solid red;
+    padding: 10px;
+}
+
+#main-bottom-right-cell {
+    min-height: 500px;
+    border: 1px solid red;
+    padding: 10px;
+}
+
+.horiz-stack {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.vert-stack {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.padded {
+    padding: 10px;
+    vertical-align: top;
+}
+
+.centered {
+    margin-left: auto;
+    margin-right: auto;
+}
+

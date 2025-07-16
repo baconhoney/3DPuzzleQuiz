@@ -1,0 +1,28 @@
+.test-results {
+    table tr:hover {
+        background-color: var(--raisedBGColor);
+    }
+
+    table tr:hover th,
+    table tr:hover td {
+        background-color: var(--raisedBGColor);
+    }
+
+    table th,
+    table td {
+        padding: 1px 5px;
+    }
+
+    table th {
+        font-size: 16px;
+    }
+
+    table th.groupname {
+        width: 100%;
+    }
+
+    table td.lang,
+    table td.score {
+        text-align: center;
+    }
+}

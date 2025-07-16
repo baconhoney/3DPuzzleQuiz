@@ -1,0 +1,34 @@
+.test-content {
+    table {
+        width: 100%;
+    }
+
+    table th,
+    table td {
+        padding: 2px 5px;
+    }
+
+    table td.testcontent-name {
+        width: 50%;
+    }
+
+    table td.testcontent-location {
+        width: 50%;
+    }
+
+    table td.testcontent-id {
+        width: 60px;
+        text-align: center;
+    }
+
+    table td.testcontent-number {
+        width: 70px;
+        text-align: center;
+    }
+
+    table td.testcontent-correct {
+        width: 80px;
+        text-align: center;
+    }
+}
+

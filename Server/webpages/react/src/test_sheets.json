@@ -1,0 +1,3654 @@
+[
+    {
+        "testData": [
+            {
+                "name": "Taipei 101 Building",
+                "country": "Tajvan",
+                "city": "Taipei",
+                "number": 74,
+                "correct": false,
+                "id": 8652
+            },
+            {
+                "name": "Big Ben",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 68,
+                "correct": false,
+                "id": 6482
+            },
+            {
+                "name": "Sagrada Família",
+                "country": "Spanyolország",
+                "city": "Barcelona",
+                "number": 53,
+                "correct": false,
+                "id": 6941
+            },
+            {
+                "name": "Pisai ferde torony",
+                "country": "Olaszország",
+                "city": "Pisa",
+                "number": 56,
+                "correct": false,
+                "id": 5284
+            },
+            {
+                "name": "Fehér Ház",
+                "country": "USA",
+                "city": "Washington",
+                "number": 76,
+                "correct": false,
+                "id": 9852
+            },
+            {
+                "name": "Burj Kalifa",
+                "country": "Egyesült Arab Emírségek",
+                "city": "Dubai",
+                "number": 55,
+                "correct": false,
+                "id": 7371
+            },
+            {
+                "name": "Sky Tower",
+                "country": "Új-Zéland",
+                "city": "Auckland",
+                "number": 4,
+                "correct": true,
+                "id": 9432
+            },
+            {
+                "name": "Boldog Vazul-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 15,
+                "correct": true,
+                "id": 9639
+            },
+            {
+                "name": "Szent Jakab-katedrális",
+                "country": "Spanyolország",
+                "city": "Santiago d. C.",
+                "number": 18,
+                "correct": true,
+                "id": 3228
+            },
+            {
+                "name": "Dohány utcai zsinagóga",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 47,
+                "correct": false,
+                "id": 8561
+            },
+            {
+                "name": "Eyüp Sultan mecset",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 54,
+                "correct": false,
+                "id": 7602
+            },
+            {
+                "name": "Megváltó Krisztus-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 51,
+                "correct": false,
+                "id": 3647
+            },
+            {
+                "name": "Uszpenszkíj-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 64,
+                "correct": true,
+                "id": 6794
+            },
+            {
+                "name": "HMS Victory 1765",
+                "country": "Egyesült Királyság",
+                "city": "Boston",
+                "number": 70,
+                "correct": true,
+                "id": 9939
+            },
+            {
+                "name": "Kultúra és Tudomány Palotája",
+                "country": "Lengyelország",
+                "city": "Varsó",
+                "number": 34,
+                "correct": false,
+                "id": 6708
+            },
+            {
+                "name": "Szmolníj székesegyház",
+                "country": "Oroszország",
+                "city": "Szentpétervár",
+                "number": 18,
+                "correct": true,
+                "id": 5535
+            },
+            {
+                "name": "Hagia Sophia",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 8,
+                "correct": true,
+                "id": 8210
+            },
+            {
+                "name": "Buckingham Palota",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 76,
+                "correct": false,
+                "id": 6306
+            },
+            {
+                "name": "Milánói Dóm",
+                "country": "Olaszország",
+                "city": "Milánó",
+                "number": 98,
+                "correct": true,
+                "id": 3900
+            },
+            {
+                "name": "Hohenzollern kastély",
+                "country": "Németország",
+                "city": "Bisinden",
+                "number": 93,
+                "correct": false,
+                "id": 2560
+            }
+        ],
+        "score": 8,
+        "timestamp": "2025-07-11T11:15:27.878"
+    },
+    {
+        "testData": [
+            {
+                "name": "Vajdahunyad vára",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 65,
+                "correct": false,
+                "id": 3671
+            },
+            {
+                "name": "Mátyás-templom és Halászbástya",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 18,
+                "correct": false,
+                "id": 7228
+            },
+            {
+                "name": "Harry Potter Roxfort Kastély",
+                "country": "Egyesült Királyság",
+                "city": "Alnwick",
+                "number": 3,
+                "correct": true,
+                "id": 9180
+            },
+            {
+                "name": "Tower-híd",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 30,
+                "correct": false,
+                "id": 5585
+            },
+            {
+                "name": "Buckingham Palota",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 61,
+                "correct": false,
+                "id": 3796
+            },
+            {
+                "name": "Brooklyn-híd",
+                "country": "USA",
+                "city": "New York",
+                "number": 49,
+                "correct": false,
+                "id": 6144
+            },
+            {
+                "name": "Diadalív",
+                "country": "Franciaország",
+                "city": "Párizs",
+                "number": 53,
+                "correct": false,
+                "id": 9877
+            },
+            {
+                "name": "Brandenburgi kapu",
+                "country": "Németország",
+                "city": "Berlin",
+                "number": 50,
+                "correct": false,
+                "id": 4125
+            },
+            {
+                "name": "Anna királynő bosszúja",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 39,
+                "correct": true,
+                "id": 5025
+            },
+            {
+                "name": "Taipei 101 Building",
+                "country": "Tajvan",
+                "city": "Taipei",
+                "number": 54,
+                "correct": true,
+                "id": 8622
+            },
+            {
+                "name": "Willis-torony",
+                "country": "USA",
+                "city": "Chicago",
+                "number": 31,
+                "correct": false,
+                "id": 2292
+            },
+            {
+                "name": "Mayflower",
+                "country": "Hollandia",
+                "city": "[elsüllyedt]",
+                "number": 9,
+                "correct": false,
+                "id": 6278
+            },
+            {
+                "name": "Fehér Ház",
+                "country": "USA",
+                "city": "Washington",
+                "number": 80,
+                "correct": true,
+                "id": 8082
+            },
+            {
+                "name": "Firenzei Dóm",
+                "country": "Olaszország",
+                "city": "Firenze",
+                "number": 10,
+                "correct": true,
+                "id": 3188
+            },
+            {
+                "name": "Dohány utcai zsinagóga",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 77,
+                "correct": true,
+                "id": 4153
+            },
+            {
+                "name": "Sydney-i Operaház",
+                "country": "Ausztrália",
+                "city": "Sydney",
+                "number": 99,
+                "correct": true,
+                "id": 3670
+            },
+            {
+                "name": "Eyüp Sultan mecset",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 26,
+                "correct": false,
+                "id": 3058
+            },
+            {
+                "name": "Pisai ferde torony",
+                "country": "Olaszország",
+                "city": "Pisa",
+                "number": 52,
+                "correct": true,
+                "id": 6770
+            },
+            {
+                "name": "Megváltó Krisztus szobra",
+                "country": "Brazília",
+                "city": "Rio de Janeiro",
+                "number": 51,
+                "correct": false,
+                "id": 8572
+            },
+            {
+                "name": "A moszkvai Kreml Fala",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 79,
+                "correct": true,
+                "id": 9912
+            }
+        ],
+        "score": 9,
+        "timestamp": "2025-07-11T11:16:09.755"
+    },
+    {
+        "testData": [
+            {
+                "name": "Groupama Aréna",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 51,
+                "correct": false,
+                "id": 3768
+            },
+            {
+                "name": "Hősök tere",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 71,
+                "correct": true,
+                "id": 7798
+            },
+            {
+                "name": "Kölni dóm",
+                "country": "Németország",
+                "city": "Köln",
+                "number": 2,
+                "correct": true,
+                "id": 8557
+            },
+            {
+                "name": "Varsói Királyi palota",
+                "country": "Lengyelország",
+                "city": "Varsó",
+                "number": 48,
+                "correct": false,
+                "id": 5431
+            },
+            {
+                "name": "Waweli Székesegyház",
+                "country": "Lengyelország",
+                "city": "Krakkó",
+                "number": 34,
+                "correct": false,
+                "id": 3989
+            },
+            {
+                "name": "Törcsvári kastély",
+                "country": "Románia",
+                "city": "Törcsvár",
+                "number": 14,
+                "correct": false,
+                "id": 8664
+            },
+            {
+                "name": "Kul Sharif mecset",
+                "country": "Oroszország",
+                "city": "Kazán",
+                "number": 21,
+                "correct": false,
+                "id": 7172
+            },
+            {
+                "name": "Willis-torony",
+                "country": "USA",
+                "city": "Chicago",
+                "number": 61,
+                "correct": true,
+                "id": 9955
+            },
+            {
+                "name": "Keleti Gyöngy torony",
+                "country": "Kína",
+                "city": "Shanghai",
+                "number": 55,
+                "correct": false,
+                "id": 3847
+            },
+            {
+                "name": "Brandenburgi kapu",
+                "country": "Németország",
+                "city": "Berlin",
+                "number": 99,
+                "correct": true,
+                "id": 4026
+            },
+            {
+                "name": "Akhmad Kadyrov mecset",
+                "country": "Oroszország",
+                "city": "Grozníj",
+                "number": 17,
+                "correct": true,
+                "id": 9488
+            },
+            {
+                "name": "Colosseum",
+                "country": "Olaszország",
+                "city": "Róma",
+                "number": 35,
+                "correct": false,
+                "id": 2511
+            },
+            {
+                "name": "countryház",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 13,
+                "correct": false,
+                "id": 4415
+            },
+            {
+                "name": "Al-Masjid al-Haram",
+                "country": "Szaúd-Arábia",
+                "city": "Mekka",
+                "number": 54,
+                "correct": true,
+                "id": 6673
+            },
+            {
+                "name": "Big Ben",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 48,
+                "correct": false,
+                "id": 3291
+            },
+            {
+                "name": "Kínai Nagy Fal",
+                "country": "Kína",
+                "city": "-",
+                "number": 27,
+                "correct": false,
+                "id": 9967
+            },
+            {
+                "name": "Megváltó Krisztus szobra",
+                "country": "Brazília",
+                "city": "Rio de Janeiro",
+                "number": 1,
+                "correct": true,
+                "id": 5908
+            },
+            {
+                "name": "Kanadai Nemzeti TV-Torony",
+                "country": "Kanada",
+                "city": "Toronto",
+                "number": 51,
+                "correct": false,
+                "id": 3963
+            },
+            {
+                "name": "Hat hölgy kastély",
+                "country": "Franciaország",
+                "city": "Chenonceaux",
+                "number": 17,
+                "correct": false,
+                "id": 8021
+            },
+            {
+                "name": "Bank of China Tower",
+                "country": "Kína",
+                "city": "Hong Kong",
+                "number": 1,
+                "correct": true,
+                "id": 6505
+            }
+        ],
+        "score": 8,
+        "timestamp": "2025-07-11T11:22:28.239"
+    },
+    {
+        "testData": [
+            {
+                "name": "Szent Vitus-székesegyház",
+                "country": "Csehország",
+                "city": "Prága",
+                "number": 26,
+                "correct": true,
+                "id": 7389
+            },
+            {
+                "name": "Harry Potter Roxfort Kastély",
+                "country": "Egyesült Királyság",
+                "city": "Alnwick",
+                "number": 89,
+                "correct": false,
+                "id": 5725
+            },
+            {
+                "name": "Al-Masjid an-Nabawi",
+                "country": "Szaúd-Arábia",
+                "city": "Medina",
+                "number": 68,
+                "correct": false,
+                "id": 6898
+            },
+            {
+                "name": "Szent István-bazilika",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 99,
+                "correct": false,
+                "id": 8121
+            },
+            {
+                "name": "New York-i Szabadság szobor",
+                "country": "USA",
+                "city": "New York",
+                "number": 59,
+                "correct": false,
+                "id": 7784
+            },
+            {
+                "name": "HMS Victory 1765",
+                "country": "Egyesült Királyság",
+                "city": "Boston",
+                "number": 61,
+                "correct": true,
+                "id": 2236
+            },
+            {
+                "name": "Himedzsi várkastély",
+                "country": "Japán",
+                "city": "Himedzsi",
+                "number": 85,
+                "correct": false,
+                "id": 5161
+            },
+            {
+                "name": "Capitolium",
+                "country": "USA",
+                "city": "Washington",
+                "number": 23,
+                "correct": false,
+                "id": 2566
+            },
+            {
+                "name": "Chrysler Building",
+                "country": "USA",
+                "city": "New York",
+                "number": 23,
+                "correct": false,
+                "id": 9236
+            },
+            {
+                "name": "Bank of China Tower",
+                "country": "Kína",
+                "city": "Hong Kong",
+                "number": 46,
+                "correct": false,
+                "id": 9463
+            },
+            {
+                "name": "Törcsvári kastély",
+                "country": "Románia",
+                "city": "Törcsvár",
+                "number": 70,
+                "correct": true,
+                "id": 8267
+            },
+            {
+                "name": "Hagia Sophia",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 49,
+                "correct": false,
+                "id": 7052
+            },
+            {
+                "name": "Tadzs Mahal",
+                "country": "India",
+                "city": "Agra",
+                "number": 32,
+                "correct": false,
+                "id": 4098
+            },
+            {
+                "name": "Sagrada Família",
+                "country": "Spanyolország",
+                "city": "Barcelona",
+                "number": 48,
+                "correct": false,
+                "id": 8655
+            },
+            {
+                "name": "Burj Kalifa",
+                "country": "Egyesült Arab Emírségek",
+                "city": "Dubai",
+                "number": 15,
+                "correct": false,
+                "id": 2480
+            },
+            {
+                "name": "Az ég temploma",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 51,
+                "correct": false,
+                "id": 5244
+            },
+            {
+                "name": "Mátyás-templom és Halászbástya",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 66,
+                "correct": false,
+                "id": 3152
+            },
+            {
+                "name": "Szent Patrik-katedrális",
+                "country": "USA",
+                "city": "New York",
+                "number": 20,
+                "correct": false,
+                "id": 6222
+            },
+            {
+                "name": "Ahmed szultán kék mecsetje",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 74,
+                "correct": false,
+                "id": 9742
+            },
+            {
+                "name": "Szmolníj székesegyház",
+                "country": "Oroszország",
+                "city": "Szentpétervár",
+                "number": 93,
+                "correct": true,
+                "id": 2960
+            }
+        ],
+        "score": 4,
+        "timestamp": "2025-07-11T11:21:50.591"
+    },
+    {
+        "testData": [
+            {
+                "name": "Mustafa Kemal Atatürk mauzóleuma",
+                "country": "Törökország",
+                "city": "Ankara",
+                "number": 40,
+                "correct": false,
+                "id": 3538
+            },
+            {
+                "name": "Eyüp Sultan mecset",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 28,
+                "correct": false,
+                "id": 2286
+            },
+            {
+                "name": "Buckingham Palota",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 21,
+                "correct": false,
+                "id": 8526
+            },
+            {
+                "name": "Burj Al Arab",
+                "country": "Egyesült Arab Emírségek",
+                "city": "Dubai",
+                "number": 52,
+                "correct": false,
+                "id": 5030
+            },
+            {
+                "name": "Dohány utcai zsinagóga",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 98,
+                "correct": false,
+                "id": 3877
+            },
+            {
+                "name": "Himedzsi várkastély",
+                "country": "Japán",
+                "city": "Himedzsi",
+                "number": 41,
+                "correct": true,
+                "id": 8676
+            },
+            {
+                "name": "Willis-torony",
+                "country": "USA",
+                "city": "Chicago",
+                "number": 36,
+                "correct": true,
+                "id": 8020
+            },
+            {
+                "name": "Törcsvári kastély",
+                "country": "Románia",
+                "city": "Törcsvár",
+                "number": 78,
+                "correct": false,
+                "id": 8596
+            },
+            {
+                "name": "Petronas-ikertorony",
+                "country": "Malajzia",
+                "city": "Kuala Lumpur",
+                "number": 78,
+                "correct": false,
+                "id": 7943
+            },
+            {
+                "name": "San Felipe 1690",
+                "country": "Spanyolország",
+                "city": "[elsüllyedt]",
+                "number": 30,
+                "correct": false,
+                "id": 9604
+            },
+            {
+                "name": "Titanic",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 10,
+                "correct": false,
+                "id": 5206
+            },
+            {
+                "name": "Galata torony",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 15,
+                "correct": true,
+                "id": 8560
+            },
+            {
+                "name": "Taipei 101 Building",
+                "country": "Tajvan",
+                "city": "Taipei",
+                "number": 52,
+                "correct": false,
+                "id": 6914
+            },
+            {
+                "name": "A Vérző Megváltó temploma",
+                "country": "Oroszország",
+                "city": "Szentpétervár",
+                "number": 40,
+                "correct": false,
+                "id": 7007
+            },
+            {
+                "name": "Kanadai Nemzeti TV-Torony",
+                "country": "Kanada",
+                "city": "Toronto",
+                "number": 24,
+                "correct": false,
+                "id": 8696
+            },
+            {
+                "name": "Tokyo Skytree",
+                "country": "Japán",
+                "city": "Tokió",
+                "number": 42,
+                "correct": true,
+                "id": 7840
+            },
+            {
+                "name": "Boldog Vazul-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 38,
+                "correct": false,
+                "id": 2455
+            },
+            {
+                "name": "Mátyás-templom és Halászbástya",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 52,
+                "correct": false,
+                "id": 2824
+            },
+            {
+                "name": "Waweli Székesegyház",
+                "country": "Lengyelország",
+                "city": "Krakkó",
+                "number": 53,
+                "correct": true,
+                "id": 8097
+            },
+            {
+                "name": "Al-Masjid al-Haram",
+                "country": "Szaúd-Arábia",
+                "city": "Mekka",
+                "number": 77,
+                "correct": true,
+                "id": 2467
+            }
+        ],
+        "score": 6,
+        "timestamp": "2025-07-11T11:15:58.040"
+    },
+    {
+        "testData": [
+            {
+                "name": "Szent Márk tér",
+                "country": "Olaszország",
+                "city": "Velence",
+                "number": 34,
+                "correct": false,
+                "id": 6165
+            },
+            {
+                "name": "Kul Sharif mecset",
+                "country": "Oroszország",
+                "city": "Kazán",
+                "number": 1,
+                "correct": false,
+                "id": 6978
+            },
+            {
+                "name": "Hohenzollern kastély",
+                "country": "Németország",
+                "city": "Bisinden",
+                "number": 79,
+                "correct": false,
+                "id": 5470
+            },
+            {
+                "name": "Kínai Nagy Fal",
+                "country": "Kína",
+                "city": "-",
+                "number": 87,
+                "correct": false,
+                "id": 4056
+            },
+            {
+                "name": "Esmeralda 1855",
+                "country": "Chile",
+                "city": "[elsüllyedt]",
+                "number": 3,
+                "correct": true,
+                "id": 9049
+            },
+            {
+                "name": "San Felipe 1690",
+                "country": "Spanyolország",
+                "city": "[elsüllyedt]",
+                "number": 80,
+                "correct": true,
+                "id": 8669
+            },
+            {
+                "name": "Mátyás-templom és Halászbástya",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 13,
+                "correct": true,
+                "id": 9105
+            },
+            {
+                "name": "Peles kastély",
+                "country": "Románia",
+                "city": "Szinaja",
+                "number": 92,
+                "correct": false,
+                "id": 8543
+            },
+            {
+                "name": "Al-Masjid an-Nabawi",
+                "country": "Szaúd-Arábia",
+                "city": "Medina",
+                "number": 45,
+                "correct": false,
+                "id": 8225
+            },
+            {
+                "name": "Notre-Dame",
+                "country": "Franciaország",
+                "city": "Párizs",
+                "number": 37,
+                "correct": true,
+                "id": 5196
+            },
+            {
+                "name": "Tradicionális pekingi udvar",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 38,
+                "correct": false,
+                "id": 2021
+            },
+            {
+                "name": "Himedzsi várkastély",
+                "country": "Japán",
+                "city": "Himedzsi",
+                "number": 3,
+                "correct": true,
+                "id": 9371
+            },
+            {
+                "name": "Megváltó Krisztus szobra",
+                "country": "Brazília",
+                "city": "Rio de Janeiro",
+                "number": 25,
+                "correct": true,
+                "id": 9945
+            },
+            {
+                "name": "Sagrada Família",
+                "country": "Spanyolország",
+                "city": "Barcelona",
+                "number": 91,
+                "correct": false,
+                "id": 3587
+            },
+            {
+                "name": "Keleti Gyöngy torony",
+                "country": "Kína",
+                "city": "Shanghai",
+                "number": 31,
+                "correct": false,
+                "id": 6083
+            },
+            {
+                "name": "Kaminarimon Kapu",
+                "country": "Japán",
+                "city": "Tokió",
+                "number": 6,
+                "correct": true,
+                "id": 7221
+            },
+            {
+                "name": "Santa Maria 1492",
+                "country": "Spanyolország",
+                "city": "[elsüllyedt]",
+                "number": 72,
+                "correct": true,
+                "id": 9196
+            },
+            {
+                "name": "Dohány utcai zsinagóga",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 52,
+                "correct": false,
+                "id": 3314
+            },
+            {
+                "name": "Széchenyi Lánchíd",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 8,
+                "correct": false,
+                "id": 8990
+            },
+            {
+                "name": "Prágai csillagászati óra és a városháza",
+                "country": "Csehország",
+                "city": "Prága",
+                "number": 55,
+                "correct": false,
+                "id": 8792
+            }
+        ],
+        "score": 8,
+        "timestamp": "2025-07-11T11:20:29.491"
+    },
+    {
+        "testData": [
+            {
+                "name": "Sky Tower",
+                "country": "Új-Zéland",
+                "city": "Auckland",
+                "number": 23,
+                "correct": true,
+                "id": 7452
+            },
+            {
+                "name": "Az ég temploma",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 70,
+                "correct": false,
+                "id": 4112
+            },
+            {
+                "name": "Újhattyúkő-kastély",
+                "country": "Németország",
+                "city": "Schwangau",
+                "number": 92,
+                "correct": true,
+                "id": 5829
+            },
+            {
+                "name": "USS Constitution 1797",
+                "country": "USA",
+                "city": "Boston",
+                "number": 75,
+                "correct": true,
+                "id": 6963
+            },
+            {
+                "name": "Mayflower",
+                "country": "Hollandia",
+                "city": "[elsüllyedt]",
+                "number": 95,
+                "correct": false,
+                "id": 6983
+            },
+            {
+                "name": "Kultúra és Tudomány Palotája",
+                "country": "Lengyelország",
+                "city": "Varsó",
+                "number": 10,
+                "correct": true,
+                "id": 5745
+            },
+            {
+                "name": "Groupama Aréna",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 55,
+                "correct": false,
+                "id": 2940
+            },
+            {
+                "name": "Oszaka várkastély",
+                "country": "Japán",
+                "city": "Oszaka",
+                "number": 58,
+                "correct": true,
+                "id": 9697
+            },
+            {
+                "name": "Keleti Gyöngy torony",
+                "country": "Kína",
+                "city": "Shanghai",
+                "number": 67,
+                "correct": false,
+                "id": 6245
+            },
+            {
+                "name": "Peles kastély",
+                "country": "Románia",
+                "city": "Szinaja",
+                "number": 57,
+                "correct": true,
+                "id": 7478
+            },
+            {
+                "name": "Megváltó Krisztus szobra",
+                "country": "Brazília",
+                "city": "Rio de Janeiro",
+                "number": 62,
+                "correct": false,
+                "id": 2850
+            },
+            {
+                "name": "Wat Phra Kaew",
+                "country": "Thaiföld",
+                "city": "Bangkok",
+                "number": 48,
+                "correct": true,
+                "id": 8482
+            },
+            {
+                "name": "Empire State Building",
+                "country": "USA",
+                "city": "New York",
+                "number": 9,
+                "correct": false,
+                "id": 7116
+            },
+            {
+                "name": "Vajdahunyad vára",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 31,
+                "correct": true,
+                "id": 7361
+            },
+            {
+                "name": "Bolygó Hollandi szellemhajó",
+                "country": "Hollandia",
+                "city": "-",
+                "number": 55,
+                "correct": true,
+                "id": 8221
+            },
+            {
+                "name": "Anna királynő bosszúja",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 4,
+                "correct": true,
+                "id": 4598
+            },
+            {
+                "name": "Kölni dóm",
+                "country": "Németország",
+                "city": "Köln",
+                "number": 69,
+                "correct": false,
+                "id": 7745
+            },
+            {
+                "name": "Bank of China Tower",
+                "country": "Kína",
+                "city": "Hong Kong",
+                "number": 32,
+                "correct": true,
+                "id": 6303
+            },
+            {
+                "name": "Big Ben",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 69,
+                "correct": false,
+                "id": 4424
+            },
+            {
+                "name": "Uszpenszkíj-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 3,
+                "correct": true,
+                "id": 2007
+            }
+        ],
+        "score": 12,
+        "timestamp": "2025-07-11T11:20:27.628"
+    },
+    {
+        "testData": [
+            {
+                "name": "Eyüp Sultan mecset",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 10,
+                "correct": false,
+                "id": 3177
+            },
+            {
+                "name": "Mayflower",
+                "country": "Hollandia",
+                "city": "[elsüllyedt]",
+                "number": 40,
+                "correct": true,
+                "id": 6276
+            },
+            {
+                "name": "Szent Márk tér",
+                "country": "Olaszország",
+                "city": "Velence",
+                "number": 76,
+                "correct": true,
+                "id": 4143
+            },
+            {
+                "name": "Willis-torony",
+                "country": "USA",
+                "city": "Chicago",
+                "number": 18,
+                "correct": false,
+                "id": 4516
+            },
+            {
+                "name": "Pisai ferde torony",
+                "country": "Olaszország",
+                "city": "Pisa",
+                "number": 8,
+                "correct": false,
+                "id": 5880
+            },
+            {
+                "name": "Kaminarimon Kapu",
+                "country": "Japán",
+                "city": "Tokió",
+                "number": 31,
+                "correct": false,
+                "id": 4112
+            },
+            {
+                "name": "Széchenyi Lánchíd",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 57,
+                "correct": true,
+                "id": 4402
+            },
+            {
+                "name": "Chrysler Building",
+                "country": "USA",
+                "city": "New York",
+                "number": 11,
+                "correct": false,
+                "id": 9818
+            },
+            {
+                "name": "Milánói Dóm",
+                "country": "Olaszország",
+                "city": "Milánó",
+                "number": 41,
+                "correct": true,
+                "id": 6288
+            },
+            {
+                "name": "Törcsvári kastély",
+                "country": "Románia",
+                "city": "Törcsvár",
+                "number": 35,
+                "correct": true,
+                "id": 6624
+            },
+            {
+                "name": "Kölni dóm",
+                "country": "Németország",
+                "city": "Köln",
+                "number": 15,
+                "correct": false,
+                "id": 5093
+            },
+            {
+                "name": "Notre-Dame",
+                "country": "Franciaország",
+                "city": "Párizs",
+                "number": 2,
+                "correct": false,
+                "id": 2104
+            },
+            {
+                "name": "Galata torony",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 80,
+                "correct": false,
+                "id": 8771
+            },
+            {
+                "name": "Keleti Gyöngy torony",
+                "country": "Kína",
+                "city": "Shanghai",
+                "number": 53,
+                "correct": true,
+                "id": 4376
+            },
+            {
+                "name": "Boldog Vazul-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 25,
+                "correct": false,
+                "id": 5696
+            },
+            {
+                "name": "Szent István-bazilika",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 23,
+                "correct": true,
+                "id": 6058
+            },
+            {
+                "name": "Tradicionális pekingi udvar",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 97,
+                "correct": true,
+                "id": 6675
+            },
+            {
+                "name": "Burj Kalifa",
+                "country": "Egyesült Arab Emírségek",
+                "city": "Dubai",
+                "number": 96,
+                "correct": false,
+                "id": 4100
+            },
+            {
+                "name": "Szent Izsák-székesegyház",
+                "country": "Oroszország",
+                "city": "Szentpétervár",
+                "number": 80,
+                "correct": true,
+                "id": 2072
+            },
+            {
+                "name": "Esmeralda 1855",
+                "country": "Chile",
+                "city": "[elsüllyedt]",
+                "number": 9,
+                "correct": true,
+                "id": 9136
+            }
+        ],
+        "score": 10,
+        "timestamp": "2025-07-11T11:22:32.076"
+    },
+    {
+        "testData": [
+            {
+                "name": "Szent Márk tér",
+                "country": "Olaszország",
+                "city": "Velence",
+                "number": 2,
+                "correct": true,
+                "id": 9196
+            },
+            {
+                "name": "Notre-Dame",
+                "country": "Franciaország",
+                "city": "Párizs",
+                "number": 46,
+                "correct": true,
+                "id": 2389
+            },
+            {
+                "name": "Westminsteri Apátság",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 85,
+                "correct": false,
+                "id": 8567
+            },
+            {
+                "name": "Szent Péter-bazilika",
+                "country": "Vatikán",
+                "city": "Vatikán city",
+                "number": 48,
+                "correct": true,
+                "id": 7481
+            },
+            {
+                "name": "Prágai csillagászati óra és a városháza",
+                "country": "Csehország",
+                "city": "Prága",
+                "number": 34,
+                "correct": false,
+                "id": 7293
+            },
+            {
+                "name": "Al-Masjid al-Haram",
+                "country": "Szaúd-Arábia",
+                "city": "Mekka",
+                "number": 42,
+                "correct": true,
+                "id": 7287
+            },
+            {
+                "name": "Mississippi gőzhajó",
+                "country": "USA",
+                "city": "New Orleans",
+                "number": 83,
+                "correct": true,
+                "id": 8655
+            },
+            {
+                "name": "Esztergomi Bazilika",
+                "country": "Magyarország",
+                "city": "Esztergom",
+                "number": 82,
+                "correct": true,
+                "id": 7653
+            },
+            {
+                "name": "Holland szélmalom",
+                "country": "Hollandia",
+                "city": "Kinderdijk",
+                "number": 37,
+                "correct": true,
+                "id": 7312
+            },
+            {
+                "name": "Buckingham Palota",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 41,
+                "correct": false,
+                "id": 5849
+            },
+            {
+                "name": "Akhmad Kadyrov mecset",
+                "country": "Oroszország",
+                "city": "Grozníj",
+                "number": 35,
+                "correct": false,
+                "id": 7031
+            },
+            {
+                "name": "Széchenyi Lánchíd",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 56,
+                "correct": true,
+                "id": 5288
+            },
+            {
+                "name": "Bank of China Tower",
+                "country": "Kína",
+                "city": "Hong Kong",
+                "number": 94,
+                "correct": false,
+                "id": 5538
+            },
+            {
+                "name": "Megváltó Krisztus-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 45,
+                "correct": true,
+                "id": 2970
+            },
+            {
+                "name": "Groupama Aréna",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 4,
+                "correct": true,
+                "id": 9086
+            },
+            {
+                "name": "Brandenburgi kapu",
+                "country": "Németország",
+                "city": "Berlin",
+                "number": 41,
+                "correct": false,
+                "id": 6145
+            },
+            {
+                "name": "Szent Jakab-katedrális",
+                "country": "Spanyolország",
+                "city": "Santiago d. C.",
+                "number": 40,
+                "correct": true,
+                "id": 7861
+            },
+            {
+                "name": "Sky Tower",
+                "country": "Új-Zéland",
+                "city": "Auckland",
+                "number": 7,
+                "correct": false,
+                "id": 6673
+            },
+            {
+                "name": "Bolygó Hollandi szellemhajó",
+                "country": "Hollandia",
+                "city": "-",
+                "number": 17,
+                "correct": false,
+                "id": 9554
+            },
+            {
+                "name": "Waweli Székesegyház",
+                "country": "Lengyelország",
+                "city": "Krakkó",
+                "number": 89,
+                "correct": true,
+                "id": 2039
+            }
+        ],
+        "score": 12,
+        "timestamp": "2025-07-11T11:24:32.191"
+    },
+    {
+        "testData": [
+            {
+                "name": "Colosseum",
+                "country": "Olaszország",
+                "city": "Róma",
+                "number": 97,
+                "correct": false,
+                "id": 2292
+            },
+            {
+                "name": "Buckingham Palota",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 96,
+                "correct": true,
+                "id": 2284
+            },
+            {
+                "name": "A Vérző Megváltó temploma",
+                "country": "Oroszország",
+                "city": "Szentpétervár",
+                "number": 87,
+                "correct": true,
+                "id": 8311
+            },
+            {
+                "name": "Az ég temploma",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 94,
+                "correct": false,
+                "id": 4017
+            },
+            {
+                "name": "Harry Potter Roxfort Kastély",
+                "country": "Egyesült Királyság",
+                "city": "Alnwick",
+                "number": 19,
+                "correct": true,
+                "id": 4781
+            },
+            {
+                "name": "Burj Kalifa",
+                "country": "Egyesült Arab Emírségek",
+                "city": "Dubai",
+                "number": 22,
+                "correct": true,
+                "id": 7741
+            },
+            {
+                "name": "Kínai Nagy Fal",
+                "country": "Kína",
+                "city": "-",
+                "number": 47,
+                "correct": false,
+                "id": 5256
+            },
+            {
+                "name": "Firenzei Dóm",
+                "country": "Olaszország",
+                "city": "Firenze",
+                "number": 4,
+                "correct": false,
+                "id": 4843
+            },
+            {
+                "name": "Waweli Székesegyház",
+                "country": "Lengyelország",
+                "city": "Krakkó",
+                "number": 61,
+                "correct": false,
+                "id": 3107
+            },
+            {
+                "name": "Sagrada Família",
+                "country": "Spanyolország",
+                "city": "Barcelona",
+                "number": 68,
+                "correct": false,
+                "id": 6697
+            },
+            {
+                "name": "Hohenzollern kastély",
+                "country": "Németország",
+                "city": "Bisinden",
+                "number": 66,
+                "correct": true,
+                "id": 8996
+            },
+            {
+                "name": "Groupama Aréna",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 50,
+                "correct": true,
+                "id": 5659
+            },
+            {
+                "name": "Holland szélmalom",
+                "country": "Hollandia",
+                "city": "Kinderdijk",
+                "number": 20,
+                "correct": false,
+                "id": 6930
+            },
+            {
+                "name": "Al-Masjid an-Nabawi",
+                "country": "Szaúd-Arábia",
+                "city": "Medina",
+                "number": 64,
+                "correct": false,
+                "id": 8866
+            },
+            {
+                "name": "Boldog Vazul-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 88,
+                "correct": false,
+                "id": 4936
+            },
+            {
+                "name": "Megváltó Krisztus szobra",
+                "country": "Brazília",
+                "city": "Rio de Janeiro",
+                "number": 22,
+                "correct": true,
+                "id": 5771
+            },
+            {
+                "name": "countryház",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 100,
+                "correct": false,
+                "id": 2080
+            },
+            {
+                "name": "Tadzs Mahal",
+                "country": "India",
+                "city": "Agra",
+                "number": 61,
+                "correct": false,
+                "id": 5430
+            },
+            {
+                "name": "Louvre Múzeum",
+                "country": "Franciaország",
+                "city": "Párizs",
+                "number": 36,
+                "correct": true,
+                "id": 4074
+            },
+            {
+                "name": "Szent Péter-bazilika",
+                "country": "Vatikán",
+                "city": "Vatikán city",
+                "number": 90,
+                "correct": false,
+                "id": 7255
+            }
+        ],
+        "score": 8,
+        "timestamp": "2025-07-11T11:21:39.367"
+    },
+    {
+        "testData": [
+            {
+                "name": "Római csatahajó",
+                "country": "Olaszország",
+                "city": "[elsüllyedt]",
+                "number": 58,
+                "correct": false,
+                "id": 6760
+            },
+            {
+                "name": "Mennyei béke kapuja",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 25,
+                "correct": true,
+                "id": 4495
+            },
+            {
+                "name": "Peles kastély",
+                "country": "Románia",
+                "city": "Szinaja",
+                "number": 81,
+                "correct": true,
+                "id": 4162
+            },
+            {
+                "name": "Sky Tower",
+                "country": "Új-Zéland",
+                "city": "Auckland",
+                "number": 46,
+                "correct": true,
+                "id": 8382
+            },
+            {
+                "name": "Kaminarimon Kapu",
+                "country": "Japán",
+                "city": "Tokió",
+                "number": 66,
+                "correct": false,
+                "id": 9815
+            },
+            {
+                "name": "Tradicionális pekingi udvar",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 63,
+                "correct": false,
+                "id": 2977
+            },
+            {
+                "name": "Esmeralda 1855",
+                "country": "Chile",
+                "city": "[elsüllyedt]",
+                "number": 75,
+                "correct": false,
+                "id": 6423
+            },
+            {
+                "name": "Kul Sharif mecset",
+                "country": "Oroszország",
+                "city": "Kazán",
+                "number": 16,
+                "correct": false,
+                "id": 9287
+            },
+            {
+                "name": "Dohány utcai zsinagóga",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 17,
+                "correct": false,
+                "id": 2751
+            },
+            {
+                "name": "countryház",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 57,
+                "correct": true,
+                "id": 7460
+            },
+            {
+                "name": "Törcsvári kastély",
+                "country": "Románia",
+                "city": "Törcsvár",
+                "number": 81,
+                "correct": false,
+                "id": 3877
+            },
+            {
+                "name": "Mississippi gőzhajó",
+                "country": "USA",
+                "city": "New Orleans",
+                "number": 27,
+                "correct": true,
+                "id": 4665
+            },
+            {
+                "name": "Willis-torony",
+                "country": "USA",
+                "city": "Chicago",
+                "number": 19,
+                "correct": false,
+                "id": 8895
+            },
+            {
+                "name": "Mustafa Kemal Atatürk mauzóleuma",
+                "country": "Törökország",
+                "city": "Ankara",
+                "number": 72,
+                "correct": true,
+                "id": 9160
+            },
+            {
+                "name": "Groupama Aréna",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 69,
+                "correct": false,
+                "id": 5301
+            },
+            {
+                "name": "Esztergomi Bazilika",
+                "country": "Magyarország",
+                "city": "Esztergom",
+                "number": 59,
+                "correct": false,
+                "id": 6576
+            },
+            {
+                "name": "Buckingham Palota",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 99,
+                "correct": true,
+                "id": 4031
+            },
+            {
+                "name": "Szent Márk tér",
+                "country": "Olaszország",
+                "city": "Velence",
+                "number": 74,
+                "correct": true,
+                "id": 6018
+            },
+            {
+                "name": "Pisai ferde torony",
+                "country": "Olaszország",
+                "city": "Pisa",
+                "number": 39,
+                "correct": false,
+                "id": 3676
+            },
+            {
+                "name": "Tadzs Mahal",
+                "country": "India",
+                "city": "Agra",
+                "number": 66,
+                "correct": false,
+                "id": 3443
+            }
+        ],
+        "score": 8,
+        "timestamp": "2025-07-11T11:21:11.055"
+    },
+    {
+        "testData": [
+            {
+                "name": "Kanadai Nemzeti TV-Torony",
+                "country": "Kanada",
+                "city": "Toronto",
+                "number": 81,
+                "correct": false,
+                "id": 8569
+            },
+            {
+                "name": "San Felipe 1690",
+                "country": "Spanyolország",
+                "city": "[elsüllyedt]",
+                "number": 78,
+                "correct": true,
+                "id": 7919
+            },
+            {
+                "name": "New York-i Szabadság szobor",
+                "country": "USA",
+                "city": "New York",
+                "number": 49,
+                "correct": false,
+                "id": 5100
+            },
+            {
+                "name": "Szent Péter-bazilika",
+                "country": "Vatikán",
+                "city": "Vatikán city",
+                "number": 15,
+                "correct": false,
+                "id": 4493
+            },
+            {
+                "name": "Tower-híd",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 60,
+                "correct": true,
+                "id": 9613
+            },
+            {
+                "name": "Eyüp Sultan mecset",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 28,
+                "correct": false,
+                "id": 4532
+            },
+            {
+                "name": "Buckingham Palota",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 11,
+                "correct": false,
+                "id": 7347
+            },
+            {
+                "name": "Himedzsi várkastély",
+                "country": "Japán",
+                "city": "Himedzsi",
+                "number": 8,
+                "correct": false,
+                "id": 2769
+            },
+            {
+                "name": "Kultúra és Tudomány Palotája",
+                "country": "Lengyelország",
+                "city": "Varsó",
+                "number": 29,
+                "correct": true,
+                "id": 8126
+            },
+            {
+                "name": "Brandenburgi kapu",
+                "country": "Németország",
+                "city": "Berlin",
+                "number": 81,
+                "correct": true,
+                "id": 8546
+            },
+            {
+                "name": "Szent Vitus-székesegyház",
+                "country": "Csehország",
+                "city": "Prága",
+                "number": 29,
+                "correct": true,
+                "id": 9397
+            },
+            {
+                "name": "A Vérző Megváltó temploma",
+                "country": "Oroszország",
+                "city": "Szentpétervár",
+                "number": 71,
+                "correct": true,
+                "id": 3542
+            },
+            {
+                "name": "Hat hölgy kastély",
+                "country": "Franciaország",
+                "city": "Chenonceaux",
+                "number": 60,
+                "correct": true,
+                "id": 5227
+            },
+            {
+                "name": "Waweli Székesegyház",
+                "country": "Lengyelország",
+                "city": "Krakkó",
+                "number": 15,
+                "correct": false,
+                "id": 5992
+            },
+            {
+                "name": "Milánói Dóm",
+                "country": "Olaszország",
+                "city": "Milánó",
+                "number": 77,
+                "correct": true,
+                "id": 2843
+            },
+            {
+                "name": "Hősök tere",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 64,
+                "correct": false,
+                "id": 9567
+            },
+            {
+                "name": "Uszpenszkíj-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 36,
+                "correct": false,
+                "id": 7714
+            },
+            {
+                "name": "Széchenyi Lánchíd",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 52,
+                "correct": true,
+                "id": 5756
+            },
+            {
+                "name": "Szent Izsák-székesegyház",
+                "country": "Oroszország",
+                "city": "Szentpétervár",
+                "number": 100,
+                "correct": false,
+                "id": 4587
+            },
+            {
+                "name": "Peles kastély",
+                "country": "Románia",
+                "city": "Szinaja",
+                "number": 33,
+                "correct": false,
+                "id": 2606
+            }
+        ],
+        "score": 9,
+        "timestamp": "2025-07-11T11:22:20.317"
+    },
+    {
+        "testData": [
+            {
+                "name": "Petronas-ikertorony",
+                "country": "Malajzia",
+                "city": "Kuala Lumpur",
+                "number": 29,
+                "correct": true,
+                "id": 2191
+            },
+            {
+                "name": "Kaminarimon Kapu",
+                "country": "Japán",
+                "city": "Tokió",
+                "number": 12,
+                "correct": true,
+                "id": 9051
+            },
+            {
+                "name": "Szent Pál-székesegyház",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 36,
+                "correct": true,
+                "id": 4497
+            },
+            {
+                "name": "Groupama Aréna",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 11,
+                "correct": true,
+                "id": 9948
+            },
+            {
+                "name": "Varsói Királyi palota",
+                "country": "Lengyelország",
+                "city": "Varsó",
+                "number": 81,
+                "correct": false,
+                "id": 7378
+            },
+            {
+                "name": "Taipei 101 Building",
+                "country": "Tajvan",
+                "city": "Taipei",
+                "number": 69,
+                "correct": true,
+                "id": 4281
+            },
+            {
+                "name": "Milánói Dóm",
+                "country": "Olaszország",
+                "city": "Milánó",
+                "number": 61,
+                "correct": false,
+                "id": 7332
+            },
+            {
+                "name": "Eyüp Sultan mecset",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 14,
+                "correct": false,
+                "id": 6774
+            },
+            {
+                "name": "Tower-híd",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 41,
+                "correct": true,
+                "id": 3668
+            },
+            {
+                "name": "Wat Phra Kaew",
+                "country": "Thaiföld",
+                "city": "Bangkok",
+                "number": 13,
+                "correct": true,
+                "id": 6771
+            },
+            {
+                "name": "Tradicionális pekingi udvar",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 59,
+                "correct": true,
+                "id": 8098
+            },
+            {
+                "name": "Boldog Vazul-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 87,
+                "correct": false,
+                "id": 8411
+            },
+            {
+                "name": "Waweli Székesegyház",
+                "country": "Lengyelország",
+                "city": "Krakkó",
+                "number": 66,
+                "correct": false,
+                "id": 7651
+            },
+            {
+                "name": "Harry Potter Roxfort Kastély",
+                "country": "Egyesült Királyság",
+                "city": "Alnwick",
+                "number": 38,
+                "correct": true,
+                "id": 8113
+            },
+            {
+                "name": "Santa Maria 1492",
+                "country": "Spanyolország",
+                "city": "[elsüllyedt]",
+                "number": 64,
+                "correct": false,
+                "id": 3244
+            },
+            {
+                "name": "Al-Masjid al-Haram",
+                "country": "Szaúd-Arábia",
+                "city": "Mekka",
+                "number": 73,
+                "correct": true,
+                "id": 6447
+            },
+            {
+                "name": "Esztergomi Bazilika",
+                "country": "Magyarország",
+                "city": "Esztergom",
+                "number": 63,
+                "correct": false,
+                "id": 6721
+            },
+            {
+                "name": "Hat hölgy kastély",
+                "country": "Franciaország",
+                "city": "Chenonceaux",
+                "number": 91,
+                "correct": false,
+                "id": 8783
+            },
+            {
+                "name": "Galata torony",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 88,
+                "correct": false,
+                "id": 7726
+            },
+            {
+                "name": "Újhattyúkő-kastély",
+                "country": "Németország",
+                "city": "Schwangau",
+                "number": 66,
+                "correct": true,
+                "id": 7561
+            }
+        ],
+        "score": 11,
+        "timestamp": "2025-07-11T11:16:48.431"
+    },
+    {
+        "testData": [
+            {
+                "name": "Bolygó Hollandi szellemhajó",
+                "country": "Hollandia",
+                "city": "-",
+                "number": 75,
+                "correct": true,
+                "id": 9915
+            },
+            {
+                "name": "Szent István-bazilika",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 76,
+                "correct": false,
+                "id": 8746
+            },
+            {
+                "name": "Pisai ferde torony",
+                "country": "Olaszország",
+                "city": "Pisa",
+                "number": 61,
+                "correct": true,
+                "id": 4488
+            },
+            {
+                "name": "Fehér Ház",
+                "country": "USA",
+                "city": "Washington",
+                "number": 35,
+                "correct": false,
+                "id": 8378
+            },
+            {
+                "name": "Prágai csillagászati óra és a városháza",
+                "country": "Csehország",
+                "city": "Prága",
+                "number": 12,
+                "correct": true,
+                "id": 7793
+            },
+            {
+                "name": "Szent Pál-székesegyház",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 56,
+                "correct": true,
+                "id": 9892
+            },
+            {
+                "name": "A moszkvai Kreml Fala",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 9,
+                "correct": false,
+                "id": 3345
+            },
+            {
+                "name": "Tokiói torony",
+                "country": "Japán",
+                "city": "Tokió",
+                "number": 45,
+                "correct": false,
+                "id": 6772
+            },
+            {
+                "name": "Hohenzollern kastély",
+                "country": "Németország",
+                "city": "Bisinden",
+                "number": 6,
+                "correct": true,
+                "id": 2052
+            },
+            {
+                "name": "Titanic",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 21,
+                "correct": false,
+                "id": 8349
+            },
+            {
+                "name": "Eiffel Torony",
+                "country": "Franciaország",
+                "city": "Párizs",
+                "number": 91,
+                "correct": true,
+                "id": 3412
+            },
+            {
+                "name": "Burj Kalifa",
+                "country": "Egyesült Arab Emírségek",
+                "city": "Dubai",
+                "number": 82,
+                "correct": true,
+                "id": 4548
+            },
+            {
+                "name": "Mennyei béke kapuja",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 83,
+                "correct": false,
+                "id": 3746
+            },
+            {
+                "name": "Kultúra és Tudomány Palotája",
+                "country": "Lengyelország",
+                "city": "Varsó",
+                "number": 71,
+                "correct": false,
+                "id": 6142
+            },
+            {
+                "name": "Megváltó Krisztus szobra",
+                "country": "Brazília",
+                "city": "Rio de Janeiro",
+                "number": 39,
+                "correct": true,
+                "id": 8254
+            },
+            {
+                "name": "Holland szélmalom",
+                "country": "Hollandia",
+                "city": "Kinderdijk",
+                "number": 59,
+                "correct": true,
+                "id": 7736
+            },
+            {
+                "name": "Petronas-ikertorony",
+                "country": "Malajzia",
+                "city": "Kuala Lumpur",
+                "number": 63,
+                "correct": false,
+                "id": 3389
+            },
+            {
+                "name": "Willis-torony",
+                "country": "USA",
+                "city": "Chicago",
+                "number": 78,
+                "correct": true,
+                "id": 9214
+            },
+            {
+                "name": "Brooklyn-híd",
+                "country": "USA",
+                "city": "New York",
+                "number": 87,
+                "correct": false,
+                "id": 5338
+            },
+            {
+                "name": "Waweli Székesegyház",
+                "country": "Lengyelország",
+                "city": "Krakkó",
+                "number": 64,
+                "correct": true,
+                "id": 2727
+            }
+        ],
+        "score": 11,
+        "timestamp": "2025-07-11T11:24:32.134"
+    },
+    {
+        "testData": [
+            {
+                "name": "Himedzsi várkastély",
+                "country": "Japán",
+                "city": "Himedzsi",
+                "number": 36,
+                "correct": true,
+                "id": 8372
+            },
+            {
+                "name": "Esmeralda 1855",
+                "country": "Chile",
+                "city": "[elsüllyedt]",
+                "number": 54,
+                "correct": true,
+                "id": 5984
+            },
+            {
+                "name": "Kaminarimon Kapu",
+                "country": "Japán",
+                "city": "Tokió",
+                "number": 4,
+                "correct": false,
+                "id": 6402
+            },
+            {
+                "name": "Harry Potter Roxfort Kastély",
+                "country": "Egyesült Királyság",
+                "city": "Alnwick",
+                "number": 98,
+                "correct": true,
+                "id": 8880
+            },
+            {
+                "name": "Hat hölgy kastély",
+                "country": "Franciaország",
+                "city": "Chenonceaux",
+                "number": 10,
+                "correct": true,
+                "id": 9575
+            },
+            {
+                "name": "Kanadai Nemzeti TV-Torony",
+                "country": "Kanada",
+                "city": "Toronto",
+                "number": 60,
+                "correct": true,
+                "id": 8349
+            },
+            {
+                "name": "Capitolium",
+                "country": "USA",
+                "city": "Washington",
+                "number": 75,
+                "correct": false,
+                "id": 3918
+            },
+            {
+                "name": "Kínai Nagy Fal",
+                "country": "Kína",
+                "city": "-",
+                "number": 14,
+                "correct": false,
+                "id": 7065
+            },
+            {
+                "name": "New York-i Szabadság szobor",
+                "country": "USA",
+                "city": "New York",
+                "number": 95,
+                "correct": true,
+                "id": 5326
+            },
+            {
+                "name": "Brandenburgi kapu",
+                "country": "Németország",
+                "city": "Berlin",
+                "number": 9,
+                "correct": true,
+                "id": 8386
+            },
+            {
+                "name": "Wat Phra Kaew",
+                "country": "Thaiföld",
+                "city": "Bangkok",
+                "number": 69,
+                "correct": false,
+                "id": 5044
+            },
+            {
+                "name": "Suzhou-i klasszikus kert",
+                "country": "Kína",
+                "city": "Suzhou",
+                "number": 72,
+                "correct": false,
+                "id": 8822
+            },
+            {
+                "name": "Mississippi gőzhajó",
+                "country": "USA",
+                "city": "New Orleans",
+                "number": 93,
+                "correct": false,
+                "id": 2218
+            },
+            {
+                "name": "Sky Tower",
+                "country": "Új-Zéland",
+                "city": "Auckland",
+                "number": 92,
+                "correct": true,
+                "id": 9888
+            },
+            {
+                "name": "Buckingham Palota",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 72,
+                "correct": false,
+                "id": 4180
+            },
+            {
+                "name": "Kultúra és Tudomány Palotája",
+                "country": "Lengyelország",
+                "city": "Varsó",
+                "number": 24,
+                "correct": false,
+                "id": 8753
+            },
+            {
+                "name": "Az ég temploma",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 73,
+                "correct": false,
+                "id": 6427
+            },
+            {
+                "name": "Westminsteri Apátság",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 88,
+                "correct": true,
+                "id": 9428
+            },
+            {
+                "name": "Szent Pál-székesegyház",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 17,
+                "correct": true,
+                "id": 8369
+            },
+            {
+                "name": "Brooklyn-híd",
+                "country": "USA",
+                "city": "New York",
+                "number": 64,
+                "correct": true,
+                "id": 3182
+            }
+        ],
+        "score": 11,
+        "timestamp": "2025-07-11T11:18:21.989"
+    },
+    {
+        "testData": [
+            {
+                "name": "Firenzei Dóm",
+                "country": "Olaszország",
+                "city": "Firenze",
+                "number": 31,
+                "correct": true,
+                "id": 8916
+            },
+            {
+                "name": "HMS Beagle hajó",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 33,
+                "correct": false,
+                "id": 5058
+            },
+            {
+                "name": "Szent Vitus-székesegyház",
+                "country": "Csehország",
+                "city": "Prága",
+                "number": 82,
+                "correct": true,
+                "id": 9944
+            },
+            {
+                "name": "Uszpenszkíj-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 20,
+                "correct": true,
+                "id": 7546
+            },
+            {
+                "name": "Colosseum",
+                "country": "Olaszország",
+                "city": "Róma",
+                "number": 17,
+                "correct": false,
+                "id": 2651
+            },
+            {
+                "name": "Titanic",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 62,
+                "correct": true,
+                "id": 4092
+            },
+            {
+                "name": "Az ég temploma",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 52,
+                "correct": true,
+                "id": 5323
+            },
+            {
+                "name": "New York-i Szabadság szobor",
+                "country": "USA",
+                "city": "New York",
+                "number": 85,
+                "correct": true,
+                "id": 4188
+            },
+            {
+                "name": "San Felipe 1690",
+                "country": "Spanyolország",
+                "city": "[elsüllyedt]",
+                "number": 98,
+                "correct": true,
+                "id": 6903
+            },
+            {
+                "name": "Szent Jakab-katedrális",
+                "country": "Spanyolország",
+                "city": "Santiago d. C.",
+                "number": 22,
+                "correct": true,
+                "id": 2426
+            },
+            {
+                "name": "Sydney-i Operaház",
+                "country": "Ausztrália",
+                "city": "Sydney",
+                "number": 19,
+                "correct": true,
+                "id": 4886
+            },
+            {
+                "name": "Mayflower",
+                "country": "Hollandia",
+                "city": "[elsüllyedt]",
+                "number": 9,
+                "correct": false,
+                "id": 7869
+            },
+            {
+                "name": "Hősök tere",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 56,
+                "correct": true,
+                "id": 3676
+            },
+            {
+                "name": "Kultúra és Tudomány Palotája",
+                "country": "Lengyelország",
+                "city": "Varsó",
+                "number": 78,
+                "correct": true,
+                "id": 7930
+            },
+            {
+                "name": "Hat hölgy kastély",
+                "country": "Franciaország",
+                "city": "Chenonceaux",
+                "number": 54,
+                "correct": true,
+                "id": 6533
+            },
+            {
+                "name": "Galata torony",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 8,
+                "correct": false,
+                "id": 7520
+            },
+            {
+                "name": "countryház",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 5,
+                "correct": false,
+                "id": 8316
+            },
+            {
+                "name": "Tadzs Mahal",
+                "country": "India",
+                "city": "Agra",
+                "number": 34,
+                "correct": false,
+                "id": 3727
+            },
+            {
+                "name": "Vajdahunyad vára",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 36,
+                "correct": true,
+                "id": 8715
+            },
+            {
+                "name": "Szent Patrik-katedrális",
+                "country": "USA",
+                "city": "New York",
+                "number": 76,
+                "correct": true,
+                "id": 4770
+            }
+        ],
+        "score": 14,
+        "timestamp": "2025-07-11T11:15:47.720"
+    },
+    {
+        "testData": [
+            {
+                "name": "Megváltó Krisztus szobra",
+                "country": "Brazília",
+                "city": "Rio de Janeiro",
+                "number": 45,
+                "correct": true,
+                "id": 5010
+            },
+            {
+                "name": "Wat Phra Kaew",
+                "country": "Thaiföld",
+                "city": "Bangkok",
+                "number": 47,
+                "correct": true,
+                "id": 9484
+            },
+            {
+                "name": "Anna királynő bosszúja",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 38,
+                "correct": false,
+                "id": 4100
+            },
+            {
+                "name": "Peles kastély",
+                "country": "Románia",
+                "city": "Szinaja",
+                "number": 71,
+                "correct": true,
+                "id": 6474
+            },
+            {
+                "name": "Varsói Királyi palota",
+                "country": "Lengyelország",
+                "city": "Varsó",
+                "number": 91,
+                "correct": true,
+                "id": 8487
+            },
+            {
+                "name": "Uszpenszkíj-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 92,
+                "correct": true,
+                "id": 4366
+            },
+            {
+                "name": "Vajdahunyad vára",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 59,
+                "correct": false,
+                "id": 6793
+            },
+            {
+                "name": "Santa Maria 1492",
+                "country": "Spanyolország",
+                "city": "[elsüllyedt]",
+                "number": 13,
+                "correct": false,
+                "id": 7460
+            },
+            {
+                "name": "USS Constitution 1797",
+                "country": "USA",
+                "city": "Boston",
+                "number": 17,
+                "correct": true,
+                "id": 5378
+            },
+            {
+                "name": "Mennyei béke kapuja",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 54,
+                "correct": false,
+                "id": 7184
+            },
+            {
+                "name": "Suzhou-i klasszikus kert",
+                "country": "Kína",
+                "city": "Suzhou",
+                "number": 92,
+                "correct": false,
+                "id": 8406
+            },
+            {
+                "name": "Pisai ferde torony",
+                "country": "Olaszország",
+                "city": "Pisa",
+                "number": 26,
+                "correct": false,
+                "id": 5757
+            },
+            {
+                "name": "Újhattyúkő-kastély",
+                "country": "Németország",
+                "city": "Schwangau",
+                "number": 43,
+                "correct": true,
+                "id": 3065
+            },
+            {
+                "name": "Groupama Aréna",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 100,
+                "correct": false,
+                "id": 8809
+            },
+            {
+                "name": "Hősök tere",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 3,
+                "correct": false,
+                "id": 7558
+            },
+            {
+                "name": "Kul Sharif mecset",
+                "country": "Oroszország",
+                "city": "Kazán",
+                "number": 42,
+                "correct": false,
+                "id": 4628
+            },
+            {
+                "name": "Fehér Ház",
+                "country": "USA",
+                "city": "Washington",
+                "number": 56,
+                "correct": false,
+                "id": 6285
+            },
+            {
+                "name": "Szent Pál-székesegyház",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 10,
+                "correct": true,
+                "id": 5818
+            },
+            {
+                "name": "Szmolníj székesegyház",
+                "country": "Oroszország",
+                "city": "Szentpétervár",
+                "number": 96,
+                "correct": false,
+                "id": 4494
+            },
+            {
+                "name": "Kanadai Nemzeti TV-Torony",
+                "country": "Kanada",
+                "city": "Toronto",
+                "number": 32,
+                "correct": true,
+                "id": 4584
+            }
+        ],
+        "score": 9,
+        "timestamp": "2025-07-11T11:18:45.472"
+    },
+    {
+        "testData": [
+            {
+                "name": "Holland szélmalom",
+                "country": "Hollandia",
+                "city": "Kinderdijk",
+                "number": 32,
+                "correct": true,
+                "id": 2761
+            },
+            {
+                "name": "Kínai Nagy Fal",
+                "country": "Kína",
+                "city": "-",
+                "number": 89,
+                "correct": false,
+                "id": 6096
+            },
+            {
+                "name": "Megváltó Krisztus szobra",
+                "country": "Brazília",
+                "city": "Rio de Janeiro",
+                "number": 98,
+                "correct": true,
+                "id": 7319
+            },
+            {
+                "name": "Kaminarimon Kapu",
+                "country": "Japán",
+                "city": "Tokió",
+                "number": 59,
+                "correct": true,
+                "id": 9453
+            },
+            {
+                "name": "Petronas-ikertorony",
+                "country": "Malajzia",
+                "city": "Kuala Lumpur",
+                "number": 50,
+                "correct": false,
+                "id": 9659
+            },
+            {
+                "name": "Tradicionális pekingi udvar",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 80,
+                "correct": false,
+                "id": 7578
+            },
+            {
+                "name": "Groupama Aréna",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 10,
+                "correct": false,
+                "id": 4435
+            },
+            {
+                "name": "HMS Beagle hajó",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 9,
+                "correct": false,
+                "id": 8912
+            },
+            {
+                "name": "Himedzsi várkastély",
+                "country": "Japán",
+                "city": "Himedzsi",
+                "number": 78,
+                "correct": false,
+                "id": 9653
+            },
+            {
+                "name": "Uszpenszkíj-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 54,
+                "correct": false,
+                "id": 8558
+            },
+            {
+                "name": "Sagrada Família",
+                "country": "Spanyolország",
+                "city": "Barcelona",
+                "number": 19,
+                "correct": false,
+                "id": 8348
+            },
+            {
+                "name": "Buckingham Palota",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 79,
+                "correct": false,
+                "id": 4562
+            },
+            {
+                "name": "Mustafa Kemal Atatürk mauzóleuma",
+                "country": "Törökország",
+                "city": "Ankara",
+                "number": 77,
+                "correct": false,
+                "id": 6138
+            },
+            {
+                "name": "Mayflower",
+                "country": "Hollandia",
+                "city": "[elsüllyedt]",
+                "number": 18,
+                "correct": false,
+                "id": 8318
+            },
+            {
+                "name": "Pisai ferde torony",
+                "country": "Olaszország",
+                "city": "Pisa",
+                "number": 41,
+                "correct": false,
+                "id": 6692
+            },
+            {
+                "name": "Az ég temploma",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 12,
+                "correct": false,
+                "id": 3993
+            },
+            {
+                "name": "Wat Phra Kaew",
+                "country": "Thaiföld",
+                "city": "Bangkok",
+                "number": 2,
+                "correct": true,
+                "id": 9860
+            },
+            {
+                "name": "Szent Péter-bazilika",
+                "country": "Vatikán",
+                "city": "Vatikán city",
+                "number": 57,
+                "correct": false,
+                "id": 8434
+            },
+            {
+                "name": "Széchenyi Lánchíd",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 93,
+                "correct": true,
+                "id": 2826
+            },
+            {
+                "name": "Varsói Királyi palota",
+                "country": "Lengyelország",
+                "city": "Varsó",
+                "number": 23,
+                "correct": false,
+                "id": 6165
+            }
+        ],
+        "score": 5,
+        "timestamp": "2025-07-11T11:16:39.752"
+    },
+    {
+        "testData": [
+            {
+                "name": "Kaminarimon Kapu",
+                "country": "Japán",
+                "city": "Tokió",
+                "number": 49,
+                "correct": true,
+                "id": 7840
+            },
+            {
+                "name": "Széchenyi Lánchíd",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 34,
+                "correct": true,
+                "id": 5484
+            },
+            {
+                "name": "Taipei 101 Building",
+                "country": "Tajvan",
+                "city": "Taipei",
+                "number": 13,
+                "correct": false,
+                "id": 9818
+            },
+            {
+                "name": "Mayflower",
+                "country": "Hollandia",
+                "city": "[elsüllyedt]",
+                "number": 77,
+                "correct": true,
+                "id": 6258
+            },
+            {
+                "name": "Anna királynő bosszúja",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 35,
+                "correct": true,
+                "id": 5229
+            },
+            {
+                "name": "Újhattyúkő-kastély",
+                "country": "Németország",
+                "city": "Schwangau",
+                "number": 69,
+                "correct": false,
+                "id": 3960
+            },
+            {
+                "name": "HMS Beagle hajó",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 98,
+                "correct": false,
+                "id": 6650
+            },
+            {
+                "name": "Harry Potter Roxfort Kastély",
+                "country": "Egyesült Királyság",
+                "city": "Alnwick",
+                "number": 22,
+                "correct": true,
+                "id": 3976
+            },
+            {
+                "name": "San Felipe 1690",
+                "country": "Spanyolország",
+                "city": "[elsüllyedt]",
+                "number": 9,
+                "correct": true,
+                "id": 4256
+            },
+            {
+                "name": "Boldog Vazul-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 49,
+                "correct": false,
+                "id": 8738
+            },
+            {
+                "name": "Waweli Székesegyház",
+                "country": "Lengyelország",
+                "city": "Krakkó",
+                "number": 64,
+                "correct": false,
+                "id": 4510
+            },
+            {
+                "name": "Hagia Sophia",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 92,
+                "correct": true,
+                "id": 7653
+            },
+            {
+                "name": "Suzhou-i klasszikus kert",
+                "country": "Kína",
+                "city": "Suzhou",
+                "number": 5,
+                "correct": true,
+                "id": 8547
+            },
+            {
+                "name": "Fehér Ház",
+                "country": "USA",
+                "city": "Washington",
+                "number": 45,
+                "correct": false,
+                "id": 6985
+            },
+            {
+                "name": "Mátyás-templom és Halászbástya",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 21,
+                "correct": false,
+                "id": 5761
+            },
+            {
+                "name": "Szent Pál-székesegyház",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 21,
+                "correct": true,
+                "id": 2715
+            },
+            {
+                "name": "HMS Victory 1765",
+                "country": "Egyesült Királyság",
+                "city": "Boston",
+                "number": 98,
+                "correct": true,
+                "id": 9111
+            },
+            {
+                "name": "Brooklyn-híd",
+                "country": "USA",
+                "city": "New York",
+                "number": 4,
+                "correct": true,
+                "id": 6031
+            },
+            {
+                "name": "Oszaka várkastély",
+                "country": "Japán",
+                "city": "Oszaka",
+                "number": 29,
+                "correct": true,
+                "id": 7933
+            },
+            {
+                "name": "Al-Masjid al-Haram",
+                "country": "Szaúd-Arábia",
+                "city": "Mekka",
+                "number": 56,
+                "correct": true,
+                "id": 6294
+            }
+        ],
+        "score": 13,
+        "timestamp": "2025-07-11T11:20:11.659"
+    },
+    {
+        "testData": [
+            {
+                "name": "Kanadai Nemzeti TV-Torony",
+                "country": "Kanada",
+                "city": "Toronto",
+                "number": 76,
+                "correct": false,
+                "id": 2000
+            },
+            {
+                "name": "Varsói Királyi palota",
+                "country": "Lengyelország",
+                "city": "Varsó",
+                "number": 25,
+                "correct": false,
+                "id": 3138
+            },
+            {
+                "name": "Kínai Nagy Fal",
+                "country": "Kína",
+                "city": "-",
+                "number": 45,
+                "correct": false,
+                "id": 8125
+            },
+            {
+                "name": "Brooklyn-híd",
+                "country": "USA",
+                "city": "New York",
+                "number": 94,
+                "correct": false,
+                "id": 6011
+            },
+            {
+                "name": "Mennyei béke kapuja",
+                "country": "Kína",
+                "city": "Peking",
+                "number": 53,
+                "correct": false,
+                "id": 4313
+            },
+            {
+                "name": "Notre-Dame",
+                "country": "Franciaország",
+                "city": "Párizs",
+                "number": 29,
+                "correct": false,
+                "id": 9067
+            },
+            {
+                "name": "Al-Masjid an-Nabawi",
+                "country": "Szaúd-Arábia",
+                "city": "Medina",
+                "number": 33,
+                "correct": true,
+                "id": 8236
+            },
+            {
+                "name": "Petronas-ikertorony",
+                "country": "Malajzia",
+                "city": "Kuala Lumpur",
+                "number": 45,
+                "correct": false,
+                "id": 3201
+            },
+            {
+                "name": "Kaminarimon Kapu",
+                "country": "Japán",
+                "city": "Tokió",
+                "number": 43,
+                "correct": true,
+                "id": 3706
+            },
+            {
+                "name": "Titanic",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 30,
+                "correct": true,
+                "id": 6124
+            },
+            {
+                "name": "Mustafa Kemal Atatürk mauzóleuma",
+                "country": "Törökország",
+                "city": "Ankara",
+                "number": 40,
+                "correct": true,
+                "id": 4665
+            },
+            {
+                "name": "Buckingham Palota",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 4,
+                "correct": false,
+                "id": 7214
+            },
+            {
+                "name": "Milánói Dóm",
+                "country": "Olaszország",
+                "city": "Milánó",
+                "number": 42,
+                "correct": false,
+                "id": 6718
+            },
+            {
+                "name": "countryház",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 93,
+                "correct": false,
+                "id": 7628
+            },
+            {
+                "name": "Holland szélmalom",
+                "country": "Hollandia",
+                "city": "Kinderdijk",
+                "number": 64,
+                "correct": false,
+                "id": 3413
+            },
+            {
+                "name": "Szent Péter-bazilika",
+                "country": "Vatikán",
+                "city": "Vatikán city",
+                "number": 83,
+                "correct": false,
+                "id": 4607
+            },
+            {
+                "name": "Firenzei Dóm",
+                "country": "Olaszország",
+                "city": "Firenze",
+                "number": 51,
+                "correct": true,
+                "id": 2469
+            },
+            {
+                "name": "Kultúra és Tudomány Palotája",
+                "country": "Lengyelország",
+                "city": "Varsó",
+                "number": 94,
+                "correct": true,
+                "id": 8371
+            },
+            {
+                "name": "Bank of China Tower",
+                "country": "Kína",
+                "city": "Hong Kong",
+                "number": 84,
+                "correct": true,
+                "id": 9436
+            },
+            {
+                "name": "Hagia Sophia",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 33,
+                "correct": true,
+                "id": 5039
+            }
+        ],
+        "score": 8,
+        "timestamp": "2025-07-11T11:21:39.945"
+    },
+    {
+        "testData": [
+            {
+                "name": "HMS Beagle hajó",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 61,
+                "correct": true,
+                "id": 6454
+            },
+            {
+                "name": "Pisai ferde torony",
+                "country": "Olaszország",
+                "city": "Pisa",
+                "number": 64,
+                "correct": false,
+                "id": 4012
+            },
+            {
+                "name": "Szent István-bazilika",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 57,
+                "correct": true,
+                "id": 9956
+            },
+            {
+                "name": "Sky Tower",
+                "country": "Új-Zéland",
+                "city": "Auckland",
+                "number": 73,
+                "correct": true,
+                "id": 7379
+            },
+            {
+                "name": "Tadzs Mahal",
+                "country": "India",
+                "city": "Agra",
+                "number": 89,
+                "correct": false,
+                "id": 2569
+            },
+            {
+                "name": "Titanic",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 32,
+                "correct": false,
+                "id": 3200
+            },
+            {
+                "name": "Al-Masjid an-Nabawi",
+                "country": "Szaúd-Arábia",
+                "city": "Medina",
+                "number": 6,
+                "correct": false,
+                "id": 7326
+            },
+            {
+                "name": "Hohenzollern kastély",
+                "country": "Németország",
+                "city": "Bisinden",
+                "number": 23,
+                "correct": false,
+                "id": 4762
+            },
+            {
+                "name": "Buckingham Palota",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 61,
+                "correct": false,
+                "id": 6793
+            },
+            {
+                "name": "Burj Kalifa",
+                "country": "Egyesült Arab Emírségek",
+                "city": "Dubai",
+                "number": 17,
+                "correct": false,
+                "id": 3920
+            },
+            {
+                "name": "Burj Al Arab",
+                "country": "Egyesült Arab Emírségek",
+                "city": "Dubai",
+                "number": 18,
+                "correct": true,
+                "id": 9296
+            },
+            {
+                "name": "Hluboká kastély",
+                "country": "Csehország",
+                "city": "Hluboká nad Vltavou",
+                "number": 56,
+                "correct": true,
+                "id": 8613
+            },
+            {
+                "name": "HMS Victory 1765",
+                "country": "Egyesült Királyság",
+                "city": "Boston",
+                "number": 23,
+                "correct": false,
+                "id": 8589
+            },
+            {
+                "name": "Vajdahunyad vára",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 73,
+                "correct": false,
+                "id": 2785
+            },
+            {
+                "name": "Taipei 101 Building",
+                "country": "Tajvan",
+                "city": "Taipei",
+                "number": 61,
+                "correct": false,
+                "id": 5638
+            },
+            {
+                "name": "Prágai csillagászati óra és a városháza",
+                "country": "Csehország",
+                "city": "Prága",
+                "number": 51,
+                "correct": false,
+                "id": 5465
+            },
+            {
+                "name": "A Vérző Megváltó temploma",
+                "country": "Oroszország",
+                "city": "Szentpétervár",
+                "number": 49,
+                "correct": false,
+                "id": 5835
+            },
+            {
+                "name": "Colosseum",
+                "country": "Olaszország",
+                "city": "Róma",
+                "number": 89,
+                "correct": true,
+                "id": 9629
+            },
+            {
+                "name": "Szent Márk tér",
+                "country": "Olaszország",
+                "city": "Velence",
+                "number": 53,
+                "correct": true,
+                "id": 2108
+            },
+            {
+                "name": "Megváltó Krisztus-székesegyház",
+                "country": "Oroszország",
+                "city": "Moszkva",
+                "number": 75,
+                "correct": true,
+                "id": 9926
+            }
+        ],
+        "score": 8,
+        "timestamp": "2025-07-11T11:19:09.558"
+    },
+    {
+        "testData": [
+            {
+                "name": "Brooklyn-híd",
+                "country": "USA",
+                "city": "New York",
+                "number": 78,
+                "correct": true,
+                "id": 6088
+            },
+            {
+                "name": "Brandenburgi kapu",
+                "country": "Németország",
+                "city": "Berlin",
+                "number": 93,
+                "correct": false,
+                "id": 3692
+            },
+            {
+                "name": "Titanic",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 54,
+                "correct": true,
+                "id": 7749
+            },
+            {
+                "name": "Szent Jakab-katedrális",
+                "country": "Spanyolország",
+                "city": "Santiago d. C.",
+                "number": 29,
+                "correct": false,
+                "id": 6253
+            },
+            {
+                "name": "Al-Masjid al-Haram",
+                "country": "Szaúd-Arábia",
+                "city": "Mekka",
+                "number": 17,
+                "correct": false,
+                "id": 4962
+            },
+            {
+                "name": "Anna királynő bosszúja",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 72,
+                "correct": true,
+                "id": 5984
+            },
+            {
+                "name": "Al-Masjid an-Nabawi",
+                "country": "Szaúd-Arábia",
+                "city": "Medina",
+                "number": 67,
+                "correct": true,
+                "id": 6864
+            },
+            {
+                "name": "San Felipe 1690",
+                "country": "Spanyolország",
+                "city": "[elsüllyedt]",
+                "number": 63,
+                "correct": true,
+                "id": 7410
+            },
+            {
+                "name": "Kultúra és Tudomány Palotája",
+                "country": "Lengyelország",
+                "city": "Varsó",
+                "number": 63,
+                "correct": false,
+                "id": 6014
+            },
+            {
+                "name": "Szent Vitus-székesegyház",
+                "country": "Csehország",
+                "city": "Prága",
+                "number": 18,
+                "correct": false,
+                "id": 4562
+            },
+            {
+                "name": "Capitolium",
+                "country": "USA",
+                "city": "Washington",
+                "number": 15,
+                "correct": false,
+                "id": 5789
+            },
+            {
+                "name": "Kínai Nagy Fal",
+                "country": "Kína",
+                "city": "-",
+                "number": 90,
+                "correct": true,
+                "id": 2682
+            },
+            {
+                "name": "HMS Beagle hajó",
+                "country": "Egyesült Királyság",
+                "city": "[elsüllyedt]",
+                "number": 41,
+                "correct": true,
+                "id": 3028
+            },
+            {
+                "name": "Bank of China Tower",
+                "country": "Kína",
+                "city": "Hong Kong",
+                "number": 2,
+                "correct": true,
+                "id": 3928
+            },
+            {
+                "name": "Buckingham Palota",
+                "country": "Egyesült Királyság",
+                "city": "London",
+                "number": 93,
+                "correct": true,
+                "id": 2332
+            },
+            {
+                "name": "Mayflower",
+                "country": "Hollandia",
+                "city": "[elsüllyedt]",
+                "number": 1,
+                "correct": false,
+                "id": 2180
+            },
+            {
+                "name": "Szent Patrik-katedrális",
+                "country": "USA",
+                "city": "New York",
+                "number": 71,
+                "correct": false,
+                "id": 8281
+            },
+            {
+                "name": "Galata torony",
+                "country": "Törökország",
+                "city": "Isztambul",
+                "number": 33,
+                "correct": true,
+                "id": 5476
+            },
+            {
+                "name": "Vajdahunyad vára",
+                "country": "Magyarország",
+                "city": "Budapest",
+                "number": 13,
+                "correct": true,
+                "id": 2794
+            },
+            {
+                "name": "Firenzei Dóm",
+                "country": "Olaszország",
+                "city": "Firenze",
+                "number": 77,
+                "correct": false,
+                "id": 5984
+            }
+        ],
+        "score": 11,
+        "timestamp": "2025-07-11T11:16:58.180"
+    }
+]
