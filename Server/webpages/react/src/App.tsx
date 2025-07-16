@@ -3,7 +3,7 @@ import TestResults, {TestResult} from "./TestResults";
 import TestContentComponent from "./TestContentComponent";
 import TestResultsComponent from "./TestResultsComponent";
 
-interface Props {
+interface Properties {
     initialResults?: TestResults
 }
 
@@ -12,12 +12,12 @@ interface State {
     selectedTab: number | null
 }
 
-export default class App extends Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
+export default class App extends Component<Properties, State> {
+    constructor(properties: Properties) {
+        super(properties);
         this.state = {
             selectedTab: null,
-            testResults: props.initialResults
+            testResults: properties.initialResults
         };
     }
 
@@ -48,7 +48,7 @@ export default class App extends Component<Props, State> {
                         </thead>
                         <tbody>
                         <tr>
-                            <td id="testContent" colSpan={3}>
+                            <td colSpan={3}>
                                 {this.state.testResults && this.state.selectedTab
                                     ? <TestContentComponent result={this.state.testResults[this.state.selectedTab]}/>
                                     : "Válassz ki egy tesztet a megtekintéshez..."
@@ -67,7 +67,7 @@ export default class App extends Component<Props, State> {
                 <div id="main-right-cell">
                     <div id="main-top-right-cell">
                         <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
-                            <div id="testResults" style={{overflow: 'auto'}}>
+                            <div style={{overflow: 'auto'}}>
                                 {this.state.testResults
                                     ? <TestResultsComponent app={this} testResults={this.state.testResults}/>
                                     : "No test results"

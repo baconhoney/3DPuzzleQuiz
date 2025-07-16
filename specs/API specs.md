@@ -66,11 +66,16 @@ Excluding `api/*`
 }
 ```
 
-### SSE `/api/updates`
-- returns
+### WebSockets `/api/updates`
+- sends
+```json
+{
+    "event": ("quizStarted" | "quizEnded" | "resultsReady"),
+    "timestamp": "<YYYY-MM-DDTHH:MM:SS.sss>"
+}
 ```
-ONE OF:
-"event: quizStarted\nendsAt: <YYYY-MM-DDTHH:MM:SS.sss>\n\n"
-"event: quizEnded\nresultsReadyAt: <YYYY-MM-DDTHH:MM:SS.sss>\n\n"
-"event: resultsReady\nnextQuizAt: <YYYY-MM-DDTHH:MM:SS.sss>\n\n"
-```
+where `timestamp` means:
+  - quizStarted `->` quiz ending time
+  - quizEnded `->` expected results ready time
+  - resultsReady `->` next quiz start time
+

@@ -10,7 +10,7 @@ let results: TestResults = testSheets;
 const root = createRoot(document.getElementById("root")!);
 root.render(
     <StrictMode>
-        <App /*initialResults={results}*//>
+        <App initialResults={results}/>
     </StrictMode>
 );
 

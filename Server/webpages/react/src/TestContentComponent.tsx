@@ -2,13 +2,13 @@ import React, {Component} from "react";
 import {TestDataItem, TestResult} from "./TestResults";
 import "./TestContentComponent.css";
 
-interface Props {
+interface Properties {
     result: TestResult;
 }
 
-export default class TestContentComponent extends Component<Props> {
-    constructor(props: Props) {
-        super(props);
+export default class TestContentComponent extends Component<Properties> {
+    constructor(properties: Properties) {
+        super(properties);
     }
 
     render() {
@@ -24,7 +24,7 @@ export default class TestContentComponent extends Component<Props> {
             </thead>
             <tbody>
             {this.props.result.testData.map((line: TestDataItem, index: number) => {
-                return <tr key={index+""}>
+                return <tr key={index.toString()}>
                     <td className="testcontent-name">{line.name}</td>
                     <td className="testcontent-location">{line.country}, ${line.city}</td>
                     <td className="testcontent-id">{line.id}</td>

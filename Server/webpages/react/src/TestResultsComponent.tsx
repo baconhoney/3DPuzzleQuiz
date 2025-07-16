@@ -3,14 +3,14 @@ import App from "./App";
 import TestResults, {TestResult} from "./TestResults";
 import "./TestResultsComponent.css";
 
-interface Props {
+interface Properties {
     app: App
     testResults: TestResults
 }
 
-export default class TestResultsComponent extends Component<Props> {
-    constructor(props: Props) {
-        super(props);
+export default class TestResultsComponent extends Component<Properties> {
+    constructor(properties: Properties) {
+        super(properties);
     }
 
     private formatTime(localIsoDate: Date) {
@@ -22,7 +22,7 @@ export default class TestResultsComponent extends Component<Props> {
     }
 
     render() {
-        return <table>
+        return <table className="test-results">
             <thead style={{position: "sticky", top: "0"}}>
             <tr onClick={() => {
                 this.props.app.setSelectedTab(null);
