@@ -26,6 +26,45 @@ td {
     border: 1px solid red;
 }
 
+body {
+    min-width: 1400px;
+    min-height: 800px;
+    width: 100vw;
+    height: 100vh;
+}
+
+#main-cell {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#main-left-cell {
+    flex-grow: 1;
+    border: 1px solid red;
+    padding: 10px;
+}
+
+#main-right-cell {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+#main-top-right-cell {
+    min-height: 0;
+    flex-grow: 1;
+    border: 1px solid red;
+    padding: 10px;
+}
+
+#main-bottom-right-cell {
+    min-height: 500px;
+    border: 1px solid red;
+    padding: 10px;
+}
+
 .horiz-stack {
     display: flex;
     flex-direction: row;
@@ -40,6 +79,7 @@ td {
 
 .padded {
     padding: 10px;
+    vertical-align: top;
 }
 
 .centered {
@@ -47,15 +87,13 @@ td {
     margin-right: auto;
 }
 
-.top-aligned {
-    vertical-align: top;
-}
-
 #testResults table tr:hover {
     background-color: var(--raisedBGColor);
 }
+
+#testResults table tr:hover th,
 #testResults table tr:hover td {
-    background-color: #0000;
+    background-color: var(--raisedBGColor);
 }
 
 
@@ -71,8 +109,40 @@ td {
 #testResults table th.groupname {
     width: 100%;
 }
+
 #testResults table td.lang,
 #testResults table td.score {
     text-align: center;
 }
 
+#testContent table {
+    width: 100%;
+}
+
+#testContent table th,
+#testContent table td {
+    padding: 2px 5px;
+}
+
+#testContent table td.testcontent-name {
+    width: 50%;
+}
+
+#testContent table td.testcontent-location {
+    width: 50%;
+}
+
+#testContent table td.testcontent-id {
+    width: 60px;
+    text-align: center;
+}
+
+#testContent table td.testcontent-number {
+    width: 70px;
+    text-align: center;
+}
+
+#testContent table td.testcontent-correct {
+    width: 80px;
+    text-align: center;
+}

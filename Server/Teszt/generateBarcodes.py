@@ -73,7 +73,7 @@ for i, dmc in enumerate(dmcCodes):
 
 outputImage = outputImage.convert("L")
 # Resize image cuz Word is stupid and cannot handle pixels
-outputImage.resize((totalWidth * 100, totalHeight * 100), resample=Image.Resampling.NEAREST).save(cwd / "dmcs.png")
+outputImage.resize((totalWidth * 300, totalHeight * 300), resample=Image.Resampling.NEAREST).save(cwd / "dmcs.png")
 print(f"\nImage width: {totalWidth}px, DMC width: {dmcRawSize}px\nImage sizes:")
 for ps in PIXELSIZES:
     print(f"- 1 px is {ps:.4f}cm: {totalWidth * ps:.4f}cm")

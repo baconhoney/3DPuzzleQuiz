@@ -10,13 +10,14 @@ let testData = [];
 
 // ------- MAIN -------
 on_load();
-loadTestContent(0);
 
 
 // ------- FUNCTIONS -------
 async function on_load() {
     testData = await fetch("test_sheets.json").then(res => res.json());
+    testData = testData.concat(testData);
     loadTestResults(testData);
+    loadTestContent(0);
 }
 
 
@@ -39,12 +40,15 @@ function loadTestResults(testData) {
     });
     let html = `
     <table>
-        <tr onclick="loadTestContent(null)">
-            <th class="groupname">Csapatnév</th>
-            <th class="lang">Nyelv</th>
-            <th class="score">Pont</th>
-            <th class="timestamp">Leadás ideje</th>
-        </tr>`;
+        <thead style="position: sticky; top: 0;">
+            <tr onclick="loadTestContent(null)">
+                <th class="groupname">Csapatnév</th>
+                <th class="lang">Nyelv</th>
+                <th class="score">Pont</th>
+                <th class="timestamp">Leadás ideje</th>
+            </tr>
+        </thead>
+        <tbody>`;
     for (const testId in testData) {
         const test = testData[testId];
         html += `
@@ -55,7 +59,7 @@ function loadTestResults(testData) {
             <td class="timestamp">${formatTime(new Date(test.timestamp))}</td>
         </tr>`;
     }
-    html += `</table>`;
+    html += `</tbody></table>`;
     testResults.innerHTML = html;
 }
 
@@ -65,21 +69,33 @@ function loadTestContent(testId) {
         testGroupName.innerText = "<csapatnév>";
         testLang.innerText = "??";
         testScore.innerText = "??/??";
+        testContent.innerHTML = "Kattints egy csapatra a részletek megtekintéséhez.";
         return;
     }
     const test = testData[testId];
-    console.log(testId);
     testGroupName.innerText = `${testId + 1}. Csapat`;
     testLang.innerText = "HU";
-    testScore.innerText = test.score;
-    testContent.innerHTML = `
+    testScore.innerText = test.score + "/" + test.testData.length;
+    let html = `
     <table>
         <tr>
-            <th>Név</th>
-            <th>Ország, Város</th>
-            <th>id</th>
-            <th>Szám</th>
-            <th>Helyes</th>
+            <th class="testcontent-header testcontent-name">Név</th>
+            <th class="testcontent-header testcontent-location">Ország, Város</th>
+            <th class="testcontent-header testcontent-id">id</th>
+            <th class="testcontent-header testcontent-number">Szám</th>
+            <th class="testcontent-header testcontent-correct">Helyes</th>
         </tr>`;
+    for (const i in test.testData) {
+        const line = test.testData[i];
+        html += `<tr>
+            <td class="testcontent-name">${line.name}</td>
+            <td class="testcontent-location">${line.country}, ${line.city}</td>
+            <td class="testcontent-id">${line.id}</td>
+            <td class="testcontent-number">${line.number}</td>
+            <td class="testcontent-correct">${line.correct ? "Igen" : "Nem"}</td>
+        </tr>`;
+    }
+    html += `</table>`;
+    testContent.innerHTML = html;
 }
 
