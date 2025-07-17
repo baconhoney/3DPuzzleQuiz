@@ -8,7 +8,7 @@
 
 
 Request specifying nothing expect nothing on request.
-All requests return `<http_response_code>` and `error message` (MIME:"text/plain") if exists, alongside the below specified, all jsons (expected and returned/sent) are stringified to UTF-8 strings.
+All requests return `<http_response_code>` and `error message` (MIME:"text/plain") if exists, alongside the below specified, where all jsons (expected and returned/sent) are stringified to UTF-8 strings.
 
 
 ### GET `/*`
