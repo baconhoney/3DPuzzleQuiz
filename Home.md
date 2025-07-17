@@ -1,8 +1,11 @@
 # API endpoint specs:
 
 `<value>`: required
+
 `[value]`: optional
+
 `(value1|value2)`: alternate
+
 
 Request specifying nothing expect nothing on request.
 All requests return `<http_response_code>` and `error message` (MIME:"text/plain") if exists, alongside the below specified, `json`s are stringified to utf-8 strings.
