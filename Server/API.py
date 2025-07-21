@@ -4,6 +4,7 @@ import mimetypes
 import random
 import json
 import sqlite3
+import QuizDB
 from aiohttp import web
 
 router = web.RouteTableDef()
@@ -11,8 +12,8 @@ cwd = pathlib.Path(__file__).parent.resolve()
 cfgRoot = cwd / "cfg"
 dataRoot = cwd / "data"
 webRoot = cwd / "web"
-
-
+quizDB = QuizDB.QuizDB(dataRoot)
+quizDBCursor = quizDB.cursor
 
 
 # load in the testdata

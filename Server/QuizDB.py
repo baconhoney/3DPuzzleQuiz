@@ -1,3 +1,10 @@
+import sqlite3
+from os import mkdir
+from pathlib import Path
+
+__all__ = ["QuizDB"]
+
+# Constant SQL commands
 questionsSQL = """
                CREATE TABLE questions
                (
@@ -24,35 +31,49 @@ teamsSQL = """
            (
                team_name    TEXT,
                language     TEXT,
-               quiz_id      TEXT FOREIGN KEY REFERENCES quizzes (ROWID),
+               quiz_id      TEXT,
                score        INTEGER,
-               submitted_at TEXT -- Time of answers submitted
+               submitted_at TEXT, -- Time of answers submitted
+               FOREIGN KEY (quiz_id) REFERENCES quizzes (ROWID)
            );"""
 
 answersSQL = """
              CREATE TABLE answers
              (
-                 participant_id INTEGER FOREIGN KEY REFERENCES participants (ROWID),
-                 question_id    INTEGER FOREIGN KEY REFERENCES questions (ROWID),
+                 participant_id INTEGER,
+                 question_id    INTEGER,
                  answer         INTEGER,
-                 is_correct     INTEGER
+                 is_correct     INTEGER,
+                 FOREIGN KEY (participant_id) REFERENCES participants (ROWID),
+                 FOREIGN KEY (question_id) REFERENCES questions (ROWID)
              );"""
 
-quizDBConn = sqlite3.connect(dataRoot / "quizData.db")
-if not quizDBConn:
-    raise RuntimeError("Database not found")
-quizDBCursor = quizDBConn.cursor()
-if not quizDBCursor:
-    raise RuntimeError("Database cursor cannot be created")
-if not quizDBCursor.execute(r"SELECT name FROM sqlite_master WHERE type='table' AND name='tests';").rowcount == 1:
-    if input("WARNING: Table 'tests' does not exist, are you sure to create it? (YES/NO) > ") == "YES":
-        quizDBCursor.execute(questionsSQL)
-        print("Table 'tests' created successfully")
-    else:
-        print("Table creation aborted")
-if not quizDBCursor.execute(r"SELECT name FROM sqlite_master WHERE type='table' AND name='teams';").rowcount == 1:
-    if input("WARNING: Table 'teams' does not exist, are you sure to create it? (YES/NO) > ") == "YES":
-        quizDBCursor.execute(teamsSQL)
-        print("Table 'teams' created successfully")
-    else:
-        print("Table creation aborted")
+
+class QuizDB:
+    def __init__(self, dataRoot: Path) -> None:
+        self._dataRoot = dataRoot
+        if not self._dataRoot:
+            raise ValueError("dataRoot is required")
+        if not Path.exists(self._dataRoot):
+            mkdir(self._dataRoot)
+
+        self.connection = sqlite3.connect(self._dataRoot / "quizData.db")
+        if not self.connection:
+            raise RuntimeError("Database not found")
+
+        self.cursor = self.connection.cursor()
+        if not self.cursor:
+            raise RuntimeError("Database cursor cannot be created")
+
+        self._checkDBTable("questions", questionsSQL)
+        self._checkDBTable("quizzes", quizzesSQL)
+        self._checkDBTable("teams", teamsSQL)
+        self._checkDBTable("answers", answersSQL)
+
+    def _checkDBTable(self, tableName: str, tableSQL: str) -> None:
+        if not self.cursor.execute(f"SELECT count(name) FROM sqlite_master WHERE type='table' AND name='{tableName}';").fetchone()[0] == 1:
+            if input(f"WARNING: Table '{tableName}' does not exist, are you sure to create it? (YES/NO) > ") == "YES":
+                self.cursor.execute(tableSQL)
+                print(f"Table '{tableName}' created successfully")
+            else:
+                print(f"Table creation aborted")
