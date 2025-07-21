@@ -15,7 +15,14 @@ All requests return `<http_response_code>` and `error message` (MIME:"text/plain
 Excluding `api/*`
 - returns file `/*` (if existing)
 
-### GET `/api/login`
+### POST `/api/login`
+- expects json:
+```json
+{
+    "name": "<Team name>",
+    "lang": "hu" (`hu` or `en`, defaults to `hu`)
+}
+```
 - returns json:
 ```json
 {
@@ -24,6 +31,7 @@ Excluding `api/*`
     "quizIsRunning": false
 }
 ```
+
 
 ### GET `/api/getQuestions`
 - expects `lang=hu` (`hu` or `en`, defaults to `hu`)
