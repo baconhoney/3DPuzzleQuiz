@@ -1,5 +1,5 @@
 {
-    "lastEdited": "2025-07-22T14:50:03.563",
+    "lastEdited": "2025-07-22T13:36:15.282",
     "entries": [
         {
             "uid": 2035,
@@ -10,7 +10,7 @@
             "country_hu": "Törökország",
             "country_en": "Turkey",
             "city_hu": "Isztambul",
-            "city_en": "Istambul"
+            "city_en": "Istanbul"
         },
         {
             "uid": 2085,
@@ -62,7 +62,7 @@
             "answer": 22,
             "name_hu": "New York-i Szabadság szobor",
             "name_en": "Statue of Liberty",
-            "country_hu": "USA",
+            "country_hu": "Egyesült Államok",
             "country_en": "United States of America",
             "city_hu": "New York",
             "city_en": "New York"
@@ -94,7 +94,7 @@
             "box": 1087,
             "answer": 13,
             "name_hu": "Országház",
-            "name_en": "Hungarian parliament",
+            "name_en": "Hungarian Parliament",
             "country_hu": "Magyarország",
             "country_en": "Hungary",
             "city_hu": "Budapest",
@@ -115,12 +115,12 @@
             "uid": 2695,
             "box": 1425,
             "answer": 68,
-            "name_hu": "Ahmed szultán kék mecsetje",
-            "name_en": "Sultan Ahmet Camii blue mosque",
+            "name_hu": "Ahmed Szultán Mecset",
+            "name_en": "Sultan Ahmed Mosque",
             "country_hu": "Törökország",
             "country_en": "Turkey",
             "city_hu": "Isztambul",
-            "city_en": "Istambul"
+            "city_en": "Istanbul"
         },
         {
             "uid": 2720,
@@ -150,7 +150,7 @@
             "answer": 34,
             "name_hu": "Szent Patrik-katedrális",
             "name_en": "St. Patrick cathedral",
-            "country_hu": "USA",
+            "country_hu": "Egyesült Államok",
             "country_en": "United States of America",
             "city_hu": "New York",
             "city_en": "New York"
@@ -183,7 +183,7 @@
             "answer": 36,
             "name_hu": "Brooklyn-híd",
             "name_en": "Brooklyn bridge",
-            "country_hu": "USA",
+            "country_hu": "Egyesült Államok",
             "country_en": "United States of America",
             "city_hu": "New York",
             "city_en": "New York"
@@ -274,7 +274,7 @@
             "country_hu": "Lengyelország",
             "country_en": "Poland",
             "city_hu": "Krakkó",
-            "city_en": "Krakkow"
+            "city_en": "Kraków"
         },
         {
             "uid": 3975,
@@ -293,7 +293,7 @@
             "answer": 82,
             "name_hu": "Willis-torony",
             "name_en": "Willis tower",
-            "country_hu": "USA",
+            "country_hu": "Egyesült Államok",
             "country_en": "United States of America",
             "city_hu": "Chicago",
             "city_en": "Chicago"
@@ -302,7 +302,7 @@
             "uid": 4190,
             "box": 1240,
             "answer": 41,
-            "name_hu": "Újhattyúkő-kastély",
+            "name_hu": "Neuschwanstein kastély",
             "name_en": "Neuschwanstein castle",
             "country_hu": "Németország",
             "country_en": "Germany",
@@ -326,7 +326,7 @@
             "answer": 9,
             "name_hu": "Chrysler Building",
             "name_en": "Chrysler Building",
-            "country_hu": "USA",
+            "country_hu": "Egyesült Államok",
             "country_en": "United States of America",
             "city_hu": "New York",
             "city_en": "New York"
@@ -362,7 +362,7 @@
             "country_hu": "Oroszország",
             "country_en": "Russia",
             "city_hu": "Szentpétervár",
-            "city_en": "St. Petersburg"
+            "city_en": "Saint Petersburg"
         },
         {
             "uid": 4512,
@@ -390,8 +390,8 @@
             "uid": 4677,
             "box": 1131,
             "answer": 73,
-            "name_hu": "Tradicionális pekingi udvar",
-            "name_en": "Traditional Beijing garden",
+            "name_hu": "Pekingi Siheyuan",
+            "name_en": "Beijing Siheyuan",
             "country_hu": "Kína",
             "country_en": "China",
             "city_hu": "Peking",
@@ -439,7 +439,7 @@
             "country_hu": "Törökország",
             "country_en": "Turkey",
             "city_hu": "Isztambul",
-            "city_en": "Istambul"
+            "city_en": "Istanbul"
         },
         {
             "uid": 4954,
@@ -447,7 +447,7 @@
             "answer": 52,
             "name_hu": "Mississippi gőzhajó",
             "name_en": "Mississippi steamship",
-            "country_hu": "USA",
+            "country_hu": "Egyesült Államok",
             "country_en": "United States of America",
             "city_hu": "New Orleans",
             "city_en": "New Orleans"
@@ -456,8 +456,8 @@
             "uid": 4982,
             "box": 0,
             "answer": 71,
-            "name_hu": "Tokiói torony",
-            "name_en": "Tokyo tower",
+            "name_hu": "Tokiói Torony",
+            "name_en": "Tokyo Tower",
             "country_hu": "Japán",
             "country_en": "Japan",
             "city_hu": "Tokió",
@@ -523,7 +523,7 @@
             "box": 1472,
             "answer": 44,
             "name_hu": "Bolygó Hollandi szellemhajó",
-            "name_en": "Flying Dutchman ghost ship",
+            "name_en": "Flying Dutchman ghostship",
             "country_hu": "Hollandia",
             "country_en": "Netherlands",
             "city_hu": "-",
@@ -615,7 +615,7 @@
             "country_hu": "Törökország",
             "country_en": "Turkey",
             "city_hu": "Isztambul",
-            "city_en": "Istambul"
+            "city_en": "Istanbul"
         },
         {
             "uid": 6316,
@@ -681,7 +681,7 @@
             "country_hu": "Oroszország",
             "country_en": "Russia",
             "city_hu": "Szentpétervár",
-            "city_en": "St. Petersburg"
+            "city_en": "Saint Petersburg"
         },
         {
             "uid": 6644,
@@ -724,8 +724,8 @@
             "name_en": "Hohenzollern castle",
             "country_hu": "Németország",
             "country_en": "Germany",
-            "city_hu": "Bisinden",
-            "city_en": "Bisinden"
+            "city_hu": "Bisingen",
+            "city_en": "Bisingen"
         },
         {
             "uid": 6939,
@@ -733,7 +733,7 @@
             "answer": 33,
             "name_hu": "Lincoln emlékmű",
             "name_en": "Lincoln memorial",
-            "country_hu": "USA",
+            "country_hu": "Egyesült Államok",
             "country_en": "United States of America",
             "city_hu": "Washington",
             "city_en": "Washington"
@@ -802,7 +802,7 @@
             "country_hu": "Oroszország",
             "country_en": "Russia",
             "city_hu": "Szentpétervár",
-            "city_en": "St. Petersburg"
+            "city_en": "Saint Petersburg"
         },
         {
             "uid": 8032,
@@ -831,7 +831,7 @@
             "box": 1651,
             "answer": 26,
             "name_hu": "Milánói Dóm",
-            "name_en": "Cathedral of Milan",
+            "name_en": "Milan Cathedral",
             "country_hu": "Olaszország",
             "country_en": "Italy",
             "city_hu": "Milánó",
@@ -887,7 +887,7 @@
             "answer": 39,
             "name_hu": "Fehér Ház",
             "name_en": "White house",
-            "country_hu": "USA",
+            "country_hu": "Egyesült Államok",
             "country_en": "United States of America",
             "city_hu": "Washington",
             "city_en": "Washington"
@@ -918,8 +918,8 @@
             "uid": 8922,
             "box": 1034,
             "answer": 24,
-            "name_hu": "HMS Beagle hajó",
-            "name_en": "HMS Beagle ship",
+            "name_hu": "HMS Beagle",
+            "name_en": "HMS Beagle",
             "country_hu": "Egyesült Királyság",
             "country_en": "United Kingdom",
             "city_hu": "[elsüllyedt]",
@@ -975,7 +975,7 @@
             "answer": 47,
             "name_hu": "USS Constitution 1797",
             "name_en": "USS Constitution 1797",
-            "country_hu": "USA",
+            "country_hu": "Egyesült Államok",
             "country_en": "United States of America",
             "city_hu": "Boston",
             "city_en": "Boston"
@@ -1073,8 +1073,8 @@
             "box": 1910,
             "answer": 21,
             "name_hu": "Capitolium",
-            "name_en": "Capitolium",
-            "country_hu": "USA",
+            "name_en": "United States Capitol",
+            "country_hu": "Egyesült Államok",
             "country_en": "United States of America",
             "city_hu": "Washington",
             "city_en": "Washington"
@@ -1096,7 +1096,7 @@
             "answer": 16,
             "name_hu": "Empire State Building",
             "name_en": "Empire State Building",
-            "country_hu": "USA",
+            "country_hu": "Egyesült Államok",
             "country_en": "United States of America",
             "city_hu": "New York",
             "city_en": "New York"
