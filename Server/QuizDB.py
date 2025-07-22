@@ -7,15 +7,15 @@ __all__ = ["QuizDB"]
 questionsSQL = """
     CREATE TABLE questions
     (
-        uid        INTEGER PRIMARY KEY,
-        box        INTEGER,
-        answer     INTEGER,
-        name_hu    TEXT,
-        name_en    TEXT,
-        country_hu TEXT,
-        country_en TEXT,
-        city_hu    TEXT,
-        city_en    TEXT
+        building_id INTEGER PRIMARY KEY,
+        box         INTEGER,
+        answer      INTEGER,
+        name_hu     TEXT,
+        name_en     TEXT,
+        country_hu  TEXT,
+        country_en  TEXT,
+        city_hu     TEXT,
+        city_en     TEXT
     ) STRICT;
 """
 

@@ -14,11 +14,11 @@ csvHeaders = {
     "Angol Név": "name_en",
     "Angol Ország": "country_en",
     "Angol Város": "city_en",
-    "id": "uid",
+    "id": "building_id",
     "Doboz": "box",
     "Szám": "answer",
 }
-jsonHeaders = ["uid", "box", "answer", "name_hu", "name_en", "country_hu", "country_en", "city_hu", "city_en"]
+jsonHeaders = ["building_id", "box", "answer", "name_hu", "name_en", "country_hu", "country_en", "city_hu", "city_en"]
 
 
 def JSON_to_Database():
@@ -31,11 +31,11 @@ def JSON_to_Database():
         raise ValueError(f"Failed to load masterList.json: {rawQuizData}")
     quizDB.cursor.execute("DELETE FROM questions;")
     quizDB.cursor.executemany(
-        "INSERT INTO questions (uid, box, answer, name_hu, name_en, country_hu, country_en, city_hu, city_en) \
+        "INSERT INTO questions (building_id, box, answer, name_hu, name_en, country_hu, country_en, city_hu, city_en) \
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
         [
             (
-                entry["uid"],
+                entry["building_id"],
                 entry["box"],
                 entry["answer"],
                 entry["name_hu"],
@@ -84,7 +84,7 @@ def CSV_to_JSON():
     data = [{v: line[i] for i, v in enumerate(csvHeaders.values())} for line in lines]
     jsonData = {
         "lastEdited": datetime.datetime.now().isoformat(timespec="milliseconds"),
-        "entries": [{k: (int(line[k]) if k in ["uid", "box", "answer"] else line[k]) for k in jsonHeaders} for line in data],
+        "entries": [{k: (int(line[k]) if k in ["building_id", "box", "answer"] else line[k]) for k in jsonHeaders} for line in data],
     }
     with open(cwd / "Teszt" / "masterList.json", "w", encoding="utf-8") as f:
         json.dump(jsonData, f, indent=4, ensure_ascii=False)
