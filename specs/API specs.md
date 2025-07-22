@@ -1,19 +1,29 @@
 # API endpoint specs:
 
 `<value>`: required
+
 `[value]`: optional
+
 `(value1|value2)`: alternate
 
+
 Request specifying nothing expect nothing on request.
-All requests return `<http_response_code>` and `error message` (MIME:"text/plain") if exists, alongside the below specified.
+All requests return `<http_response_code>` and `error message` (MIME:"text/plain") if exists, alongside the below specified, where all jsons (expected and returned/sent) are stringified to UTF-8 strings.
 
 
 ### GET `/*`
 Excluding `api/*`
 - returns file `/*` (if existing)
 
-### GET `/api/login`
-- returns
+### POST `/api/login`
+- expects json:
+```json
+{
+    "name": "<Team name>",
+    "lang": "hu" (`hu` or `en`, defaults to `hu`)
+}
+```
+- returns json:
 ```json
 {
     "uid": 1234567890, (random number from 1e9, up to but not including 1e10)
@@ -24,7 +34,7 @@ Excluding `api/*`
 
 ### GET `/api/getQuestions`
 - expects `lang=hu` (`hu` or `en`, defaults to `hu`)
-- returns
+- returns json:
 ```json
 {
     "quizdata": {
@@ -38,10 +48,10 @@ Excluding `api/*`
 ```
 
 ### POST `/api/uploadAnswers`
-
-- expects
+- expects json:
 ```json
 {
+    "uid": 1234567890, (the returned uid value from `/login`)
     "answers": {
         "0": {"id": 2000, "number": 1},
         "1": {"id": 2001, "number": 41},
@@ -53,7 +63,7 @@ Excluding `api/*`
 
 ### GET `/api/getAnswers`
 - expects `uid=1234567890` (the returned uid value from `/login`)
-- returns
+- returns json:
 ```json
 {
     "quizdata": {
@@ -67,7 +77,8 @@ Excluding `api/*`
 ```
 
 ### WebSockets `/api/updates`
-- sends
+- expects `'{"uid"=1234567890}'` (the returned uid value from `/login`) as the first message in json, and no other after that
+- sends `events` as json:
 ```json
 {
     "event": ("quizStarted" | "quizEnded" | "resultsReady"),

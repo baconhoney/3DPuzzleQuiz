@@ -1,52 +1,57 @@
 import sqlite3
-from os import mkdir
+from os import makedirs
 from pathlib import Path
 
 __all__ = ["QuizDB"]
 
-# Constant SQL commands
 questionsSQL = """
-               CREATE TABLE questions
-               (
-                   name_hu    TEXT,
-                   country_hu TEXT,
-                   city_hu    TEXT,
-                   name_en    TEXT,
-                   country_en TEXT,
-                   city_en    TEXT,
-                   uid        INTEGER,
-                   box_id     INTEGER,
-                   answer     INTEGER
-               );"""
+    CREATE TABLE questions
+    (
+        uid        INTEGER PRIMARY KEY,
+        box        INTEGER,
+        answer     INTEGER,
+        name_hu    TEXT,
+        name_en    TEXT,
+        country_hu TEXT,
+        country_en TEXT,
+        city_hu    TEXT,
+        city_en    TEXT
+    ) STRICT;
+"""
 
 quizzesSQL = """
-             CREATE TABLE quizzes
-             (
-                 size         INTEGER, -- Size of the test
-                 question_ids TEXT     -- Store as JSON-encoded array {"0": <questions.ROWID>}
-             );"""
+    CREATE TABLE quizzes
+    (
+        size         INTEGER, -- Size of the test
+        question_ids TEXT     -- Store as JSON-encoded array [<questions.ROWID>, ...]
+    ) STRICT;
+"""
 
 teamsSQL = """
-           CREATE TABLE teams
-           (
-               team_name    TEXT,
-               language     TEXT,
-               quiz_id      TEXT,
-               score        INTEGER,
-               submitted_at TEXT, -- Time of answers submitted
-               FOREIGN KEY (quiz_id) REFERENCES quizzes (ROWID)
-           );"""
+    CREATE TABLE teams
+    (
+        uuid         INTEGER PRIMARY KEY,
+        team_name    TEXT,
+        language     TEXT,
+        quiz_id      INTEGER,
+        score        INTEGER,
+        submitted_at TEXT, -- Time of answers submitted
+        
+        FOREIGN KEY (quiz_id) REFERENCES quizzes (ROWID)
+    ) STRICT;
+"""
 
 answersSQL = """
-             CREATE TABLE answers
-             (
-                 participant_id INTEGER,
-                 question_id    INTEGER,
-                 answer         INTEGER,
-                 is_correct     INTEGER,
-                 FOREIGN KEY (participant_id) REFERENCES participants (ROWID),
-                 FOREIGN KEY (question_id) REFERENCES questions (ROWID)
-             );"""
+    CREATE TABLE answers (
+        team_id     INTEGER,
+        question_id INTEGER,
+        answer      INTEGER,
+        is_correct  INTEGER,
+        
+        FOREIGN KEY (team_id)     REFERENCES teams (ROWID),
+        FOREIGN KEY (question_id) REFERENCES questions (ROWID)
+    ) STRICT;
+"""
 
 
 class QuizDB:
@@ -55,7 +60,7 @@ class QuizDB:
         if not self._dataRoot:
             raise ValueError("dataRoot is required")
         if not Path.exists(self._dataRoot):
-            mkdir(self._dataRoot)
+            makedirs(self._dataRoot)
 
         self.connection = sqlite3.connect(self._dataRoot / "quizData.db")
         if not self.connection:

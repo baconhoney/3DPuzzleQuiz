@@ -3,8 +3,10 @@ import pathlib
 import mimetypes
 import random
 import json
-import sqlite3
 import QuizDB
+import logging
+import sys
+from enum import Enum
 from aiohttp import web
 
 router = web.RouteTableDef()
@@ -13,46 +15,85 @@ cfgRoot = cwd / "cfg"
 dataRoot = cwd / "data"
 webRoot = cwd / "web"
 quizDB = QuizDB.QuizDB(dataRoot)
-quizDBCursor = quizDB.cursor
-
-
-# load in the testdata
-with open(cwd / "Teszt/masterList.json", "r", encoding="utf-8") as f:
-    testdata: dict[str, dict[str, dict]] = json.load(f)
+loggingLevel = "INFO"
 
 
 # ------- CLASSES -------
+class QuizType(Enum):
+    """Possible types of the quiz."""
+
+    DIGITAL = 0
+    PAPER = 1
+
+
+class QuizPhases(Enum):
+    """Possible phases of the quiz."""
+
+    IDLE = 0
+    RUNNING = 1
+    WAITING_FOR_RESULTS = 2
+
+
+class QuizState:
+    isRunning: bool = False
+    nextQuizAt: datetime.datetime = None
+    currentQuizId: int = None
+    phase: QuizPhases = QuizPhases.IDLE
+
+    @property
+    def nextQuizAtFormatted(self) -> str:
+        """Returns the formatted nextQuizAt value."""
+        return self._nextQuizAt.isoformat(timespec="milliseconds")
 
 
 # ------- UTIL FUNCTIONS -------
-def getNewUUID():
+def getNewUUID(type: QuizType):
     """Generate a new unique identifier."""
-    # TODO: make sure it never repeats and gets added to the db
-    return str(random.randint(int(1e9), int(1e10 - 1)))
+    while True:
+        if type == QuizType.DIGITAL:
+            # generating from 5000000000 to 9999999999
+            uuid = random.randint(int(5e9), int(1e10 - 1))
+        elif type == QuizType.PAPER:
+            # generating from 1000000000 to 4999999999
+            uuid = random.randint(int(1e9), int(5e9 - 1))
+        else:
+            raise ValueError(f"Invalid quizType {type}")
+        quizDB.cursor.execute(f"SELECT count(id) FROM teams WHERE uuid={uuid};")
+        if quizDB.cursor.fetchone()[0] == 0:
+            return uuid
 
 
-def getNewTimestamp():
-    # TODO: extract it from the state
-    return (datetime.datetime.now() - datetime.timedelta(microseconds=(random.random() * 600 * 1e6))).isoformat(timespec="milliseconds")
+def getQuiz(quizId: int, lang: str) -> dict[str, dict[str, dict[str, str]]]:
+    pass
 
 
 # ------- API HANDLER FUNCTIONS -------
-@router.get("/api/login")
-def loginHandler(request: web.Request):
-    print(f"API GET request incoming: login")
-    return web.json_response({"uid": getNewUUID(), "startTime": getNewTimestamp(), "isRunning": True})
+@router.post("/api/login")
+async def loginHandler(request: web.Request):
+    print(f"API POST request incoming: login")
+    requestData: dict[str, str] = await request.json()
+    lang = requestData.get("lang", "hu")
+    teamName = requestData.get("teamName").strip()
+    if not teamName:
+        return web.HTTPBadRequest(text="Value 'teamName' is missing from json")
+    uuid = getNewUUID()
+    logging.info(f"Registering new team: {teamName} ({uuid}), {lang}")
+    quizDB.cursor.execute(f"INSERT INTO teams (uuid, team_name, language, quiz_id) VALUES ({uuid}, '{teamName}', '{lang}', {QuizState.currentQuizId});")
+    return web.json_response({"uid": uuid, "startTime": QuizState.nextQuizAtFormatted, "isRunning": QuizState.isRunning})
 
 
 @router.get("/api/getQuestions")
-def getQuestionsHandler(request: web.Request):
+async def getQuestionsHandler(request: web.Request):
     print(f"API GET request incoming: getQuestions")
     lang = request.query.get("lang", "hu")
-    entrylist = sorted(
-        random.sample(list(testdata["entries"].items()), 20),
-        key=lambda x: x[1][lang]["name"]
-    )
+    entrylist = sorted(random.sample(list(rawQuizData["entries"].items()), 20), key=lambda x: x[1][lang]["name"])
     quizdata = {
-        str(i): {"name": entry[lang]["name"], "country": entry[lang]["country"], "city": entry[lang]["city"], "id": uid}
+        str(i): {
+            "name": entry[lang]["name"],
+            "country": entry[lang]["country"],
+            "city": entry[lang]["city"],
+            "id": uid,
+        }
         for i, (uid, entry) in enumerate(entrylist)
     }
     return web.json_response(quizdata)
@@ -78,14 +119,12 @@ def getAnswersHandler(request: web.Request):
 # ------- 404 Handlers -------
 @router.get("/api/{fn}")
 async def GET_NotFound(request: web.Request) -> web.Response:
-    raise web.HTTPNotFound(
-        text=f"API GET endpoint '{request.match_info.get('fn')}' doesn't exist.")
+    raise web.HTTPNotFound(text=f"API GET endpoint '{request.match_info.get('fn')}' doesn't exist.")
 
 
 @router.post("/api/{fn}")
 async def POST_NotFound(request: web.Request) -> web.Response:
-    raise web.HTTPNotFound(
-        text=f"API POST endpoint '{request.match_info.get('fn')}' doesn't exist.")
+    raise web.HTTPNotFound(text=f"API POST endpoint '{request.match_info.get('fn')}' doesn't exist.")
 
 
 @router.get("/{fn:.*}")
@@ -108,6 +147,8 @@ async def GET_files(request: web.Request) -> web.Response:
 
 # ------- MAIN -------
 def main():
+    logging.basicConfig(level=loggingLevel.upper(), stream=sys.stdout, format="%(asctime)s %(name)s %(levelname)s %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+    logging.debug("Testing logger")
     app = web.Application()
     app.add_routes(router)
     web.run_app(app, port=1006)
