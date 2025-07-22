@@ -29,7 +29,7 @@ def JSON_to_Database():
     quizData = rawQuizData.get("entries")
     if not quizData:
         raise ValueError(f"Failed to load masterList.json: {rawQuizData}")
-    #quizDB.cursor.execute("DELETE FROM questions;")
+    quizDB.cursor.execute("DELETE FROM questions;")
     quizDB.cursor.executemany(
         "INSERT INTO questions (uid, box, answer, name_hu, name_en, country_hu, country_en, city_hu, city_en) \
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
