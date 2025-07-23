@@ -40,10 +40,10 @@ Excluding `api/*`
 ```json
 {
     "quizdata": {
-        "0": {"name": "Fehér Ház", "country": "Egyesült Államok", "city": "Washington", "id": 2000},
-        "1": {"name": "Szent István bazilika", "country": "Magyarország", "city": "Budapest", "id": 2001},
+        "0": {"name": "Fehér Ház", "country": "Egyesült Államok", "city": "Washington", "building_id": 2000},
+        "1": {"name": "Szent István bazilika", "country": "Magyarország", "city": "Budapest", "building_id": 2001},
         ...
-        "19": {"name": "Kölni dóm", "country": "Németország", "city": "Köln", "id": 2019}
+        "19": {"name": "Kölni dóm", "country": "Németország", "city": "Köln", "building_id": 2019}
     },
     "endTime": "<YYYY-MM-DDTHH:MM:SS.sss>"
 }
@@ -55,10 +55,10 @@ Excluding `api/*`
 {
     "uid": 1234567890, (the returned uid value from `/login`)
     "answers": {
-        "0": {"id": 2000, "number": 1},
-        "1": {"id": 2001, "number": 41},
+        "0": {"building_id": 2000, "answer": 1},
+        "1": {"building_id": 2001, "answer": 41},
         ...
-        "19": {"id": 2019, "number": 39}
+        "19": {"building_id": 2019, "answer": 39}
     }
 }
 ```

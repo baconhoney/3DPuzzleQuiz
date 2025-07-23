@@ -116,7 +116,7 @@ async def getQuestionsHandler(request: web.Request):
     ).fetchall()
     quizdata = {
         str(i): {
-            "id": entry[0],
+            "building_id": entry[0],
             "name": entry[1],
             "country": entry[2],
             "city": entry[3],
@@ -129,17 +129,48 @@ async def getQuestionsHandler(request: web.Request):
 @router.post("/api/uploadAnswers")
 async def uploadAnswersHandler(request: web.Request):
     print("API POST request incoming: uploadAnswers")
-    data = await request.json()
-    print(f"Received length {'answers' in data and len(data['answers'])}")
-    raise web.HTTPOk()
+    data: dict[str, int | dict[str, dict[str, int]]] = await request.json()
+    if "teamID" not in data:
+        raise web.HTTPBadRequest(text="Field 'teamID' is missing from json")
+    if not isinstance(data["teamID"], int) or not quizDB.cursor.execute(f"SELECT id FROM teams WHERE id = {data['teamID']};").fetchone():
+        raise web.HTTPBadRequest(text=f"Invalid teamID: {data['teamID']}")
+    if "answers" not in data:
+        raise web.HTTPBadRequest(text="Field 'answers' is missing from json")
+    if not isinstance(data["answers"], dict):
+        raise web.HTTPBadRequest(text=f"Field 'answers' is not a dictionary: {data['answers']}")
+    teamID = data["teamID"]
+    answers = data["answers"]
+    for answer in answers.values():
+        if not isinstance(answer, dict):
+            raise web.HTTPBadRequest(text=f"Field 'answers' is not a dictionary: {answer}")
+        if "building_id" not in answer or "answer" not in answer:
+            raise web.HTTPBadRequest(text=f"Malformed answer: {answer}, teamID: {teamID}")
+        quizDB.cursor.execute(
+            f"INSERT INTO answers (team_id, building_id, answer) VALUES (?, ?, ?);",
+            (teamID, answer["building_id"], answer["answer"]),
+        )
+    score = quizDB.cursor.execute("SELECT count(answers.id) \
+        FROM teams JOIN answers ON teams.id = answers.team_id JOIN buildings ON answers.building_id = buildings.id \
+        WHERE teams.id = {teamID} AND buildings.answer = answers.answer;"
+    ).fetchone()[0]
+    if quizDB.cursor.execute(
+        f"UPDATE teams \
+        SET submitted_at = {datetime.datetime.now().isoformat(timespec='milliseconds')}, \
+        score = {score} \
+        WHERE id = {teamID};"
+    ).rowcount != 1:
+        raise web.HTTPInternalServerError(text=f"Failed to update team {teamID}")
+    quizDB.connection.commit()
+    raise web.HTTPNoContent()
 
 
 @router.get("/api/getAnswers")
 def getAnswersHandler(request: web.Request):
     print(f"API GET request incoming: getAnswers")
-    uid = request.query.get("uid")
-    if not uid:
-        raise web.HTTPBadRequest(text="UID missing")
+    teamID = request.query.get("teamID")
+    if not teamID:
+        raise web.HTTPBadRequest(text="Value 'teamID' is missing")
+    # TODO: finish this
     return web.json_response({"quizdata": {}, "score": random.randint(0, 20)})
 
 
