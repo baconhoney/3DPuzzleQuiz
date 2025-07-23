@@ -1,6 +1,7 @@
-/**/node_modules/
-/**/dist
 /**/.idea/
-gtk3-runtime-3.24.31-2022-01-04-ts-win64.exe
-/identifier.sqlite
-Server/__pycache__/QuizDB.cpython-312.pyc
+/**/dist/
+/**/node_modules/
+/**/__pycache__/
+/**/identifier.sqlite
+/1_Dist/*
+/Specs/.$*

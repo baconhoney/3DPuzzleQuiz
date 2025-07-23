@@ -17,18 +17,20 @@ Excluding `api/*`
 
 ### POST `/api/login`
 - expects json:
+  - name (string): Name of the team
+  - lang (string): Language of the team: `"hu"|"en"`
 ```json
 {
-    "name": "<Team name>",
-    "lang": "hu" (`hu` or `en`, defaults to `hu`)
+    "name": "John Doe",
+    "lang": "hu"
 }
 ```
 - returns json:
 ```json
 {
-    "uid": 1234567890, (random number from 1e9, up to but not including 1e10)
+    "teamID": <10 digit number>,
     "startTime": "<YYYY-MM-DDTHH:MM:SS.sss>",
-    "quizIsRunning": false
+    "quizState": "<studying|answering|scoring>"
 }
 ```
 
@@ -81,7 +83,7 @@ Excluding `api/*`
 - sends `events` as json:
 ```json
 {
-    "event": ("quizStarted" | "quizEnded" | "resultsReady"),
+    "event": <"quizStarted" | "quizEnded" | "resultsReady">,
     "timestamp": "<YYYY-MM-DDTHH:MM:SS.sss>"
 }
 ```

@@ -2,55 +2,56 @@ import sqlite3
 from os import makedirs
 from pathlib import Path
 
-__all__ = ["QuizDB"]
 
-questionsSQL = """
-    CREATE TABLE questions
-    (
-        building_id INTEGER PRIMARY KEY,
-        box         INTEGER,
-        answer      INTEGER,
-        name_hu     TEXT,
-        name_en     TEXT,
-        country_hu  TEXT,
-        country_en  TEXT,
-        city_hu     TEXT,
-        city_en     TEXT
-    ) STRICT;
+_buildingsSQL = """
+CREATE TABLE buildings
+(
+    id         INTEGER PRIMARY KEY NOT NULL,
+    box        INTEGER             NOT NULL,
+    answer     INTEGER             NOT NULL,
+    name_hu    TEXT                NOT NULL,
+    name_en    TEXT                NOT NULL,
+    country_hu TEXT                NOT NULL,
+    country_en TEXT                NOT NULL,
+    city_hu    TEXT                NOT NULL,
+    city_en    TEXT                NOT NULL
+) STRICT;
 """
 
-quizzesSQL = """
-    CREATE TABLE quizzes
-    (
-        size         INTEGER, -- Size of the test
-        question_ids TEXT     -- Store as JSON-encoded array [<questions.ROWID>, ...]
-    ) STRICT;
+_quizzesSQL = """
+CREATE TABLE quizzes
+(
+    id          INTEGER PRIMARY KEY NOT NULL,
+    quiz_number INTEGER             NOT NULL,
+    building_id INTEGER             NOT NULL,
+    
+    FOREIGN KEY (building_id) REFERENCES buildings (id)
+) STRICT;
 """
 
-teamsSQL = """
-    CREATE TABLE teams
-    (
-        uuid         INTEGER PRIMARY KEY,
-        team_name    TEXT,
-        language     TEXT,
-        quiz_id      INTEGER,
-        score        INTEGER,
-        submitted_at TEXT, -- Time of answers submitted
-        
-        FOREIGN KEY (quiz_id) REFERENCES quizzes (ROWID)
-    ) STRICT;
+_teamsSQL = """
+CREATE TABLE teams
+(
+    id           INTEGER PRIMARY KEY NOT NULL,
+    name         TEXT                NOT NULL,
+    language     TEXT                NOT NULL,
+    quiz_number  INTEGER             NOT NULL,
+    score        INTEGER,
+    submitted_at TEXT
+) STRICT;
 """
 
-answersSQL = """
-    CREATE TABLE answers (
-        team_id     INTEGER,
-        question_id INTEGER,
-        answer      INTEGER,
-        is_correct  INTEGER,
-        
-        FOREIGN KEY (team_id)     REFERENCES teams (ROWID),
-        FOREIGN KEY (question_id) REFERENCES questions (ROWID)
-    ) STRICT;
+_answersSQL = """
+CREATE TABLE answers
+(
+    id          INTEGER PRIMARY KEY NOT NULL,
+    team_id     INTEGER             NOT NULL,
+    building_id INTEGER             NOT NULL,
+    answer      INTEGER             NOT NULL,
+    
+    FOREIGN KEY (team_id) REFERENCES teams (id),
+    FOREIGN KEY (building_id) REFERENCES buildings (id)
+) STRICT;
 """
 
 
@@ -70,10 +71,10 @@ class QuizDB:
         if not self.cursor:
             raise RuntimeError("Database cursor cannot be created")
 
-        self._checkDBTable("questions", questionsSQL)
-        self._checkDBTable("quizzes", quizzesSQL)
-        self._checkDBTable("teams", teamsSQL)
-        self._checkDBTable("answers", answersSQL)
+        self._checkDBTable("buildings", _buildingsSQL)
+        self._checkDBTable("quizzes", _quizzesSQL)
+        self._checkDBTable("teams", _teamsSQL)
+        self._checkDBTable("answers", _answersSQL)
 
     def _checkDBTable(self, tableName: str, tableSQL: str) -> None:
         if not self.cursor.execute(f"SELECT count(name) FROM sqlite_master WHERE type='table' AND name='{tableName}';").fetchone()[0] == 1:
@@ -82,3 +83,6 @@ class QuizDB:
                 print(f"Table '{tableName}' created successfully")
             else:
                 print(f"Table creation aborted")
+
+__all__ = ["QuizDB"]
+

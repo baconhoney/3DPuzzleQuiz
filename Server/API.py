@@ -33,16 +33,16 @@ class QuizType(Enum):
 class QuizPhases(Enum):
     """Possible phases of the quiz."""
 
-    IDLE = 0
-    RUNNING = 1
-    WAITING_FOR_RESULTS = 2
+    STUDYING = "studying"
+    ANSWERING = "answering"
+    SCORING = "scoring"
 
 
 class QuizState:
-    isRunning: bool = False
     nextQuizAt: datetime.datetime = datetime.datetime.now()
-    currentQuizId: int = 2
-    phase: QuizPhases = QuizPhases.IDLE
+    currentQuizNumber: int = 2
+    phase: QuizPhases = QuizPhases.STUDYING
+    _currentQuizdata: dict[str, dict[str, dict[str, str | int]]] = None
 
     @classmethod
     def formatNextQuizAt(cls) -> str:
@@ -53,7 +53,7 @@ class QuizState:
 # ------------------------------
 # ------- UTIL FUNCTIONS -------
 # ------------------------------
-def getNewUUID(type: QuizType):
+def getNewTeamID(type: QuizType):
     """Generate a new unique identifier."""
     while True:
         if type == QuizType.DIGITAL:
@@ -64,7 +64,7 @@ def getNewUUID(type: QuizType):
             uuid = random.randint(int(1e9), int(5e9 - 1))
         else:
             raise ValueError(f"Invalid quizType {type}")
-        quizDB.cursor.execute(f"SELECT count(uuid) FROM teams WHERE uuid={uuid};")
+        quizDB.cursor.execute(f"SELECT count(id) FROM teams WHERE id={uuid};")
         if quizDB.cursor.fetchone()[0] == 0:
             return uuid
 
@@ -76,42 +76,52 @@ def getNewUUID(type: QuizType):
 async def loginHandler(request: web.Request):
     print(f"API POST request incoming: login")
     requestData: dict[str, str] = await request.json()
-    teamName = requestData.get("teamName").strip()
+    teamName = requestData.get("name", "").strip()
     if not teamName:
-        raise web.HTTPBadRequest(text="Value 'teamName' is missing from json")
-    lang = requestData.get("lang", "hu")
-    if lang not in SUPPORTED_LANGS:
-        raise web.HTTPBadRequest(text=f"Invalid language: {lang}")
-    uuid = getNewUUID(QuizType.DIGITAL)
-    logging.info(f"Registering new team: {teamName} ({uuid}), {lang}")
+        raise web.HTTPBadRequest(text="Value 'name' is missing from json")
+    teamLang = requestData.get("lang", "").strip().lower()
+    if not teamName:
+        raise web.HTTPBadRequest(text="Value 'lang' is missing from json")
+    if teamLang not in SUPPORTED_LANGS:
+        raise web.HTTPBadRequest(text=f"Invalid language: '{teamLang}'")
+    teamID = getNewTeamID(QuizType.DIGITAL)
+    logging.info(f"Registering new team: {teamName} ({teamID}), {teamLang}")
     quizDB.cursor.execute(
-        f"INSERT INTO teams (uuid, team_name, language, quiz_id) VALUES (?, ?, ?, ?);",
-        (uuid, teamName, lang, QuizState.currentQuizId),
+        f"INSERT INTO teams (id, name, language, quiz_number) VALUES (?, ?, ?, ?);",
+        (teamID, teamName, teamLang, QuizState.currentQuizNumber),
     )
     quizDB.connection.commit()
-    return web.json_response({"uuid": uuid, "startTime": QuizState.formatNextQuizAt(), "isRunning": QuizState.isRunning})
+    return web.json_response({"teamID": teamID, "startTime": QuizState.formatNextQuizAt(), "quizState": QuizState.phase.value})
 
 
 @router.get("/api/getQuestions")
 async def getQuestionsHandler(request: web.Request):
     print(f"API GET request incoming: getQuestions")
-    uuid = request.query.get("uuid")
-    if not uuid:
-        raise web.HTTPBadRequest(text="UUID missing")
-    res = quizDB.cursor.execute(f"SELECT language, quiz_id FROM teams WHERE uuid={uuid};").fetchone()
+    teamID = request.query.get("teamID")
+    if not teamID:
+        raise web.HTTPBadRequest(text="Value 'teamID' is missing from query")
+    if not teamID.isdigit():
+        raise web.HTTPBadRequest(text=f"Invalid teamID: {teamID}")
+    res: list[str | int] = quizDB.cursor.execute(f"SELECT language, quiz_number FROM teams WHERE id = {teamID};").fetchone()
     if not res:
-        raise web.HTTPBadRequest(text=f"Invalid UUID: {uuid}")
+        raise web.HTTPBadRequest(text=f"Invalid teamID: {teamID}")
     lang = res[0]
-    # TODO: ez így nem jó
-    res = quizDB.cursor.execute(f"SELECT building_id, name_{lang}, country_{lang}, city_{lang} FROM questions JOIN quizzes ON questions.ROWID = quizzes.question_ids WHERE quizzes.ROWID = {res[1]};").fetchall()
+    quizNumber = res[1]
+    if quizNumber != QuizState.currentQuizNumber:
+        raise web.HTTPGone(text=f"")
+    rawQuizdata: list[list[str | int]] = quizDB.cursor.execute(
+        f"SELECT buildings.id, buildings.name_{lang}, buildings.country_{lang}, buildings.city_{lang} \
+        FROM buildings JOIN quizzes ON buildings.id = quizzes.building_id \
+        WHERE quizzes.quiz_number = {quizNumber};"
+    ).fetchall()
     quizdata = {
         str(i): {
-            "name": entry[res]["name"],
-            "country": entry[res]["country"],
-            "city": entry[res]["city"],
-            "id": "",
+            "id": entry[0],
+            "name": entry[1],
+            "country": entry[2],
+            "city": entry[3],
         }
-        for i, entry in enumerate([])
+        for i, entry in enumerate(sorted(rawQuizdata, key=lambda x: x[2]))
     }
     return web.json_response(quizdata)
 
