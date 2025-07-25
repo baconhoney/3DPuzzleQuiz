@@ -3,5 +3,6 @@
 /**/node_modules/
 /**/__pycache__/
 /**/identifier.sqlite
+/**/.venv/
 /1_Dist/*
 /Specs/.$*
