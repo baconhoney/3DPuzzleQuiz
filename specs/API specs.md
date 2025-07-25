@@ -43,7 +43,6 @@ Excluding `api/*`
   {
       "name": "John Doe",
       "lang": "hu",
-      "uid": 1234567890, (the returned uid value from `/login`)
       "answers": {
           "0": {"building_id": 2000, "answer": 1},
           "1": {"building_id": 2001, "answer": 41},
