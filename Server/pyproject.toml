@@ -3,9 +3,9 @@ name = "server"
 version = "0.1.0"
 description = "A 3D Puzzle Quizzer back-end application."
 authors = [
-    {name = "BaconHoney",email = ""}
+    {name = "BaconHoney"}
 ]
-readme = "README.md"
+package-mode = false
 requires-python = ">=3.12, <3.13"
 dependencies = [
     "aiohttp (>=3.12.14,<4.0.0)"

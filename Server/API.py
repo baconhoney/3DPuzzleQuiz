@@ -206,7 +206,7 @@ def main():
     logging.debug("Testing logger")
     app = web.Application()
     app.add_routes(router)
-    web.run_app(app, port=1006)
+    web.run_app(app, port=8000)
 
 
 # ------- Entrypoint -------
