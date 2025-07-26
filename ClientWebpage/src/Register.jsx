@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useLanguage } from './App';
 
+const LightTheme = "retro"
+const DarkTheme = "forest"
+
 const Register = () => {
     const { language, changeLng, t, toQuiz, teamName, setTeamName } = useLanguage();
     const [nameError, setNameError] = useState(false);
-    const [theme, setTheme] = useState('light');
+    const [theme, setTheme] = useState(LightTheme);
 
     useEffect(() => {
         const savedTheme = localStorage.getItem("theme");
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+        const initialTheme = savedTheme || (prefersDark ? DarkTheme : LightTheme);
         setTheme(initialTheme);
         document.documentElement.setAttribute('data-theme', initialTheme);
     }, []);
 
     const toggleTheme = () => {
-        const newTheme = theme === 'light' ? 'dark' : 'light';
+        const newTheme = theme === LightTheme ? DarkTheme : LightTheme;
         setTheme(newTheme);
         localStorage.setItem("theme", newTheme);
         document.documentElement.setAttribute('data-theme', newTheme);
@@ -41,7 +44,7 @@ const Register = () => {
         <div className="flex flex-col items-center justify-center min-h-screen gap-16 w-full">
             <div className="absolute top-4 right-4 z-50">
                 <button className="btn btn-info btn-outline w-10" onClick={toggleTheme}>
-                    {theme === 'light' ? t("🌙") : t("☀️")}
+                    {theme === LightTheme ? t("🌙") : t("☀️")}
                 </button>
             </div>
 
