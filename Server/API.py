@@ -33,15 +33,15 @@ class QuizType(Enum):
 class QuizPhases(Enum):
     """Possible phases of the quiz."""
 
-    STUDYING = "studying"
-    ANSWERING = "answering"
+    IDLE = "idle"
+    RUNNING = "running"
     SCORING = "scoring"
 
 
 class QuizState:
     nextQuizAt: datetime.datetime = datetime.datetime.now()
     currentQuizNumber: int = 2
-    phase: QuizPhases = QuizPhases.STUDYING
+    phase: QuizPhases = QuizPhases.IDLE
     _currentQuizdata: dict[str, dict[str, dict[str, str | int]]] = None
 
     @classmethod
