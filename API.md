@@ -76,14 +76,24 @@ Excluding `api/*`
 ### WebSockets `/api/events`
 - expects no messages
 - sends `events` as json:
-```json
-{
-  "event": <"quizStarted" | "quizEnded" | "resultsReady">,
-  "timestamp": "<YYYY-MM-DDTHH:MM:SS.sss>"
-}
-```
+  ```json
+  {
+    "event": <"quizStarted" | "quizEnded" | "resultsReady">,
+    "timestamp": "<YYYY-MM-DDTHH:MM:SS.sss>"
+  }
+  ```
+
 where `timestamp` means:
 - quizStarted `->` quiz ending time
 - quizEnded `->` expected results-ready time
 - resultsReady `->` next quiz start time
 
+### GET `/api/status`
+
+- expects no messages
+- returns json:
+  ```json
+  {
+    "state": <"idle" | "running" | "scoring">
+  }
+  ```
