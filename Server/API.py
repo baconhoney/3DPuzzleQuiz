@@ -3,6 +3,7 @@ import pathlib
 import mimetypes
 import random
 import json
+import dotenv
 import QuizDB
 import logging
 import sys
@@ -179,6 +180,10 @@ async def POST_NotFound(request: web.Request) -> web.Response:
     raise web.HTTPNotFound(text=f"API POST endpoint '{request.match_info.get('fn')}' doesn't exist.")
 
 
+# --------------------------------------------
+# ------- FILE SERVERHANDLER FUNCTIONS -------
+# --------------------------------------------
+# Client webpage
 @router.get("/{fn:.*}")
 async def GET_files(request: web.Request) -> web.Response:
     print(f"Request incoming: {request.method} {request.path}")
