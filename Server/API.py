@@ -7,22 +7,34 @@ import dotenv
 import QuizDB
 import logging
 import sys
+import os
 from enum import Enum
 from aiohttp import web
 
+
+os.environ["CWD"] = str(pathlib.Path(__file__).parent.resolve().as_uri())
+dotenv.load_dotenv()
+
+
+# create object for paths
+class paths:
+    cwd = pathlib.Path(os.getenv("CWD")).resolve()
+    cfgRoot = pathlib.Path(os.getenv("CFG_ROOT")).resolve()
+    dataRoot = pathlib.Path(os.getenv("DATA_ROOT")).resolve()
+    clientRoot = pathlib.Path(os.getenv("CLIENT_ROOT")).resolve()
+    searchRoot = pathlib.Path(os.getenv("SEARCH_ROOT")).resolve()
+    adminRoot = pathlib.Path(os.getenv("ADMIN_ROOT")).resolve()
+
+
 router = web.RouteTableDef()
-cwd = pathlib.Path(__file__).parent.resolve()
-cfgRoot = cwd / "cfg"
-dataRoot = cwd / "data"
-webRoot = cwd / "web"
-quizDB = QuizDB.QuizDB(dataRoot)
+quizDB = QuizDB.QuizDB(paths.dataRoot)
 loggingLevel = "INFO"
 
 SUPPORTED_LANGS = ["hu", "en"]
 
 
 # -----------------------
-# ------- CLASSES -------
+# ------- ENUMS -------
 # -----------------------
 class QuizType(Enum):
     """Possible types of the quiz."""
@@ -39,6 +51,9 @@ class QuizPhases(Enum):
     SCORING = "scoring"
 
 
+# -----------------------
+# ------- CLASSES -------
+# -----------------------
 class QuizState:
     nextQuizAt: datetime.datetime = datetime.datetime.now()
     currentQuizNumber: int = 2
@@ -181,21 +196,43 @@ async def POST_NotFound(request: web.Request) -> web.Response:
 
 
 # --------------------------------------------
-# ------- FILE SERVERHANDLER FUNCTIONS -------
+# ------- FILE HANDLER FUNCTIONS -------
 # --------------------------------------------
+def handleFile(request: web.Request, root: pathlib.Path) -> web.Response:
+    print(f"HTTP GET request incoming: {request.path}")
+    url = request.match_info.get("fn", "").strip("/")
+    if ".." in url:
+        raise web.HTTPForbidden(text=f"URL contains '..': '{str(url)}'")
+    filepath = root / url
+    if filepath.is_dir():
+        # Directory is requested, serve index.html from that directory
+        filepath = filepath / "index.html"
+    if not filepath.exists():
+        # File does not exist, return 404
+        raise web.HTTPNotFound(text=f"Resource '{filepath}' does not exist.")
+    if not filepath.is_file():
+        # Resource is not a file, return 403
+        raise web.HTTPForbidden(text=f"Resource '{filepath}' is not a file.")
+    mimetype, encoding = mimetypes.guess_type(filepath)
+    return web.Response(body=filepath.read_text(), content_type=mimetype or "text/plain", charset=encoding or "utf-8")
+
+
+# Search webpage
+@router.get("/search/{fn:.*}")
+async def GET_files(request: web.Request) -> web.Response:
+    return handleFile(request, paths.searchRoot)
+
+
+# Admin webpage
+@router.get("/admin/{fn:.*}")
+async def GET_files(request: web.Request) -> web.Response:
+    return handleFile(request, paths.adminRoot)
+
+
 # Client webpage
 @router.get("/{fn:.*}")
 async def GET_files(request: web.Request) -> web.Response:
-    print(f"Request incoming: {request.method} {request.path}")
-    filepath = webRoot / request.match_info.get("fn", "").strip("/")
-    # If a directory is requested, serve index.html from that directory
-    if filepath.is_dir():
-        filepath = filepath / "index.html"
-    # If the file does not exist, return 404
-    if not (filepath.exists() and filepath.is_file()):
-        raise web.HTTPNotFound(text=f"File '{filepath}' does not exist.")
-    mimetype, encoding = mimetypes.guess_type(filepath)
-    return web.Response(body=filepath.read_text(), content_type=mimetype or "text/plain", charset=encoding or "utf-8")
+    return handleFile(request, paths.clientRoot)
 
 
 # --------------------

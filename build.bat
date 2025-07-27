@@ -16,6 +16,7 @@ set buildAdmin=0
 set buildServer=1
 
 echo Cleaning build folder...
+mkdir \Build
 del /q /s "%cwd%%buildRoot%\*.*"
 for /d %%x in ("%cwd%%buildRoot%\*") do rd /s /q "%%x"
 echo Cleaning build folder done
