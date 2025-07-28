@@ -1,9 +1,9 @@
-/**/.idea/
-/**/dist/
-/**/node_modules/
 /**/__pycache__/
-/**/identifier.sqlite
+/**/.idea/
 /**/.venv/
 /**/.vscode/
+/**/dist/
+/**/identifier.sqlite
+/**/node_modules/
 /Build/*
 /Specs/.$*

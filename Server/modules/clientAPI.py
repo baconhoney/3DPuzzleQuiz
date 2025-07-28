@@ -94,7 +94,7 @@ def getAnswersHandler(request: web.Request):
                     "name": entry[0],
                     "country": entry[1],
                     "city": entry[2],
-                    "number": entry[3],
+                    "answers": entry[3],
                     "correct": bool(entry[4]),
                 }
                 for i, entry in enumerate(rawData)
