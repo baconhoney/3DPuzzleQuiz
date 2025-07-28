@@ -17,9 +17,11 @@ const resources = {
 	},
 }
 
+const savedLang = localStorage.getItem("language") || "hu";
+
 i18n.use(initReactI18next).init({
 	resources,
-	lng: 'hu',
+	lng: savedLang,
 	fallbackLng: 'en',
 	interpolation: {
 		escapeValue: false,
@@ -57,6 +59,7 @@ function App() {
 	const changeLng = (lng) => {
 		i18n.changeLanguage(lng);
 		setLanguage(lng);
+		localStorage.setItem("language", lng);
 	}
 
 	// Called when the team has registered and the quiz should be shown

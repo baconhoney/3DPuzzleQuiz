@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useLanguage } from './App';
+import i18n from "i18next";
 
-const LightTheme = "retro"
-const DarkTheme = "forest"
+const LightTheme = "light"
+const DarkTheme = "dark"
 
 const Register = () => {
-    const { language, changeLng, t, toQuiz, teamName, setTeamName } = useLanguage();
+    const { changeLng, t, toQuiz, teamName, setTeamName } = useLanguage();
+    const [language, setLanguage] = useState(i18n.language);
     const [nameError, setNameError] = useState(false);
     const [theme, setTheme] = useState(LightTheme);
 
@@ -15,6 +17,12 @@ const Register = () => {
         const initialTheme = savedTheme || (prefersDark ? DarkTheme : LightTheme);
         setTheme(initialTheme);
         document.documentElement.setAttribute('data-theme', initialTheme);
+    }, []);
+
+    useEffect(() => {
+        const onLangChanged = (lng) => setLanguage(lng);
+        i18n.on('languageChanged', onLangChanged);
+        return () => i18n.off('languageChanged', onLangChanged);
     }, []);
 
     const toggleTheme = () => {

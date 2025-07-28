@@ -60,7 +60,8 @@ const Quiz = () => {
         });
 
         const formattedAnswers = {
-            teamName: localStorage.getItem("teamName"),
+            name: localStorage.getItem("teamName"),
+            lang: localStorage.getItem("language") || "hu",
             answers
         };
 
