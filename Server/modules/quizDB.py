@@ -83,6 +83,7 @@ class QuizDB:
                 print(f"Table '{tableName}' created successfully")
             else:
                 print(f"Table creation aborted")
+                exit(-1)
 
 __all__ = ["QuizDB"]
 
