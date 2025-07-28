@@ -1,9 +1,10 @@
 from aiohttp import web
 import datetime
-import utils
 import logging
+import modules.utils as utils
 
 logger = logging.getLogger(__name__)
+logger.info(f"Importing {__name__}...")
 baseURL = "/api/admin"
 
 
@@ -27,6 +28,7 @@ async def getQuizResultsHandler(request: web.Request):
             for i, entry in enumerate(res)
         },
     )
+
 
 @utils.router.get(baseURL + "/getQuizdata")
 async def getQuizdataHandler(request: web.Request):
@@ -52,10 +54,10 @@ async def getQuizdataHandler(request: web.Request):
                 "city": entry[2],
                 "number": entry[3],
                 "correct": bool(entry[4]),
-            } for i, entry in enumerate(rawData)
+            }
+            for i, entry in enumerate(rawData)
         }
     )
-
 
 
 # ------- 404 Handlers -------

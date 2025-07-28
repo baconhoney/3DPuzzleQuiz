@@ -1,7 +1,11 @@
 from aiohttp import web
-from utils import *
 import mimetypes
 import pathlib
+import logging
+import modules.utils as utils
+
+logger = logging.getLogger(__name__)
+logger.info(f"Importing {__name__}...")
 
 
 def handleFile(request: web.Request, root: pathlib.Path) -> web.Response:
@@ -31,18 +35,18 @@ def handleFile(request: web.Request, root: pathlib.Path) -> web.Response:
 
 
 # Search webpage
-@router.get("/search/{fn:.*}")
+@utils.router.get("/search/{fn:.*}")
 async def GET_files(request: web.Request) -> web.Response:
-    return handleFile(request, paths.searchRoot)
+    return handleFile(request, utils.paths.searchRoot)
 
 
 # Admin webpage
-@router.get("/admin/{fn:.*}")
+@utils.router.get("/admin/{fn:.*}")
 async def GET_files(request: web.Request) -> web.Response:
-    return handleFile(request, paths.adminRoot)
+    return handleFile(request, utils.paths.adminRoot)
 
 
 # Client webpage
-@router.get("/{fn:.*}")
+@utils.router.get("/{fn:.*}")
 async def GET_files(request: web.Request) -> web.Response:
-    return handleFile(request, paths.clientRoot)
+    return handleFile(request, utils.paths.clientRoot)

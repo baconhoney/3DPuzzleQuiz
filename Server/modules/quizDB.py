@@ -1,7 +1,10 @@
 import sqlite3
 from os import makedirs
 from pathlib import Path
+import logging
 
+logger = logging.getLogger(__name__)
+logger.info(f"Importing {__name__}...")
 
 _buildingsSQL = """
 CREATE TABLE buildings
@@ -57,6 +60,7 @@ CREATE TABLE answers
 
 class QuizDB:
     def __init__(self, dataRoot: Path) -> None:
+        logger.debug("Initializing QuizDB")
         self._dataRoot = dataRoot
         if not self._dataRoot:
             raise ValueError("dataRoot is required")
@@ -78,12 +82,12 @@ class QuizDB:
 
     def _checkDBTable(self, tableName: str, tableSQL: str) -> None:
         if not self.cursor.execute(f"SELECT count(name) FROM sqlite_master WHERE type='table' AND name='{tableName}';").fetchone()[0] == 1:
-            if input(f"WARNING: Table '{tableName}' does not exist, are you sure to create it? (YES/NO) > ") == "YES":
-                self.cursor.execute(tableSQL)
-                print(f"Table '{tableName}' created successfully")
-            else:
-                print(f"Table creation aborted")
-                exit(-1)
+            # if input(f"WARNING: Table '{tableName}' does not exist, are you sure to create it? (YES/NO) > ") == "YES":
+            #     self.cursor.execute(tableSQL)
+            #     print(f"Table '{tableName}' created successfully")
+            # else:
+            print(f"Table creation aborted")
+            # exit(-1)
+
 
 __all__ = ["QuizDB"]
-

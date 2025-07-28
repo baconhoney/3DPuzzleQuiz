@@ -3,8 +3,12 @@ from enum import Enum
 import datetime
 import os
 import pathlib
-import quizDB
 import random
+import logging
+import modules.quizDB as quizDB
+
+logger = logging.getLogger(__name__)
+logger.info(f"Importing {__name__}...")
 
 
 # create object for paths
