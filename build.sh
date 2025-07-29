@@ -2,7 +2,7 @@
 cwd=$(pwd)
 clientRoot="/ClientWebpage"
 searchRoot="/SearchWebpage"
-adminRoot="/AdminWebpage"
+adminRoot="/AdminWebpage/react"
 serverRoot="/Server"
 buildRoot="/Build"
 
@@ -42,11 +42,18 @@ fi
 if [ $buildServer -eq 1 ]; then
     echo "Copying server files..."
     cd "$cwd"
-    cp -u "$cwd$serverRoot/API.py" "$cwd$buildRoot"
-    cp -u "$cwd$serverRoot/QuizDB.py" "$cwd$buildRoot"
-    cp -u "$cwd$serverRoot/manageQuizdata.py" "$cwd$buildRoot"
-    cp -r -u "$cwd$serverRoot/cfg" "$cwd$buildRoot"
-    cp -r -u "$cwd$serverRoot/data" "$cwd$buildRoot"
+    # Create destination directory
+    mkdir -p "$cwd$buildRoot/modules"
+    # Copy build.env as .env into destination folder
+    cp "$cwd/build.env" "$cwd$buildRoot/.env"
+    # Copy the specific root files
+    cp "$cwd/main.py" "$cwd$buildRoot/"
+    cp "$cwd/manageQuizdata.py" "$cwd$buildRoot/"
+    # Copy all files from modules/, excluding __pycache__
+    find "$cwd$serverRoot/modules" -type f ! -path "*/__pycache__/*" -exec cp {} "$cwd$buildRoot/modules" \;
+    # Copy cfg and data folders recursively
+    cp -r ./cfg "$cwd$buildRoot/"
+    cp -r ./data "$cwd$buildRoot/"
     echo "Copying server files done"
 fi
 

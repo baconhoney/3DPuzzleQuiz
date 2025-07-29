@@ -5,14 +5,14 @@ REM Define root directories
 set "cwd=%cd%"
 set "clientRoot=\ClientWebpage"
 set "searchRoot=\SearchWebpage"
-set "adminRoot=\AdminWebpage"
+set "adminRoot=\AdminWebpage\react"
 set "serverRoot=\Server"
 set "buildRoot=\Build"
 
 REM Build flags
-set buildClient=0
-set buildSearch=0
-set buildAdmin=0
+set buildClient=1
+set buildSearch=1
+set buildAdmin=1
 set buildServer=1
 
 echo Cleaning build folder...
@@ -48,11 +48,17 @@ if "%buildAdmin%"=="1" (
 if "%buildServer%"=="1" (
     echo Copying server files...
     cd /d "%cwd%"
-    copy /Y "%cwd%%serverRoot%\API.py" "%cwd%%buildRoot%\"
-    copy /Y "%cwd%%serverRoot%\QuizDB.py" "%cwd%%buildRoot%\"
-    copy /Y "%cwd%%serverRoot%\manageQuizdata.py" "%cwd%%buildRoot%\"
-    xcopy /E /Y "%cwd%%serverRoot%\cfg" "%cwd%%buildRoot%\cfg\"
-    xcopy /E /Y "%cwd%%serverRoot%\data" "%cwd%%buildRoot%\data\"
+    mkdir %cwd%%buildRoot%\modules
+    :: Copy build.env as .env into destination folder
+    copy /Y ".\build.env" "%cwd%%buildRoot%\.env"
+    :: Copy only the specific root files
+    copy .\main.py %cwd%%buildRoot%\
+    copy .\manageQuizdata.py %cwd%%buildRoot%\
+    :: Copy only files directly in modules\ (not in __pycache__ or subfolders)
+    for %%F in (modules\*.py) do copy "%%F" "%cwd%%buildRoot%\modules\"
+    :: Recursive copy all the cfg and data folders
+    xcopy /E /I /Y "%cwd%%serverRoot%\cfg" "%cwd%%buildRoot%\cfg\"
+    xcopy /E /I /Y "%cwd%%serverRoot%\data" "%cwd%%buildRoot%\data\"
     echo Copying server files done
 )
 
