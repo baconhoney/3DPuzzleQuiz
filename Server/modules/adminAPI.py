@@ -8,6 +8,15 @@ logger.info(f"Importing {__name__}...")
 baseURL = "/api/admin"
 
 
+@utils.router.get(baseURL + "/getAllBuildingsData")
+async def getAllBuildingsDataHandler(request: web.Request):
+    print(f"API GET request incoming: admin/getAllBuildingsData")
+    localisedCols = ", ".join([f"name_{lang.value}, country_{lang.value}, city_{lang.value}" for lang in utils.SupportedLanguages])
+    res = utils.quizDB.cursor.execute(f"SELECT id, box, answer, {localisedCols} FROM buildings;").fetchall()
+    colHeaders = ["id", "box", "answer"] + localisedCols.split(", ")
+    return web.json_response({str(i): dict(zip(colHeaders, entry)) for i, entry in enumerate(res)})
+
+
 @utils.router.get(baseURL + "/getQuizResults")
 async def getQuizResultsHandler(request: web.Request):
     print(f"API GET request incoming: admin/getResults")

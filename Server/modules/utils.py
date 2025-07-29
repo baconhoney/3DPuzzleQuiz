@@ -23,7 +23,7 @@ class paths:
 
 router = web.RouteTableDef()
 quizDB = quizDB.QuizDB(paths.dataRoot)
-
+connectedWSClients = set()
 
 # -----------------------
 # ------- ENUMS -------

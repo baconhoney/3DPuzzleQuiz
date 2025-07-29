@@ -1,11 +1,11 @@
 import json, pathlib, sys, datetime
-import QuizDB
+import modules.quizDB as quizDB
 
 
 cwd = pathlib.Path(__file__).parent.resolve()
 dataRoot = cwd / "data"
-quizRoot = cwd / "Teszt"
-quizDB = QuizDB.QuizDB(dataRoot)
+quizRoot = cwd / "_Teszt"
+quizDB = quizDB.QuizDB(dataRoot)
 
 csvHeaders = {
     "Név": "name_hu",
@@ -14,11 +14,11 @@ csvHeaders = {
     "Angol Név": "name_en",
     "Angol Ország": "country_en",
     "Angol Város": "city_en",
-    "id": "building_id",
+    "id": "id",
     "Doboz": "box",
     "Szám": "answer",
 }
-jsonHeaders = ["building_id", "box", "answer", "name_hu", "name_en", "country_hu", "country_en", "city_hu", "city_en"]
+jsonHeaders = ["id", "box", "answer", "name_hu", "name_en", "country_hu", "country_en", "city_hu", "city_en"]
 
 
 def JSON_to_Database():
@@ -29,31 +29,18 @@ def JSON_to_Database():
     quizData = rawQuizData.get("entries")
     if not quizData:
         raise ValueError(f"Failed to load masterList.json: {rawQuizData}")
-    quizDB.cursor.execute("DELETE FROM questions;")
+    quizDB.cursor.execute("DELETE FROM buildings;")
     quizDB.cursor.executemany(
-        "INSERT INTO questions (building_id, box, answer, name_hu, name_en, country_hu, country_en, city_hu, city_en) \
+        "INSERT INTO buildings (id, box, answer, name_hu, name_en, country_hu, country_en, city_hu, city_en) \
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        [
-            (
-                entry["building_id"],
-                entry["box"],
-                entry["answer"],
-                entry["name_hu"],
-                entry["name_en"],
-                entry["country_hu"],
-                entry["country_en"],
-                entry["city_hu"],
-                entry["city_en"],
-            )
-            for entry in quizData
-        ],
+        [tuple(entry[k] for k in jsonHeaders) for entry in quizData],
     )
     quizDB.connection.commit()
     print(f"Loaded {quizDB.cursor.rowcount} entries into the database")
 
 
 def Database_to_JSON():
-    quizDB.cursor.execute(f"SELECT {', '.join(jsonHeaders)} FROM questions;")
+    quizDB.cursor.execute(f"SELECT {', '.join(jsonHeaders)} FROM buildings;")
     data = [dict(zip(jsonHeaders, row)) for row in quizDB.cursor.fetchall()]
     jsonData = {"lastEdited": datetime.datetime.now().isoformat(timespec="milliseconds"), "entries": data}
     with open(quizRoot / "masterList.json", "w", encoding="utf-8") as f:
@@ -67,7 +54,7 @@ def JSON_to_CSV():
     quizData = rawQuizData.get("entries")
     if not quizData:
         raise ValueError(f"Failed to load masterList.json: {rawQuizData}")
-    with open(cwd / "Teszt/MesterLista.txt", "w", encoding="utf-16") as f:
+    with open(quizRoot / "MesterLista.txt", "w", encoding="utf-16") as f:
         f.write("\t".join(csvHeaders.keys()) + "\n")
         for entry in quizData:
             f.write("\t".join(str(entry[v]) for v in csvHeaders.values()) + "\n")
@@ -84,9 +71,9 @@ def CSV_to_JSON():
     data = [{v: line[i] for i, v in enumerate(csvHeaders.values())} for line in lines]
     jsonData = {
         "lastEdited": datetime.datetime.now().isoformat(timespec="milliseconds"),
-        "entries": [{k: (int(line[k]) if k in ["building_id", "box", "answer"] else line[k]) for k in jsonHeaders} for line in data],
+        "entries": [{k: (int(line[k]) if k in ["id", "box", "answer"] else line[k]) for k in jsonHeaders} for line in data],
     }
-    with open(cwd / "Teszt" / "masterList.json", "w", encoding="utf-8") as f:
+    with open(quizRoot / "masterList.json", "w", encoding="utf-8") as f:
         json.dump(jsonData, f, indent=4, ensure_ascii=False)
     print(f"Saved {len(data)} entries to masterList.json")
 

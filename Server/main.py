@@ -19,7 +19,7 @@ logging.debug("Testing logger")
 # sys.path.insert(1, str(pathlib.Path(__file__).parent.resolve() / "modules"))
 
 # get main file path for determining the root of the program
-os.environ["CWD"] = str(pathlib.Path(__file__).parent.resolve().as_uri())
+os.environ["CWD"] = str(pathlib.Path(__file__).parent.resolve().as_posix())
 dotenv.load_dotenv()
 
 # import the modules to add them to the program
@@ -32,7 +32,7 @@ import modules.fileServer as fileServer  # fileserver has to be the very last
 def main():
     app = web.Application()
     app.add_routes(router)
-    # web.run_app(app, port=8000)
+    web.run_app(app, port=1006)
 
 
 # ------- Entrypoint -------

@@ -26,3 +26,5 @@ CASE WHEN buildings.answer = answers.answer THEN 1 ELSE 0 END
 FROM answers JOIN buildings ON answers.building_id = buildings.id
 WHERE answers.team_id = {teamID};
 
+SELECT id, box, answer, {localisedCols} FROM buildings;
+

@@ -11,14 +11,14 @@ CREATE TABLE buildings
 (
     id         INTEGER PRIMARY KEY NOT NULL,
     box        INTEGER             NOT NULL,
-    answer     INTEGER             NOT NULL,
+    answer     INTEGER UNIQUE      NOT NULL,
     name_hu    TEXT                NOT NULL,
     name_en    TEXT                NOT NULL,
     country_hu TEXT                NOT NULL,
     country_en TEXT                NOT NULL,
     city_hu    TEXT                NOT NULL,
     city_en    TEXT                NOT NULL
-) STRICT;
+) STRICT, WITHOUT ROWID;
 """
 
 _quizzesSQL = """
@@ -29,19 +29,19 @@ CREATE TABLE quizzes
     building_id INTEGER             NOT NULL,
     
     FOREIGN KEY (building_id) REFERENCES buildings (id)
-) STRICT;
+) STRICT, WITHOUT ROWID;
 """
 
 _teamsSQL = """
 CREATE TABLE teams
 (
     id           INTEGER PRIMARY KEY NOT NULL,
-    name         TEXT                NOT NULL,
+    name         TEXT,
     language     TEXT                NOT NULL,
     quiz_number  INTEGER             NOT NULL,
     score        INTEGER,
     submitted_at TEXT
-) STRICT;
+) STRICT, WITHOUT ROWID;
 """
 
 _answersSQL = """
@@ -54,7 +54,7 @@ CREATE TABLE answers
     
     FOREIGN KEY (team_id) REFERENCES teams (id),
     FOREIGN KEY (building_id) REFERENCES buildings (id)
-) STRICT;
+) STRICT, WITHOUT ROWID;
 """
 
 
@@ -67,7 +67,8 @@ class QuizDB:
         if not Path.exists(self._dataRoot):
             makedirs(self._dataRoot)
 
-        self.connection = sqlite3.connect(self._dataRoot / "quizData.db")
+        self._dbExisted = (self._dataRoot / "quizData.sqlite").exists()
+        self.connection = sqlite3.connect(self._dataRoot / "quizData.sqlite")
         if not self.connection:
             raise RuntimeError("Database not found")
 
@@ -82,12 +83,11 @@ class QuizDB:
 
     def _checkDBTable(self, tableName: str, tableSQL: str) -> None:
         if not self.cursor.execute(f"SELECT count(name) FROM sqlite_master WHERE type='table' AND name='{tableName}';").fetchone()[0] == 1:
-            # if input(f"WARNING: Table '{tableName}' does not exist, are you sure to create it? (YES/NO) > ") == "YES":
-            #     self.cursor.execute(tableSQL)
-            #     print(f"Table '{tableName}' created successfully")
-            # else:
-            print(f"Table creation aborted")
-            # exit(-1)
+            if not self._dbExisted or input(f"WARNING: Table '{tableName}' does not exist, are you sure to create it? (YES/NO) > ") == "YES":
+                self.cursor.execute(tableSQL)
+                print(f"Table '{tableName}' created successfully")
+            else:
+                print(f"Table creation aborted")
 
 
 __all__ = ["QuizDB"]
