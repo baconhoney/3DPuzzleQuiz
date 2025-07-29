@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLanguage } from './App';
+import { useGlobalContext } from './App';
 import ThemeToggle from "./ThemeToggle";
 
 const Quiz = () => {
@@ -30,7 +30,7 @@ const Quiz = () => {
         endTime: "13:55:00"
     };
 
-    const { t, teamName } = useLanguage();
+    const { t, teamName } = useGlobalContext();
     const isQuizActive = true;
     const formattedTime = data.endTime.split(':').slice(0, 2).join(':');
 
