@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLanguage } from './App';
+import ThemeToggle from "./ThemeToggle";
 
 const Quiz = () => {
     const data = {
@@ -73,6 +74,9 @@ const Quiz = () => {
             <div className="navbar bg-base-200 shadow-sm px-5 sticky top-0 z-50 justify-between">
                 <p className="text-lg font-bold truncate">{teamName}</p>
                 <p className="text-lg">{isQuizActive ? formattedTime : ''}</p>
+            </div>
+            <div className="absolute top-3 right-18 z-50">
+                <ThemeToggle />
             </div>
 
             {isQuizActive ? (

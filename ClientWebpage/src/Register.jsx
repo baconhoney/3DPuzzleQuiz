@@ -1,38 +1,23 @@
-import { useEffect, useState } from 'react';
-import { useLanguage } from './App';
+import { useEffect, useState } from "react";
+import { useLanguage } from "./App";
 import i18n from "i18next";
+import ThemeToggle from "./ThemeToggle";
 
-const LightTheme = "light"
-const DarkTheme = "dark"
+const LightTheme = "light";
+const DarkTheme = "dark";
 
 const Register = () => {
     const { changeLng, t, toQuiz, teamName, setTeamName } = useLanguage();
     const [language, setLanguage] = useState(i18n.language);
     const [nameError, setNameError] = useState(false);
-    const [theme, setTheme] = useState(LightTheme);
-
-    useEffect(() => {
-        const savedTheme = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initialTheme = savedTheme || (prefersDark ? DarkTheme : LightTheme);
-        setTheme(initialTheme);
-        document.documentElement.setAttribute('data-theme', initialTheme);
-    }, []);
 
     useEffect(() => {
         const onLangChanged = (lng) => setLanguage(lng);
-        i18n.on('languageChanged', onLangChanged);
-        return () => i18n.off('languageChanged', onLangChanged);
+        i18n.on("languageChanged", onLangChanged);
+        return () => i18n.off("languageChanged", onLangChanged);
     }, []);
 
-    const toggleTheme = () => {
-        const newTheme = theme === LightTheme ? DarkTheme : LightTheme;
-        setTheme(newTheme);
-        localStorage.setItem("theme", newTheme);
-        document.documentElement.setAttribute('data-theme', newTheme);
-    };
-
-    const isLanguageSelected = (lng) => language === lng ? " btn-active" : "";
+    const isLanguageSelected = (lng) => (language === lng ? " btn-active" : "");
 
     const handleInputChange = (e) => {
         setTeamName(e.target.value);
@@ -51,19 +36,30 @@ const Register = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen gap-16 w-full">
             <div className="absolute top-4 right-4 z-50">
-                <button className="btn btn-info btn-outline w-10" onClick={toggleTheme}>
-                    {theme === LightTheme ? t("🌙") : t("☀️")}
-                </button>
+                <ThemeToggle />
             </div>
 
             <div className="flex flex-col items-center gap-2 mt-4">
                 <div className="flex items-center gap-2">
-                    <button className={"btn btn-info btn-outline" + isLanguageSelected("hu")} onClick={() => changeLng("hu")}>🇭🇺 Magyar</button>
-                    <button className={"btn btn-info btn-outline" + isLanguageSelected("en")} onClick={() => changeLng("en")}>🇬🇧 English</button>
+                    <button
+                        className={"btn btn-info btn-outline" + isLanguageSelected("hu")}
+                        onClick={() => changeLng("hu")}
+                    >
+                        🇭🇺 Magyar
+                    </button>
+                    <button
+                        className={"btn btn-info btn-outline" + isLanguageSelected("en")}
+                        onClick={() => changeLng("en")}
+                    >
+                        🇬🇧 English
+                    </button>
                 </div>
             </div>
 
-            <form onSubmit={handleButtonClick} className="flex flex-col items-center content-center gap-5 w-2/3">
+            <form
+                onSubmit={handleButtonClick}
+                className="flex flex-col items-center content-center gap-5 w-2/3"
+            >
                 <fieldset className="fieldset w-full max-w-sm">
                     <legend className="fieldset-legend">{t("team_name")}</legend>
                     <input
@@ -73,9 +69,13 @@ const Register = () => {
                         value={teamName}
                         onChange={handleInputChange}
                     />
-                    {nameError && <p className="label text-error">{t("team_name_required")}</p>}
+                    {nameError && (
+                        <p className="label text-error">{t("team_name_required")}</p>
+                    )}
                 </fieldset>
-                <button type="submit" className="btn btn-primary btn-wide">{t("continue")}</button>
+                <button type="submit" className="btn btn-primary btn-wide">
+                    {t("continue")}
+                </button>
             </form>
         </div>
     );
