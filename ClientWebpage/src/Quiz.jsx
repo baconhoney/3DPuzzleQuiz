@@ -46,6 +46,12 @@ const Quiz = () => {
         document.getElementById('quiz_finish_modal').showModal();
     };
 
+    const goBack = () => {
+        localStorage.removeItem("teamName");
+        localStorage.removeItem("quizAnswers");
+        location.reload();
+    }
+
     const sendQuiz = (e) => {
         e.preventDefault();
         const form = document.getElementById('quiz-form');
@@ -71,11 +77,11 @@ const Quiz = () => {
 
     return (
         <>
-            <div className="navbar bg-base-200 shadow-sm px-5 sticky top-0 z-50 justify-between">
-                <p className="text-lg font-bold truncate">{teamName}</p>
-                <p className="text-lg">{isQuizActive ? formattedTime : ''}</p>
-            </div>
-            <div className="absolute top-3 right-18 z-50">
+            <div className="navbar bg-base-200 shadow-sm px-3 sticky top-0 z-50 justify-between gap-3">
+                <button className="btn btn-ghost btn-circle" onClick={goBack}>
+                    <svg className="size-8 fill-current rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2.5"><path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path></svg>
+                </button>
+                <p className="text-lg font-bold truncate w-full">{teamName}</p>
                 <ThemeToggle />
             </div>
 
@@ -120,16 +126,12 @@ const Quiz = () => {
 
                         <div className="flex flex-col gap-3 justify-center sticky bottom-0">
                             <div className="flex justify-center gap-3">
-                                <button className="btn btn-error w-20" onClick={() => {
-                                    localStorage.removeItem("teamName");
-                                    localStorage.removeItem("quizAnswers");
-                                    location.reload();
-                                }}>
-                                    {t("back")}
-                                </button>
                                 <button className="btn btn-primary w-60" onClick={openModal}>
                                     {t("finish")}
                                 </button>
+                                {/* <div className="btn btn-info w-20">
+                                    {isQuizActive ? formattedTime : ''}
+                                </div> */}
                             </div>
                             <progress className="progress progress-primary w-full" value="40" max="100"></progress>
                         </div>
