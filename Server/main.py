@@ -15,6 +15,9 @@ logging.basicConfig(
 )
 logging.debug("Testing logger")
 
+aiohttpLogger = logging.getLogger("aiohttp")
+aiohttpLogger.setLevel("WARNING")
+
 # add local modules to pythonpath
 # sys.path.insert(1, str(pathlib.Path(__file__).parent.resolve() / "modules"))
 
