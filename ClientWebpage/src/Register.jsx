@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useLanguage } from './App';
+import { useGlobalContext } from './App';
 import i18n from "i18next";
 
 const LightTheme = "light"
 const DarkTheme = "dark"
 
 const Register = () => {
-    const { changeLng, t, toQuiz, teamName, setTeamName } = useLanguage();
+    const { changeLng, t, toQuiz, teamName, setTeamName } = useGlobalContext();
     const [language, setLanguage] = useState(i18n.language);
     const [nameError, setNameError] = useState(false);
     const [theme, setTheme] = useState(LightTheme);
