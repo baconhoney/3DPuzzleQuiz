@@ -24,6 +24,7 @@ echo Cleaning build folder done
 if "%buildClient%"=="1" (
     echo Building Client webpage...
     cd /d "%cwd%%clientRoot%"
+    call npm i
     call npm run build
     xcopy /E /Y "%cwd%%clientRoot%\dist" "%cwd%%buildRoot%\webpages\client\"
     echo Building Client webpage done
@@ -32,6 +33,7 @@ if "%buildClient%"=="1" (
 if "%buildSearch%"=="1" (
     echo Building Search webpage...
     cd /d "%cwd%%searchRoot%"
+    call npm i
     call npm run build
     xcopy /E /Y "%cwd%%searchRoot%\dist" "%cwd%%buildRoot%\webpages\search\"
     echo Building Search webpage done
@@ -40,6 +42,7 @@ if "%buildSearch%"=="1" (
 if "%buildAdmin%"=="1" (
     echo Building Admin webpage...
     cd /d "%cwd%%adminRoot%"
+    call npm i
     call npm run build
     xcopy /E /Y "%cwd%%adminRoot%\dist" "%cwd%%buildRoot%\webpages\admin\"
     echo Building Admin webpage done

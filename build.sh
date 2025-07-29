@@ -18,6 +18,7 @@ echo "Cleaning build folder done"
 if [ $buildClient -eq 1 ]; then
     echo "Building Client webpage..."
     cd "$cwd$clientRoot"
+    npm i
     npm run build
     cp -r -u "$cwd$clientRoot/dist" "$cwd$buildRoot/webpages/client"
     echo "Building Client webpage done"
@@ -26,6 +27,7 @@ fi
 if [ $buildSearch -eq 1 ]; then
     echo "Building Search webpage..."
     cd "$cwd$searchRoot"
+    npm i
     npm run build
     cp -r -u "$cwd$searchRoot/dist" "$cwd$buildRoot/webpages/search"
     echo "Building Search webpage done"
@@ -34,6 +36,7 @@ fi
 if [ $buildAdmin -eq 1 ]; then
     echo "Building Admin webpage..."
     cd "$cwd$adminRoot"
+    npm i
     npm run build
     cp -r -u "$cwd$adminRoot/dist" "$cwd$buildRoot/webpages/admin"
     echo "Building Admin webpage done"
