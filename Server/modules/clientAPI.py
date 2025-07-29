@@ -27,7 +27,7 @@ async def getQuestionsHandler(request: web.Request):
     ).fetchall()
     quizdata = {
         str(i): {
-            "building_id": entry[0],
+            "id": entry[0],
             "name": entry[1],
             "country": entry[2],
             "city": entry[3],
@@ -134,9 +134,9 @@ async def eventsHandler(request: web.Request):
 # ------- 404 Handlers -------
 @utils.router.get(baseURL + "/{fn}")
 async def GET_NotFound(request: web.Request) -> web.Response:
-    raise web.HTTPNotFound(text=f"API GET endpoint '{request.match_info.get('fn')}' doesn't exist.")
+    raise web.HTTPNotFound(text=f"API-Client GET endpoint '{request.match_info.get('fn')}' doesn't exist.")
 
 
 @utils.router.post(baseURL + "/{fn}")
 async def POST_NotFound(request: web.Request) -> web.Response:
-    raise web.HTTPNotFound(text=f"API POST endpoint '{request.match_info.get('fn')}' doesn't exist.")
+    raise web.HTTPNotFound(text=f"API-Client POST endpoint '{request.match_info.get('fn')}' doesn't exist.")
