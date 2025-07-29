@@ -144,13 +144,6 @@ export function removeAccents(str) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-function isSafeRegex(pattern) {
-    // Egyszerű példa, ne legyen üres és ne kezdődjön kvantorral
-    if (!pattern || pattern.trim() === "") return false;
-    if (/^[*+?]/.test(pattern.trim())) return false;
-    return true;
-}
-
 export function highlight(text, query, colLabel) {
     if (!query || typeof text !== "string") return text;
 

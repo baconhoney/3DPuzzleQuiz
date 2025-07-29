@@ -9,15 +9,15 @@ export default function SearchPage() {
     const [sortAsc, setSortAsc] = useState(true);
 
     const columns = [
-        { key: "name_hu", label: "Név", width: "180px" },
-        { key: "country_hu", label: "Ország", width: "140px" },
-        { key: "city_hu", label: "Város", width: "140px" },
-        { key: "name_en", label: "Angol Név", width: "180px" },
-        { key: "country_en", label: "Angol Ország", width: "140px" },
-        { key: "city_en", label: "Angol Város", width: "140px" },
-        { key: "id", label: "ID", width: "60px", numeric: true },
-        { key: "box", label: "Doboz", width: "80px", numeric: true },
-        { key: "answer", label: "Válasz", width: "90px", numeric: true },
+        { key: "id", label: "ID", numeric: true },
+        { key: "box", label: "Doboz", numeric: true },
+        { key: "answer", label: "Válasz", numeric: true },
+        { key: "name_hu", label: "Név" },
+        { key: "country_hu", label: "Ország" },
+        { key: "city_hu", label: "Város" },
+        { key: "name_en", label: "Angol Név" },
+        { key: "country_en", label: "Angol Ország" },
+        { key: "city_en", label: "Angol Város" },
     ];
 
     const labelToKeyMap = useMemo(() => {
@@ -39,7 +39,7 @@ export default function SearchPage() {
         }
     };
 
-    const regex = /^re:(.+)$/i;
+    const regex = /^re:(.+)$/iu;
 
     function trimTrailingOperators(query) {
         return query.replace(/[\s&|]+$/g, "").trim();
@@ -67,7 +67,7 @@ export default function SearchPage() {
     }, [data, query, sortKey, sortAsc, columns]);
 
     return (
-        <div className="w-full max-w-full bg-white p-2 sm:p-8 rounded-2xl shadow-xl">
+        <div className="w-full max-w-full bg-white p-2 rounded-2xl">
             <div className="sticky top-0 bg-white pt-4 pb-4 z-30 border-b border-gray-300">
                 <input
                     type="text"
