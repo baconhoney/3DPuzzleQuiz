@@ -54,7 +54,7 @@ class QuizState:
     """Stores the state of the quiz."""
 
     nextQuizAt: datetime.datetime = datetime.datetime.now()
-    currentQuizNumber: int = 2
+    currentQuizNumber: int = 1
     phase: QuizPhases = QuizPhases.IDLE
     _currentQuizdata: dict[str, dict[str, dict[str, str | int]]] = None
 

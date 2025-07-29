@@ -28,3 +28,5 @@ WHERE answers.team_id = {teamID};
 
 SELECT id, box, answer, {localisedCols} FROM buildings;
 
+INSERT INTO quizzes (quiz_number, building_id) VALUES (?, ?);
+

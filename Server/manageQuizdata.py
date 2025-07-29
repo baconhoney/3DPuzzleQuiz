@@ -1,11 +1,17 @@
-import json, pathlib, sys, datetime
+import datetime
+import json
 import modules.quizDB as quizDB
+import pathlib
+import random
+import sys
+import logging
 
 
 cwd = pathlib.Path(__file__).parent.resolve()
 dataRoot = cwd / "data"
 quizRoot = cwd / "_Teszt"
 quizDB = quizDB.QuizDB(dataRoot)
+logger = logging.getLogger(__name__)
 
 csvHeaders = {
     "Név": "name_hu",
@@ -78,9 +84,21 @@ def CSV_to_JSON():
     print(f"Saved {len(data)} entries to masterList.json")
 
 
+def regenerateQuizzes(quizCount: int = 8, questionsCount: int = 20):
+    res = quizDB.cursor.execute("SELECT id FROM buildings;").fetchall()
+    availableBuildings = [row[0] for row in res]
+    if len(availableBuildings) < questionsCount:
+        raise RuntimeError(f"Too few questions in the database ({len(availableBuildings)}) to generate {questionsCount} questions")
+    quizzes = [random.sample(availableBuildings, questionsCount) for _ in range(quizCount)]
+    quizDB.cursor.execute("DELETE FROM quizzes;")
+    for quizNum, quiz in enumerate(quizzes):
+        quizDB.cursor.executemany("INSERT INTO quizzes (quiz_number, building_id) VALUES (?, ?);", [(quizNum + 1, b) for b in quiz])
+    print(f"Generated {quizCount} quizzes with {quizDB.cursor.rowcount} questions each (taken from the last quiz)")
+    quizDB.connection.commit()
+
+
 # ------- MAIN -------
-def main():
-    arg = len(sys.argv) > 1 and sys.argv[1] or ""
+def main(arg: str = ""):
     if arg == "j2d":
         print("Converting JSON to database...")
         JSON_to_Database()
@@ -101,9 +119,39 @@ def main():
         print("Converting database to JSON and then to CSV...")
         Database_to_JSON()
         JSON_to_CSV()
+    elif arg == "regen":
+        logger.warning("WARNING: Automatically generating quizzes, uncomment line to enable asking")
+        # if input("Are you sure to regenerate all quizzes? (YES/NO) > ") == "YES":
+        if True:
+            quizCount = len(sys.argv) > 2 and int(sys.argv[2]) or 8
+            questionCount = len(sys.argv) > 3 and int(sys.argv[3]) or 20
+            print(f"Regenerating quizzes with {quizCount} quizzes and {questionCount} questions...")
+            regenerateQuizzes(quizCount, questionCount)
     else:
-        print("Usage: manageQuizDB.py [j2d | d2j | j2c | c2j | c2j2d | d2j2c]")
+        # print help
+        print(
+            "\n".join(
+                [
+                    "\nUsage: python manageQuizdata.py <task>",
+                    "",
+                    "<task> =",
+                    "- c2j: Convert CSV to JSON",
+                    "- j2d: Convert JSON to database",
+                    "- d2j: Convert database to JSON",
+                    "- j2c: Convert JSON to CSV",
+                    "- c2j2d: Convert CSV to JSON and then to database",
+                    "- d2j2c: Convert database to JSON and then to CSV",
+                    "- regen [quizCount] [questionsCount]: Regenerate quizzes",
+                ]
+            )
+        )
 
 
 if __name__ == "__main__":
-    main()
+    logging.basicConfig(
+        level="info".upper(),
+        stream=sys.stdout,
+        format="%(asctime)s %(name)-20s %(levelname)-7s> %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+    main(len(sys.argv) > 1 and sys.argv[1] or "")

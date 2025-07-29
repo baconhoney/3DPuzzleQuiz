@@ -41,11 +41,15 @@ cd 3DPuzzleQuiz
 
 1. The project uses [poetry](https://python-poetry.org/) for managing the dependencies.
 Download `poetry` from https://python-poetry.org/docs/#installing-with-the-official-installer and install it.
-2. Run the recommended PS script for adding `poetry` to your path.
+2. Run the recommended PS script (by the installer) for adding `poetry` to your path.
 3. Run
     ```bash
+    cd Server
     poetry config virtualenvs.in-project true
     poetry install --no-root
+    poetry env activate
+    <run the command printed out by the above line>
+    cd ..
     ```
 
 ### 3. Build the Project

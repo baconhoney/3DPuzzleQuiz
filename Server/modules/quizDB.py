@@ -18,7 +18,7 @@ CREATE TABLE buildings
     country_en TEXT                NOT NULL,
     city_hu    TEXT                NOT NULL,
     city_en    TEXT                NOT NULL
-) STRICT, WITHOUT ROWID;
+) STRICT;
 """
 
 _quizzesSQL = """
@@ -29,7 +29,7 @@ CREATE TABLE quizzes
     building_id INTEGER             NOT NULL,
     
     FOREIGN KEY (building_id) REFERENCES buildings (id)
-) STRICT, WITHOUT ROWID;
+) STRICT;
 """
 
 _teamsSQL = """
@@ -41,7 +41,7 @@ CREATE TABLE teams
     quiz_number  INTEGER             NOT NULL,
     score        INTEGER,
     submitted_at TEXT
-) STRICT, WITHOUT ROWID;
+) STRICT;
 """
 
 _answersSQL = """
@@ -54,7 +54,7 @@ CREATE TABLE answers
     
     FOREIGN KEY (team_id) REFERENCES teams (id),
     FOREIGN KEY (building_id) REFERENCES buildings (id)
-) STRICT, WITHOUT ROWID;
+) STRICT;
 """
 
 
