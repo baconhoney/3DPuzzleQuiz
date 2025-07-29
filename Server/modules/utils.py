@@ -34,6 +34,12 @@ class SupportedLanguages(Enum):
     HU = "hu"
     EN = "en"
 
+class QuizSize(Enum):
+    """Possible sizes of the quiz."""
+
+    SIZE_20 = 20
+    SIZE_100 = 100
+
 
 class QuizType(Enum):
     """Possible types of the quiz."""
