@@ -34,12 +34,12 @@ const Register = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen gap-16 w-full">
+        <div className="flex flex-col items-center min-h-screen gap-10 w-full">
             <div className="absolute top-4 right-4 z-50">
                 <ThemeToggle />
             </div>
 
-            <div className="flex flex-col items-center gap-2 mt-4">
+            <div className="flex flex-col items-center gap-2 mt-25">
                 <div className="flex items-center gap-2">
                     <button
                         className={"btn btn-info btn-outline" + isLanguageSelected("hu")}
@@ -67,6 +67,7 @@ const Register = () => {
                         className={"input w-full " + (nameError ? "input-error" : "")}
                         placeholder={t("type_here")}
                         value={teamName}
+                        maxLength={200}
                         onChange={handleInputChange}
                     />
                     {nameError && (
