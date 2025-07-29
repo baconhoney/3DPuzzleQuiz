@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { useLanguage } from "./App"; // for translation `t`
+import { useGlobalContext } from "./App";
 
 const LightTheme = "light";
 const DarkTheme = "dark";
 
 export default function ThemeToggle() {
-    const { t } = useLanguage();
+    const { t } = useGlobalContext();
     const [theme, setTheme] = useState(LightTheme);
 
     useEffect(() => {
