@@ -6,7 +6,7 @@ import { initReactI18next } from "react-i18next";
 import translationHU from "./locales/hu/translation.json";
 import translationEN from "./locales/en/translation.json";
 import Register from './Register';
-import Quiz from './Quiz';
+import Manager from './Manager';
 
 const resources = {
 	hu: {
@@ -29,13 +29,13 @@ i18n.use(initReactI18next).init({
 })
 
 // Create a context for language management
-const LanguageContext = createContext();
+const Context = createContext();
 
 // Custom hook to use the language context
-export const useLanguage = () => {
-	const context = useContext(LanguageContext);
+export const useGlobalContext = () => {
+	const context = useContext(Context);
 	if (!context) {
-		throw new Error('useLanguage must be used within a LanguageProvider');
+		throw new Error('useGlobalContext must be used within a Context.Provider');
 	}
 	return context;
 }
@@ -78,9 +78,9 @@ function App() {
 	};
 
 	return (
-		<LanguageContext.Provider value={contextValue}>
-			{isSet ? <Quiz /> : <Register />}
-		</LanguageContext.Provider>
+		<Context.Provider value={contextValue}>
+			{isSet ? <Manager /> : <Register />}
+		</Context.Provider>
 	)
 }
 
