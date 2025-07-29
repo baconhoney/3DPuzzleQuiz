@@ -8,6 +8,12 @@ logger.info(f"Importing {__name__}...")
 baseURL = "/api/client"
 
 
+@utils.router.get(baseURL + "/getQuizState")
+async def getQuizStateHandler(request: web.Request):
+    print(f"API GET request incoming: getQuizState")
+    return web.json_response({"state": utils.QuizState.phase.value})
+
+
 @utils.router.get(baseURL + "/getQuestions")
 async def getQuestionsHandler(request: web.Request):
     print(f"API GET request incoming: getQuestions")
@@ -104,6 +110,25 @@ def getAnswersHandler(request: web.Request):
             "submittedAt": submittedAt,
         }
     )
+
+
+# websockets handler for incoming websocket connections at /api/events
+@utils.router.get(baseURL + "/events")
+async def eventsHandler(request: web.Request):
+    print(f"API GET request incoming: events")
+    ws = web.WebSocketResponse()
+    await ws.prepare(request)
+    utils.connectedWSClients.add(ws)
+    logger.debug(f"New websocket client connected: {ws}\nTotal: {len(utils.connectedWSClients)}")
+    try:
+        async for msg in ws:
+            if msg.type == web.WSMsgType.ERROR:
+                logger.warning(f"WebSocket connection closed with error: {ws.exception()}")
+                print(f"WebSocket connection closed with error: {ws.exception()}")
+    finally:
+        utils.connectedWSClients.remove(ws)
+        logger.debug(f"WebSocket client disconnected: {ws}\nTotal: {len(utils.connectedWSClients)}")
+    return ws
 
 
 # ------- 404 Handlers -------
