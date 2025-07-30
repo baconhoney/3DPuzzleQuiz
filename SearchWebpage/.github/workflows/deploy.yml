@@ -8,11 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./SearchWebpage
 
-        
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -24,9 +20,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: ./SearchWebpage
 
       - name: Build the project
         run: npm run build
+        working-directory: ./SearchWebpage
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
