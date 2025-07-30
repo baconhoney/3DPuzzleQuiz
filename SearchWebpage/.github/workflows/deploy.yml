@@ -27,8 +27,10 @@ jobs:
         working-directory: ./SearchWebpage
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: dist
+          branch: gh-pages
+          folder: SearchWebpage/dist
+          token: ${{ secrets.GITHUB_TOKEN }}
+
 
