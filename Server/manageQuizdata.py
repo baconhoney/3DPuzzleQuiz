@@ -91,6 +91,7 @@ def regenerateQuizzes(quizCount: int = 8, questionsCount: int = 20):
         raise RuntimeError(f"Too few questions in the database ({len(availableBuildings)}) to generate {questionsCount} questions")
     quizzes = [random.sample(availableBuildings, questionsCount) for _ in range(quizCount)]
     quizDB.cursor.execute("DELETE FROM quizzes;")
+    quizDB.cursor.executemany("INSERT INTO quizzes (quiz_number, building_id) VALUES (?, ?);", [(-1, b) for b in availableBuildings])
     for quizNum, quiz in enumerate(quizzes):
         quizDB.cursor.executemany("INSERT INTO quizzes (quiz_number, building_id) VALUES (?, ?);", [(quizNum + 1, b) for b in quiz])
     print(f"Generated {quizCount} quizzes with {quizDB.cursor.rowcount} questions each (taken from the last quiz)")

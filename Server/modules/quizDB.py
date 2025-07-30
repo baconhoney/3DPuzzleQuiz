@@ -39,6 +39,7 @@ CREATE TABLE teams
     name         TEXT,
     language     TEXT                NOT NULL,
     quiz_number  INTEGER             NOT NULL,
+    quiz_size    INTEGER             NOT NULL,
     score        INTEGER,
     submitted_at TEXT
 ) STRICT;

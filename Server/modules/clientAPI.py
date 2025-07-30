@@ -17,13 +17,18 @@ async def getQuizStateHandler(request: web.Request):
 @utils.router.get(baseURL + "/getQuestions")
 async def getQuestionsHandler(request: web.Request):
     print(f"API GET request incoming: getQuestions")
-    lang = request.query.get("lang")
-    if not lang or lang not in utils.SupportedLanguages:
+    lang = request.query.get("lang", "<missing>")
+    size = request.query.get("size", "<missing>")
+    if lang not in utils.SupportedLanguages:
         raise web.HTTPBadRequest(text=f"Value 'lang' is missing or invalid: {lang}")
+    if size not in utils.QuizSize:
+        raise web.HTTPBadRequest(text=f"Value 'size' is missing or invalid: {size}")
+    lang = utils.SupportedLanguages(lang)
+    size = utils.QuizSize(size)
     rawQuizdata: list[list[str | int]] = utils.quizDB.cursor.execute(
         f"SELECT buildings.id, buildings.name_{lang}, buildings.country_{lang}, buildings.city_{lang} \
         FROM buildings JOIN quizzes ON buildings.id = quizzes.building_id \
-        WHERE quizzes.quiz_number = {utils.QuizState.currentQuizNumber};"
+        WHERE quizzes.quiz_number = {(size == utils.QuizSize.SIZE_20 and utils.QuizState.currentQuizNumber) or -1};"
     ).fetchall()
     quizdata = {
         str(i): {
@@ -47,9 +52,12 @@ async def uploadAnswersHandler(request: web.Request):
         raise web.HTTPBadRequest(text=f"Value 'lang' is invalid: {data.get('lang', '<missing>')}")
     if "answers" not in data:
         raise web.HTTPBadRequest(text="Value 'answers' is missing")
+    answers: dict[str, dict[str, int]] = data["answers"]
+    if len(answers) not in utils.QuizSize:
+        raise web.HTTPBadRequest(text=f"Value 'answers' has invalid number of lines: {len(answers)}")
+    size = len(answers)
     teamID = utils.getNewTeamID(utils.QuizType.DIGITAL)
     try:  # catching all kinda errors cuz they shouldnt happen
-        answers: dict[str, dict[str, int]] = data["answers"]
         utils.quizDB.cursor.executemany(
             f"INSERT INTO answers (team_id, building_id, answer) VALUES (?, ?, ?);",
             ((teamID, answer["building_id"], answer["answer"]) for answer in answers.values()),
@@ -61,12 +69,13 @@ async def uploadAnswersHandler(request: web.Request):
             WHERE teams.id = {teamID} AND buildings.answer = answers.answer;"
         ).fetchone()[0]
         utils.quizDB.cursor.execute(
-            f"INSERT INTO teams (id, name, language, quiz_number, score, submitted_at) VALUES (?, ?, ?, ?, ?);",
+            f"INSERT INTO teams (id, name, language, quiz_number, quiz_size, score, submitted_at) VALUES (?, ?, ?, ?, ?);",
             (
                 teamID,
                 data["name"],
                 data["lang"],
                 utils.QuizState.currentQuizNumber,
+                size,
                 score,
                 datetime.datetime.now().isoformat(timespec="milliseconds"),
             ),

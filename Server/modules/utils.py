@@ -25,8 +25,9 @@ router = web.RouteTableDef()
 quizDB = quizDB.QuizDB(paths.dataRoot)
 connectedWSClients = set()
 
+
 # -----------------------
-# ------- ENUMS -------
+# -------- ENUMS --------
 # -----------------------
 class SupportedLanguages(Enum):
     """Supported languages."""
@@ -38,8 +39,15 @@ class SupportedLanguages(Enum):
 class QuizType(Enum):
     """Possible types of the quiz."""
 
-    DIGITAL = 0
-    PAPER = 1
+    DIGITAL = "digital"
+    PAPER = "paper"
+
+
+class QuizSize(Enum):
+    """Possible sizes of the quiz."""
+
+    SIZE_20 = 20
+    SIZE_100 = 100
 
 
 class QuizPhases(Enum):
