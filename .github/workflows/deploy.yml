@@ -31,4 +31,4 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./SearchWebpage/build  # or build, depending on your tool
+          folder: ./SearchWebpage/dist  # or build, depending on your tool
