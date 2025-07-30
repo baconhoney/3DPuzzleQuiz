@@ -1,12 +1,27 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { masterList } from "./masterList";
 import { tokenize, parseTokens, evaluateNode, highlight, sortItems, removeAccents } from "./utils";
 
 export default function SearchPage() {
-    const [data] = useState(masterList);
+    const [data, setData] = useState([]);
     const [query, setQuery] = useState("");
     const [sortKey, setSortKey] = useState("name_hu");
     const [sortAsc, setSortAsc] = useState(true);
+
+    useEffect(() => {
+        const isGitHubPages = location.hostname.includes("github.io");
+        if (isGitHubPages) {
+            setData(masterList);
+        } else {
+            fetch("http://localhost:1006/api/admin/getAllBuildingsData")
+                .then(res => res.json())
+                .then(json => setData(json))
+                .catch(err => {
+                    console.error("API fetch error, falling back to local data:", err);
+                    setData(masterList);
+                });
+        }
+    }, []);
 
     const columns = [
         { key: "id", label: "ID", numeric: true },
