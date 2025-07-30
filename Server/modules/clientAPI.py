@@ -2,6 +2,7 @@ from aiohttp import web
 import datetime
 import logging
 import modules.utils as utils
+import asyncio
 
 logger = logging.getLogger(__name__)
 logger.info(f"Importing {__name__}...")
@@ -64,12 +65,11 @@ async def uploadAnswersHandler(request: web.Request):
         )
         utils.quizDB.connection.commit()
         score = utils.quizDB.cursor.execute(
-            f"SELECT count(answers.id) \
-            FROM teams JOIN answers ON teams.id = answers.team_id JOIN buildings ON answers.building_id = buildings.id \
-            WHERE teams.id = {teamID} AND buildings.answer = answers.answer;"
+            "SELECT count(answers.id) FROM answers JOIN buildings ON answers.building_id = buildings.id \
+            WHERE answers.team_id = (?) AND buildings.answer = answers.answer;", (teamID,)
         ).fetchone()[0]
         utils.quizDB.cursor.execute(
-            f"INSERT INTO teams (id, name, language, quiz_number, quiz_size, score, submitted_at) VALUES (?, ?, ?, ?, ?);",
+            f"INSERT INTO teams (id, name, language, quiz_number, quiz_size, score, submitted_at) VALUES (?, ?, ?, ?, ?, ?, ?);",
             (
                 teamID,
                 data["name"],
@@ -83,6 +83,7 @@ async def uploadAnswersHandler(request: web.Request):
         utils.quizDB.connection.commit()
         return web.json_response({"teamID": teamID})
     except Exception as e:
+        utils.quizDB.cursor.execute(f"DELETE FROM answers WHERE team_id = {teamID};")
         logger.error(f"Failed to upload answers: {e}")
         raise web.HTTPInternalServerError(text=f"Failed to upload answers: {e}")
 
