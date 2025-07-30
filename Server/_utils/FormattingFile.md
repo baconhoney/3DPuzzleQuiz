@@ -43,7 +43,7 @@ Uploads a (partially) filled out quiz to the DB.
 }
 ```
 
-## GET /api/client/getStates
+## GET /api/admin/getStates
 Returns the internal StateMachine's values, and maybe some extra stuff too
 
 ### Returns
@@ -55,13 +55,13 @@ Returns the internal StateMachine's values, and maybe some extra stuff too
 }
 ```
 
-## POST /api/client/requestPrintjob:
+## POST /api/admin/queuePrintjob
 Queues up some print jobs.
 
 ### Expects
 ```json
 {
-    "numberOfPages": 1,
+    "numberOfTests": 1,
     "language": "hu",
     "type": 20
 }

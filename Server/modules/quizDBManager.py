@@ -57,7 +57,7 @@ def uploadAnswers(teamID: int, name: str, lang: utils.SupportedLanguages, answer
         raise web.HTTPInternalServerError(text=f"Failed to upload answers: {e}")
 
 
-def getAnswers(teamID, lang) -> dict[str, str | int | dict[str, dict[str, str | int | bool]]]:
+def getAnswers(teamID: int) -> dict[str, str | int | dict[str, dict[str, str | int | bool]]]:
     res = utils.quizDB.cursor.execute(f"SELECT language, score, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
     if not res:
         raise web.HTTPNotFound(text=f"Team with ID {teamID} not found")
