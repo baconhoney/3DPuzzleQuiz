@@ -8,25 +8,22 @@
 * {
     background-color: var(--backroundColor);
     color: var(--foregroundColor);
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
     box-sizing: border-box;
 }
 
-table,
-tr,
-td {
+table, tr, td {
     border-collapse: collapse;
 }
 
-th,
-td {
+th, td {
     border: 1px solid red;
 }
 
-body {
+body, #root {
     min-width: 1400px;
     min-height: 800px;
     width: 100vw;
@@ -87,62 +84,3 @@ body {
     margin-right: auto;
 }
 
-#testResults table tr:hover {
-    background-color: var(--raisedBGColor);
-}
-
-#testResults table tr:hover th,
-#testResults table tr:hover td {
-    background-color: var(--raisedBGColor);
-}
-
-
-#testResults table th,
-#testResults table td {
-    padding: 1px 5px;
-}
-
-#testResults table th {
-    font-size: 16px;
-}
-
-#testResults table th.groupname {
-    width: 100%;
-}
-
-#testResults table td.lang,
-#testResults table td.score {
-    text-align: center;
-}
-
-#testContent table {
-    width: 100%;
-}
-
-#testContent table th,
-#testContent table td {
-    padding: 2px 5px;
-}
-
-#testContent table td.testcontent-name {
-    width: 50%;
-}
-
-#testContent table td.testcontent-location {
-    width: 50%;
-}
-
-#testContent table td.testcontent-id {
-    width: 60px;
-    text-align: center;
-}
-
-#testContent table td.testcontent-number {
-    width: 70px;
-    text-align: center;
-}
-
-#testContent table td.testcontent-correct {
-    width: 80px;
-    text-align: center;
-}
