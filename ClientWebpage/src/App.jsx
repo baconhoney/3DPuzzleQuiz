@@ -55,6 +55,19 @@ function App() {
 		}
 	}, [teamName]);
 
+	// Handle localStorage changes for teamName
+	// useEffect(() => {
+	// 	const handleStorageChange = (e) => {
+	// 		if (e.key === "teamName" && e.newValue === null) {
+	// 			setTeamName("");
+	// 			setIsSet(false);
+	// 		}
+	// 	};
+
+	// 	window.addEventListener("storage", handleStorageChange);
+	// 	return () => window.removeEventListener("storage", handleStorageChange);
+	// }, [localStorage.getItem("teamName")]);
+
 	// Change language
 	const changeLng = (lng) => {
 		i18n.changeLanguage(lng);

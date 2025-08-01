@@ -1,34 +1,7 @@
 import { useEffect } from 'react';
 import { useGlobalContext } from './App';
-import ThemeToggle from "./ThemeToggle";
 
-const Quiz = () => {
-    const data = {
-        quizNumber: 3,
-        quizdata: {
-            "0": { name: "Hősök tere", country: "Magyarország", city: "Budapest", flag: "flag_hu", id: 9675 },
-            "1": { name: "Kaminarimon Kapu", country: "Japán", city: "Tokió", flag: "flag_jp", id: 5131 },
-            "2": { name: "Kanadai Nemzeti TV-Torony", country: "Kanada", city: "Toronto", flag: "flag_ca", id: 2085 },
-            "3": { name: "Keleti Gyöngy torony", country: "Kína", city: "Shanghai", flag: "flag_cn", id: 4721 },
-            "4": { name: "Kínai Nagy Fal", country: "Kína", city: "-", flag: "flag_cn", id: 5210 },
-            "5": { name: "Kölni dóm", country: "Németország", city: "Köln", flag: "flag_de", id: 3265 },
-            "6": { name: "Kul Sharif mecset", country: "Oroszország", city: "Kazán", flag: "flag_ru", id: 9010 },
-            "7": { name: "Kultúra és Tudomány Palotája", country: "Lengyelország", city: "Varsó", flag: "flag_pl", id: 5466 },
-            "8": { name: "Lincoln emlékmű", country: "USA", city: "Washington", flag: "flag_us", id: 6939 },
-            "9": { name: "Louvre Múzeum", country: "Franciaország", city: "Párizs", flag: "flag_fr", id: 9266 },
-            "10": { name: "Mátyás-templom és Halászbástya", country: "Magyarország", city: "Budapest", flag: "flag_hu", id: 8948 },
-            "11": { name: "Mayflower", country: "Hollandia", city: "[elsüllyedt]", flag: "flag_nl", id: 3278 },
-            "12": { name: "Megváltó Krisztus szobra", country: "Brazília", city: "Rio de Janeiro", flag: "flag_br", id: 4805 },
-            "13": { name: "Megváltó Krisztus-székesegyház", country: "Oroszország", city: "Moszkva", flag: "flag_ru", id: 9218 },
-            "14": { name: "Mennyei béke kapuja", country: "Kína", city: "Peking", flag: "flag_cn", id: 9483 },
-            "15": { name: "Milánói Dóm", country: "Olaszország", city: "Milánó", flag: "flag_it", id: 8053 },
-            "16": { name: "Mississippi gőzhajó", country: "USA", city: "New Orleans", flag: "flag_us", id: 4954 },
-            "17": { name: "Mustafa Kemal Atatürk mauzóleuma", country: "Törökország", city: "Ankara", flag: "flag_tr", id: 2340 },
-            "18": { name: "New York-i Szabadság szobor", country: "USA", city: "New York", flag: "flag_us", id: 2354 },
-            "19": { name: "Notre-Dame", country: "Franciaország", city: "Párizs", flag: "flag_fr", id: 7310 }
-        },
-        endTime: "13:55:00"
-    };
+const Quiz = ({ data }) => {
 
     const { t, teamName } = useGlobalContext();
     const isQuizActive = true;
@@ -77,21 +50,13 @@ const Quiz = () => {
 
     return (
         <>
-            <div className="navbar bg-base-200 shadow-sm px-3 sticky top-0 z-50 justify-between gap-3">
-                <button className="btn btn-ghost btn-circle" onClick={goBack}>
-                    <svg className="size-8 fill-current rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2.5"><path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path></svg>
-                </button>
-                <p className="text-lg font-bold truncate w-full">{teamName}</p>
-                <ThemeToggle />
-            </div>
-
             {isQuizActive ? (
                 <>
                     <form id="quiz-form">
                         <div className="grid grid-cols-1 gap-1 p-3">
                             {Object.entries(data.quizdata).map(([key, value]) => (
-                                <div key={key} className="card bg-base-100 shadow-xl h-28">
-                                    <div className="flex flex-row justify-between items-center p-5 card-body">
+                                <div key={key} className="card bg-base-100 shadow-2xl h-22">
+                                    <div className="flex flex-row justify-between items-center px-3 py-0 card-body gap-4">
                                         <div>
                                             <h2 className="card-title">{value.name}</h2>
                                             <p>{value.city === "-" ? value.country : `${value.city}, ${value.country}`}</p>
