@@ -1,24 +1,42 @@
-import { StrictMode } from 'react'
+import { StrictMode, Component } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Component } from "react";
+
 import QuizResultsComponent, { type QuizResults } from "./Components/QuizResultsComponent.tsx";
-import QuizDetailsComponent from "./Components/QuizDetailsComponent.tsx";
+import QuizDetailsComponent, { type Question } from "./Components/QuizDetailsComponent.tsx";
+
 import "./App.css";
 
-import { loaddata } from './Testdata.ts';
+import { getResultsData } from './Testdata.ts';
 
 
-interface Properties { }
+export interface JSONQuizResults {
+    [index: string]: {
+        teamID: number,
+        name: string,
+        score: number,
+        timestamp: string
+    }
+}
+
+export interface JSONQuizDetails {
+    name: string,
+    language: string,
+    score: number,
+    timestamp: string,
+    questions: {
+        [index: string]: Question
+    }
+}
 
 interface State {
     openedQuizTeamID: number | null,
     quizResults: QuizResults,
 }
 
-export default class App extends Component<Properties, State> {
+export default class App extends Component<unknown, State> {
     private quizGetterHandler: number | undefined = undefined;
 
-    constructor(properties: Properties) {
+    constructor(properties: unknown) {
         super(properties);
         this.state = {
             openedQuizTeamID: null,
@@ -51,8 +69,17 @@ export default class App extends Component<Properties, State> {
             })
         })*/
         // temp code for testing
+        const json = getResultsData();
+        const result: QuizResults = {};
+        for (const key in json) {
+            const item = json[key];
+            result[key] = {
+                ...item,
+                timestamp: new Date(item.timestamp)
+            }
+        }
         this.updateState({
-            quizResults: loaddata(),
+            quizResults: result,
         })
         clearInterval(this.quizGetterHandler);
     }
@@ -67,7 +94,7 @@ export default class App extends Component<Properties, State> {
     render() {
         return <div id="main-cell">
             <div id="main-left-cell" style={{ position: "relative" }}>
-                <QuizDetailsComponent app={this} />
+                <QuizDetailsComponent app={this} teamID={this.state.openedQuizTeamID} />
                 <div className="vert-stack" style={{ position: 'absolute', top: '10px', right: '10px' }}>
                     <button>Mentés</button>
                     <button>Törlés</button>

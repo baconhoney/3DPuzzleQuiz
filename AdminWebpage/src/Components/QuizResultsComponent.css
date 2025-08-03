@@ -7,6 +7,7 @@ table.test-results {
 
     th, td {
         padding: 1px 5px;
+        cursor: pointer;
     }
 
     th {
@@ -19,6 +20,9 @@ table.test-results {
 
     td.lang, td.score {
         text-align: center;
+    }
+    .selected, .selected td {
+        background-color: var(--raisedBGColor);
     }
 }
 
