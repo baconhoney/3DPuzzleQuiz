@@ -79,7 +79,7 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
 
     render() {
         return (
-            <table style={{ width: '80%', maxWidth: '1200px' }} className="centered quiz-details">
+            <table style={{ width: '80%', maxWidth: '1200px' }} className="centered">
                 <thead>
                     <tr>
                         <td style={{ width: 'auto' }}>
@@ -114,7 +114,7 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
                                                 <td className="location">{question.country}{question.city != "-" ? ", " + question.city : ""}</td>
                                                 <td className="id">{question.buildingID ?? ""}</td>
                                                 <td className="answer">
-                                                    <input type="number" defaultValue={question.answer} id={question.buildingID.toString()} className="answer-input" />
+                                                    <input type="number" key={question.answer} defaultValue={question.answer} id={question.buildingID.toString()} className="answer-input" />
                                                 </td>
                                                 <td className="correct">{question.correct ? "✅" : "❌"}</td>
                                             </tr>

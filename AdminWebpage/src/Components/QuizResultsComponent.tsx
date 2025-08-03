@@ -43,7 +43,7 @@ export default class QuizResultsComponent extends Component<Properties, State> {
     render() {
         return <table className="test-results">
             <thead style={{ position: "sticky", top: "0" }}>
-                <tr onClick={() => { this.props.app.setSelectedTab(null); }}>
+                <tr onClick={() => { this.props.app.updateState({ openedQuizTeamID: null }); }}>
                     <th className="groupname">Csapatnév</th>
                     <th className="score">Pont</th>
                     <th className="timestamp">Leadás ideje</th>
@@ -51,7 +51,7 @@ export default class QuizResultsComponent extends Component<Properties, State> {
             </thead>
             <tbody>
                 {Object.entries(this.props.quizResults).map(([i, elem]) => (
-                    <tr key={i} onClick={() => { this.props.app.setSelectedTab(elem.teamID); }} className={elem.teamID == this.props.app.state.openedQuizTeamID ? "selected" : ""}>
+                    <tr key={i} onClick={() => { this.props.app.updateState({ openedQuizTeamID: elem.teamID }); }} className={elem.teamID == this.props.app.state.openedQuizTeamID ? "selected" : ""}>
                         <td className="groupname">{elem.name}</td>
                         <td className="score">{elem.score}</td>
                         <td className="timestamp">{this.formatTime(elem.timestamp)}</td>
