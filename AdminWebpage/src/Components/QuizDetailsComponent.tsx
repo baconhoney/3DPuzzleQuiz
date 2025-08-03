@@ -1,6 +1,6 @@
 import { Component } from "react";
 import App from "../App";
-import "./QuizComponent.css";
+import "./QuizDetailsComponent.css";
 
 interface Properties {
     app: App,
@@ -28,12 +28,12 @@ export interface Quiz {
     questions: Question[],
 }
 
-export default class QuizComponent extends Component<Properties, State> {
+export default class QuizDetailsComponent extends Component<Properties, State> {
     constructor(properties: Properties) {
         super(properties);
-        this.setState({
+        this.state ={
             quiz: [],
-        });
+        };
     }
 
     render() {

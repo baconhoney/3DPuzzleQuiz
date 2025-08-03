@@ -1,22 +1,60 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Component } from "react";
-import QuizComponent from "./Components/QuizComponent.tsx";
-import QuizResultsComponent from "./Components/QuizResultsComponent.tsx";
+import QuizResultsComponent, { type QuizResults } from "./Components/QuizResultsComponent.tsx";
+import QuizDetailsComponent from "./Components/QuizDetailsComponent.tsx";
 import "./App.css";
+
+import { loaddata } from './Testdata.ts';
+
 
 interface Properties { }
 
 interface State {
-    openedQuizTeamID: number | null
+    openedQuizTeamID: number | null,
+    quizResults: QuizResults,
 }
 
 export default class App extends Component<Properties, State> {
+    private quizGetterHandler: number | undefined = undefined;
+
     constructor(properties: Properties) {
         super(properties);
         this.state = {
-            openedQuizTeamID: null
+            openedQuizTeamID: null,
+            quizResults: {},
         };
+    }
+
+    private updateState(newState: Partial<State>) {
+        this.setState({ ...this.state, ...newState });
+    }
+
+    componentDidMount() {
+        this.quizGetterHandler = setTimeout(() => {
+            this.quizGetterHandler = setInterval(() => this.getQuizzes(), 10000);
+            this.getQuizzes();
+        }, 100);
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.quizGetterHandler);
+        clearInterval(this.quizGetterHandler);
+    }
+
+    private getQuizzes() {
+        /*fetch("/api/admin/getQuizResults").then((response) => {
+            response.json().then((data: QuizResult[]) => {
+                this.updateState({
+                    quizResults: data
+                })
+            })
+        })*/
+        // temp code for testing
+        this.updateState({
+            quizResults: loaddata(),
+        })
+        clearInterval(this.quizGetterHandler);
     }
 
     setSelectedTab(tab: number | null) {
@@ -29,7 +67,7 @@ export default class App extends Component<Properties, State> {
     render() {
         return <div id="main-cell">
             <div id="main-left-cell" style={{ position: "relative" }}>
-                <QuizComponent app={this} />
+                <QuizDetailsComponent app={this} />
                 <div className="vert-stack" style={{ position: 'absolute', top: '10px', right: '10px' }}>
                     <button>Mentés</button>
                     <button>Törlés</button>
@@ -40,7 +78,7 @@ export default class App extends Component<Properties, State> {
                 <div id="main-top-right-cell">
                     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                         <div style={{ overflow: 'auto' }}>
-                            <QuizResultsComponent app={this} />
+                            <QuizResultsComponent app={this} quizResults={this.state.quizResults} />
                         </div>
                     </div>
                 </div>
