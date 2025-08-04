@@ -13,7 +13,7 @@ export default function SearchPage() {
         if (isGitHubPages) {
             setData(masterList);
         } else {
-            fetch("http://localhost:1006/api/admin/getAllBuildingsData")
+            fetch("http://192.168.0.101:1006/api/admin/getAllBuildingsData")
                 .then(res => res.json())
                 .then(json => setData(json))
                 .catch(err => {
