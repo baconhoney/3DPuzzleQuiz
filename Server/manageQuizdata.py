@@ -68,6 +68,14 @@ def JSON_to_CSV():
 
 
 def CSV_to_JSON():
+    def format(key: str, value: str) -> str | int | None:
+        if key in ["id", "box", "answer"]:
+            if value == "None":
+                return None
+            return int(value)
+        else:
+            return value
+
     with open(quizRoot / "MesterLista.txt", "r", encoding="utf-16") as f:
         fileLines = [line.strip().split("\t") for line in f]
     header = fileLines[0]
@@ -77,7 +85,7 @@ def CSV_to_JSON():
     data = [{v: line[i] for i, v in enumerate(csvHeaders.values())} for line in lines]
     jsonData = {
         "lastEdited": datetime.datetime.now().isoformat(timespec="milliseconds"),
-        "entries": [{k: (int(line[k]) if k in ["id", "box", "answer"] else line[k]) for k in jsonHeaders} for line in data],
+        "entries": [{k: format(k, line[k]) for k in jsonHeaders} for line in data],
     }
     with open(quizRoot / "masterList.json", "w", encoding="utf-8") as f:
         json.dump(jsonData, f, indent=4, ensure_ascii=False)

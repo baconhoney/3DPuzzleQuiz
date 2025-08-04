@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useGlobalContext } from './App';
+import Input from './Input';
 
 const Quiz = ({ data }) => {
 
@@ -61,10 +62,10 @@ const Quiz = ({ data }) => {
                                             <h2 className="card-title">{value.name}</h2>
                                             <p>{value.city === "-" ? value.country : `${value.city}, ${value.country}`}</p>
                                         </div>
-                                        <input
+                                        <Input
                                             id={value.id}
-                                            type="number"
-                                            className="input validator input-md w-18 text-xl"
+                                            type={"number"}
+                                            className={"w-18 text-xl text-center border-2 rounded-full h-10 cursor-text touch-manipulation"}
                                             min={1}
                                             max={100}
                                             defaultValue={

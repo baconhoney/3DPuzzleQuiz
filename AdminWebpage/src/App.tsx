@@ -1,33 +1,71 @@
-import { StrictMode } from 'react'
+import { StrictMode, Component } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Component } from "react";
+
 import QuizResultsComponent, { type QuizResults } from "./Components/QuizResultsComponent.tsx";
-import QuizDetailsComponent from "./Components/QuizDetailsComponent.tsx";
+import QuizDetailsComponent, { type Question } from "./Components/QuizDetailsComponent.tsx";
+import { TimeTillNextComponent, ConfirmPopupComponent } from "./Components/ControllerComponents.tsx";
+import * as actions from "./Actions.ts";
+
 import "./App.css";
 
-import { loaddata } from './Testdata.ts';
+import { getResultsData } from './Testdata.ts';
 
 
-interface Properties { }
+export interface JSONQuizResults {
+    [index: string]: {
+        teamID: number,
+        name: string,
+        score: number,
+        timestamp: string
+    }
+}
+
+export interface JSONQuizDetails {
+    name: string,
+    language: string,
+    score: number,
+    timestamp: string,
+    questions: {
+        [index: string]: Question
+    }
+}
 
 interface State {
     openedQuizTeamID: number | null,
     quizResults: QuizResults,
+    nextEventAt: Date,
+    currentQuizNumber: number,
+    phase: actions.Phase,
+    displayConfirmSendPhasePopup: boolean,
 }
 
-export default class App extends Component<Properties, State> {
+export function getISOString(date: Date) {
+    const f = (n: number) => (n > 9 ? "" : "0") + n;
+    const y = date.getFullYear();
+    const m = f(date.getMonth() + 1);
+    const d = f(date.getDate());
+    const hour = f(date.getHours());
+    const min = f(date.getMinutes());
+    const sec = f(date.getSeconds());
+    return `${y}-${m}-${d}T${hour}:${min}:${sec}Z`;
+}
+
+
+export default class App extends Component<unknown, State> {
     private quizGetterHandler: number | undefined = undefined;
 
-    constructor(properties: Properties) {
+    constructor(properties: unknown) {
         super(properties);
+        let date = new Date();
+        date.setSeconds(0, 0);
         this.state = {
             openedQuizTeamID: null,
             quizResults: {},
+            nextEventAt: date,
+            currentQuizNumber: 0,
+            phase: "idle",
+            displayConfirmSendPhasePopup: false,
         };
-    }
-
-    private updateState(newState: Partial<State>) {
-        this.setState({ ...this.state, ...newState });
     }
 
     componentDidMount() {
@@ -47,70 +85,93 @@ export default class App extends Component<Properties, State> {
             response.json().then((data: QuizResult[]) => {
                 this.updateState({
                     quizResults: data
-                })
-            })
-        })*/
+                    })
+                    })
+                    })*/
         // temp code for testing
+        const json = getResultsData();
+        const result: QuizResults = {};
+        for (const key in json) {
+            const item = json[key];
+            result[key] = {
+                ...item,
+                timestamp: new Date(item.timestamp)
+            }
+        }
         this.updateState({
-            quizResults: loaddata(),
+            quizResults: result,
         })
         clearInterval(this.quizGetterHandler);
     }
 
-    setSelectedTab(tab: number | null) {
-        this.setState({
-            ...this.state,
-            openedQuizTeamID: tab
-        });
+    updateState(newState: Partial<State>) {
+        this.setState({ ...this.state, ...newState });
     }
 
     render() {
-        return <div id="main-cell">
-            <div id="main-left-cell" style={{ position: "relative" }}>
-                <QuizDetailsComponent app={this} />
-                <div className="vert-stack" style={{ position: 'absolute', top: '10px', right: '10px' }}>
-                    <button>Mentés</button>
-                    <button>Törlés</button>
-                </div>
-            </div>
+        return (
+            <>
+                <div id="main-cell">
+                    <div id="main-left-cell" style={{ position: "relative" }}>
+                        <QuizDetailsComponent app={this} teamID={this.state.openedQuizTeamID} />
+                        <div className="vert-stack" style={{ position: 'absolute', top: '10px', right: '10px' }}>
+                            <button>Mentés</button>
+                            <button>Törlés</button>
+                        </div>
+                    </div>
 
-            <div id="main-right-cell">
-                <div id="main-top-right-cell">
-                    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                        <div style={{ overflow: 'auto' }}>
-                            <QuizResultsComponent app={this} quizResults={this.state.quizResults} />
+                    <div id="main-right-cell">
+                        <div id="main-top-right-cell">
+                            <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                                <div style={{ overflow: 'auto' }}>
+                                    <QuizResultsComponent app={this} quizResults={this.state.quizResults} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="main-bottom-right-cell">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <TimeTillNextComponent app={this} timeTillNext={this.state.nextEventAt} />
+                                        </td>
+                                        <td>
+                                            <div className="vert-stack">
+                                                <button style={{ width: '50px', height: '50px' }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() + 60000) })}>+1</button>
+                                                <button style={{ width: '50px', height: '50px' }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() - 60000) })}>-1</button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="vert-stack">
+                                                <button style={{ width: '50px', height: '50px' }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() + 60000 * 5) })}>+5</button>
+                                                <button style={{ width: '50px', height: '50px' }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() - 60000 * 5) })}>-5</button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button style={{ width: '100px', height: '50px' }} onClick={() => actions.setTimeTill(this.state.nextEventAt)}>Beállít</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan={4}>
+                                            <button style={{ width: '200px', height: '120px' }} onClick={() => this.updateState({ displayConfirmSendPhasePopup: true })}>
+                                                Pillanatnyi fázis:<br />{this.state.phase}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-
-                <div id="main-bottom-right-cell">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span style={{ marginRight: '5px' }}>Idő lejár:</span>
-                                    <span id="timeLeft">HH:mm</span>
-                                </td>
-                                <td className="vert-stack">
-                                    <button style={{ width: '50px', height: '50px' }}>+</button>
-                                    <button style={{ width: '50px', height: '50px' }}>-</button>
-                                </td>
-                                <td>
-                                    <button style={{ width: '100px', height: '50px' }}>Beállít</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colSpan={3}>
-                                    <button style={{ width: '200px', height: '120px' }}>
-                                        next phase
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                {this.state.displayConfirmSendPhasePopup
+                    ? <ConfirmPopupComponent app={this} stateToUpdate={{ displayConfirmSendPhasePopup: false }} text="Biztosan vált Kvíz Fásist?"
+                        onConfirm={() => { actions.sendNextPhase(this); }}
+                        onCancel={() => { }} />
+                    : null
+                }
+            </>
+        )
     }
 }
 

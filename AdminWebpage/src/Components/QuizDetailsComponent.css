@@ -1,4 +1,4 @@
-.test-content {
+#main-left-cell {
     table {
         width: 100%;
     }
@@ -8,25 +8,42 @@
         padding: 2px 5px;
     }
 
-    table td.testcontent-name {
+    .answers .name {
         width: 50%;
     }
 
-    table td.testcontent-location {
+    .answers .location {
         width: 50%;
     }
 
-    table td.testcontent-id {
+    .answers .id {
+        min-width: 60px;
         width: 60px;
         text-align: center;
     }
 
-    table td.testcontent-number {
-        width: 70px;
+    .answers .answer input {
         text-align: center;
+        width: 60px;
+        margin: 0px 10px;
+        padding: 5px;
+        border: 1px solid var(--halfwayColor);
+        border-radius: 5px;
     }
 
-    table td.testcontent-correct {
+    .answers .answer input::-webkit-outer-spin-button,
+    .answers .answer input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .answers .answer input[type=number] {
+        appearance: textfield;
+        -moz-appearance: textfield;
+    }
+
+    .answers .correct {
+        min-width: 80px;
         width: 80px;
         text-align: center;
     }
