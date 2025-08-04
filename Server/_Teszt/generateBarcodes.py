@@ -5,13 +5,14 @@ from datamatrix_modified.datamatrix import DataMatrix
 
 
 # ------ CONSTANTS ------
-#DMCCONTENT = "{uid}|{box}|{name}"  # format string for the DataMatrix content, use 'ascii' mode
+DMCCONTENT = "{uid}|{box}|{name}"  # format string for the DataMatrix content, use 'ascii' mode
 #DMCCONTENT = "{uid}" # use 'ascii' mode
-DMCCONTENT = "{box}" # use 'text' mode
-DMCCODEC = "text"
+#DMCCONTENT = "{box}" # use 'text' mode
+DMCCODEC = "ascii"
+#DMCCODEC = "text"
 NAMELENGTH = 50  # max length of the name in the DataMatrix code
 PIXELSIZES = [0.05]  # sizes of one pixel in cm
-CODESIZES = [0.5, 2, 3]  # sizes of one dmc in cm
+CODESIZES = [0.5, 2, 3.5]  # sizes of one dmc in cm
 CODESPERLINE = 8  # number of codes per line
 SPACING = 3  # spacing between the code images (total)
 BORDER = 0  # separation around the codes
@@ -39,7 +40,7 @@ cwd = pathlib.Path(__file__).parent.resolve()
 data: dict[str, str | list[dict[str, str | int]]] = json.load(open(cwd / "masterList.json", encoding="utf-8"))
 entries: list[dict[str, str | int]] = sorted(data["entries"], key=SORTKEY)
 
-valueList: set[str] = set()
+valueList: list[str] = []
 for entry in entries:
     uid: int = entry["id"]
     name: str = unidecode(entry["name_hu"])
@@ -47,7 +48,9 @@ for entry in entries:
         raise RuntimeError(f"Name '{name}' is too long ({len(name)} > {NAMELENGTH})")
     name = name.ljust(NAMELENGTH, ".")
     box = str(entry["box"] or "null")
-    valueList.add(DMCCONTENT.format(uid=uid, name=name, box=box))
+    val = DMCCONTENT.format(uid=uid, name=name, box=box)
+    if not val in valueList:
+        valueList.append(val)
 
 dmcCodes: list[DataMatrix] = []
 for entry in valueList:
@@ -80,11 +83,11 @@ for i, dmc in enumerate(dmcCodes):
 
 outputImage = outputImage.convert("L")
 # Resize image cuz Word is stupid and cannot handle pixels
-multiplier = int(15000 / totalWidth)
+multiplier = int(10000 / totalWidth)
 outputImage.resize((totalWidth * multiplier, totalHeight * multiplier), resample=Image.Resampling.NEAREST).save(cwd / "dmcs.png")
 print(f"\nImage width: {totalWidth}px, DMC width: {dmcRawSize}px\nImage sizes:")
 for ps in PIXELSIZES:
     print(f"- 1 px is {ps:.4f}cm: {totalWidth * ps:.4f}cm")
 for cs in CODESIZES:
     print(f"- DMC is {cs}cm: {totalWidth * cs / dmcRawSize:.4f}cm")
-outputImage.show()
+# outputImage.show()
