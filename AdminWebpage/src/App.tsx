@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 
 import QuizResultsComponent, { type QuizResults } from "./Components/QuizResultsComponent.tsx";
 import QuizDetailsComponent, { type Question } from "./Components/QuizDetailsComponent.tsx";
-import TimeTillNextComponent from "./Components/ControllerComponents.tsx";
+import { TimeTillNextComponent, ConfirmPopupComponent } from "./Components/ControllerComponents.tsx";
 import * as actions from "./Actions.ts";
 
 import "./App.css";
@@ -36,9 +36,10 @@ interface State {
     nextEventAt: Date,
     currentQuizNumber: number,
     phase: actions.Phase,
+    displayConfirmSendPhasePopup: boolean,
 }
 
-export function getISOString(date: Date){
+export function getISOString(date: Date) {
     const f = (n: number) => (n > 9 ? "" : "0") + n;
     const y = date.getFullYear();
     const m = f(date.getMonth() + 1);
@@ -62,7 +63,8 @@ export default class App extends Component<unknown, State> {
             quizResults: {},
             nextEventAt: date,
             currentQuizNumber: 0,
-            phase: "idle"
+            phase: "idle",
+            displayConfirmSendPhasePopup: false,
         };
     }
 
@@ -107,59 +109,69 @@ export default class App extends Component<unknown, State> {
     }
 
     render() {
-        return <div id="main-cell">
-            <div id="main-left-cell" style={{ position: "relative" }}>
-                <QuizDetailsComponent app={this} teamID={this.state.openedQuizTeamID} />
-                <div className="vert-stack" style={{ position: 'absolute', top: '10px', right: '10px' }}>
-                    <button>Mentés</button>
-                    <button>Törlés</button>
-                </div>
-            </div>
+        return (
+            <>
+                <div id="main-cell">
+                    <div id="main-left-cell" style={{ position: "relative" }}>
+                        <QuizDetailsComponent app={this} teamID={this.state.openedQuizTeamID} />
+                        <div className="vert-stack" style={{ position: 'absolute', top: '10px', right: '10px' }}>
+                            <button>Mentés</button>
+                            <button>Törlés</button>
+                        </div>
+                    </div>
 
-            <div id="main-right-cell">
-                <div id="main-top-right-cell">
-                    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                        <div style={{ overflow: 'auto' }}>
-                            <QuizResultsComponent app={this} quizResults={this.state.quizResults} />
+                    <div id="main-right-cell">
+                        <div id="main-top-right-cell">
+                            <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                                <div style={{ overflow: 'auto' }}>
+                                    <QuizResultsComponent app={this} quizResults={this.state.quizResults} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="main-bottom-right-cell">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <TimeTillNextComponent app={this} timeTillNext={this.state.nextEventAt} />
+                                        </td>
+                                        <td>
+                                            <div className="vert-stack">
+                                                <button style={{ width: '50px', height: '50px' }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() + 60000) })}>+1</button>
+                                                <button style={{ width: '50px', height: '50px' }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() - 60000) })}>-1</button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="vert-stack">
+                                                <button style={{ width: '50px', height: '50px' }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() + 60000 * 5) })}>+5</button>
+                                                <button style={{ width: '50px', height: '50px' }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() - 60000 * 5) })}>-5</button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button style={{ width: '100px', height: '50px' }} onClick={() => actions.setTimeTill(this.state.nextEventAt)}>Beállít</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan={4}>
+                                            <button style={{ width: '200px', height: '120px' }} onClick={() => this.updateState({ displayConfirmSendPhasePopup: true })}>
+                                                Pillanatnyi fázis:<br />{this.state.phase}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-
-                <div id="main-bottom-right-cell">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <TimeTillNextComponent app={this} timeTillNext={this.state.nextEventAt} />
-                                </td>
-                                <td>
-                                    <div className="vert-stack">
-                                        <button style={{ width: '50px', height: '50px' }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() + 60000) })}>+1</button>
-                                        <button style={{ width: '50px', height: '50px' }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() - 60000) })}>-1</button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="vert-stack">
-                                        <button style={{ width: '50px', height: '50px' }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() + 60000 * 5) })}>+5</button>
-                                        <button style={{ width: '50px', height: '50px' }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() - 60000 * 5) })}>-5</button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <button style={{ width: '100px', height: '50px' }} onClick={() => actions.setTimeTill(this.state.nextEventAt)}>Beállít</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colSpan={4}>
-                                    <button style={{ width: '200px', height: '120px' }} onClick={() => actions.sendNextPhase(this)}>
-                                        Pillanatnyi fázis:<br />{this.state.phase}
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                {this.state.displayConfirmSendPhasePopup
+                    ? <ConfirmPopupComponent app={this} stateToUpdate={{ displayConfirmSendPhasePopup: false }} text="Biztosan vált Kvíz Fásist?"
+                        onConfirm={() => { actions.sendNextPhase(this); }}
+                        onCancel={() => { }} />
+                    : null
+                }
+            </>
+        )
     }
 }
 
