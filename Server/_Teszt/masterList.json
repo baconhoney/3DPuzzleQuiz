@@ -1,5 +1,5 @@
 {
-    "lastEdited": "2025-07-28T22:12:05.792",
+    "lastEdited": "2025-08-04T13:40:49.293",
     "entries": [
         {
             "id": 2035,
@@ -256,7 +256,7 @@
         },
         {
             "id": 3735,
-            "box": 0,
+            "box": null,
             "answer": 42,
             "name_hu": "Burj Al Arab",
             "name_en": "Burj Al Arab",
@@ -333,7 +333,7 @@
         },
         {
             "id": 4355,
-            "box": 0,
+            "box": null,
             "answer": 37,
             "name_hu": "Burj Kalifa",
             "name_en": "Burj Kalifa",
@@ -410,7 +410,7 @@
         },
         {
             "id": 4794,
-            "box": 0,
+            "box": null,
             "answer": 97,
             "name_hu": "Eiffel Torony",
             "name_en": "Eiffel tower",
@@ -432,7 +432,7 @@
         },
         {
             "id": 4837,
-            "box": 0,
+            "box": null,
             "answer": 19,
             "name_hu": "Eyüp Sultan mecset",
             "name_en": "Eyüp Sultan mosque",
@@ -454,7 +454,7 @@
         },
         {
             "id": 4982,
-            "box": 0,
+            "box": null,
             "answer": 71,
             "name_hu": "Tokiói Torony",
             "name_en": "Tokyo Tower",
@@ -850,7 +850,7 @@
         },
         {
             "id": 8261,
-            "box": 0,
+            "box": null,
             "answer": 11,
             "name_hu": "Titanic",
             "name_en": "Titanic",
@@ -883,7 +883,7 @@
         },
         {
             "id": 8465,
-            "box": 0,
+            "box": null,
             "answer": 39,
             "name_hu": "Fehér Ház",
             "name_en": "White house",
@@ -1059,7 +1059,7 @@
         },
         {
             "id": 9678,
-            "box": 0,
+            "box": null,
             "answer": 45,
             "name_hu": "Big Ben",
             "name_en": "Big Ben",

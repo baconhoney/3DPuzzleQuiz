@@ -1,21 +1,23 @@
 import json, pathlib, math
 from unidecode import unidecode
 from PIL import Image
-from ppf.datamatrix.datamatrix import DataMatrix
+from datamatrix_modified.datamatrix import DataMatrix
 
 
 # ------ CONSTANTS ------
-#DMCCONTENT = "{idx}|{box}|{name}"  # format string for the DataMatrix content
-DMCCONTENT = "{idx}"
+#DMCCONTENT = "{uid}|{box}|{name}"  # format string for the DataMatrix content, use 'ascii' mode
+#DMCCONTENT = "{uid}" # use 'ascii' mode
+DMCCONTENT = "{box}" # use 'text' mode
+DMCCODEC = "text"
 NAMELENGTH = 50  # max length of the name in the DataMatrix code
 PIXELSIZES = [0.05]  # sizes of one pixel in cm
-CODESIZES = [0.5, 2]  # sizes of one dmc in cm
-CODESPERLINE = 10  # number of codes per line
+CODESIZES = [0.5, 2, 3]  # sizes of one dmc in cm
+CODESPERLINE = 8  # number of codes per line
 SPACING = 3  # spacing between the code images (total)
 BORDER = 0  # separation around the codes
 FGCOLOR = (0, 0, 0)  # foreground color
 BGCOLOR = (255, 255, 255)  # background color
-SORTKEY = lambda x: x[0]  # sort key for the ordering of the entries
+SORTKEY = lambda x: x["box"] or 0  # sort key for the ordering of the entries
 
 
 # ------ FUNCTIONS ------
@@ -34,19 +36,24 @@ def dmcToPng(dmc: DataMatrix, /, bg: tuple = (255, 255, 255), fg: tuple = (0, 0,
 
 # ------ MAIN CODE ------
 cwd = pathlib.Path(__file__).parent.resolve()
-data: dict[str, str | dict[str, str | int]] = json.load(open(cwd / "masterList.json", encoding="utf-8"))
-data["entries"] = dict(sorted(list(data["entries"].items()), key=SORTKEY))
+data: dict[str, str | list[dict[str, str | int]]] = json.load(open(cwd / "masterList.json", encoding="utf-8"))
+entries: list[dict[str, str | int]] = sorted(data["entries"], key=SORTKEY)
 
-i: int
-dmcCodes: list[DataMatrix] = []
-for uid, entry in data["entries"].items():
-    name: str = unidecode(entry["hu"]["name"])
+valueList: set[str] = set()
+for entry in entries:
+    uid: int = entry["id"]
+    name: str = unidecode(entry["name_hu"])
     if len(name) > NAMELENGTH:
         raise RuntimeError(f"Name '{name}' is too long ({len(name)} > {NAMELENGTH})")
     name = name.ljust(NAMELENGTH, ".")
-    box = str(entry["box"] or "0000")
-    dmc = DataMatrix(DMCCONTENT.format(idx=uid, name=name, box=box), codecs=["ascii"])
-    print(f"{uid}: '{dmc.message}'")
+    box = str(entry["box"] or "null")
+    valueList.add(DMCCONTENT.format(uid=uid, name=name, box=box))
+
+dmcCodes: list[DataMatrix] = []
+for entry in valueList:
+    dmc = DataMatrix(entry, codecs=[DMCCODEC])
+    matrix = dmc.matrix
+    print(f"'{entry}': codec={dmc.usedCodec}, {len(matrix)}x{len(matrix[0])}")
     # dmcToPng(dmc).show()
     dmcCodes.append(dmc)
     # break
@@ -73,11 +80,11 @@ for i, dmc in enumerate(dmcCodes):
 
 outputImage = outputImage.convert("L")
 # Resize image cuz Word is stupid and cannot handle pixels
-outputImage.resize((totalWidth * 300, totalHeight * 300), resample=Image.Resampling.NEAREST).save(cwd / "dmcs.png")
+multiplier = int(15000 / totalWidth)
+outputImage.resize((totalWidth * multiplier, totalHeight * multiplier), resample=Image.Resampling.NEAREST).save(cwd / "dmcs.png")
 print(f"\nImage width: {totalWidth}px, DMC width: {dmcRawSize}px\nImage sizes:")
 for ps in PIXELSIZES:
     print(f"- 1 px is {ps:.4f}cm: {totalWidth * ps:.4f}cm")
 for cs in CODESIZES:
     print(f"- DMC is {cs}cm: {totalWidth * cs / dmcRawSize:.4f}cm")
 outputImage.show()
-

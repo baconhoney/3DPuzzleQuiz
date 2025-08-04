@@ -10,7 +10,7 @@ _buildingsSQL = """
 CREATE TABLE buildings
 (
     id         INTEGER PRIMARY KEY NOT NULL,
-    box        INTEGER             NOT NULL,
+    box        INTEGER,
     answer     INTEGER UNIQUE      NOT NULL,
     name_hu    TEXT                NOT NULL,
     name_en    TEXT                NOT NULL,
