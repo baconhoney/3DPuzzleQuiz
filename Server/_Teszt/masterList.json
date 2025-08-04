@@ -1,5 +1,5 @@
 {
-    "lastEdited": "2025-08-04T16:46:24.463",
+    "lastEdited": "2025-08-04T17:37:48.145",
     "entries": [
         {
             "id": 6381,
@@ -58,7 +58,7 @@
         },
         {
             "id": 5588,
-            "box": 1458,
+            "box": 1568,
             "answer": 75,
             "name_hu": "Al-Masjid an-Nabawi",
             "name_en": "Al-Masjid an-Nabawi",
@@ -1070,7 +1070,7 @@
         },
         {
             "id": 3848,
-            "box": null,
+            "box": 1695,
             "answer": 87,
             "name_hu": "Waweli székesegyház",
             "name_en": "Wawel Cathedral",
