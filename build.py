@@ -6,7 +6,7 @@ from pathlib import Path
 cwd = Path.cwd()
 client_root = cwd / "ClientWebpage"
 search_root = cwd / "SearchWebpage"
-admin_root = cwd / "AdminWebpage" / "react"
+admin_root = cwd / "AdminWebpage"
 server_root = cwd / "Server"
 build_root = cwd / "Build"
 
