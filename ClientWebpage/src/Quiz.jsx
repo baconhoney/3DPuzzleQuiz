@@ -4,8 +4,7 @@ import Input from './Input';
 
 const Quiz = ({ data }) => {
 
-    const { t, teamName } = useGlobalContext();
-    const isQuizActive = true;
+    const { t } = useGlobalContext();
     const formattedTime = data.endTime.split(':').slice(0, 2).join(':');
 
     useEffect(() => {
@@ -19,12 +18,6 @@ const Quiz = ({ data }) => {
         e.preventDefault();
         document.getElementById('quiz_finish_modal').showModal();
     };
-
-    const goBack = () => {
-        localStorage.removeItem("teamName");
-        localStorage.removeItem("quizAnswers");
-        location.reload();
-    }
 
     const sendQuiz = (e) => {
         e.preventDefault();
@@ -51,77 +44,69 @@ const Quiz = ({ data }) => {
 
     return (
         <>
-            {isQuizActive ? (
-                <>
-                    <form id="quiz-form">
-                        <div className="grid grid-cols-1 gap-1 p-3">
-                            {Object.entries(data.quizdata).map(([key, value]) => (
-                                <div key={key} className="card bg-base-100 shadow-2xl h-22">
-                                    <div className="flex flex-row justify-between items-center px-3 py-0 card-body gap-4">
-                                        <div>
-                                            <h2 className="card-title">{value.name}</h2>
-                                            <p>{value.city === "-" ? value.country : `${value.city}, ${value.country}`}</p>
-                                        </div>
-                                        <Input
-                                            id={value.id}
-                                            type={"number"}
-                                            className={"w-18 text-xl text-center border-2 rounded-full h-10 cursor-text touch-manipulation"}
-                                            min={1}
-                                            max={100}
-                                            defaultValue={
-                                                localStorage.getItem("quizAnswers")
-                                                    ? JSON.parse(localStorage.getItem("quizAnswers"))[key]?.num || ""
-                                                    : ""
-                                            }
-                                            onInput={(e) => {
-                                                if (e.target.value.length > 3) {
-                                                    e.target.value = e.target.value.slice(0, 3);
-                                                }
-                                                const stored = JSON.parse(localStorage.getItem("quizAnswers") || "{}");
-                                                stored[key] = {
-                                                    id: parseInt(e.target.id),
-                                                    num: parseInt(e.target.value || "0")
-                                                };
-                                                localStorage.setItem("quizAnswers", JSON.stringify(stored));
-                                            }}
-                                        />
-                                    </div>
+            <form id="quiz-form">
+                <div className="grid grid-cols-1 gap-1 p-3">
+                    {Object.entries(data.quizdata).map(([key, value]) => (
+                        <div key={key} className="card bg-base-100 shadow-2xl h-22">
+                            <div className="flex flex-row justify-between items-center px-3 py-0 card-body gap-4">
+                                <div>
+                                    <h2 className="card-title">{value.name}</h2>
+                                    <p>{value.city === "-" ? value.country : `${value.city}, ${value.country}`}</p>
                                 </div>
-                            ))}
+                                <Input
+                                    id={value.id}
+                                    type={"number"}
+                                    className={"w-18 text-xl text-center border-2 rounded-full h-10 cursor-text touch-manipulation"}
+                                    min={1}
+                                    max={100}
+                                    defaultValue={
+                                        localStorage.getItem("quizAnswers")
+                                            ? JSON.parse(localStorage.getItem("quizAnswers"))[key]?.num || ""
+                                            : ""
+                                    }
+                                    onInput={(e) => {
+                                        if (e.target.value.length > 3) {
+                                            e.target.value = e.target.value.slice(0, 3);
+                                        }
+                                        const stored = JSON.parse(localStorage.getItem("quizAnswers") || "{}");
+                                        stored[key] = {
+                                            id: parseInt(e.target.id),
+                                            num: parseInt(e.target.value || "0")
+                                        };
+                                        localStorage.setItem("quizAnswers", JSON.stringify(stored));
+                                    }}
+                                />
+                            </div>
                         </div>
+                    ))}
+                </div>
 
-                        <div className="flex flex-col gap-3 justify-center sticky bottom-0">
-                            <div className="flex justify-center gap-3">
-                                <button className="btn btn-primary w-60" onClick={openModal}>
-                                    {t("finish")}
-                                </button>
-                                {/* <div className="btn btn-info w-20">
+                <div className="flex flex-col gap-3 justify-center sticky bottom-0">
+                    <div className="flex justify-center gap-3">
+                        <button className="btn btn-primary w-60" onClick={openModal}>
+                            {t("finish")}
+                        </button>
+                        {/* <div className="btn btn-info w-20">
                                     {isQuizActive ? formattedTime : ''}
                                 </div> */}
-                            </div>
-                            <progress className="progress progress-primary w-full" value="40" max="100"></progress>
-                        </div>
-                    </form>
-
-                    <dialog id="quiz_finish_modal" className="modal">
-                        <div className="modal-box">
-                            <h3 className="font-bold text-lg">{t("finish")}</h3>
-                            <p className="py-4">{t("finish_modal_message")}</p>
-                            <form method="dialog" className="modal-action justify-around">
-                                <button className="btn btn-soft btn-error">{t("cancel")}</button>
-                                <button className="btn btn-success" onClick={sendQuiz}>{t("continue")}</button>
-                            </form>
-                        </div>
-                        <form method="dialog" className="modal-backdrop">
-                            <button>close</button>
-                        </form>
-                    </dialog>
-                </>
-            ) : (
-                <div className="flex justify-center items-center p-10">
-                    <p className="text-2xl font-bold">{t("quiz_not_started")}</p>
+                    </div>
+                    <progress className="progress progress-primary w-full" value="40" max="100"></progress>
                 </div>
-            )}
+            </form>
+
+            <dialog id="quiz_finish_modal" className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">{t("finish")}</h3>
+                    <p className="py-4">{t("finish_modal_message")}</p>
+                    <form method="dialog" className="modal-action justify-around">
+                        <button className="btn btn-soft btn-error">{t("cancel")}</button>
+                        <button className="btn btn-success" onClick={sendQuiz}>{t("continue")}</button>
+                    </form>
+                </div>
+                <form method="dialog" className="modal-backdrop">
+                    <button>close</button>
+                </form>
+            </dialog>
         </>
     );
 };
