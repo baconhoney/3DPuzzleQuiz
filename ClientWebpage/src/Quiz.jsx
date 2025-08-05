@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useGlobalContext } from './App';
 import Input from './Input';
 
 const Quiz = ({ data }) => {
 
     const { t } = useGlobalContext();
+    const [answerCount, setAnswerCount] = useState(0);
     const formattedTime = data.endTime.split(':').slice(0, 2).join(':');
 
     useEffect(() => {
@@ -73,6 +74,7 @@ const Quiz = ({ data }) => {
                                             id: parseInt(e.target.id),
                                             num: parseInt(e.target.value || "0")
                                         };
+                                        setAnswerCount(Object.keys(stored).filter(key => stored[key].num > 0).length);
                                         localStorage.setItem("quizAnswers", JSON.stringify(stored));
                                     }}
                                 />
@@ -90,7 +92,7 @@ const Quiz = ({ data }) => {
                                     {isQuizActive ? formattedTime : ''}
                                 </div> */}
                     </div>
-                    <progress className="progress progress-primary w-full" value="40" max="100"></progress>
+                    <progress className="progress progress-primary w-full" value={100 / Object.keys(data.quizdata).length * answerCount} max="100"></progress>
                 </div>
             </form>
 
