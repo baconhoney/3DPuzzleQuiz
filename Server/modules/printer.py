@@ -16,7 +16,9 @@ def printQuiz(teamID: int, lang: str, quizType: utils.QuizSize):
         WHERE quizzes.quiz_number == {quizNumber} \
         ORDER BY Name;"
     ).fetchall()
-    
+
+    # itt menetne a file egy BytesIO-ba is, és akkor nem pollutálja teli rákkal a mappáim :)
+    # for ex: `svgFile = BytesIO(); Code128().write(svgFile)` - bacon
     with open(f'{teamID}.svg', 'wb') as f:
         Code128(str(teamID), writer=SVGWriter()).write(f)
 
@@ -37,6 +39,7 @@ def printQuiz(teamID: int, lang: str, quizType: utils.QuizSize):
                                 \
                             ')
         with tag('body'):
+            # és akkor itt csak `src=svgFile` possibly - bacon
             doc.stag('img', src=f'{teamID}.svg', klass='barcode')
 
             with tag('table'):
