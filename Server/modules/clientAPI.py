@@ -1,8 +1,10 @@
 from aiohttp import web
-import datetime
 import logging
+import quizDBManager
 import utils
 
+
+router = web.RouteTableDef()
 
 _logger = logging.getLogger(__name__)
 _logger.info(f"Importing {__name__}...")
@@ -18,29 +20,10 @@ async def getQuizStateHandler(request: web.Request):
 @utils.router.get(_baseURL + "/getQuestions")
 async def getQuestionsHandler(request: web.Request):
     print(f"API GET request incoming: getQuestions")
-    lang = request.query.get("lang", "<missing>")
-    size = request.query.get("size", "<missing>")
-    if lang not in utils.SupportedLanguages:
+    lang = request.query.get("lang")
+    if not lang or lang not in utils.SupportedLanguages:
         raise web.HTTPBadRequest(text=f"Value 'lang' is missing or invalid: {lang}")
-    if size not in utils.QuizSize:
-        raise web.HTTPBadRequest(text=f"Value 'size' is missing or invalid: {size}")
-    lang = utils.SupportedLanguages(lang)
-    size = utils.QuizSize(size)
-    rawQuizdata: list[list[str | int]] = utils.quizDB.cursor.execute(
-        f"SELECT buildings.id, buildings.name_{lang}, buildings.country_{lang}, buildings.city_{lang} \
-        FROM buildings JOIN quizzes ON buildings.id = quizzes.building_id \
-        WHERE quizzes.quiz_number = {(size == utils.QuizSize.SIZE_20 and utils.QuizState.currentQuizNumber) or -1};"
-    ).fetchall()
-    quizdata = {
-        str(i): {
-            "id": entry[0],
-            "name": entry[1],
-            "country": entry[2],
-            "city": entry[3],
-        }
-        for i, entry in enumerate(sorted(rawQuizdata, key=lambda x: x[1]))
-    }
-    return web.json_response(quizdata)
+    return web.json_response(quizDBManager.getQuestions(utils.SupportedLanguages(lang)))
 
 
 @utils.router.post(_baseURL + "/uploadAnswers")
@@ -53,40 +36,9 @@ async def uploadAnswersHandler(request: web.Request):
         raise web.HTTPBadRequest(text=f"Value 'lang' is invalid: {data.get('lang', '<missing>')}")
     if "answers" not in data:
         raise web.HTTPBadRequest(text="Value 'answers' is missing")
-    answers: dict[str, dict[str, int]] = data["answers"]
-    if len(answers) not in utils.QuizSize:
-        raise web.HTTPBadRequest(text=f"Value 'answers' has invalid number of lines: {len(answers)}")
-    size = len(answers)
-    teamID = utils.getNewTeamID(utils.QuizType.DIGITAL)
-    try:  # catching all kinda errors cuz they shouldnt happen
-        utils.quizDB.cursor.executemany(
-            f"INSERT INTO answers (team_id, building_id, answer) VALUES (?, ?, ?);",
-            ((teamID, answer["building_id"], answer["answer"]) for answer in answers.values()),
-        )
-        utils.quizDB.connection.commit()
-        score = utils.quizDB.cursor.execute(
-            "SELECT count(answers.id) FROM answers JOIN buildings ON answers.building_id = buildings.id \
-            WHERE answers.team_id = (?) AND buildings.answer = answers.answer;",
-            (teamID,),
-        ).fetchone()[0]
-        utils.quizDB.cursor.execute(
-            f"INSERT INTO teams (id, name, language, quiz_number, quiz_size, score, submitted_at) VALUES (?, ?, ?, ?, ?, ?, ?);",
-            (
-                teamID,
-                data["name"],
-                data["lang"],
-                utils.QuizState.currentQuizNumber,
-                size,
-                score,
-                datetime.datetime.now().isoformat(timespec="milliseconds"),
-            ),
-        )
-        utils.quizDB.connection.commit()
-        return web.json_response({"teamID": teamID})
-    except Exception as e:
-        utils.quizDB.cursor.execute(f"DELETE FROM answers WHERE team_id = {teamID};")
-        _logger.error(f"Failed to upload answers: {e}")
-        raise web.HTTPInternalServerError(text=f"Failed to upload answers: {e}")
+    teamID = utils.getNewTeamID(utils.QuizTypes.DIGITAL)
+    quizDBManager.uploadAnswers(teamID, data["name"], utils.SupportedLanguages(data["lang"]), data["answers"])
+    return web.json_response({"teamID": teamID})
 
 
 @utils.router.get(_baseURL + "/getAnswers")
@@ -95,32 +47,7 @@ def getAnswersHandler(request: web.Request):
     teamID = request.query.get("teamID")
     if not teamID:
         raise web.HTTPBadRequest(text="Value 'teamID' is missing")
-    res = utils.quizDB.cursor.execute(f"SELECT language, score, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
-    if not res:
-        raise web.HTTPNotFound(text=f"Team with ID {teamID} not found")
-    lang, score, submittedAt = res
-    rawData: list[list[str | int]] = utils.quizDB.cursor.execute(
-        f"SELECT buildings.name_{lang}, buildings.country_{lang}, buildings.city_{lang}, answers.answer, \
-        CASE WHEN buildings.answer = answers.answer THEN 1 ELSE 0 END \
-        FROM answers JOIN buildings ON answers.building_id = buildings.id \
-        WHERE answers.team_id = {teamID};"
-    ).fetchall()
-    return web.json_response(
-        {
-            "quizdata": {
-                str(i): {
-                    "name": entry[0],
-                    "country": entry[1],
-                    "city": entry[2],
-                    "answers": entry[3],
-                    "correct": bool(entry[4]),
-                }
-                for i, entry in enumerate(rawData)
-            },
-            "score": score,
-            "submittedAt": submittedAt,
-        }
-    )
+    return web.json_response(quizDBManager.getAnswers(teamID))
 
 
 # websockets handler for incoming websocket connections at /api/events

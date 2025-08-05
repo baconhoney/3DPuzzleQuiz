@@ -18,24 +18,21 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 logging.debug("Testing logger")
-
 logging.getLogger("aiohttp").setLevel("WARNING")
 
-
-# import the modules to add them to the program
-from utils import router
-import adminAPI
-
-# client has to be 2nd last, so sub-API requests are not refused with 404
-import clientAPI
-
-# fileserver has to be the very last
-import fileServer
+# import the routers from the modules
+from adminAPI import router as adminRouter
+from clientAPI import router as clientRouter
+from fileServer import router as fileServerRouter
 
 
 def main():
     app = web.Application()
-    app.add_routes(router)
+    # client has to be 2nd last, so sub-API requests are not refused with 404
+    # fileserver has to be the very last, so API requests are not refused with 404
+    app.add_routes(adminRouter)
+    app.add_routes(clientRouter)
+    app.add_routes(fileServerRouter)
     web.run_app(app, port=1006)
 
 

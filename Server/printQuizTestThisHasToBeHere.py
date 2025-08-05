@@ -10,6 +10,6 @@ import printer
 import utils
 
 
-printer.printQuiz(1234567890, "en", utils.QuizSize.SIZE_20)
+printer.printQuiz(1234567890, "en", utils.QuizSizes.SIZE_20)
 
 # illetve kicsit átrendeztem a jóistent, és mostmár nem kell ez a file, elv rögtön a printer.py-ból is tudsz olyat hogy `if name == main: printQuiz(...)` - bacon

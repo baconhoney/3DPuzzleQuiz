@@ -1,4 +1,3 @@
-from aiohttp import web
 from enum import Enum
 import datetime
 import dotenv
@@ -29,7 +28,6 @@ class paths:
     adminRoot = pathlib.Path(os.getenv("ADMIN_ROOT")).resolve()
 
 
-router = web.RouteTableDef()
 quizDB = quizDB.QuizDB(paths.dataRoot)
 connectedWSClients = set()
 
@@ -44,14 +42,14 @@ class SupportedLanguages(Enum):
     EN = "en"
 
 
-class QuizType(Enum):
+class QuizTypes(Enum):
     """Possible types of the quiz."""
 
     DIGITAL = "digital"
     PAPER = "paper"
 
 
-class QuizSize(Enum):
+class QuizSizes(Enum):
     """Possible sizes of the quiz."""
 
     SIZE_20 = 20
@@ -80,13 +78,13 @@ class QuizState:
         return cls.nextQuizAt.isoformat(timespec="milliseconds")
 
 
-def getNewTeamID(type: QuizType):
+def getNewTeamID(type: QuizTypes):
     """Generate a new unique identifier."""
     while True:
-        if type == QuizType.DIGITAL:
+        if type == QuizTypes.DIGITAL:
             # generating from 5000000000 to 9999999999
             uuid = random.randint(int(5e9), int(1e10 - 1))
-        elif type == QuizType.PAPER:
+        elif type == QuizTypes.PAPER:
             # generating from 1000000000 to 4999999999
             uuid = random.randint(int(1e9), int(5e9 - 1))
         else:

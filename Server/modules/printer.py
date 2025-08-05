@@ -4,9 +4,9 @@ from barcode import Code128
 from barcode.writer import SVGWriter 
 
 #async ??
-def printQuiz(teamID: int, lang: str, quizType: utils.QuizSize):
+def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
     print("print or do stuff idk")
-    if quizType == utils.QuizSize.SIZE_20:
+    if quizType == utils.QuizSizes.SIZE_20:
         quizNumber = utils.QuizState.currentQuizNumber
     else:
         quizNumber = -1

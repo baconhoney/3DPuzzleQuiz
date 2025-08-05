@@ -5,6 +5,8 @@ import pathlib
 import utils
 
 
+router = web.RouteTableDef()
+
 _logger = logging.getLogger(__name__)
 _logger.info(f"Importing {__name__}...")
 
