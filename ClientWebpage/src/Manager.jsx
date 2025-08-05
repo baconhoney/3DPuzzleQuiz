@@ -16,6 +16,8 @@ const Manager = () => {
     const [teamID, setTeamID] = useState("123");
     const haveResults = true;
 
+    const { t } = useGlobalContext();
+
     const quizData = {
         quizNumber: 3,
         quizdata: {
@@ -40,7 +42,7 @@ const Manager = () => {
             "18": { name: "New York-i Szabadság szobor", country: "USA", city: "New York", flag: "flag_us", id: 2354 },
             "19": { name: "Notre-Dame", country: "Franciaország", city: "Párizs", flag: "flag_fr", id: 7310 }
         },
-        endTime: "10:00:00"
+        endTime: "21:35:00"
     };
 
     const answerData = {
@@ -206,7 +208,7 @@ const Manager = () => {
                     // If results are available, show them
                     return <Results data={answerData} />;
                 }
-                return <div>Ehhez a csapathoz nem állnak rendelkezésre eredmények</div>;
+                return <div className='text-center p-4'>{t("no_results")}</div>;
 
             } else {
                 // If the game state is unknown, show an error
@@ -228,7 +230,7 @@ const Manager = () => {
         }
     }
 
-    const errorDiv = (<div>Hiba történt. gameState: {gameState}, wantToPlay: {wantToPlay}</div>)
+    const errorDiv = (<div className='text-error text-center p-4'>Hiba történt. There was an error.<br />gameState: {gameState}, wantToPlay: {wantToPlay}</div>)
 
     function lateStart() {
         const now = new Date();
