@@ -1,15 +1,18 @@
 import React from 'react'
+import { useGlobalContext } from './App';
 
 const Waiting = ({ reason }) => {
+
+    const { t } = useGlobalContext();
 
     function errorDiv() {
         switch (reason) {
             case "quiz":
-                return <div>Várakozás a kvízre</div>;
+                return <div className='text-center p-4'>{t("waiting_for_quiz")}</div>;
             case "results":
-                return <div>Várakozás az eredményekre</div>;
+                return <div className='text-center p-4'>{t("waiting_for_results")}</div>;
             default:
-                return <div>Ismeretlen hiba történt</div>;
+                return <div className='text-center p-4 text-error'>{t("waiting_error")}</div>;
         }
     }
 
