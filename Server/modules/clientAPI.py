@@ -29,13 +29,13 @@ async def getQuestionsHandler(request: web.Request):
 @utils.router.post(_baseURL + "/uploadAnswers")
 async def uploadAnswersHandler(request: web.Request):
     print("API POST request incoming: uploadAnswers")
-    data: dict[str, str | dict[str, dict[str, int]]] = await request.json()
-    if "name" not in data:
+    data: dict[str, str | list[dict[str, int]]] = await request.json()
+    if "name" not in data or not data["name"]:
         raise web.HTTPBadRequest(text="Value 'name' is missing")
     if "lang" not in data or data["lang"] not in utils.SupportedLanguages:
         raise web.HTTPBadRequest(text=f"Value 'lang' is invalid: {data.get('lang', '<missing>')}")
-    if "answers" not in data:
-        raise web.HTTPBadRequest(text="Value 'answers' is missing")
+    if "answers" not in data or not data["answers"] or not isinstance(data["answers"], list) or len(data["answers"]) not in utils.QuizSizes:
+        raise web.HTTPBadRequest(text="Value 'answers' is either missing, not a list or not the right lenght")
     teamID = utils.getNewTeamID(utils.QuizTypes.DIGITAL)
     quizDBManager.uploadAnswers(teamID, data["name"], utils.SupportedLanguages(data["lang"]), data["answers"])
     return web.json_response({"teamID": teamID})

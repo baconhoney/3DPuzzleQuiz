@@ -39,19 +39,7 @@ async def getQuizResultsHandler(request: web.Request):
     ).fetchall()
     if not res:
         return web.json_response({})
-    return web.json_response(
-        {
-            str(i): {
-                "id": entry[0],
-                "name": entry[1],
-                "language": entry[2],
-                "quizSize": entry[3],
-                "score": entry[4],
-                "submittedAt": entry[5],
-            }
-            for i, entry in enumerate(res)
-        },
-    )
+    return web.json_response([{"id": entry[0], "name": entry[1], "language": entry[2], "quizSize": entry[3], "score": entry[4], "submittedAt": entry[5]} for entry in res])
 
 
 @utils.router.get(_baseURL + "/getQuizdata")
@@ -60,7 +48,7 @@ async def getQuizdataHandler(request: web.Request):
     teamID = request.query.get("teamID")
     if not teamID:
         raise web.HTTPBadRequest(text="Value 'teamID' is missing")
-    return web.json_response(quizDBManager.getAnswers(teamID)["quizdata"])
+    return web.json_response(quizDBManager.getAnswers(teamID))
 
 
 @utils.router.post(_baseURL + "/uploadQuiz")
@@ -89,7 +77,7 @@ async def queuePrintjobHandler(request: web.Request):
         raise web.HTTPBadRequest(text=f"Value 'language' is invalid: {data.get('language', '<missing>')}")
     if "size" not in data or data["size"] not in utils.QuizSizes:
         raise web.HTTPBadRequest(text=f"Value 'size' is invalid: {data.get('size', '<missing>')}")
-    print(f"New print job: {data['numberOfTests']} copies of type {utils.QuizSizes(data['size']).name} in {utils.SupportedLanguages(data['language']).name}")
+    print(f"New print job: {data['numberOfTests']} copies of type {utils.QuizSizes(data['size']).name} in lang {utils.SupportedLanguages(data['language']).name}")
     for _ in range(data["numberOfTests"]):
         pass  # call print function
     return web.HTTPOk()

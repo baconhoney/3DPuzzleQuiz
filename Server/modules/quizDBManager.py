@@ -39,16 +39,7 @@ def getAnswers(teamID: int) -> dict[str, str | int | dict[str, dict[str, str | i
         ).fetchall(),
     )
     return {
-        "quizdata": {
-            str(i): {
-                "name": entry[0],
-                "country": entry[1],
-                "city": entry[2],
-                "answers": entry[3],
-                "correct": bool(entry[4]),
-            }
-            for i, entry in enumerate(rawData)
-        },
+        "quizdata": [{"name": entry[0], "country": entry[1], "city": entry[2], "answers": entry[3], "correct": bool(entry[4])} for entry in rawData],
         "score": score,
         "submittedAt": submittedAt,
     }
@@ -71,19 +62,12 @@ def uploadAnswers(teamID: int, name: str, lang: utils.SupportedLanguages, answer
         _quizDBconnection.commit()
         score = _quizDBcursor.execute(
             f"SELECT count(answers.id) \
-                FROM teams JOIN answers ON teams.id = answers.team_id JOIN buildings ON answers.building_id = buildings.id \
-                WHERE teams.id = {teamID} AND buildings.answer = answers.answer;"
+            FROM teams JOIN answers ON teams.id = answers.team_id JOIN buildings ON answers.building_id = buildings.id \
+            WHERE teams.id = {teamID} AND buildings.answer = answers.answer;"
         ).fetchone()[0]
         _quizDBcursor.execute(
             f"INSERT INTO teams (id, name, language, quiz_number, score, submitted_at) VALUES (?, ?, ?, ?, ?);",
-            (
-                teamID,
-                name,
-                lang.value,
-                _quizState.currentQuizNumber,
-                score,
-                datetime.datetime.now().isoformat(timespec="milliseconds"),
-            ),
+            (teamID, name, lang.value, _quizState.currentQuizNumber, score, datetime.datetime.now().isoformat(timespec="milliseconds")),
         )
         _quizDBconnection.commit()
     except Exception as e:
