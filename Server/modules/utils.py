@@ -36,7 +36,7 @@ connectedWSClients = set()
 # -----------------------
 # -------- ENUMS --------
 # -----------------------
-class SupportedLanguages(Enum):
+class QuizLanguages(Enum):
     """Supported languages."""
 
     HU = "hu"
@@ -79,6 +79,27 @@ class QuizState:
         return cls.nextQuizAt.isoformat(timespec="milliseconds")
 
 
+# ---------------------------
+# -------- FUNCTIONS --------
+# ---------------------------
+# ----- Converters -----
+def convertToQuizLanguage(lang: str) -> QuizLanguages | None:
+    return lang in QuizLanguages and QuizLanguages(lang) or None
+
+
+def convertToQuizType(type: str) -> QuizTypes | None:
+    return type in QuizTypes and QuizTypes(type) or None
+
+
+def convertToQuizSize(size: str) -> QuizSizes | None:
+    return size in QuizSizes and QuizSizes(size) or None
+
+
+def convertToQuizPhase(phase: str) -> QuizPhases | None:
+    return phase in QuizPhases and QuizPhases(phase) or None
+
+
+# ----- Generators -----
 def getNewTeamID(type: QuizTypes):
     """Generate a new unique identifier."""
     while True:
@@ -95,6 +116,7 @@ def getNewTeamID(type: QuizTypes):
             return uuid
 
 
+# ----- Main -----
 if __name__ == "__main__":
     print("Hello from the utils module")
     for d in paths.__dict__:

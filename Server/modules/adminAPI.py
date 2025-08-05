@@ -59,11 +59,11 @@ async def uploadQuizHandler(request: web.Request):
         raise web.HTTPBadRequest(text="Value 'id' is missing")
     if "name" not in data:
         raise web.HTTPBadRequest(text="Value 'name' is missing")
-    if "lang" not in data or data["lang"] not in utils.SupportedLanguages:
+    if "lang" not in data or data["lang"] not in utils.QuizLanguages:
         raise web.HTTPBadRequest(text=f"Value 'lang' is invalid: {data.get('lang', '<missing>')}")
     if "answers" not in data:
         raise web.HTTPBadRequest(text="Value 'answers' is missing")
-    quizDBManager.uploadAnswers(data["id"], data["name"], utils.SupportedLanguages(data["lang"]), data["answers"])
+    quizDBManager.uploadAnswers(data["id"], data["name"], utils.QuizLanguages(data["lang"]), data["answers"])
     return web.HTTPOk()
 
 
@@ -73,11 +73,11 @@ async def queuePrintjobHandler(request: web.Request):
     data = await request.json()
     if "numberOfTests" not in data or not data["numberOfTests"].isdigit():
         raise web.HTTPBadRequest(text="Value 'numberOfTests' is missing")
-    if "language" not in data or data["language"] not in utils.SupportedLanguages:
+    if "language" not in data or data["language"] not in utils.QuizLanguages:
         raise web.HTTPBadRequest(text=f"Value 'language' is invalid: {data.get('language', '<missing>')}")
     if "size" not in data or data["size"] not in utils.QuizSizes:
         raise web.HTTPBadRequest(text=f"Value 'size' is invalid: {data.get('size', '<missing>')}")
-    print(f"New print job: {data['numberOfTests']} copies of type {utils.QuizSizes(data['size']).name} in lang {utils.SupportedLanguages(data['language']).name}")
+    print(f"New print job: {data['numberOfTests']} copies of type {utils.QuizSizes(data['size']).name} in lang {utils.QuizLanguages(data['language']).name}")
     for _ in range(data["numberOfTests"]):
         pass  # call print function
     return web.HTTPOk()

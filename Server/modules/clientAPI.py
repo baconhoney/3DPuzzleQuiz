@@ -20,34 +20,31 @@ async def getQuizStateHandler(request: web.Request):
 @utils.router.get(_baseURL + "/getQuestions")
 async def getQuestionsHandler(request: web.Request):
     print(f"API GET request incoming: getQuestions")
-    lang = request.query.get("lang")
-    if not lang or lang not in utils.SupportedLanguages:
-        raise web.HTTPBadRequest(text=f"Value 'lang' is missing or invalid: {lang}")
-    return web.json_response(quizDBManager.getQuestions(utils.SupportedLanguages(lang)))
+    try:
+        return web.json_response(quizDBManager.getQuestions(utils.convertToQuizLanguage(request.query.get("lang")), utils.convertToQuizSize(request.query.get("size"))))
+    except quizDBManager.InvalidParameterError as e:
+        raise web.HTTPBadRequest(text=str(e))
 
 
 @utils.router.post(_baseURL + "/uploadAnswers")
 async def uploadAnswersHandler(request: web.Request):
     print("API POST request incoming: uploadAnswers")
     data: dict[str, str | list[dict[str, int]]] = await request.json()
-    if "name" not in data or not data["name"]:
-        raise web.HTTPBadRequest(text="Value 'name' is missing")
-    if "lang" not in data or data["lang"] not in utils.SupportedLanguages:
-        raise web.HTTPBadRequest(text=f"Value 'lang' is invalid: {data.get('lang', '<missing>')}")
-    if "answers" not in data or not data["answers"] or not isinstance(data["answers"], list) or len(data["answers"]) not in utils.QuizSizes:
-        raise web.HTTPBadRequest(text="Value 'answers' is either missing, not a list or not the right lenght")
     teamID = utils.getNewTeamID(utils.QuizTypes.DIGITAL)
-    quizDBManager.uploadAnswers(teamID, data["name"], utils.SupportedLanguages(data["lang"]), data["answers"])
+    try:
+        quizDBManager.uploadAnswers(teamID, data.get("name"), utils.convertToQuizLanguage(data.get("lang")), data.get("answers"))
+    except quizDBManager.InvalidParameterError as e:
+        raise web.HTTPBadRequest(text=str(e))
     return web.json_response({"teamID": teamID})
 
 
 @utils.router.get(_baseURL + "/getAnswers")
 def getAnswersHandler(request: web.Request):
     print(f"API GET request incoming: getAnswers")
-    teamID = request.query.get("teamID")
-    if not teamID:
-        raise web.HTTPBadRequest(text="Value 'teamID' is missing")
-    return web.json_response(quizDBManager.getAnswers(teamID))
+    try:
+        return web.json_response(quizDBManager.getAnswers(request.query.get("teamID")))
+    except quizDBManager.InvalidParameterError as e:
+        raise web.HTTPBadRequest(text=str(e))
 
 
 # websockets handler for incoming websocket connections at /api/events
