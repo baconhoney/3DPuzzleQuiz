@@ -1,21 +1,21 @@
 from aiohttp import web
 import datetime
 import logging
-import modules.utils as utils
-import asyncio
-
-logger = logging.getLogger(__name__)
-logger.info(f"Importing {__name__}...")
-baseURL = "/api/client"
+import utils
 
 
-@utils.router.get(baseURL + "/getQuizState")
+_logger = logging.getLogger(__name__)
+_logger.info(f"Importing {__name__}...")
+_baseURL = "/api/client"
+
+
+@utils.router.get(_baseURL + "/getQuizState")
 async def getQuizStateHandler(request: web.Request):
     print(f"API GET request incoming: getQuizState")
     return web.json_response({"state": utils.QuizState.phase.value})
 
 
-@utils.router.get(baseURL + "/getQuestions")
+@utils.router.get(_baseURL + "/getQuestions")
 async def getQuestionsHandler(request: web.Request):
     print(f"API GET request incoming: getQuestions")
     lang = request.query.get("lang", "<missing>")
@@ -43,7 +43,7 @@ async def getQuestionsHandler(request: web.Request):
     return web.json_response(quizdata)
 
 
-@utils.router.post(baseURL + "/uploadAnswers")
+@utils.router.post(_baseURL + "/uploadAnswers")
 async def uploadAnswersHandler(request: web.Request):
     print("API POST request incoming: uploadAnswers")
     data: dict[str, str | dict[str, dict[str, int]]] = await request.json()
@@ -66,7 +66,8 @@ async def uploadAnswersHandler(request: web.Request):
         utils.quizDB.connection.commit()
         score = utils.quizDB.cursor.execute(
             "SELECT count(answers.id) FROM answers JOIN buildings ON answers.building_id = buildings.id \
-            WHERE answers.team_id = (?) AND buildings.answer = answers.answer;", (teamID,)
+            WHERE answers.team_id = (?) AND buildings.answer = answers.answer;",
+            (teamID,),
         ).fetchone()[0]
         utils.quizDB.cursor.execute(
             f"INSERT INTO teams (id, name, language, quiz_number, quiz_size, score, submitted_at) VALUES (?, ?, ?, ?, ?, ?, ?);",
@@ -84,11 +85,11 @@ async def uploadAnswersHandler(request: web.Request):
         return web.json_response({"teamID": teamID})
     except Exception as e:
         utils.quizDB.cursor.execute(f"DELETE FROM answers WHERE team_id = {teamID};")
-        logger.error(f"Failed to upload answers: {e}")
+        _logger.error(f"Failed to upload answers: {e}")
         raise web.HTTPInternalServerError(text=f"Failed to upload answers: {e}")
 
 
-@utils.router.get(baseURL + "/getAnswers")
+@utils.router.get(_baseURL + "/getAnswers")
 def getAnswersHandler(request: web.Request):
     print(f"API GET request incoming: getAnswers")
     teamID = request.query.get("teamID")
@@ -123,30 +124,30 @@ def getAnswersHandler(request: web.Request):
 
 
 # websockets handler for incoming websocket connections at /api/events
-@utils.router.get(baseURL + "/events")
+@utils.router.get(_baseURL + "/events")
 async def eventsHandler(request: web.Request):
     print(f"API GET request incoming: events")
     ws = web.WebSocketResponse()
     await ws.prepare(request)
     utils.connectedWSClients.add(ws)
-    logger.debug(f"New websocket client connected: {ws}\nTotal: {len(utils.connectedWSClients)}")
+    _logger.debug(f"New websocket client connected: {ws}\nTotal: {len(utils.connectedWSClients)}")
     try:
         async for msg in ws:
             if msg.type == web.WSMsgType.ERROR:
-                logger.warning(f"WebSocket connection closed with error: {ws.exception()}")
+                _logger.warning(f"WebSocket connection closed with error: {ws.exception()}")
                 print(f"WebSocket connection closed with error: {ws.exception()}")
     finally:
         utils.connectedWSClients.remove(ws)
-        logger.debug(f"WebSocket client disconnected: {ws}\nTotal: {len(utils.connectedWSClients)}")
+        _logger.debug(f"WebSocket client disconnected: {ws}\nTotal: {len(utils.connectedWSClients)}")
     return ws
 
 
 # ------- 404 Handlers -------
-@utils.router.get(baseURL + "/{fn}")
+@utils.router.get(_baseURL + "/{fn}")
 async def GET_NotFound(request: web.Request) -> web.Response:
     raise web.HTTPNotFound(text=f"API-Client GET endpoint '{request.match_info.get('fn')}' doesn't exist.")
 
 
-@utils.router.post(baseURL + "/{fn}")
+@utils.router.post(_baseURL + "/{fn}")
 async def POST_NotFound(request: web.Request) -> web.Response:
     raise web.HTTPNotFound(text=f"API-Client POST endpoint '{request.match_info.get('fn')}' doesn't exist.")

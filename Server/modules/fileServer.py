@@ -1,11 +1,12 @@
 from aiohttp import web
+import logging
 import mimetypes
 import pathlib
-import logging
-import modules.utils as utils
+import utils
 
-logger = logging.getLogger(__name__)
-logger.info(f"Importing {__name__}...")
+
+_logger = logging.getLogger(__name__)
+_logger.info(f"Importing {__name__}...")
 
 
 def handleFile(request: web.Request, root: pathlib.Path) -> web.Response:

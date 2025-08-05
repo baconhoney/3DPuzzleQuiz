@@ -1,14 +1,15 @@
 from aiohttp import web
 import datetime
 import logging
-import modules.utils as utils
-
-logger = logging.getLogger(__name__)
-logger.info(f"Importing {__name__}...")
-baseURL = "/api/admin"
+import utils
 
 
-@utils.router.get(baseURL + "/getStates")
+_logger = logging.getLogger(__name__)
+_logger.info(f"Importing {__name__}...")
+_baseURL = "/api/admin"
+
+
+@utils.router.get(_baseURL + "/getStates")
 async def getStatesHandler(request: web.Request):
     print(f"API GET request incoming: admin/getStates")
     return web.json_response(
@@ -20,7 +21,7 @@ async def getStatesHandler(request: web.Request):
     )
 
 
-@utils.router.get(baseURL + "/getAllBuildingsData")
+@utils.router.get(_baseURL + "/getAllBuildingsData")
 async def getAllBuildingsDataHandler(request: web.Request):
     print(f"API GET request incoming: admin/getAllBuildingsData")
     localisedCols = ", ".join([f"name_{lang.value}, country_{lang.value}, city_{lang.value}" for lang in utils.SupportedLanguages])
@@ -29,7 +30,7 @@ async def getAllBuildingsDataHandler(request: web.Request):
     return web.json_response({str(i): dict(zip(colHeaders, entry)) for i, entry in enumerate(res)})
 
 
-@utils.router.get(baseURL + "/getQuizResults")
+@utils.router.get(_baseURL + "/getQuizResults")
 async def getQuizResultsHandler(request: web.Request):
     print(f"API GET request incoming: admin/getResults")
     res: list[list[str | int]] = utils.quizDB.cursor.execute(
@@ -54,7 +55,7 @@ async def getQuizResultsHandler(request: web.Request):
     )
 
 
-@utils.router.get(baseURL + "/getQuizdata")
+@utils.router.get(_baseURL + "/getQuizdata")
 async def getQuizdataHandler(request: web.Request):
     print(f"API GET request incoming: admin/getQuizdataFor")
     teamID = request.query.get("teamID")
@@ -84,7 +85,7 @@ async def getQuizdataHandler(request: web.Request):
     )
 
 
-@utils.router.post(baseURL + "/uploadQuiz")
+@utils.router.post(_baseURL + "/uploadQuiz")
 async def uploadQuizHandler(request: web.Request):
     print("API POST request incoming: admin/uploadQuiz")
     data = await request.json()
@@ -127,11 +128,11 @@ async def uploadQuizHandler(request: web.Request):
         utils.quizDB.connection.commit()
         return web.json_response({"teamID": teamID})
     except Exception as e:
-        logger.error(f"Failed to upload answers: {e}")
+        _logger.error(f"Failed to upload answers: {e}")
         raise web.HTTPInternalServerError(text=f"Failed to upload answers: {e}")
 
 
-@utils.router.post(baseURL + "/queuePrintjob")
+@utils.router.post(_baseURL + "/queuePrintjob")
 async def queuePrintjobHandler(request: web.Request):
     print(f"API POST request incoming: admin/queuePrintjob")
     data = await request.json()
@@ -148,11 +149,11 @@ async def queuePrintjobHandler(request: web.Request):
 
 
 # ------- 404 Handlers -------
-@utils.router.get(baseURL + "/{fn}")
+@utils.router.get(_baseURL + "/{fn}")
 async def GET_NotFound(request: web.Request) -> web.Response:
     raise web.HTTPNotFound(text=f"API GET endpoint '{request.match_info.get('fn')}' doesn't exist.")
 
 
-@utils.router.post(baseURL + "/{fn}")
+@utils.router.post(_baseURL + "/{fn}")
 async def POST_NotFound(request: web.Request) -> web.Response:
     raise web.HTTPNotFound(text=f"API POST endpoint '{request.match_info.get('fn')}' doesn't exist.")

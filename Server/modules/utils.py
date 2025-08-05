@@ -1,19 +1,27 @@
 from aiohttp import web
 from enum import Enum
 import datetime
+import dotenv
+import logging
 import os
 import pathlib
 import random
-import logging
-import modules.quizDB as quizDB
 
-logger = logging.getLogger(__name__)
-logger.info(f"Importing {__name__}...")
+import quizDB
 
 
-# create object for paths
+_logger = logging.getLogger(__name__)
+_logger.info(f"Importing {__name__}...")
+
+# get filepath for determining the root of the program
+# this file is supposed to be in <root>/modules
+os.environ["ROOT"] = str(pathlib.Path(__file__).parent.parent.resolve().as_posix())
+dotenv.load_dotenv()
+
+
+# resolve paths
 class paths:
-    cwd = pathlib.Path(os.getenv("CWD")).resolve()
+    cwd = pathlib.Path(os.getenv("ROOT")).resolve()
     cfgRoot = pathlib.Path(os.getenv("CFG_ROOT")).resolve()
     dataRoot = pathlib.Path(os.getenv("DATA_ROOT")).resolve()
     clientRoot = pathlib.Path(os.getenv("CLIENT_ROOT")).resolve()
@@ -86,3 +94,9 @@ def getNewTeamID(type: QuizType):
         quizDB.cursor.execute(f"SELECT count(id) FROM teams WHERE id={uuid};")
         if quizDB.cursor.fetchone()[0] == 0:
             return uuid
+
+
+if __name__ == "__main__":
+    print("Hello from the utils module")
+    for d in paths.__dict__:
+        print(f"{d}: {getattr(paths, d)}")

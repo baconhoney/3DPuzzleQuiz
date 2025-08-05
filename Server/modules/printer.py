@@ -1,4 +1,4 @@
-import modules.utils as utils
+import utils
 
 #async ??
 def printQuiz(teamID: int, lang: str, quizType: utils.QuizSize):
@@ -24,3 +24,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+

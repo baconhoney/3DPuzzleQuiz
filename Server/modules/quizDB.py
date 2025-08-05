@@ -1,10 +1,14 @@
-import sqlite3
 from os import makedirs
 from pathlib import Path
 import logging
+import sqlite3
 
-logger = logging.getLogger(__name__)
-logger.info(f"Importing {__name__}...")
+
+__all__ = ["QuizDB"]
+
+_logger = logging.getLogger(__name__)
+_logger.info(f"Importing {__name__}...")
+
 
 _buildingsSQL = """
 CREATE TABLE buildings
@@ -61,7 +65,7 @@ CREATE TABLE answers
 
 class QuizDB:
     def __init__(self, dataRoot: Path) -> None:
-        logger.debug("Initializing QuizDB")
+        _logger.debug("Initializing QuizDB")
         self._dataRoot = dataRoot
         if not self._dataRoot:
             raise ValueError("dataRoot is required")
@@ -90,5 +94,3 @@ class QuizDB:
             else:
                 print(f"Table creation aborted")
 
-
-__all__ = ["QuizDB"]

@@ -1,25 +1,24 @@
 # 3D Puzzle Quiz – Exhibition Web Platform
-This repository powers the **3D Puzzle Quiz**, a digital quiz game designed for use at exhibitions. It includes multiple frontend interfaces, a backend server, a searchable interface, and developer documentation via a Git submodule. The system is designed to be modular, multilingual, and easy to deploy.
+This repository powers the **3D Puzzle Quiz**, an analog and digital quiz game designed for use at exhibitions. It includes multiple frontend interfaces, a backend server, a searchable interface, and developer documentation via a Git submodule. The system is designed to be modular, multilingual, and easy to deploy.
 
 
 ## Project Structure
 ```
-./
-├─ ClientWebpage/         # Participant-facing client interface
-├─ SearchWebpage/         # Search utility interface
-├─ AdminWebpage/          # Admin interface
-├─ Server/                # aiohttp backend server
-├─ Build/                 # Output folder for the built app
-├─ cfg/                   # Configuration for the server
-├─ data/                  # Data storage
-│   └─ quizData.sqlite    # SQLite database containing quiz data
-├─ Wiki/                  # Developer documentation (Git submodule)
-├─ build.sh               # Linux build script
-├─ build.bat              # Windows build script
-├─ manageQuizdata.py      # Utility for managing quiz content
-├─ .env                   # Defines relative paths to components
-├─ .gitignore
-└─ .gitmodules
+ClientWebpage/         # Participant-facing client interface
+SearchWebpage/         # Search utility interface
+AdminWebpage/          # Admin interface
+Build/                 # Output folder for the built app
+Server/                # aiohttp backend server
+    cfg/                   # Configuration for the server
+    data/                  # Data storage
+        quizData.sqlite    # SQLite database containing quiz data
+    .env                   # Defines relative paths to components
+    main.py                # The entry point of the Server root-module
+    manageQuizdata.py      # Utility for managing quiz content
+Wiki/                  # Developer documentation (Git submodule)
+build.bat              # Launcher for windows
+build.sh               # Launcher for linux
+build.py               # Build script
 ```
 
 ## Requirements
@@ -54,16 +53,16 @@ Download `poetry` from https://python-poetry.org/docs/#installing-with-the-offic
 
 ### 3. Build the Project
 
-#### On Linux:
-
-```bash
-./build.sh
-```
-
 #### On Windows:
 
 ```cmd
 build.bat
+```
+
+#### On Linux:
+
+```bash
+./build.sh
 ```
 
 This compiles the Frontends and places them in the `Build/` folder, which the server will serve, and also copies the necessary server files into the `Build/` folder.
@@ -77,8 +76,8 @@ python main.py
 
 After starting the server:
 * **Participant Link:** Share the computer's public URL (e.g., `http://<server-ip>:<port>/`) with the quiz participants.
+* **Search Webpage:** Accessible at https://baconhoney.github.io/3DPuzzleQuiz/ (static version) or `http://<server-ip>:<port>/search/` (live version with the live data; requires running the Server).
 * **Admin Dashboard:** Accessible at `http://<server-ip>:<port>/admin/`.
-* **Search Webpage:** Accessible at `http://<server-ip>:<port>/search/`.
 
 ## Database Management
 Quiz data is stored in an SQLite database at: `/data/quizData.sqlite`.
