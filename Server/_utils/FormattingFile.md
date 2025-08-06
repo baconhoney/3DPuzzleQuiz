@@ -7,7 +7,7 @@
 ### Expects
 ```json
 {
-    "type": "queuePrint" | "nextPhase" | "setTimeTill",
+    "type": "queuePrint" | "nextPhase" | "setNextPhaseChangeAt",
     "data": {
         ...
     }
@@ -19,21 +19,21 @@ where `data` is:
   data = {
       "currentPhase": "idle",
       "nextPhase": "running",
-      "timeTillNextPhase": "ISO DateTime string"
+      "nextPhaseChangeAt": "ISO DateTime string"
   }
   ```
 - if `type == "queueprint"`:
   ```json
   data = {
       "copyCount": 5,
-      "quizSize": 20,
-      "language": "hu"
+      "language": "hu",
+      "quizSize": 20
   }
   ```
-- if `type == "setTimeTill"`:
+- if `type == "setNextPhaseChangeAt"`:
   ```json
   data = {
-      "timeTill": "ISO DateTime string"
+      "nextPhaseChangeAt": "ISO DateTime string"
   }
   ```
 

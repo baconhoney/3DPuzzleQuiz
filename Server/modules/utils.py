@@ -68,15 +68,19 @@ class QuizPhases(Enum):
 class QuizState:
     """Stores the state of the quiz."""
 
-    nextQuizAt: datetime.datetime = datetime.datetime.now()
+    nextPhaseChangeAt: datetime.datetime = datetime.datetime.now()
     currentQuizNumber: int = 1
     phase: QuizPhases = QuizPhases.IDLE
     _currentQuizdata: dict[str, dict[str, dict[str, str | int]]] = None
 
     @classmethod
-    def formatNextQuizAt(cls) -> str:
+    def formatNextPhaseChangeAt(cls) -> str:
         """Returns the formatted nextQuizAt value."""
-        return cls.nextQuizAt.isoformat(timespec="milliseconds")
+        return cls.nextPhaseChangeAt.isoformat(timespec="milliseconds")
+
+    @classmethod
+    def getNextPhase(cls) -> QuizPhases:
+        return {QuizPhases.IDLE: QuizPhases.RUNNING, QuizPhases.RUNNING: QuizPhases.SCORING, QuizPhases.SCORING: QuizPhases.IDLE}[cls.phase]
 
 
 # ---------------------------

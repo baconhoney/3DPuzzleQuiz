@@ -1,3 +1,4 @@
+import datetime
 from aiohttp import web
 import logging
 import quizDBManager
@@ -18,7 +19,7 @@ async def getStatesHandler(request: web.Request):
         {
             "phase": utils.QuizState.phase.value,
             "currentQuizNumber": utils.QuizState.currentQuizNumber,
-            "nextQuizAt": utils.QuizState.formatNextQuizAt(),
+            "nextQuizAt": utils.QuizState.formatNextPhaseChangeAt(),
         }
     )
 
@@ -53,22 +54,52 @@ async def uploadQuizHandler(request: web.Request):
 async def queuePrintjobHandler(request: web.Request):
     print(f"API POST request incoming: admin/queuePrintjob")
     data: dict[str, str | int] = await request.json()
-    numberOfTests = data.get("numberOfTests")
+    copyCount = data.get("copyCount")
     lang = utils.convertToQuizLanguage(data.get("language"))
-    size = utils.convertToQuizSize(data.get("size"))
-    if not numberOfTests or not isinstance(numberOfTests, int):
-        raise web.HTTPBadRequest(text=f"Value 'numberOfTests' is invalid: {data.get('numberOfTests', '<missing>')}")
+    size = utils.convertToQuizSize(data.get("quizSize"))
+    if not copyCount or not isinstance(copyCount, int) or copyCount < 1:
+        raise web.HTTPBadRequest(text=f"Value 'copyCount' is invalid: {data.get('copyCount', '<missing>')}")
     if not lang:
         raise web.HTTPBadRequest(text=f"Value 'language' is invalid: {data.get('language', '<missing>')}")
     if not size:
-        raise web.HTTPBadRequest(text=f"Value 'size' is invalid: {data.get('size', '<missing>')}")
-    print(f"New print job: {numberOfTests} copies of type {size.name} in lang {lang.name}")
-    for _ in range(numberOfTests):
+        raise web.HTTPBadRequest(text=f"Value 'quizSize' is invalid: {data.get('quizSize', '<missing>')}")
+    print(f"New print job: {copyCount} copies of type {size.name} in lang {lang.name}")
+    for _ in range(copyCount):
         pass  # call print function
     return web.HTTPOk()
 
 
-@router.get(_baseURL + "/{fn}")
+@router.post(_baseURL + "/nextPhase")
+async def nextPhaseHandler(request: web.Request):
+    print(f"API GET request incoming: admin/nextPhase")
+    data: dict[str, str] = await request.json()
+    currentPhase = utils.convertToQuizPhase(data.get("currentPhase"))
+    nextPhase = utils.convertToQuizPhase(data.get("nextPhase"))
+    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")) or None
+    if not currentPhase:
+        raise web.HTTPBadRequest(text=f"Value 'currentPhase' is invalid: {data.get('currentPhase', '<missing>')}")
+    if not nextPhase:
+        raise web.HTTPBadRequest(text=f"Value 'nextPhase' is invalid: {data.get('nextPhase', '<missing>')}")
+    if not nextPhaseChangeAt:
+        raise web.HTTPBadRequest(text=f"Value 'nextPhaseChangeAt' is invalid: {data.get('nextPhaseChangeAt', '<missing>')}")
+    if currentPhase != utils.QuizState.phase:
+        raise web.HTTPBadRequest(text=f"Value currentPhase is not the actual current phase: {currentPhase.value}")
+    if nextPhase != utils.QuizState.getNextPhase():
+        raise web.HTTPBadRequest(text=f"Value nextPhase is not the actual next phase: {nextPhase.value}")
+    utils.QuizState.phase = nextPhase
+    utils.QuizState.nextPhaseChangeAt = nextPhaseChangeAt
+    return web.HTTPOk()
+
+
+@router.post(_baseURL + "/setNextPhaseChangeAt")
+async def setNextPhaseChangeAtHandler(request: web.Request):
+    print(f"API GET request incoming: admin/setNextPhaseChangeAt")
+    data: dict[str, str] = await request.json()
+    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")) or None
+    if not nextPhaseChangeAt:
+        raise web.HTTPBadRequest(text=f"Value 'nextPhaseChangeAt' is invalid: {data.get('nextPhaseChangeAt', '<missing>')}")
+    utils.QuizState.nextPhaseChangeAt = nextPhaseChangeAt
+    return web.HTTPOk()
 
 
 # ------- 404 Handlers -------
