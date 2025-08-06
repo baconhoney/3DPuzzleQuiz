@@ -32,53 +32,38 @@ async def getAllBuildingsDataHandler(request: web.Request):
 @utils.router.get(_baseURL + "/getQuizResults")
 async def getQuizResultsHandler(request: web.Request):
     print(f"API GET request incoming: admin/getResults")
-    res: list[list[str | int]] = utils.quizDB.cursor.execute(
-        f"SELECT id, name, language, quiz_size, score, submitted_at FROM teams \
-        WHERE quiz_number = {utils.QuizState.currentQuizNumber} \
-        ORDER BY score DESC, submitted_at ASC;",
-    ).fetchall()
-    if not res:
-        return web.json_response({})
-    return web.json_response([{"id": entry[0], "name": entry[1], "language": entry[2], "quizSize": entry[3], "score": entry[4], "submittedAt": entry[5]} for entry in res])
+    return web.json_response(quizDBManager.getLeaderboard())
 
 
 @utils.router.get(_baseURL + "/getQuizdata")
 async def getQuizdataHandler(request: web.Request):
     print(f"API GET request incoming: admin/getQuizdata")
-    teamID = request.query.get("teamID")
-    if not teamID:
-        raise web.HTTPBadRequest(text="Value 'teamID' is missing")
-    return web.json_response(quizDBManager.getAnswers(teamID))
+    return web.json_response(quizDBManager.getAnswers(request.query.get("teamID")))
 
 
 @utils.router.post(_baseURL + "/uploadQuiz")
 async def uploadQuizHandler(request: web.Request):
     print("API POST request incoming: admin/uploadQuiz")
-    data = request.json()
-    if "id" not in data:
-        raise web.HTTPBadRequest(text="Value 'id' is missing")
-    if "name" not in data:
-        raise web.HTTPBadRequest(text="Value 'name' is missing")
-    if "lang" not in data or data["lang"] not in utils.QuizLanguages:
-        raise web.HTTPBadRequest(text=f"Value 'lang' is invalid: {data.get('lang', '<missing>')}")
-    if "answers" not in data:
-        raise web.HTTPBadRequest(text="Value 'answers' is missing")
-    quizDBManager.uploadAnswers(data["id"], data["name"], utils.QuizLanguages(data["lang"]), data["answers"])
+    data: dict[str, str | int | list[dict[str, str | int]]] = request.json()
+    quizDBManager.uploadAnswers("paper-uploadAnswers", data.get("teamID"), data.get("name"), utils.convertToQuizLanguage(data.get("lang")), data.get("answers"))
     return web.HTTPOk()
 
 
 @utils.router.post(_baseURL + "/queuePrintjob")
 async def queuePrintjobHandler(request: web.Request):
     print(f"API POST request incoming: admin/queuePrintjob")
-    data = await request.json()
-    if "numberOfTests" not in data or not data["numberOfTests"].isdigit():
-        raise web.HTTPBadRequest(text="Value 'numberOfTests' is missing")
-    if "language" not in data or data["language"] not in utils.QuizLanguages:
+    data: dict[str, str | int] = await request.json()
+    numberOfTests = data.get("numberOfTests")
+    lang = utils.convertToQuizLanguage(data.get("language"))
+    size = utils.convertToQuizSize(data.get("size"))
+    if not numberOfTests or not isinstance(numberOfTests, int):
+        raise web.HTTPBadRequest(text=f"Value 'numberOfTests' is invalid: {data.get('numberOfTests', '<missing>')}")
+    if not lang:
         raise web.HTTPBadRequest(text=f"Value 'language' is invalid: {data.get('language', '<missing>')}")
-    if "size" not in data or data["size"] not in utils.QuizSizes:
+    if not size:
         raise web.HTTPBadRequest(text=f"Value 'size' is invalid: {data.get('size', '<missing>')}")
-    print(f"New print job: {data['numberOfTests']} copies of type {utils.QuizSizes(data['size']).name} in lang {utils.QuizLanguages(data['language']).name}")
-    for _ in range(data["numberOfTests"]):
+    print(f"New print job: {numberOfTests} copies of type {size.name} in lang {lang.name}")
+    for _ in range(numberOfTests):
         pass  # call print function
     return web.HTTPOk()
 

@@ -11,10 +11,10 @@ _logger.info(f"Importing {__name__}...")
 _baseURL = "/api/client"
 
 
-@utils.router.get(_baseURL + "/getQuizState")
-async def getQuizStateHandler(request: web.Request):
+@utils.router.get(_baseURL + "/getQuizPhase")
+async def getQuizPhaseHandler(request: web.Request):
     print(f"API GET request incoming: getQuizState")
-    return web.json_response({"state": utils.QuizState.phase.value})
+    return web.json_response({"phase": utils.QuizState.phase.value})
 
 
 @utils.router.get(_baseURL + "/getQuestions")
@@ -32,7 +32,7 @@ async def uploadAnswersHandler(request: web.Request):
     data: dict[str, str | list[dict[str, int]]] = await request.json()
     teamID = utils.getNewTeamID(utils.QuizTypes.DIGITAL)
     try:
-        quizDBManager.uploadAnswers(teamID, data.get("name"), utils.convertToQuizLanguage(data.get("lang")), data.get("answers"))
+        quizDBManager.uploadAnswers("digital-uploadFull", teamID, data.get("name"), utils.convertToQuizLanguage(data.get("lang")), data.get("answers"))
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
     return web.json_response({"teamID": teamID})
