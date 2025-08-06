@@ -9,4 +9,4 @@ import modules.printer as printer
 import modules.utils as utils
 
 
-printer.printQuiz(1234567890, "en", utils.QuizSize.SIZE_20)
+printer.printQuiz(1234567890, "en", utils.QuizSize.SIZE_100)
