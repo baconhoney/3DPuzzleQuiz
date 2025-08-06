@@ -7,10 +7,9 @@
             "answer": 38,
             "name_hu": "A moszkvai Kreml Fala",
             "name_en": "The Moscow Kremlin Wall",
-            "country_hu": "Oroszország",
-            "country_en": "Russia",
-            "city_hu": "Moszkva",
-            "city_en": "Moscow"
+            "location_hu": "Oroszország, Moszkva",
+            "location_en": "Moscow, Russia",
+            "type": "wall"
         },
         {
             "id": 7805,
@@ -18,10 +17,9 @@
             "answer": 62,
             "name_hu": "A Vérző Megváltó temploma",
             "name_en": "Church of the Savior on Blood",
-            "country_hu": "Oroszország",
-            "country_en": "Russia",
-            "city_hu": "Szentpétervár",
-            "city_en": "Saint Petersburg"
+            "location_hu": "Oroszország, Szentpétervár",
+            "location_en": "Saint Petersburg, Russia",
+            "type": "place-of-religion/church"
         },
         {
             "id": 2695,
@@ -29,10 +27,9 @@
             "answer": 68,
             "name_hu": "Ahmed Szultán Mecset",
             "name_en": "Sultan Ahmed Mosque",
-            "country_hu": "Törökország",
-            "country_en": "Turkey",
-            "city_hu": "Isztambul",
-            "city_en": "Istanbul"
+            "location_hu": "Törökország, Isztambul",
+            "location_en": "Istanbul, Turkey",
+            "type": "place-of-religion/mosque"
         },
         {
             "id": 3975,
@@ -40,10 +37,9 @@
             "answer": 55,
             "name_hu": "Akhmad Kadyrov mecset",
             "name_en": "Akhmad Kadyrov mosque",
-            "country_hu": "Oroszország",
-            "country_en": "Russia",
-            "city_hu": "Grozníj",
-            "city_en": "Grozny"
+            "location_hu": "Oroszország, Grozníj",
+            "location_en": "Grozny, Russia",
+            "type": "place-of-religion/mosque"
         },
         {
             "id": 3316,
@@ -51,10 +47,9 @@
             "answer": 6,
             "name_hu": "Al-Masjid al-Haram",
             "name_en": "Al-Masjid al-Haram",
-            "country_hu": "Szaúd-Arábia",
-            "country_en": "Saudi Arabia",
-            "city_hu": "Mekka",
-            "city_en": "Mekka"
+            "location_hu": "Szaúd-Arábia, Mekka",
+            "location_en": "Mekka, Saudi Arabia",
+            "type": "place-of-religion/mosque"
         },
         {
             "id": 5588,
@@ -62,10 +57,9 @@
             "answer": 75,
             "name_hu": "Al-Masjid an-Nabawi",
             "name_en": "Al-Masjid an-Nabawi",
-            "country_hu": "Szaúd-Arábia",
-            "country_en": "Saudi Arabia",
-            "city_hu": "Medina",
-            "city_en": "Medina"
+            "location_hu": "Szaúd-Arábia, Medina",
+            "location_en": "Medina, Saudi Arabia",
+            "type": "place-of-religion/mosque"
         },
         {
             "id": 2676,
@@ -73,10 +67,9 @@
             "answer": 61,
             "name_hu": "Anna királynő bosszúja",
             "name_en": "Queen Anne's Revenge",
-            "country_hu": "Egyesült Királyság",
-            "country_en": "United Kingdom",
-            "city_hu": "[elsüllyedt]",
-            "city_en": "[sank]"
+            "location_hu": "Egyesült Királyság [elsüllyedt]",
+            "location_en": "United Kingdom [sank]",
+            "type": "ship"
         },
         {
             "id": 6509,
@@ -84,10 +77,9 @@
             "answer": 46,
             "name_hu": "Az ég temploma",
             "name_en": "Temple of Heaven",
-            "country_hu": "Kína",
-            "country_en": "China",
-            "city_hu": "Peking",
-            "city_en": "Beijing"
+            "location_hu": "Kína, Peking",
+            "location_en": "Beijing, China",
+            "type": "place-of-religion/church"
         },
         {
             "id": 6036,
@@ -95,10 +87,9 @@
             "answer": 8,
             "name_hu": "Bank of China Tower",
             "name_en": "Bank of China tower",
-            "country_hu": "Kína",
-            "country_en": "China",
-            "city_hu": "Hong Kong",
-            "city_en": "Hong Kong"
+            "location_hu": "Kína, Hong Kong",
+            "location_en": "Hong Kong, China",
+            "type": "tower"
         },
         {
             "id": 9678,
@@ -106,10 +97,9 @@
             "answer": 45,
             "name_hu": "Big Ben",
             "name_en": "Big Ben",
-            "country_hu": "Egyesült Királyság",
-            "country_en": "United Kingdom",
-            "city_hu": "London",
-            "city_en": "London"
+            "location_hu": "Egyesült Királyság, London",
+            "location_en": "London, United Kingdom",
+            "type": "clock"
         },
         {
             "id": 2720,
@@ -117,10 +107,9 @@
             "answer": 60,
             "name_hu": "Boldog Vazul-székesegyház",
             "name_en": "Saint Basil's cathedral",
-            "country_hu": "Oroszország",
-            "country_en": "Russia",
-            "city_hu": "Moszkva",
-            "city_en": "Moscow"
+            "location_hu": "Oroszország, Moszkva",
+            "location_en": "Moscow, Russia",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 5517,
@@ -128,10 +117,9 @@
             "answer": 44,
             "name_hu": "Bolygó Hollandi szellemhajó",
             "name_en": "Flying Dutchman ghostship",
-            "country_hu": "Hollandia",
-            "country_en": "Netherlands",
-            "city_hu": "-",
-            "city_en": "-"
+            "location_hu": "Hollandia",
+            "location_en": "Netherlands",
+            "type": "fictional/ship"
         },
         {
             "id": 6118,
@@ -139,21 +127,19 @@
             "answer": 10,
             "name_hu": "Brandenburgi kapu",
             "name_en": "Brandenburg gate",
-            "country_hu": "Németország",
-            "country_en": "Germany",
-            "city_hu": "Berlin",
-            "city_en": "Berlin"
+            "location_hu": "Németország, Berlin",
+            "location_en": "Berlin, Germany",
+            "type": "gate"
         },
         {
             "id": 3095,
             "box": 1346,
             "answer": 36,
-            "name_hu": "Brooklyn-híd",
+            "name_hu": "Brooklyn híd",
             "name_en": "Brooklyn bridge",
-            "country_hu": "Egyesült Államok",
-            "country_en": "United States of America",
-            "city_hu": "New York",
-            "city_en": "New York"
+            "location_hu": "Egyesült Államok, New York",
+            "location_en": "New York, United States of America",
+            "type": "bridge"
         },
         {
             "id": 8032,
@@ -161,10 +147,9 @@
             "answer": 35,
             "name_hu": "Buckingham Palota",
             "name_en": "Buckingham Palace",
-            "country_hu": "Egyesült Királyság",
-            "country_en": "United Kingdom",
-            "city_hu": "London",
-            "city_en": "London"
+            "location_hu": "Egyesült Királyság, London",
+            "location_en": "London, United Kingdom",
+            "type": "palace"
         },
         {
             "id": 3735,
@@ -172,10 +157,9 @@
             "answer": 42,
             "name_hu": "Burj Al Arab",
             "name_en": "Burj Al Arab",
-            "country_hu": "Egyesült Arab Emírségek",
-            "country_en": "United Arab Emirates",
-            "city_hu": "Dubai",
-            "city_en": "Dubai"
+            "location_hu": "Egyesült Arab Emírségek, Dubai",
+            "location_en": "Dubai, United Arab Emirates",
+            "type": "tower"
         },
         {
             "id": 4355,
@@ -183,10 +167,9 @@
             "answer": 37,
             "name_hu": "Burj Kalifa",
             "name_en": "Burj Kalifa",
-            "country_hu": "Egyesült Arab Emírségek",
-            "country_en": "United Arab Emirates",
-            "city_hu": "Dubai",
-            "city_en": "Dubai"
+            "location_hu": "Egyesült Arab Emírségek, Dubai",
+            "location_en": "Dubai, United Arab Emirates",
+            "type": "tower"
         },
         {
             "id": 9788,
@@ -194,10 +177,9 @@
             "answer": 21,
             "name_hu": "Capitolium",
             "name_en": "United States Capitol",
-            "country_hu": "Egyesült Államok",
-            "country_en": "United States of America",
-            "city_hu": "Washington",
-            "city_en": "Washington"
+            "location_hu": "Egyesült Államok, Washington",
+            "location_en": "Washington, United States of America",
+            "type": "parliament"
         },
         {
             "id": 4342,
@@ -205,10 +187,9 @@
             "answer": 9,
             "name_hu": "Chrysler Building",
             "name_en": "Chrysler Building",
-            "country_hu": "Egyesült Államok",
-            "country_en": "United States of America",
-            "city_hu": "New York",
-            "city_en": "New York"
+            "location_hu": "Egyesült Államok, New York",
+            "location_en": "New York, United States of America",
+            "type": "tower"
         },
         {
             "id": 8052,
@@ -216,10 +197,9 @@
             "answer": 79,
             "name_hu": "Colosseum",
             "name_en": "Colosseum",
-            "country_hu": "Olaszország",
-            "country_en": "Italy",
-            "city_hu": "Róma",
-            "city_en": "Rome"
+            "location_hu": "Olaszország, Róma",
+            "location_en": "Rome, Italy",
+            "type": "arena"
         },
         {
             "id": 9118,
@@ -227,10 +207,9 @@
             "answer": 100,
             "name_hu": "Diadalív",
             "name_en": "Triumphal Arch",
-            "country_hu": "Franciaország",
-            "country_en": "France",
-            "city_hu": "Párizs",
-            "city_en": "Paris"
+            "location_hu": "Franciaország, Párizs",
+            "location_en": "Paris, France",
+            "type": "gate"
         },
         {
             "id": 9851,
@@ -238,10 +217,9 @@
             "answer": 28,
             "name_hu": "Dohány utcai zsinagóga",
             "name_en": "Dohány Street Synagogue",
-            "country_hu": "Magyarország",
-            "country_en": "Hungary",
-            "city_hu": "Budapest",
-            "city_en": "Budapest"
+            "location_hu": "Magyarország, Budapest",
+            "location_en": "Budapest, Hungary",
+            "type": "place-of-religion/synagogue"
         },
         {
             "id": 4794,
@@ -249,10 +227,9 @@
             "answer": 97,
             "name_hu": "Eiffel Torony",
             "name_en": "Eiffel tower",
-            "country_hu": "Franciaország",
-            "country_en": "France",
-            "city_hu": "Párizs",
-            "city_en": "Paris"
+            "location_hu": "Franciaország, Párizs",
+            "location_en": "Paris, France",
+            "type": "tower"
         },
         {
             "id": 9974,
@@ -260,10 +237,9 @@
             "answer": 16,
             "name_hu": "Empire State Building",
             "name_en": "Empire State Building",
-            "country_hu": "Egyesült Államok",
-            "country_en": "United States of America",
-            "city_hu": "New York",
-            "city_en": "New York"
+            "location_hu": "Egyesült Államok, New York",
+            "location_en": "New York, United States of America",
+            "type": "tower"
         },
         {
             "id": 7582,
@@ -271,10 +247,9 @@
             "answer": 67,
             "name_hu": "Esmeralda 1855",
             "name_en": "Esmeralda 1855",
-            "country_hu": "Chile",
-            "country_en": "Chile",
-            "city_hu": "[elsüllyedt]",
-            "city_en": "[sank]"
+            "location_hu": "Chile [elsüllyedt]",
+            "location_en": "Chile [sank]",
+            "type": "ship"
         },
         {
             "id": 6653,
@@ -282,10 +257,9 @@
             "answer": 58,
             "name_hu": "Esztergomi Bazilika",
             "name_en": "Basilica of Esztergom",
-            "country_hu": "Magyarország",
-            "country_en": "Hungary",
-            "city_hu": "Esztergom",
-            "city_en": "Esztergom"
+            "location_hu": "Magyarország, Esztergom",
+            "location_en": "Esztergom, Hungary",
+            "type": "place-of-religion/basilica"
         },
         {
             "id": 4837,
@@ -293,10 +267,9 @@
             "answer": 19,
             "name_hu": "Eyüp Sultan mecset",
             "name_en": "Eyüp Sultan mosque",
-            "country_hu": "Törökország",
-            "country_en": "Turkey",
-            "city_hu": "Isztambul",
-            "city_en": "Istanbul"
+            "location_hu": "Törökország, Isztambul",
+            "location_en": "Istanbul, Turkey",
+            "type": "place-of-religion/mosque"
         },
         {
             "id": 8465,
@@ -304,10 +277,9 @@
             "answer": 39,
             "name_hu": "Fehér Ház",
             "name_en": "White House",
-            "country_hu": "Egyesült Államok",
-            "country_en": "United States of America",
-            "city_hu": "Washington",
-            "city_en": "Washington"
+            "location_hu": "Egyesült Államok, Washington",
+            "location_en": "Washington, United States of America",
+            "type": "parliament"
         },
         {
             "id": 7619,
@@ -315,10 +287,9 @@
             "answer": 23,
             "name_hu": "Firenzei Dóm",
             "name_en": "Florence Cathedral",
-            "country_hu": "Olaszország",
-            "country_en": "Italy",
-            "city_hu": "Firenze",
-            "city_en": "Firenze"
+            "location_hu": "Olaszország, Firenze",
+            "location_en": "Firenze, Italy",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 2035,
@@ -326,10 +297,9 @@
             "answer": 78,
             "name_hu": "Galata torony",
             "name_en": "Galata tower",
-            "country_hu": "Törökország",
-            "country_en": "Turkey",
-            "city_hu": "Isztambul",
-            "city_en": "Istanbul"
+            "location_hu": "Törökország, Isztambul",
+            "location_en": "Istanbul, Turkey",
+            "type": "tower"
         },
         {
             "id": 9461,
@@ -337,10 +307,9 @@
             "answer": 72,
             "name_hu": "Groupama Aréna",
             "name_en": "Groupama Arena",
-            "country_hu": "Magyarország",
-            "country_en": "Hungary",
-            "city_hu": "Budapest",
-            "city_en": "Budapest"
+            "location_hu": "Magyarország, Budapest",
+            "location_en": "Budapest, Hungary",
+            "type": "arena"
         },
         {
             "id": 6192,
@@ -348,10 +317,9 @@
             "answer": 94,
             "name_hu": "Hagia Sophia",
             "name_en": "Hagia Sophia",
-            "country_hu": "Törökország",
-            "country_en": "Turkey",
-            "city_hu": "Isztambul",
-            "city_en": "Istanbul"
+            "location_hu": "Törökország, Isztambul",
+            "location_en": "Istanbul, Turkey",
+            "type": "place-of-religion/mosque"
         },
         {
             "id": 8550,
@@ -359,10 +327,9 @@
             "answer": 54,
             "name_hu": "Harry Potter Roxfort Kastély",
             "name_en": "Harry Potter Hogwarts castle",
-            "country_hu": "Egyesült Királyság",
-            "country_en": "United Kingdom",
-            "city_hu": "Alnwick",
-            "city_en": "Alnwick"
+            "location_hu": "Egyesült Királyság, Alnwick",
+            "location_en": "Alnwick, United Kingdom",
+            "type": "fictional/castle"
         },
         {
             "id": 8422,
@@ -370,10 +337,9 @@
             "answer": 49,
             "name_hu": "Hat hölgy kastély",
             "name_en": "Château de Chenonceau",
-            "country_hu": "Franciaország",
-            "country_en": "France",
-            "city_hu": "Chenonceaux",
-            "city_en": "Chenonceaux"
+            "location_hu": "Franciaország, Chenonceaux",
+            "location_en": "Chenonceaux, France",
+            "type": "castle"
         },
         {
             "id": 5641,
@@ -381,10 +347,9 @@
             "answer": 31,
             "name_hu": "Himedzsi várkastély",
             "name_en": "Himeji castle",
-            "country_hu": "Japán",
-            "country_en": "Japan",
-            "city_hu": "Himedzsi",
-            "city_en": "Himeji"
+            "location_hu": "Japán, Himedzsi",
+            "location_en": "Himeji, Japan",
+            "type": "castle"
         },
         {
             "id": 4512,
@@ -392,10 +357,9 @@
             "answer": 85,
             "name_hu": "Hluboká kastély",
             "name_en": "Hluboká castle",
-            "country_hu": "Csehország",
-            "country_en": "Czech Republic",
-            "city_hu": "Hluboká nad Vltavou",
-            "city_en": "Hluboká nad Vltavou"
+            "location_hu": "Csehország, Hluboká nad Vltavou",
+            "location_en": "Hluboká nad Vltavou, Czech Republic",
+            "type": "castle"
         },
         {
             "id": 8922,
@@ -403,10 +367,9 @@
             "answer": 24,
             "name_hu": "HMS Beagle 1918",
             "name_en": "HMS Beagle 1918",
-            "country_hu": "Egyesült Királyság",
-            "country_en": "United Kingdom",
-            "city_hu": "[elsüllyedt]",
-            "city_en": "[sank]"
+            "location_hu": "Egyesült Királyság [elsüllyedt]",
+            "location_en": "United Kingdom [sank]",
+            "type": "ship"
         },
         {
             "id": 8447,
@@ -414,10 +377,9 @@
             "answer": 99,
             "name_hu": "HMS Victory 1765",
             "name_en": "HMS Victory 1765",
-            "country_hu": "Egyesült Királyság",
-            "country_en": "United Kingdom",
-            "city_hu": "Boston",
-            "city_en": "Boston"
+            "location_hu": "Egyesült Királyság, Boston",
+            "location_en": "Boston, United Kingdom",
+            "type": "ship"
         },
         {
             "id": 6841,
@@ -425,10 +387,9 @@
             "answer": 3,
             "name_hu": "Hohenzollern kastély",
             "name_en": "Hohenzollern castle",
-            "country_hu": "Németország",
-            "country_en": "Germany",
-            "city_hu": "Bisingen",
-            "city_en": "Bisingen"
+            "location_hu": "Németország, Bisingen",
+            "location_en": "Bisingen, Germany",
+            "type": "castle"
         },
         {
             "id": 2501,
@@ -436,10 +397,9 @@
             "answer": 12,
             "name_hu": "Holland szélmalom",
             "name_en": "Dutch windmill",
-            "country_hu": "Hollandia",
-            "country_en": "Netherlands",
-            "city_hu": "Kinderdijk",
-            "city_en": "Kinderdijk"
+            "location_hu": "Hollandia, Kinderdijk",
+            "location_en": "Kinderdijk, Netherlands",
+            "type": "other"
         },
         {
             "id": 9675,
@@ -447,10 +407,9 @@
             "answer": 90,
             "name_hu": "Hősök tere",
             "name_en": "Heroes' Square",
-            "country_hu": "Magyarország",
-            "country_en": "Hungary",
-            "city_hu": "Budapest",
-            "city_en": "Budapest"
+            "location_hu": "Magyarország, Budapest",
+            "location_en": "Budapest, Hungary",
+            "type": "square"
         },
         {
             "id": 5131,
@@ -458,10 +417,9 @@
             "answer": 1,
             "name_hu": "Kaminarimon Kapu",
             "name_en": "Kaminarimon Gate",
-            "country_hu": "Japán",
-            "country_en": "Japan",
-            "city_hu": "Tokió",
-            "city_en": "Tokyo"
+            "location_hu": "Japán, Tokió",
+            "location_en": "Tokyo, Japan",
+            "type": "gate"
         },
         {
             "id": 2085,
@@ -469,10 +427,9 @@
             "answer": 76,
             "name_hu": "Kanadai Nemzeti TV-Torony",
             "name_en": "Canadian National tower",
-            "country_hu": "Kanada",
-            "country_en": "Canada",
-            "city_hu": "Toronto",
-            "city_en": "Toronto"
+            "location_hu": "Kanada, Toronto",
+            "location_en": "Toronto, Canada",
+            "type": "tower"
         },
         {
             "id": 4721,
@@ -480,10 +437,9 @@
             "answer": 4,
             "name_hu": "Keleti Gyöngy torony",
             "name_en": "Oriental Pearl tower",
-            "country_hu": "Kína",
-            "country_en": "China",
-            "city_hu": "Shanghai",
-            "city_en": "Shanghai"
+            "location_hu": "Kína, Shanghai",
+            "location_en": "Shanghai, China",
+            "type": "tower"
         },
         {
             "id": 5210,
@@ -491,10 +447,9 @@
             "answer": 15,
             "name_hu": "Kínai Nagy Fal",
             "name_en": "Great Wall of China",
-            "country_hu": "Kína",
-            "country_en": "China",
-            "city_hu": "-",
-            "city_en": "-"
+            "location_hu": "Kína, -",
+            "location_en": "-, China",
+            "type": "wall"
         },
         {
             "id": 5519,
@@ -502,10 +457,9 @@
             "answer": 5,
             "name_hu": "Királyi palota",
             "name_en": "Royal Castle",
-            "country_hu": "Lengyelország",
-            "country_en": "Poland",
-            "city_hu": "Varsó",
-            "city_en": "Warsaw"
+            "location_hu": "Lengyelország, Varsó",
+            "location_en": "Warsaw, Poland",
+            "type": "castle"
         },
         {
             "id": 3265,
@@ -513,10 +467,9 @@
             "answer": 91,
             "name_hu": "Kölni dóm",
             "name_en": "Cologne cathedral",
-            "country_hu": "Németország",
-            "country_en": "Germany",
-            "city_hu": "Köln",
-            "city_en": "Cologne"
+            "location_hu": "Németország, Köln",
+            "location_en": "Cologne, Germany",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 9010,
@@ -524,10 +477,9 @@
             "answer": 25,
             "name_hu": "Kul Sharif mecset",
             "name_en": "Kul Sharif mosque",
-            "country_hu": "Oroszország",
-            "country_en": "Russia",
-            "city_hu": "Kazán",
-            "city_en": "Kazan"
+            "location_hu": "Oroszország, Kazán",
+            "location_en": "Kazan, Russia",
+            "type": "place-of-religion/mosque"
         },
         {
             "id": 5466,
@@ -535,10 +487,9 @@
             "answer": 80,
             "name_hu": "Kultúra és Tudomány Palotája",
             "name_en": "Palace of Culture and Science",
-            "country_hu": "Lengyelország",
-            "country_en": "Poland",
-            "city_hu": "Varsó",
-            "city_en": "Warsaw"
+            "location_hu": "Lengyelország, Varsó",
+            "location_en": "Warsaw, Poland",
+            "type": "palace"
         },
         {
             "id": 6939,
@@ -546,10 +497,9 @@
             "answer": 33,
             "name_hu": "Lincoln emlékmű",
             "name_en": "Lincoln memorial",
-            "country_hu": "Egyesült Államok",
-            "country_en": "United States of America",
-            "city_hu": "Washington",
-            "city_en": "Washington"
+            "location_hu": "Egyesült Államok, Washington",
+            "location_en": "Washington, United States of America",
+            "type": "monument"
         },
         {
             "id": 9266,
@@ -557,10 +507,9 @@
             "answer": 93,
             "name_hu": "Louvre Múzeum",
             "name_en": "Louvre Museum",
-            "country_hu": "Franciaország",
-            "country_en": "France",
-            "city_hu": "Párizs",
-            "city_en": "Paris"
+            "location_hu": "Franciaország, Párizs",
+            "location_en": "Paris, France",
+            "type": "monument"
         },
         {
             "id": 8948,
@@ -568,10 +517,9 @@
             "answer": 30,
             "name_hu": "Mátyás-templom és Halászbástya",
             "name_en": "Matthias church & Fisherman's bastion",
-            "country_hu": "Magyarország",
-            "country_en": "Hungary",
-            "city_hu": "Budapest",
-            "city_en": "Budapest"
+            "location_hu": "Magyarország, Budapest",
+            "location_en": "Budapest, Hungary",
+            "type": "place-of-religion/church"
         },
         {
             "id": 3278,
@@ -579,10 +527,9 @@
             "answer": 63,
             "name_hu": "Mayflower",
             "name_en": "Mayflower",
-            "country_hu": "Hollandia",
-            "country_en": "Netherlands",
-            "city_hu": "[elsüllyedt]",
-            "city_en": "[sank]"
+            "location_hu": "Hollandia [elsüllyedt]",
+            "location_en": "Netherlands [sank]",
+            "type": "ship"
         },
         {
             "id": 4805,
@@ -590,10 +537,9 @@
             "answer": 59,
             "name_hu": "Megváltó Krisztus szobra",
             "name_en": "Christ the Redeemer",
-            "country_hu": "Brazília",
-            "country_en": "Brasil",
-            "city_hu": "Rio de Janeiro",
-            "city_en": "Rio de Janeiro"
+            "location_hu": "Brazília, Rio de Janeiro",
+            "location_en": "Rio de Janeiro, Brasil",
+            "type": "monument"
         },
         {
             "id": 9218,
@@ -601,10 +547,9 @@
             "answer": 66,
             "name_hu": "Megváltó Krisztus-székesegyház",
             "name_en": "Cathedral of Christ the Savior",
-            "country_hu": "Oroszország",
-            "country_en": "Russia",
-            "city_hu": "Moszkva",
-            "city_en": "Moscow"
+            "location_hu": "Oroszország, Moszkva",
+            "location_en": "Moscow, Russia",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 8053,
@@ -612,10 +557,9 @@
             "answer": 26,
             "name_hu": "Milánói Dóm",
             "name_en": "Milan Cathedral",
-            "country_hu": "Olaszország",
-            "country_en": "Italy",
-            "city_hu": "Milánó",
-            "city_en": "Milan"
+            "location_hu": "Olaszország, Milánó",
+            "location_en": "Milan, Italy",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 4954,
@@ -623,10 +567,9 @@
             "answer": 52,
             "name_hu": "Mississippi gőzhajó",
             "name_en": "Mississippi steamship",
-            "country_hu": "Egyesült Államok",
-            "country_en": "United States of America",
-            "city_hu": "New Orleans",
-            "city_en": "New Orleans"
+            "location_hu": "Egyesült Államok, New Orleans",
+            "location_en": "New Orleans, United States of America",
+            "type": "ship"
         },
         {
             "id": 2340,
@@ -634,10 +577,9 @@
             "answer": 48,
             "name_hu": "Mustafa Kemal Atatürk Mauzóleuma",
             "name_en": "Mausoleum of Mustafa Kemal Atatürk",
-            "country_hu": "Törökország",
-            "country_en": "Turkey",
-            "city_hu": "Ankara",
-            "city_en": "Ankara"
+            "location_hu": "Törökország, Ankara",
+            "location_en": "Ankara, Turkey",
+            "type": "mausoleum"
         },
         {
             "id": 6114,
@@ -645,10 +587,9 @@
             "answer": 64,
             "name_hu": "Nagyboldogasszony-székesegyház",
             "name_en": "The Assumption Cathedral",
-            "country_hu": "Oroszország",
-            "country_en": "Russia",
-            "city_hu": "Szergijev Poszad",
-            "city_en": "Sergiyev Posad"
+            "location_hu": "Oroszország, Szergijev Poszad",
+            "location_en": "Sergiyev Posad, Russia",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 4190,
@@ -656,10 +597,9 @@
             "answer": 41,
             "name_hu": "Új Hattyúkő kastély",
             "name_en": "Neuschwanstein castle",
-            "country_hu": "Németország",
-            "country_en": "Germany",
-            "city_hu": "Schwangau",
-            "city_en": "Schwangau"
+            "location_hu": "Németország, Schwangau",
+            "location_en": "Schwangau, Germany",
+            "type": "castle"
         },
         {
             "id": 7310,
@@ -667,10 +607,9 @@
             "answer": 74,
             "name_hu": "Notre-Dame-székesegyház",
             "name_en": "Notre-Dame de Paris",
-            "country_hu": "Franciaország",
-            "country_en": "France",
-            "city_hu": "Párizs",
-            "city_en": "Paris"
+            "location_hu": "Franciaország, Párizs",
+            "location_en": "Paris, France",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 2615,
@@ -678,10 +617,9 @@
             "answer": 13,
             "name_hu": "Országház",
             "name_en": "Hungarian Parliament",
-            "country_hu": "Magyarország",
-            "country_en": "Hungary",
-            "city_hu": "Budapest",
-            "city_en": "Budapest"
+            "location_hu": "Magyarország, Budapest",
+            "location_en": "Budapest, Hungary",
+            "type": "parliament"
         },
         {
             "id": 2987,
@@ -689,10 +627,9 @@
             "answer": 89,
             "name_hu": "Oszakai várkastély",
             "name_en": "Osaka castle",
-            "country_hu": "Japán",
-            "country_en": "Japan",
-            "city_hu": "Oszaka",
-            "city_en": "Osaka"
+            "location_hu": "Japán, Oszaka",
+            "location_en": "Osaka, Japan",
+            "type": "castle"
         },
         {
             "id": 4677,
@@ -700,10 +637,9 @@
             "answer": 73,
             "name_hu": "Pekingi Siheyuan",
             "name_en": "Beijing Siheyuan",
-            "country_hu": "Kína",
-            "country_en": "China",
-            "city_hu": "Peking",
-            "city_en": "Beijing"
+            "location_hu": "Kína, Peking",
+            "location_en": "Beijing, China",
+            "type": "garden"
         },
         {
             "id": 5408,
@@ -711,10 +647,9 @@
             "answer": 83,
             "name_hu": "Peles kastély",
             "name_en": "Peles castle",
-            "country_hu": "Románia",
-            "country_en": "Romania",
-            "city_hu": "Szinaja",
-            "city_en": "Sinaia"
+            "location_hu": "Románia, Szinaja",
+            "location_en": "Sinaia, Romania",
+            "type": "castle"
         },
         {
             "id": 7401,
@@ -722,10 +657,9 @@
             "answer": 84,
             "name_hu": "Petronas-ikertorony",
             "name_en": "Petronas Twin towers",
-            "country_hu": "Malajzia",
-            "country_en": "Malaysia",
-            "city_hu": "Kuala Lumpur",
-            "city_en": "Kuala Lumpur"
+            "location_hu": "Malajzia, Kuala Lumpur",
+            "location_en": "Kuala Lumpur, Malaysia",
+            "type": "tower"
         },
         {
             "id": 2366,
@@ -733,10 +667,9 @@
             "answer": 69,
             "name_hu": "Pisai Ferde Torony",
             "name_en": "Leaning Tower of Pisa",
-            "country_hu": "Olaszország",
-            "country_en": "Italy",
-            "city_hu": "Pisa",
-            "city_en": "Pisa"
+            "location_hu": "Olaszország, Pisa",
+            "location_en": "Pisa, Italy",
+            "type": "tower"
         },
         {
             "id": 4638,
@@ -744,10 +677,9 @@
             "answer": 77,
             "name_hu": "Prágai Csillagászati óra és városháza",
             "name_en": "Prague Astronomical Clock and Town Hall",
-            "country_hu": "Csehország",
-            "country_en": "Czech Republic",
-            "city_hu": "Prága",
-            "city_en": "Prague"
+            "location_hu": "Csehország, Prága",
+            "location_en": "Prague, Czech Republic",
+            "type": "clock"
         },
         {
             "id": 8790,
@@ -755,10 +687,9 @@
             "answer": 88,
             "name_hu": "Római csatahajó",
             "name_en": "Roman warship",
-            "country_hu": "Olaszország",
-            "country_en": "Italy",
-            "city_hu": "[elsüllyedt]",
-            "city_en": "[sank]"
+            "location_hu": "Olaszország [elsüllyedt]",
+            "location_en": "Italy [sank]",
+            "type": "ship"
         },
         {
             "id": 9040,
@@ -766,10 +697,9 @@
             "answer": 70,
             "name_hu": "Sagrada Família",
             "name_en": "Sagrada Familia",
-            "country_hu": "Spanyolország",
-            "country_en": "Spain",
-            "city_hu": "Barcelona",
-            "city_en": "Barcelona"
+            "location_hu": "Spanyolország, Barcelona",
+            "location_en": "Barcelona, Spain",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 8171,
@@ -777,10 +707,9 @@
             "answer": 29,
             "name_hu": "San Felipe 1690",
             "name_en": "San Felipe 1690",
-            "country_hu": "Spanyolország",
-            "country_en": "Spain",
-            "city_hu": "[elsüllyedt]",
-            "city_en": "[sank]"
+            "location_hu": "Spanyolország [elsüllyedt]",
+            "location_en": "Spain [sank]",
+            "type": "ship"
         },
         {
             "id": 2154,
@@ -788,10 +717,9 @@
             "answer": 18,
             "name_hu": "Santa Maria 1492",
             "name_en": "Santa Maria 1492",
-            "country_hu": "Spanyolország",
-            "country_en": "Spain",
-            "city_hu": "[elsüllyedt]",
-            "city_en": "[sank]"
+            "location_hu": "Spanyolország [elsüllyedt]",
+            "location_en": "Spain [sank]",
+            "type": "ship"
         },
         {
             "id": 2762,
@@ -799,10 +727,9 @@
             "answer": 32,
             "name_hu": "Sky Tower",
             "name_en": "Sky tower",
-            "country_hu": "Új-Zéland",
-            "country_en": "New-Zealand",
-            "city_hu": "Auckland",
-            "city_en": "Auckland"
+            "location_hu": "Új-Zéland, Auckland",
+            "location_en": "Auckland, New-Zealand",
+            "type": "tower"
         },
         {
             "id": 4367,
@@ -810,10 +737,9 @@
             "answer": 51,
             "name_hu": "Suzhou klasszikus kertjei",
             "name_en": "Classical Gardens of Suzhou",
-            "country_hu": "Kína",
-            "country_en": "China",
-            "city_hu": "Suzhou",
-            "city_en": "Suzhou"
+            "location_hu": "Kína, Suzhou",
+            "location_en": "Suzhou, China",
+            "type": "garden"
         },
         {
             "id": 6522,
@@ -821,10 +747,9 @@
             "answer": 81,
             "name_hu": "Sydney-i Operaház",
             "name_en": "Sydney Opera House",
-            "country_hu": "Ausztrália",
-            "country_en": "Australia",
-            "city_hu": "Sydney",
-            "city_en": "Sydney"
+            "location_hu": "Ausztrália, Sydney",
+            "location_en": "Sydney, Australia",
+            "type": "arena"
         },
         {
             "id": 2354,
@@ -832,10 +757,9 @@
             "answer": 22,
             "name_hu": "Szabadság-szobor",
             "name_en": "Statue of Liberty",
-            "country_hu": "Egyesült Államok",
-            "country_en": "United States of America",
-            "city_hu": "New York",
-            "city_en": "New York"
+            "location_hu": "Egyesült Államok, New York",
+            "location_en": "New York, United States of America",
+            "type": "monument"
         },
         {
             "id": 5047,
@@ -843,10 +767,9 @@
             "answer": 7,
             "name_hu": "Széchenyi Lánchíd",
             "name_en": "Széchenyi Chain Bridge",
-            "country_hu": "Magyarország",
-            "country_en": "Hungary",
-            "city_hu": "Budapest",
-            "city_en": "Budapest"
+            "location_hu": "Magyarország, Budapest",
+            "location_en": "Budapest, Hungary",
+            "type": "bridge"
         },
         {
             "id": 6144,
@@ -854,10 +777,9 @@
             "answer": 96,
             "name_hu": "Szent István-bazilika",
             "name_en": "St. Stephen's basilica",
-            "country_hu": "Magyarország",
-            "country_en": "Hungary",
-            "city_hu": "Budapest",
-            "city_en": "Budapest"
+            "location_hu": "Magyarország, Budapest",
+            "location_en": "Budapest, Hungary",
+            "type": "place-of-religion/basilica"
         },
         {
             "id": 4485,
@@ -865,10 +787,9 @@
             "answer": 40,
             "name_hu": "Szent Izsák-székesegyház",
             "name_en": "St. Isaac's cathedral",
-            "country_hu": "Oroszország",
-            "country_en": "Russia",
-            "city_hu": "Szentpétervár",
-            "city_en": "Saint Petersburg"
+            "location_hu": "Oroszország, Szentpétervár",
+            "location_en": "Saint Petersburg, Russia",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 6795,
@@ -876,10 +797,9 @@
             "answer": 14,
             "name_hu": "Szent Jakab-katedrális",
             "name_en": "St. Jacob's cathedral",
-            "country_hu": "Spanyolország",
-            "country_en": "Spain",
-            "city_hu": "Santiago d. C.",
-            "city_en": "Santiago d. C."
+            "location_hu": "Spanyolország, Santiago d. C.",
+            "location_en": "Santiago d. C., Spain",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 3074,
@@ -887,10 +807,9 @@
             "answer": 98,
             "name_hu": "Szent Márk tér",
             "name_en": "St. Mark square",
-            "country_hu": "Olaszország",
-            "country_en": "Italy",
-            "city_hu": "Velence",
-            "city_en": "Venice"
+            "location_hu": "Olaszország, Velence",
+            "location_en": "Venice, Italy",
+            "type": "square"
         },
         {
             "id": 3489,
@@ -898,10 +817,9 @@
             "answer": 43,
             "name_hu": "Szent Pál-székesegyház",
             "name_en": "St. Paul cathedral",
-            "country_hu": "Egyesült Királyság",
-            "country_en": "United Kingdom",
-            "city_hu": "London",
-            "city_en": "London"
+            "location_hu": "Egyesült Királyság, London",
+            "location_en": "London, United Kingdom",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 2795,
@@ -909,10 +827,9 @@
             "answer": 34,
             "name_hu": "Szent Patrik-katedrális",
             "name_en": "St. Patrick cathedral",
-            "country_hu": "Egyesült Államok",
-            "country_en": "United States of America",
-            "city_hu": "New York",
-            "city_en": "New York"
+            "location_hu": "Egyesült Államok, New York",
+            "location_en": "New York, United States of America",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 6644,
@@ -920,10 +837,9 @@
             "answer": 56,
             "name_hu": "Szent Péter-bazilika",
             "name_en": "St. Peter's basilica",
-            "country_hu": "Vatikán",
-            "country_en": "Vatican",
-            "city_hu": "Vatikán Város",
-            "city_en": "Vatican City"
+            "location_hu": "Vatikán, Vatikán Város",
+            "location_en": "Vatican City, Vatican",
+            "type": "place-of-religion/basilica"
         },
         {
             "id": 2194,
@@ -931,10 +847,9 @@
             "answer": 27,
             "name_hu": "Szent Vitus-székesegyház",
             "name_en": "St. Vitus cathedral",
-            "country_hu": "Csehország",
-            "country_en": "Czech Republic",
-            "city_hu": "Prága",
-            "city_en": "Prague"
+            "location_hu": "Csehország, Prága",
+            "location_en": "Prague, Czech Republic",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 6558,
@@ -942,10 +857,9 @@
             "answer": 50,
             "name_hu": "Szmolnij kolostor",
             "name_en": "Smolny Convent",
-            "country_hu": "Oroszország",
-            "country_en": "Russia",
-            "city_hu": "Szentpétervár",
-            "city_en": "Saint Petersburg"
+            "location_hu": "Oroszország, Szentpétervár",
+            "location_en": "Saint Petersburg, Russia",
+            "type": "place-of-religion/other"
         },
         {
             "id": 6316,
@@ -953,10 +867,9 @@
             "answer": 53,
             "name_hu": "Tadzs Mahal",
             "name_en": "Taj Mahal",
-            "country_hu": "India",
-            "country_en": "India",
-            "city_hu": "Agra",
-            "city_en": "Agra"
+            "location_hu": "India, Agra",
+            "location_en": "Agra, India",
+            "type": "mausoleum"
         },
         {
             "id": 7148,
@@ -964,10 +877,9 @@
             "answer": 95,
             "name_hu": "Taipei 101 Building",
             "name_en": "Taipei 101 Building",
-            "country_hu": "Tajvan",
-            "country_en": "Taiwan",
-            "city_hu": "Taipei",
-            "city_en": "Taipei"
+            "location_hu": "Tajvan, Taipei",
+            "location_en": "Taipei, Taiwan",
+            "type": "tower"
         },
         {
             "id": 9483,
@@ -975,10 +887,9 @@
             "answer": 20,
             "name_hu": "Tiananmen tér",
             "name_en": "Tiananmen Square",
-            "country_hu": "Kína",
-            "country_en": "China",
-            "city_hu": "Peking",
-            "city_en": "Beijing"
+            "location_hu": "Kína, Peking",
+            "location_en": "Beijing, China",
+            "type": "square"
         },
         {
             "id": 8261,
@@ -986,10 +897,9 @@
             "answer": 11,
             "name_hu": "Titanic",
             "name_en": "Titanic",
-            "country_hu": "Egyesült Királyság",
-            "country_en": "United Kingdom",
-            "city_hu": "[elsüllyedt]",
-            "city_en": "[sank]"
+            "location_hu": "Egyesült Királyság [elsüllyedt]",
+            "location_en": "United Kingdom [sank]",
+            "type": "ship"
         },
         {
             "id": 4982,
@@ -997,10 +907,9 @@
             "answer": 71,
             "name_hu": "Tokiói torony",
             "name_en": "Tokyo Tower",
-            "country_hu": "Japán",
-            "country_en": "Japan",
-            "city_hu": "Tokió",
-            "city_en": "Tokyo"
+            "location_hu": "Japán, Tokió",
+            "location_en": "Tokyo, Japan",
+            "type": "tower"
         },
         {
             "id": 4240,
@@ -1008,10 +917,9 @@
             "answer": 92,
             "name_hu": "Tokyo Skytree",
             "name_en": "Tokyo Skytree",
-            "country_hu": "Japán",
-            "country_en": "Japan",
-            "city_hu": "Tokió",
-            "city_en": "Tokyo"
+            "location_hu": "Japán, Tokió",
+            "location_en": "Tokyo, Japan",
+            "type": "tower"
         },
         {
             "id": 9658,
@@ -1019,10 +927,9 @@
             "answer": 17,
             "name_hu": "Törcsvári kastély",
             "name_en": "Bran castle",
-            "country_hu": "Románia",
-            "country_en": "Romania",
-            "city_hu": "Törcsvár",
-            "city_en": "Bran"
+            "location_hu": "Románia, Törcsvár",
+            "location_en": "Bran, Romania",
+            "type": "castle"
         },
         {
             "id": 3609,
@@ -1030,10 +937,9 @@
             "answer": 2,
             "name_hu": "Tower híd",
             "name_en": "Tower bridge",
-            "country_hu": "Egyesült Királyság",
-            "country_en": "United Kingdom",
-            "city_hu": "London",
-            "city_en": "London"
+            "location_hu": "Egyesült Királyság, London",
+            "location_en": "London, United Kingdom",
+            "type": "tower"
         },
         {
             "id": 9213,
@@ -1041,10 +947,9 @@
             "answer": 47,
             "name_hu": "USS Constitution 1797",
             "name_en": "USS Constitution 1797",
-            "country_hu": "Egyesült Államok",
-            "country_en": "United States of America",
-            "city_hu": "Boston",
-            "city_en": "Boston"
+            "location_hu": "Egyesült Államok, Boston",
+            "location_en": "Boston, United States of America",
+            "type": "ship"
         },
         {
             "id": 6389,
@@ -1052,10 +957,9 @@
             "answer": 65,
             "name_hu": "Vajdahunyad vára",
             "name_en": "Vajdahunyad Castle",
-            "country_hu": "Magyarország",
-            "country_en": "Hungary",
-            "city_hu": "Budapest",
-            "city_en": "Budapest"
+            "location_hu": "Magyarország, Budapest",
+            "location_en": "Budapest, Hungary",
+            "type": "castle"
         },
         {
             "id": 3423,
@@ -1063,10 +967,9 @@
             "answer": 57,
             "name_hu": "Wat Phra Kaew",
             "name_en": "Wat Phra Kaew",
-            "country_hu": "Thaiföld",
-            "country_en": "Thailand",
-            "city_hu": "Bangkok",
-            "city_en": "Bangkok"
+            "location_hu": "Thaiföld, Bangkok",
+            "location_en": "Bangkok, Thailand",
+            "type": "place-of-religion/other"
         },
         {
             "id": 3848,
@@ -1074,10 +977,9 @@
             "answer": 87,
             "name_hu": "Waweli székesegyház",
             "name_en": "Wawel Cathedral",
-            "country_hu": "Lengyelország",
-            "country_en": "Poland",
-            "city_hu": "Krakkó",
-            "city_en": "Kraków"
+            "location_hu": "Lengyelország, Krakkó",
+            "location_en": "Kraków, Poland",
+            "type": "place-of-religion/cathedral"
         },
         {
             "id": 9596,
@@ -1085,10 +987,9 @@
             "answer": 86,
             "name_hu": "Westminsteri apátság",
             "name_en": "Westminster Abbey",
-            "country_hu": "Egyesült Királyság",
-            "country_en": "United Kingdom",
-            "city_hu": "London",
-            "city_en": "London"
+            "location_hu": "Egyesült Királyság, London",
+            "location_en": "London, United Kingdom",
+            "type": "place-of-religion/other"
         },
         {
             "id": 4025,
@@ -1096,10 +997,9 @@
             "answer": 82,
             "name_hu": "Willis Tower",
             "name_en": "Willis Tower",
-            "country_hu": "Egyesült Államok",
-            "country_en": "United States of America",
-            "city_hu": "Chicago",
-            "city_en": "Chicago"
+            "location_hu": "Egyesült Államok, Chicago",
+            "location_en": "Chicago, United States of America",
+            "type": "tower"
         }
     ]
 }

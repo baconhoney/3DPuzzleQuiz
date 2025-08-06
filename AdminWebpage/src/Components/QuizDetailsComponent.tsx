@@ -2,7 +2,7 @@ import { Component } from "react";
 
 import App from "../App";
 import { getDetailsData } from "../Testdata";
-import type { Quiz } from "../utils";
+import type { QuizDetails } from "../utils";
 
 import "./QuizDetailsComponent.css";
 
@@ -13,7 +13,7 @@ interface Properties {
 }
 
 interface State {
-    quiz: Quiz | undefined;
+    quiz: QuizDetails | undefined;
 }
 
 export default class QuizDetailsComponent extends Component<Properties, State> {

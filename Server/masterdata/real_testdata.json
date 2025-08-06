@@ -1,20 +1,4 @@
-import type { QuizDetails, QuizLanguage, QuizResults } from "./utils";
-
-type JSONQuizData = Record<string, {
-    name: string,
-    language: string,
-    score: number,
-    timestamp: string,
-    questions: {
-        name: string,
-        country: string,
-        city: string,
-        answer: number,
-        correct: boolean
-    }[]
-}>;
-
-const quizdata: JSONQuizData = {
+{
     "6694586311": {
         "name": "Team Hello 1",
         "language": "en",
@@ -3124,59 +3108,3 @@ const quizdata: JSONQuizData = {
         ]
     }
 }
-
-export type RawQuizResults = Array<{
-    "teamID": number,
-    "name": string,
-    "language": string,
-    "score": number,
-    "submittedAt": string
-}>
-
-export type RawQuizDetails = {
-    "name": string,
-    "language": string,
-    "score": number,
-    "timestamp": string,
-    "questions": {
-        "name": string,
-        "country": string,
-        "city": string,
-        "answer": number,
-        "correct": boolean
-    }[]
-}
-
-
-const quizResults: RawQuizResults = [];
-const quizDetails: { [teamID: string]: RawQuizDetails } = {};
-
-for (const teamID in quizdata) {
-    if (Object.prototype.hasOwnProperty.call(quizdata, teamID)) {
-        const element = quizdata[teamID];
-        quizResults.push({
-            teamID: parseInt(teamID),
-            name: element.name,
-            language: element.language,
-            score: element.score,
-            submittedAt: element.timestamp,
-        })
-        quizDetails[teamID] = {
-            name: element.name,
-            language: element.language as QuizLanguage,
-            score: element.score,
-            timestamp: element.timestamp,
-            questions: element.questions
-        };
-    }
-}
-
-
-export function getResultsData(): RawQuizResults {
-    return quizResults;
-}
-
-export function getDetailsData(teamID: number | null): RawQuizDetails | null {
-    return teamID ? quizDetails[teamID.toString()] : null;
-}
-

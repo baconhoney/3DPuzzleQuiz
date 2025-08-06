@@ -5,19 +5,66 @@ import { getTimeFromDate, type QuizResults } from "../utils.ts";
 
 import "./QuizResultsComponent.css";
 
-interface Properties {
+import { getResultsData } from "../Testdata.ts";
+
+
+interface QuizResultsProperties {
     app: App;
+}
+
+interface QuizResultsState {
     quizResults: QuizResults;
 }
 
-export default class QuizResultsComponent extends Component<Properties, unknown> {
-    constructor(properties: Properties) {
+export default class QuizResultsComponent extends Component<QuizResultsProperties, unknown> {
+    private quizGetterHandler: number | undefined = undefined;
+
+    constructor(properties: QuizResultsProperties) {
         super(properties);
+        this.state = {
+            quizResults: [],
+        };
     }
 
-    /*private updateState(newState: Partial<State>) {
+    componentDidMount() {
+        this.quizGetterHandler = setTimeout(() => {
+            this.quizGetterHandler = setInterval(() => this.getQuizzes(), 10000);
+            this.getQuizzes();
+        }, 100);
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.quizGetterHandler);
+        clearInterval(this.quizGetterHandler);
+    }
+
+    private getQuizzes() {
+        /*fetch("/api/admin/getQuizResults").then((response) => {
+            response.json().then((data: QuizResult[]) => {
+                this.updateState({
+                    quizResults: data
+                    })
+                    })
+                    })*/
+        // temp code for testing
+        const json = getResultsData();
+        const result: QuizResults = [];
+        for (const key in json) {
+            const item = json[key];
+            result[key] = {
+                ...item,
+                timestamp: new Date(item.timestamp),
+            };
+        }
+        this.updateState({
+            quizResults: result,
+        });
+        clearInterval(this.quizGetterHandler);
+    }
+
+    private updateState(newState: Partial<QuizResultsState>) {
         this.setState({ ...this.state, ...newState });
-    }*/
+    }
 
     render() {
         return (

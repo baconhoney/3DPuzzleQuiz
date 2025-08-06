@@ -6,22 +6,19 @@ import QuizDetailsComponent from "./Components/QuizDetailsComponent.tsx";
 import { NextChangeAtComponent, ConfirmPopupComponent } from "./Components/ControllerComponents.tsx";
 
 import * as actions from "./Actions.ts";
-import { getHHMMFromDate, type QuizPhase, type QuizResults } from "./utils.ts";
+import { getHHMMFromDate, type QuizPhase } from "./utils.ts";
 
 import "./App.css";
 
-import { getResultsData } from "./Testdata.ts";
 
 interface AppState {
     openedQuizTeamID: number | null;
-    quizResults: QuizResults;
     nextEventAt: Date;
     currentQuizNumber: number;
     phase: QuizPhase;
 }
 
 export default class App extends Component<unknown, AppState> {
-    private quizGetterHandler: number | undefined = undefined;
     private confirmSendPhasePopupRef = createRef<ConfirmPopupComponent>();
     private confirmSendUpdateNextChangeAtPopupRef = createRef<ConfirmPopupComponent>();
 
@@ -31,47 +28,10 @@ export default class App extends Component<unknown, AppState> {
         date.setSeconds(0, 0);
         this.state = {
             openedQuizTeamID: null,
-            quizResults: {},
             nextEventAt: date,
-            currentQuizNumber: 0,
+            currentQuizNumber: 1,
             phase: "idle",
         };
-    }
-
-    componentDidMount() {
-        this.quizGetterHandler = setTimeout(() => {
-            this.quizGetterHandler = setInterval(() => this.getQuizzes(), 10000);
-            this.getQuizzes();
-        }, 100);
-    }
-
-    componentWillUnmount() {
-        clearTimeout(this.quizGetterHandler);
-        clearInterval(this.quizGetterHandler);
-    }
-
-    private getQuizzes() {
-        /*fetch("/api/admin/getQuizResults").then((response) => {
-            response.json().then((data: QuizResult[]) => {
-                this.updateState({
-                    quizResults: data
-                    })
-                    })
-                    })*/
-        // temp code for testing
-        const json = getResultsData();
-        const result: QuizResults = {};
-        for (const key in json) {
-            const item = json[key];
-            result[key] = {
-                ...item,
-                timestamp: new Date(item.timestamp),
-            };
-        }
-        this.updateState({
-            quizResults: result,
-        });
-        clearInterval(this.quizGetterHandler);
     }
 
     updateState(newState: Partial<AppState>) {
@@ -93,7 +53,7 @@ export default class App extends Component<unknown, AppState> {
                         <div id="main-top-right-cell">
                             <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
                                 <div style={{ overflow: "auto" }}>
-                                    <QuizResultsComponent app={this} quizResults={this.state.quizResults} />
+                                    <QuizResultsComponent app={this}/>
                                 </div>
                             </div>
                         </div>
@@ -138,6 +98,7 @@ export default class App extends Component<unknown, AppState> {
         );
     }
 }
+
 
 createRoot(document.getElementById("root")!).render(<StrictMode><App /></StrictMode>);
 
