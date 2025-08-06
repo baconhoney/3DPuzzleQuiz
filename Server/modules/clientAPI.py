@@ -11,13 +11,13 @@ _logger.info(f"Importing {__name__}...")
 _baseURL = "/api/client"
 
 
-@utils.router.get(_baseURL + "/getQuizPhase")
+@router.get(_baseURL + "/getQuizPhase")
 async def getQuizPhaseHandler(request: web.Request):
     print(f"API GET request incoming: getQuizState")
     return web.json_response({"phase": utils.QuizState.phase.value})
 
 
-@utils.router.get(_baseURL + "/getQuestions")
+@router.get(_baseURL + "/getQuestions")
 async def getQuestionsHandler(request: web.Request):
     print(f"API GET request incoming: getQuestions")
     try:
@@ -26,7 +26,7 @@ async def getQuestionsHandler(request: web.Request):
         raise web.HTTPBadRequest(text=str(e))
 
 
-@utils.router.post(_baseURL + "/uploadAnswers")
+@router.post(_baseURL + "/uploadAnswers")
 async def uploadAnswersHandler(request: web.Request):
     print("API POST request incoming: uploadAnswers")
     data: dict[str, str | list[dict[str, int]]] = await request.json()
@@ -38,7 +38,7 @@ async def uploadAnswersHandler(request: web.Request):
     return web.json_response({"teamID": teamID})
 
 
-@utils.router.get(_baseURL + "/getAnswers")
+@router.get(_baseURL + "/getAnswers")
 def getAnswersHandler(request: web.Request):
     print(f"API GET request incoming: getAnswers")
     try:
@@ -48,7 +48,7 @@ def getAnswersHandler(request: web.Request):
 
 
 # websockets handler for incoming websocket connections at /api/events
-@utils.router.get(_baseURL + "/events")
+@router.get(_baseURL + "/events")
 async def eventsHandler(request: web.Request):
     print(f"API GET request incoming: events")
     ws = web.WebSocketResponse()
@@ -67,11 +67,11 @@ async def eventsHandler(request: web.Request):
 
 
 # ------- 404 Handlers -------
-@utils.router.get(_baseURL + "/{fn}")
+@router.get(_baseURL + "/{fn}")
 async def GET_NotFound(request: web.Request) -> web.Response:
     raise web.HTTPNotFound(text=f"API-Client GET endpoint '{request.match_info.get('fn')}' doesn't exist.")
 
 
-@utils.router.post(_baseURL + "/{fn}")
+@router.post(_baseURL + "/{fn}")
 async def POST_NotFound(request: web.Request) -> web.Response:
     raise web.HTTPNotFound(text=f"API-Client POST endpoint '{request.match_info.get('fn')}' doesn't exist.")

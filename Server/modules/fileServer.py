@@ -38,18 +38,18 @@ def handleFile(request: web.Request, root: pathlib.Path) -> web.Response:
 
 
 # Search webpage
-@utils.router.get("/search/{fn:.*}")
+@router.get("/search/{fn:.*}")
 async def GET_files(request: web.Request) -> web.Response:
     return handleFile(request, utils.paths.searchRoot)
 
 
 # Admin webpage
-@utils.router.get("/admin/{fn:.*}")
+@router.get("/admin/{fn:.*}")
 async def GET_files(request: web.Request) -> web.Response:
     return handleFile(request, utils.paths.adminRoot)
 
 
 # Client webpage
-@utils.router.get("/{fn:.*}")
+@router.get("/{fn:.*}")
 async def GET_files(request: web.Request) -> web.Response:
     return handleFile(request, utils.paths.clientRoot)
