@@ -21,3 +21,16 @@
     --radius-field: 1rem;
     --radius-box: 1rem;
 }
+
+/* Prevent theme flashing and ensure smooth transitions */
+:root {
+    color-scheme: light dark;
+}
+
+[data-theme="light"] {
+    color-scheme: light;
+}
+
+[data-theme="dark"] {
+    color-scheme: dark;
+}

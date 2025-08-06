@@ -3,9 +3,6 @@ import { useGlobalContext } from "./App";
 import i18n from "i18next";
 import ThemeToggle from "./ThemeToggle";
 
-const LightTheme = "light";
-const DarkTheme = "dark";
-
 const Register = () => {
     const { changeLng, t, toQuiz, teamName, setTeamName } = useGlobalContext();
     const [language, setLanguage] = useState(i18n.language);

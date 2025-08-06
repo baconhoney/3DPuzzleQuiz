@@ -1,13 +1,13 @@
-import modules.utils as utils
+import utils
 from yattag import Doc
 from barcode import Code128
 from barcode.writer import SVGWriter
 from datetime import date
 
 #async ??
-def printQuiz(teamID: int, lang: str, quizType: utils.QuizSize):
+def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
     print("print or do stuff idk")
-    if quizType == utils.QuizSize.SIZE_20:
+    if quizType == utils.QuizSizes.SIZE_20:
         quizNumber = utils.QuizState.currentQuizNumber
     else:
         quizNumber = -1
@@ -17,7 +17,9 @@ def printQuiz(teamID: int, lang: str, quizType: utils.QuizSize):
         WHERE quizzes.quiz_number == {quizNumber} \
         ORDER BY Name;"
     ).fetchall()
-    
+
+    # itt menetne a file egy BytesIO-ba is, és akkor nem pollutálja teli rákkal a mappáim :)
+    # for ex: `svgFile = BytesIO(); Code128().write(svgFile)` - bacon
     with open(f'{teamID}.svg', 'wb') as f:
         Code128(str(teamID), writer=SVGWriter()).write(f)
 
@@ -99,3 +101,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+

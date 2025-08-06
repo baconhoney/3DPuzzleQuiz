@@ -1,152 +1,77 @@
 from aiohttp import web
-import datetime
 import logging
-import modules.utils as utils
-import asyncio
-
-logger = logging.getLogger(__name__)
-logger.info(f"Importing {__name__}...")
-baseURL = "/api/client"
+import quizDBManager
+import utils
 
 
-@utils.router.get(baseURL + "/getQuizState")
-async def getQuizStateHandler(request: web.Request):
+router = web.RouteTableDef()
+
+_logger = logging.getLogger(__name__)
+_logger.info(f"Importing {__name__}...")
+_baseURL = "/api/client"
+
+
+@router.get(_baseURL + "/getQuizPhase")
+async def getQuizPhaseHandler(request: web.Request):
     print(f"API GET request incoming: getQuizState")
-    return web.json_response({"state": utils.QuizState.phase.value})
+    return web.json_response({"phase": utils.QuizState.phase.value})
 
 
-@utils.router.get(baseURL + "/getQuestions")
+@router.get(_baseURL + "/getQuestions")
 async def getQuestionsHandler(request: web.Request):
     print(f"API GET request incoming: getQuestions")
-    lang = request.query.get("lang", "<missing>")
-    size = request.query.get("size", "<missing>")
-    if lang not in utils.SupportedLanguages:
-        raise web.HTTPBadRequest(text=f"Value 'lang' is missing or invalid: {lang}")
-    if size not in utils.QuizSize:
-        raise web.HTTPBadRequest(text=f"Value 'size' is missing or invalid: {size}")
-    lang = utils.SupportedLanguages(lang)
-    size = utils.QuizSize(size)
-    rawQuizdata: list[list[str | int]] = utils.quizDB.cursor.execute(
-        f"SELECT buildings.id, buildings.name_{lang}, buildings.country_{lang}, buildings.city_{lang} \
-        FROM buildings JOIN quizzes ON buildings.id = quizzes.building_id \
-        WHERE quizzes.quiz_number = {(size == utils.QuizSize.SIZE_20 and utils.QuizState.currentQuizNumber) or -1};"
-    ).fetchall()
-    quizdata = {
-        str(i): {
-            "id": entry[0],
-            "name": entry[1],
-            "country": entry[2],
-            "city": entry[3],
-        }
-        for i, entry in enumerate(sorted(rawQuizdata, key=lambda x: x[1]))
-    }
-    return web.json_response(quizdata)
+    try:
+        return web.json_response(quizDBManager.getQuestions(utils.convertToQuizLanguage(request.query.get("lang")), utils.convertToQuizSize(request.query.get("size"))))
+    except quizDBManager.InvalidParameterError as e:
+        raise web.HTTPBadRequest(text=str(e))
 
 
-@utils.router.post(baseURL + "/uploadAnswers")
+@router.post(_baseURL + "/uploadAnswers")
 async def uploadAnswersHandler(request: web.Request):
     print("API POST request incoming: uploadAnswers")
-    data: dict[str, str | dict[str, dict[str, int]]] = await request.json()
-    if "name" not in data:
-        raise web.HTTPBadRequest(text="Value 'name' is missing")
-    if "lang" not in data or data["lang"] not in utils.SupportedLanguages:
-        raise web.HTTPBadRequest(text=f"Value 'lang' is invalid: {data.get('lang', '<missing>')}")
-    if "answers" not in data:
-        raise web.HTTPBadRequest(text="Value 'answers' is missing")
-    answers: dict[str, dict[str, int]] = data["answers"]
-    if len(answers) not in utils.QuizSize:
-        raise web.HTTPBadRequest(text=f"Value 'answers' has invalid number of lines: {len(answers)}")
-    size = len(answers)
-    teamID = utils.getNewTeamID(utils.QuizType.DIGITAL)
-    try:  # catching all kinda errors cuz they shouldnt happen
-        utils.quizDB.cursor.executemany(
-            f"INSERT INTO answers (team_id, building_id, answer) VALUES (?, ?, ?);",
-            ((teamID, answer["building_id"], answer["answer"]) for answer in answers.values()),
-        )
-        utils.quizDB.connection.commit()
-        score = utils.quizDB.cursor.execute(
-            "SELECT count(answers.id) FROM answers JOIN buildings ON answers.building_id = buildings.id \
-            WHERE answers.team_id = (?) AND buildings.answer = answers.answer;", (teamID,)
-        ).fetchone()[0]
-        utils.quizDB.cursor.execute(
-            f"INSERT INTO teams (id, name, language, quiz_number, quiz_size, score, submitted_at) VALUES (?, ?, ?, ?, ?, ?, ?);",
-            (
-                teamID,
-                data["name"],
-                data["lang"],
-                utils.QuizState.currentQuizNumber,
-                size,
-                score,
-                datetime.datetime.now().isoformat(timespec="milliseconds"),
-            ),
-        )
-        utils.quizDB.connection.commit()
-        return web.json_response({"teamID": teamID})
-    except Exception as e:
-        utils.quizDB.cursor.execute(f"DELETE FROM answers WHERE team_id = {teamID};")
-        logger.error(f"Failed to upload answers: {e}")
-        raise web.HTTPInternalServerError(text=f"Failed to upload answers: {e}")
+    data: dict[str, str | list[dict[str, int]]] = await request.json()
+    teamID = utils.getNewTeamID(utils.QuizTypes.DIGITAL)
+    try:
+        quizDBManager.uploadAnswers("digital-uploadFull", teamID, data.get("name"), utils.convertToQuizLanguage(data.get("lang")), data.get("answers"))
+    except quizDBManager.InvalidParameterError as e:
+        raise web.HTTPBadRequest(text=str(e))
+    return web.json_response({"teamID": teamID})
 
 
-@utils.router.get(baseURL + "/getAnswers")
+@router.get(_baseURL + "/getAnswers")
 def getAnswersHandler(request: web.Request):
     print(f"API GET request incoming: getAnswers")
-    teamID = request.query.get("teamID")
-    if not teamID:
-        raise web.HTTPBadRequest(text="Value 'teamID' is missing")
-    res = utils.quizDB.cursor.execute(f"SELECT language, score, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
-    if not res:
-        raise web.HTTPNotFound(text=f"Team with ID {teamID} not found")
-    lang, score, submittedAt = res
-    rawData: list[list[str | int]] = utils.quizDB.cursor.execute(
-        f"SELECT buildings.name_{lang}, buildings.country_{lang}, buildings.city_{lang}, answers.answer, \
-        CASE WHEN buildings.answer = answers.answer THEN 1 ELSE 0 END \
-        FROM answers JOIN buildings ON answers.building_id = buildings.id \
-        WHERE answers.team_id = {teamID};"
-    ).fetchall()
-    return web.json_response(
-        {
-            "quizdata": {
-                str(i): {
-                    "name": entry[0],
-                    "country": entry[1],
-                    "city": entry[2],
-                    "answers": entry[3],
-                    "correct": bool(entry[4]),
-                }
-                for i, entry in enumerate(rawData)
-            },
-            "score": score,
-            "submittedAt": submittedAt,
-        }
-    )
+    try:
+        return web.json_response(quizDBManager.getAnswers(request.query.get("teamID")))
+    except quizDBManager.InvalidParameterError as e:
+        raise web.HTTPBadRequest(text=str(e))
 
 
 # websockets handler for incoming websocket connections at /api/events
-@utils.router.get(baseURL + "/events")
+@router.get(_baseURL + "/events")
 async def eventsHandler(request: web.Request):
     print(f"API GET request incoming: events")
     ws = web.WebSocketResponse()
     await ws.prepare(request)
     utils.connectedWSClients.add(ws)
-    logger.debug(f"New websocket client connected: {ws}\nTotal: {len(utils.connectedWSClients)}")
+    _logger.debug(f"New websocket client connected: {ws}\nTotal: {len(utils.connectedWSClients)}")
     try:
         async for msg in ws:
             if msg.type == web.WSMsgType.ERROR:
-                logger.warning(f"WebSocket connection closed with error: {ws.exception()}")
+                _logger.warning(f"WebSocket connection closed with error: {ws.exception()}")
                 print(f"WebSocket connection closed with error: {ws.exception()}")
     finally:
         utils.connectedWSClients.remove(ws)
-        logger.debug(f"WebSocket client disconnected: {ws}\nTotal: {len(utils.connectedWSClients)}")
+        _logger.debug(f"WebSocket client disconnected: {ws}\nTotal: {len(utils.connectedWSClients)}")
     return ws
 
 
 # ------- 404 Handlers -------
-@utils.router.get(baseURL + "/{fn}")
+@router.get(_baseURL + "/{fn}")
 async def GET_NotFound(request: web.Request) -> web.Response:
     raise web.HTTPNotFound(text=f"API-Client GET endpoint '{request.match_info.get('fn')}' doesn't exist.")
 
 
-@utils.router.post(baseURL + "/{fn}")
+@router.post(_baseURL + "/{fn}")
 async def POST_NotFound(request: web.Request) -> web.Response:
     raise web.HTTPNotFound(text=f"API-Client POST endpoint '{request.match_info.get('fn')}' doesn't exist.")

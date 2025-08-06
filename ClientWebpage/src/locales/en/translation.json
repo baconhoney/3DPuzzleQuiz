@@ -7,5 +7,14 @@
     "team_name_required": "Team name is required",
     "finish_modal_message": "Are you sure you want to submit the quiz? You can only do this once, and the answers cannot be changed afterwards!",
     "cancel": "Cancel",
-    "back": "Back"
+    "back": "Back",
+    "no_results": "No results are available for this team.",
+    "uploaded_at": "Uploaded at",
+    "score": "Score",
+    "waiting_for_quiz": "The quiz has not started yet, please wait.",
+    "waiting_for_results": "The quiz results are not yet available, please wait.",
+    "waiting_error": "An unknown error occurred, please try again later.",
+    "want_to_play_late": "Are you sure you want to start the game? Less than 10 minutes are left in the quiz.",
+    "want_to_play_yes": "Start quiz",
+    "want_to_play_no": "Maybe later"
 }

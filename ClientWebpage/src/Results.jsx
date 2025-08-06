@@ -1,6 +1,9 @@
 import React from 'react'
+import { useGlobalContext } from './App';
 
 const Results = ({ data }) => {
+
+    const { t } = useGlobalContext();
 
     const formatTime = (timestamp) => {
         return timestamp.split('T')[1].split('.')[0];
@@ -22,8 +25,8 @@ const Results = ({ data }) => {
                 ))}
             </div>
             <div className="navbar bottom-0 bg-base-200 shadow-sm px-8 sticky z-50">
-                <p className="navbar-start">Beadva: {formatTime(data.submittedAt)}</p>
-                <p className="navbar-end">Pontszám: <span className="font-bold text-xl mx-1">{data.score}</span> / {Object.keys(data.quizdata).length}</p>
+                <p className="navbar-start">{t("uploaded_at")}: {formatTime(data.submittedAt)}</p>
+                <p className="navbar-end">{t("score")}: <span className="font-bold text-xl mx-1">{data.score}</span> / {Object.keys(data.quizdata).length}</p>
             </div>
         </>
     )

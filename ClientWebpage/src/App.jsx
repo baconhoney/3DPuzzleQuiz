@@ -31,7 +31,10 @@ i18n.use(initReactI18next).init({
 // Create a context for language management
 const Context = createContext();
 
-// Custom hook to use the language context
+/**
+ * Custom hook to use the language context and other global states.
+ * @returns {Object} - The language context and other global states.
+ */
 export const useGlobalContext = () => {
 	const context = useContext(Context);
 	if (!context) {

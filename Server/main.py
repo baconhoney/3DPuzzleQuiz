@@ -1,9 +1,13 @@
-from aiohttp import web
-import dotenv
-import logging
-import os
 import pathlib
 import sys
+
+# add local modules to pythonpath (each top level file needs this)
+sys.path.insert(1, str(pathlib.Path("./modules").resolve()))
+
+
+#################### START OF MAIN ####################
+from aiohttp import web
+import logging
 
 # set up logging
 loggingLevel = "DEBUG"
@@ -14,26 +18,21 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 logging.debug("Testing logger")
-
 logging.getLogger("aiohttp").setLevel("WARNING")
 
-# add local modules to pythonpath
-# sys.path.insert(1, str(pathlib.Path(__file__).parent.resolve() / "modules"))
-
-# get main file path for determining the root of the program
-os.environ["CWD"] = str(pathlib.Path(__file__).parent.resolve().as_posix())
-dotenv.load_dotenv()
-
-# import the modules to add them to the program
-from modules.utils import router
-import modules.adminAPI as adminAPI
-import modules.clientAPI as clientAPI  # client has to be 2nd last, so sub-API requests are not refused with 404
-import modules.fileServer as fileServer  # fileserver has to be the very last
+# import the routers from the modules
+from adminAPI import router as adminRouter
+from clientAPI import router as clientRouter
+from fileServer import router as fileServerRouter
 
 
 def main():
     app = web.Application()
-    app.add_routes(router)
+    # client has to be 2nd last, so sub-API requests are not refused with 404
+    # fileserver has to be the very last, so API requests are not refused with 404
+    app.add_routes(adminRouter)
+    app.add_routes(clientRouter)
+    app.add_routes(fileServerRouter)
     web.run_app(app, port=1006)
 
 

@@ -1,158 +1,113 @@
-from aiohttp import web
 import datetime
+from aiohttp import web
 import logging
-import modules.utils as utils
-
-logger = logging.getLogger(__name__)
-logger.info(f"Importing {__name__}...")
-baseURL = "/api/admin"
+import quizDBManager
+import utils
 
 
-@utils.router.get(baseURL + "/getStates")
+router = web.RouteTableDef()
+
+_logger = logging.getLogger(__name__)
+_logger.info(f"Importing {__name__}...")
+_baseURL = "/api/admin"
+
+
+@router.get(_baseURL + "/getStates")
 async def getStatesHandler(request: web.Request):
     print(f"API GET request incoming: admin/getStates")
     return web.json_response(
         {
             "phase": utils.QuizState.phase.value,
             "currentQuizNumber": utils.QuizState.currentQuizNumber,
-            "nextQuizAt": utils.QuizState.formatNextQuizAt(),
+            "nextQuizAt": utils.QuizState.formatNextPhaseChangeAt(),
         }
     )
 
 
-@utils.router.get(baseURL + "/getAllBuildingsData")
+@router.get(_baseURL + "/getAllBuildingsData")
 async def getAllBuildingsDataHandler(request: web.Request):
     print(f"API GET request incoming: admin/getAllBuildingsData")
-    localisedCols = ", ".join([f"name_{lang.value}, country_{lang.value}, city_{lang.value}" for lang in utils.SupportedLanguages])
-    res = utils.quizDB.cursor.execute(f"SELECT id, box, answer, {localisedCols} FROM buildings;").fetchall()
-    colHeaders = ["id", "box", "answer"] + localisedCols.split(", ")
-    return web.json_response({str(i): dict(zip(colHeaders, entry)) for i, entry in enumerate(res)})
+    return web.json_response(quizDBManager.getAllBuildingData())
 
 
-@utils.router.get(baseURL + "/getQuizResults")
+@router.get(_baseURL + "/getQuizResults")
 async def getQuizResultsHandler(request: web.Request):
     print(f"API GET request incoming: admin/getResults")
-    res: list[list[str | int]] = utils.quizDB.cursor.execute(
-        f"SELECT id, name, language, quiz_size, score, submitted_at FROM teams \
-        WHERE quiz_number = {utils.QuizState.currentQuizNumber} \
-        ORDER BY score DESC, submitted_at ASC;",
-    ).fetchall()
-    if not res:
-        return web.json_response({})
-    return web.json_response(
-        {
-            str(i): {
-                "id": entry[0],
-                "name": entry[1],
-                "language": entry[2],
-                "quizSize": entry[3],
-                "score": entry[4],
-                "submittedAt": entry[5],
-            }
-            for i, entry in enumerate(res)
-        },
-    )
+    return web.json_response(quizDBManager.getLeaderboard())
 
 
-@utils.router.get(baseURL + "/getQuizdata")
+@router.get(_baseURL + "/getQuizdata")
 async def getQuizdataHandler(request: web.Request):
-    print(f"API GET request incoming: admin/getQuizdataFor")
-    teamID = request.query.get("teamID")
-    if not teamID:
-        raise web.HTTPBadRequest(text="Value 'teamID' is missing")
-    res = utils.quizDB.cursor.execute(f"SELECT language FROM teams WHERE teams.id = {teamID};").fetchone()
-    if not res:
-        raise web.HTTPNotFound(text=f"Team with ID {teamID} not found")
-    lang = res[0]
-    rawData: list[list[str | int]] = utils.quizDB.cursor.execute(
-        f"SELECT buildings.name_{lang}, buildings.country_{lang}, buildings.city_{lang}, answers.answer, \
-        CASE WHEN buildings.answer = answers.answer THEN 1 ELSE 0 END \
-        FROM answers JOIN buildings ON answers.building_id = buildings.id \
-        WHERE answers.team_id = {teamID};"
-    ).fetchall()
-    return web.json_response(
-        {
-            str(i): {
-                "name": entry[0],
-                "country": entry[1],
-                "city": entry[2],
-                "number": entry[3],
-                "correct": bool(entry[4]),
-            }
-            for i, entry in enumerate(rawData)
-        }
-    )
+    print(f"API GET request incoming: admin/getQuizdata")
+    return web.json_response(quizDBManager.getAnswers(request.query.get("teamID")))
 
 
-@utils.router.post(baseURL + "/uploadQuiz")
+@router.post(_baseURL + "/uploadQuiz")
 async def uploadQuizHandler(request: web.Request):
     print("API POST request incoming: admin/uploadQuiz")
-    data = await request.json()
-    if "id" not in data:
-        raise web.HTTPBadRequest(text="Value 'id' is missing")
-    if "name" not in data:
-        raise web.HTTPBadRequest(text="Value 'name' is missing")
-    if "lang" not in data or data["lang"] not in utils.SupportedLanguages:
-        raise web.HTTPBadRequest(text=f"Value 'lang' is invalid: {data.get('lang', '<missing>')}")
-    if "answers" not in data:
-        raise web.HTTPBadRequest(text="Value 'answers' is missing")
-    answers: dict[str, dict[str, int]] = data["answers"]
-    if len(answers) not in utils.QuizSize:
-        raise web.HTTPBadRequest(text=f"Value 'answers' has invalid number of lines: {len(answers)}")
-    size = len(answers)
-    teamID = utils.getNewTeamID(utils.QuizType.DIGITAL)
-    try:  # catching all kinda errors cuz they shouldnt happen
-        utils.quizDB.cursor.executemany(
-            f"INSERT INTO answers (team_id, building_id, answer) VALUES (?, ?, ?);",
-            ((teamID, answer["building_id"], answer["answer"]) for answer in answers.values()),
-        )
-        utils.quizDB.connection.commit()
-        score = utils.quizDB.cursor.execute(
-            f"SELECT count(answers.id) \
-            FROM teams JOIN answers ON teams.id = answers.team_id JOIN buildings ON answers.building_id = buildings.id \
-            WHERE teams.id = {teamID} AND buildings.answer = answers.answer;"
-        ).fetchone()[0]
-        utils.quizDB.cursor.execute(
-            f"INSERT INTO teams (id, name, language, quiz_number, quiz_size, score, submitted_at) VALUES (?, ?, ?, ?, ?);",
-            (
-                teamID,
-                data["name"],
-                data["lang"],
-                utils.QuizState.currentQuizNumber,
-                size,
-                score,
-                datetime.datetime.now().isoformat(timespec="milliseconds"),
-            ),
-        )
-        utils.quizDB.connection.commit()
-        return web.json_response({"teamID": teamID})
-    except Exception as e:
-        logger.error(f"Failed to upload answers: {e}")
-        raise web.HTTPInternalServerError(text=f"Failed to upload answers: {e}")
+    data: dict[str, str | int | list[dict[str, str | int]]] = request.json()
+    quizDBManager.uploadAnswers("paper-uploadAnswers", data.get("teamID"), data.get("name"), utils.convertToQuizLanguage(data.get("lang")), data.get("answers"))
+    return web.HTTPOk()
 
 
-@utils.router.post(baseURL + "/queuePrintjob")
+@router.post(_baseURL + "/queuePrintjob")
 async def queuePrintjobHandler(request: web.Request):
     print(f"API POST request incoming: admin/queuePrintjob")
-    data = await request.json()
-    if "numberOfTests" not in data or not data["numberOfTests"].isdigit():
-        raise web.HTTPBadRequest(text="Value 'numberOfTests' is missing")
-    if "language" not in data or data["language"] not in utils.SupportedLanguages:
+    data: dict[str, str | int] = await request.json()
+    copyCount = data.get("copyCount")
+    lang = utils.convertToQuizLanguage(data.get("language"))
+    size = utils.convertToQuizSize(data.get("quizSize"))
+    if not copyCount or not isinstance(copyCount, int) or copyCount < 1:
+        raise web.HTTPBadRequest(text=f"Value 'copyCount' is invalid: {data.get('copyCount', '<missing>')}")
+    if not lang:
         raise web.HTTPBadRequest(text=f"Value 'language' is invalid: {data.get('language', '<missing>')}")
-    if "size" not in data or data["size"] not in utils.QuizSize:
-        raise web.HTTPBadRequest(text=f"Value 'size' is invalid: {data.get('size', '<missing>')}")
-    print(f"New print job: {data['numberOfTests']} copies of type {utils.QuizSize(data['size']).name} in {utils.SupportedLanguages(data['language']).name}")
-    for _ in range(data["numberOfTests"]):
+    if not size:
+        raise web.HTTPBadRequest(text=f"Value 'quizSize' is invalid: {data.get('quizSize', '<missing>')}")
+    print(f"New print job: {copyCount} copies of type {size.name} in lang {lang.name}")
+    for _ in range(copyCount):
         pass  # call print function
     return web.HTTPOk()
 
 
+@router.post(_baseURL + "/nextPhase")
+async def nextPhaseHandler(request: web.Request):
+    print(f"API GET request incoming: admin/nextPhase")
+    data: dict[str, str] = await request.json()
+    currentPhase = utils.convertToQuizPhase(data.get("currentPhase"))
+    nextPhase = utils.convertToQuizPhase(data.get("nextPhase"))
+    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")) or None
+    if not currentPhase:
+        raise web.HTTPBadRequest(text=f"Value 'currentPhase' is invalid: {data.get('currentPhase', '<missing>')}")
+    if not nextPhase:
+        raise web.HTTPBadRequest(text=f"Value 'nextPhase' is invalid: {data.get('nextPhase', '<missing>')}")
+    if not nextPhaseChangeAt:
+        raise web.HTTPBadRequest(text=f"Value 'nextPhaseChangeAt' is invalid: {data.get('nextPhaseChangeAt', '<missing>')}")
+    if currentPhase != utils.QuizState.phase:
+        raise web.HTTPBadRequest(text=f"Value currentPhase is not the actual current phase: {currentPhase.value}")
+    if nextPhase != utils.QuizState.getNextPhase():
+        raise web.HTTPBadRequest(text=f"Value nextPhase is not the actual next phase: {nextPhase.value}")
+    utils.QuizState.phase = nextPhase
+    utils.QuizState.nextPhaseChangeAt = nextPhaseChangeAt
+    return web.HTTPOk()
+
+
+@router.post(_baseURL + "/setNextPhaseChangeAt")
+async def setNextPhaseChangeAtHandler(request: web.Request):
+    print(f"API GET request incoming: admin/setNextPhaseChangeAt")
+    data: dict[str, str] = await request.json()
+    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")) or None
+    if not nextPhaseChangeAt:
+        raise web.HTTPBadRequest(text=f"Value 'nextPhaseChangeAt' is invalid: {data.get('nextPhaseChangeAt', '<missing>')}")
+    utils.QuizState.nextPhaseChangeAt = nextPhaseChangeAt
+    return web.HTTPOk()
+
+
 # ------- 404 Handlers -------
-@utils.router.get(baseURL + "/{fn}")
+@router.get(_baseURL + "/{fn}")
 async def GET_NotFound(request: web.Request) -> web.Response:
     raise web.HTTPNotFound(text=f"API GET endpoint '{request.match_info.get('fn')}' doesn't exist.")
 
 
-@utils.router.post(baseURL + "/{fn}")
+@router.post(_baseURL + "/{fn}")
 async def POST_NotFound(request: web.Request) -> web.Response:
     raise web.HTTPNotFound(text=f"API POST endpoint '{request.match_info.get('fn')}' doesn't exist.")
