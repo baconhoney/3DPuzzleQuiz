@@ -84,14 +84,29 @@ export default function SearchPage() {
     return (
         <div className="w-full max-w-full bg-white p-2 rounded-2xl">
             <div className="sticky top-0 bg-white pt-4 pb-4 z-30 border-b border-gray-300">
-                <input
-                    type="text"
-                    placeholder="🔍 Keresés minden mezőben..."
-                    value={query}
-                    onChange={e => setQuery(e.target.value)}
-                    autoFocus
-                    className="w-full p-2 sm:p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-sm sm:text-base"
-                />
+                <div className="relative">
+                    <input
+                        type="text"
+                        placeholder="🔍 Keresés minden mezőben..."
+                        value={query}
+                        onChange={e => setQuery(e.target.value)}
+                        autoFocus
+                        className="w-full p-2 sm:p-3 pr-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-sm sm:text-base"
+                    />
+                    {query && (
+                        <button
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() => {
+                                setQuery("");
+                            }}
+                            className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 text-red-600 hover:text-red-700 transition p-2 sm:p-1 font-bold"
+                            aria-label="Clear search"
+                            type="button"
+                        >
+                            <span className="text-lg sm:text-base text-red-500 font-bold">✕</span>
+                        </button>
+                    )}
+                </div>
             </div>
 
             <div className="overflow-x-auto overflow-y-auto max-h-[80vh] rounded-lg shadow-sm mt-4">
