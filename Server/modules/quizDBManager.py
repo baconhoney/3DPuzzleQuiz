@@ -102,26 +102,24 @@ def addEmptyTeamEntry(teamID: int, lang, size):
     _quizDBconnection.commit()
 
 
+def updateSubmittedAt(teamID: int):
+    if not teamID or teamID >= int(5e9):
+        raise InvalidParameterError(f"Invalid teamID for paper-quiz: {teamID}")
+    _quizDBcursor.execute(
+        "UPDATE teams SET submitted_at = (?) WHERE id = (?);",
+        (datetime.datetime.now().isoformat(timespec="milliseconds"), teamID),
+    )
+    _quizDBconnection.commit()
+
+
 def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = None, lang: str = None, answers: list[dict[str, int]] = None):
     """mode = `paper-updateSubmittedAt` or `paper-uploadAnswers` or `digital-uploadFull`"""
-    if mode == "paper-updateSubmittedAt":
-        if teamID and not name and not lang and not answers:
-            # uploading Paper quiz the first time (scanner reading) -> adding submittedAt
-            if teamID >= int(5e9):
-                raise InvalidParameterError(f"Invalid teamID for paper-quiz: {teamID}")
-            _quizDBcursor.execute(
-                "UPDATE teams SET submitted_at = (?) WHERE id = (?);",
-                (datetime.datetime.now().isoformat(timespec="milliseconds"), teamID),
-            )
-            _quizDBconnection.commit()
-        else:
-            raise InvalidParameterError(f"Invalid parameters: teamID={teamID}, name={name}, lang={lang}, answers={answers}; only teamID is allowed for this mode")
-    elif mode == "paper-uploadAnswers" or mode == "digital-uploadFull":
+    if mode == "paper-uploadAnswers" or mode == "digital-uploadFull":
         if (
             teamID
             and name
-            and lang
-            and utils.convertToQuizLanguage(lang)
+            and (mode == "digital-uploadFull" and lang and utils.convertToQuizLanguage(lang) 
+                 or (mode == "paper-uploadAnswers" and not lang))
             and answers
             and isinstance(answers, list)
             and len(answers) in utils.QuizSizes

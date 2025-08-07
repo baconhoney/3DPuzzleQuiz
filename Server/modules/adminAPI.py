@@ -19,7 +19,7 @@ async def getStatesHandler(request: web.Request):
         {
             "phase": utils.QuizState.phase.value,
             "currentQuizNumber": utils.QuizState.currentQuizNumber,
-            "nextQuizAt": utils.QuizState.formatNextPhaseChangeAt(),
+            "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt(),
         }
     )
 
@@ -50,7 +50,7 @@ async def uploadQuizHandler(request: web.Request):
     print("API POST request incoming: admin/uploadQuiz")
     data: dict[str, str | int | list[dict[str, str | int]]] = request.json()
     try:
-        quizDBManager.uploadAnswers("paper-uploadAnswers", data.get("teamID"), data.get("name"), data.get("lang"), data.get("answers"))
+        quizDBManager.uploadAnswers("paper-uploadAnswers", teamID=data.get("teamID"), name=data.get("name"), answers=data.get("answers"))
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
     return web.HTTPOk()
