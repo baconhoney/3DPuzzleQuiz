@@ -38,51 +38,30 @@ export type QuizSize = 20 | 100;
 export type QuizPhase = "idle" | "running" | "scoring";
 
 
-export interface Question {
+export type Question = {
+    id: number;
     name: string;
-    country: string;
-    city: string;
-    buildingID: number;
+    location: string;
     answer: number;
     correct: boolean;
 }
 
-export interface Quiz {
+export type QuizDetails = {
     name: string;
-    language: string;
+    language: QuizLanguage;
     score: number;
     timestamp: Date;
-    questions: {
-        [index: string]: Question;
-    };
+    questions: Question[];
 }
 
-export interface QuizResult {
-    teamID: number;
-    name: string;
-    score: number;
-    timestamp: Date;
+export type QuizResult = {
+    teamID: number,
+    name: string,
+    language: QuizLanguage,
+    quizSize: QuizSize,
+    score: number,
+    submittedAt: Date
 }
 
-export interface QuizResults {
-    [index: string]: QuizResult;
-}
+export type QuizResults = QuizResult[]
 
-export interface JSONQuizResults {
-    [index: string]: {
-        teamID: number;
-        name: string;
-        score: number;
-        timestamp: string;
-    };
-}
-
-export interface JSONQuizDetails {
-    name: string;
-    language: string;
-    score: number;
-    timestamp: string;
-    questions: {
-        [index: string]: Question;
-    };
-}

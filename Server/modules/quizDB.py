@@ -13,15 +13,14 @@ _logger.info(f"Importing {__name__}...")
 _buildingsSQL = """
 CREATE TABLE buildings
 (
-    id         INTEGER PRIMARY KEY NOT NULL,
-    box        INTEGER,
-    answer     INTEGER UNIQUE      NOT NULL,
-    name_hu    TEXT                NOT NULL,
-    name_en    TEXT                NOT NULL,
-    country_hu TEXT                NOT NULL,
-    country_en TEXT                NOT NULL,
-    city_hu    TEXT                NOT NULL,
-    city_en    TEXT                NOT NULL
+    id          INTEGER PRIMARY KEY NOT NULL,
+    box         INTEGER,
+    answer      INTEGER UNIQUE,
+    name_hu     TEXT                NOT NULL,
+    name_en     TEXT                NOT NULL,
+    location_hu TEXT                NOT NULL,
+    location_en TEXT                NOT NULL,
+    type        TEXT                NOT NULL
 ) STRICT;
 """
 
@@ -55,7 +54,7 @@ CREATE TABLE answers
     id          INTEGER PRIMARY KEY NOT NULL,
     team_id     INTEGER             NOT NULL,
     building_id INTEGER             NOT NULL,
-    answer      INTEGER             NOT NULL,
+    answer      INTEGER,
     
     FOREIGN KEY (team_id) REFERENCES teams (id),
     FOREIGN KEY (building_id) REFERENCES buildings (id)

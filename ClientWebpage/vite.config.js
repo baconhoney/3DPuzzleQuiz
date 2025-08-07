@@ -9,5 +9,12 @@ export default defineConfig({
     server: {
         allowedHosts: ["gombosnet.ddns.net", "cicanet.ddns.net"],
         port: 2009,
+        proxy: {
+            "/api": {
+                target: "http://192.168.1.20:1006",
+                changeOrigin: true,
+                secure: false,
+            },
+        },
     },
 })
