@@ -37,8 +37,7 @@ for i, name in enumerate(team_names):
 
         question = {
             "name": entry["name_en"] if language == "en" else entry["name_hu"],
-            "country": entry["country_en"] if language == "en" else entry["country_hu"],
-            "city": entry["city_en"] if language == "en" else entry["city_hu"],
+            "location": entry["location_en"] if language == "en" else entry["location_hu"],
             "answer": user_answer,
             "correct": is_correct,
         }
