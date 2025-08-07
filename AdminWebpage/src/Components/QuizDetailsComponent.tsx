@@ -2,7 +2,7 @@ import { Component } from "react";
 
 import App from "../App";
 import { getDetailsData } from "../Testdata";
-import type { QuizDetails } from "../utils";
+import type { QuizDetails, QuizLanguage } from "../utils";
 
 import "./QuizDetailsComponent.css";
 
@@ -13,14 +13,14 @@ interface Properties {
 }
 
 interface State {
-    quiz: QuizDetails | undefined;
+    quizDetails: QuizDetails | undefined;
 }
 
 export default class QuizDetailsComponent extends Component<Properties, State> {
     constructor(properties: Properties) {
         super(properties);
         this.state = {
-            quiz: undefined,
+            quizDetails: undefined,
         };
     }
 
@@ -52,9 +52,13 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
         // temp code for testing
         const json = getDetailsData(this.props.teamID);
         this.updateState({
-            quiz: json
+            quizDetails: json
                 ? {
                     ...json,
+                    questions: [
+                        ...(json.questions.map((val) => ({ ...val, id: 1 }))), /*TODO: fix this shit*/
+                    ],
+                    language: json.language as QuizLanguage,
                     timestamp: new Date(json.timestamp),
                 }
                 : undefined,
@@ -68,17 +72,17 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
                     <tr>
                         <td style={{ width: "auto" }}>
                             <span id="testGroupName" style={{ padding: "0px 5px", fontSize: "1.5rem", fontWeight: "bold" }}>
-                                {this.state.quiz?.name ?? "Csapatnév"}
+                                {this.state.quizDetails?.name ?? "Csapatnév"}
                             </span>
                         </td>
                         <td style={{ padding: "5px 5px", width: "0px", textAlign: "center" }}>
                             <span id="testLang" style={{ padding: "0px 5px", fontSize: "1.5rem", fontWeight: "bold" }}>
-                                {this.state.quiz?.language.toUpperCase() ?? "Nyelv"}
+                                {this.state.quizDetails?.language.toUpperCase() ?? "Nyelv"}
                             </span>
                         </td>
                         <td style={{ padding: "5px 5px", width: "150px", textAlign: "center", whiteSpace: "nowrap" }}>
                             <span id="testScore" style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
-                                {this.state.quiz?.score ?? "??"} / {this.state.quiz ? Object.values(this.state.quiz.questions).length : "??"}
+                                {this.state.quizDetails?.score ?? "??"} / {this.state.quizDetails ? Object.values(this.state.quizDetails.questions).length : "??"}
                             </span>
                         </td>
                     </tr>
@@ -86,7 +90,7 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
                 <tbody>
                     <tr>
                         <td colSpan={3}>
-                            {this.state.quiz
+                            {this.state.quizDetails
                                 ? <table className="answers">
                                     <thead>
                                         <tr>
@@ -98,14 +102,14 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {Object.entries(this.state.quiz.questions).map(([index, question]) => {
+                                        {this.state.quizDetails.questions.map((question, index) => {
                                             return (
                                                 <tr key={index}>
                                                     <td className="name">{question.name}</td>
-                                                    <td className="location">{question.country} {question.city != "-" ? ", " + question.city : ""}</td>
-                                                    <td className="id">{question.buildingID ?? ""}</td>
+                                                    <td className="location">{question.location}</td>
+                                                    <td className="id">{question.id}</td>
                                                     <td className="answer">
-                                                        <input type="number" key={question.answer} defaultValue={question.answer} id={question.buildingID.toString()} className="answer-input" />
+                                                        <input type="number" key={question.answer} defaultValue={question.answer} id={question.id.toString()} className="answer-input" />
                                                     </td>
                                                     <td className="correct">{question.correct ? "✅" : "❌"}</td>
                                                 </tr>

@@ -39,9 +39,9 @@ export type QuizPhase = "idle" | "running" | "scoring";
 
 
 export type Question = {
+    id: number;
     name: string;
-    country: string;
-    city: string;
+    location: string;
     answer: number;
     correct: boolean;
 }
@@ -55,11 +55,12 @@ export type QuizDetails = {
 }
 
 export type QuizResult = {
-    teamID: number
-    name: string
-    language: QuizLanguage;
-    score: number;
-    submittedAt: Date;
+    teamID: number,
+    name: string,
+    language: QuizLanguage,
+    quizSize: QuizSize,
+    score: number,
+    submittedAt: Date
 }
 
 export type QuizResults = QuizResult[]
