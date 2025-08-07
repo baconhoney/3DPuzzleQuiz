@@ -1,7 +1,7 @@
 import { Component } from "react";
 
 import App from "../App.tsx";
-import { getTimeFromDate, type QuizResults } from "../utils.ts";
+import { getTimeFromDate, type QuizLanguage, type QuizResults, type QuizSize } from "../utils.ts";
 
 import "./QuizResultsComponent.css";
 
@@ -16,7 +16,7 @@ interface QuizResultsState {
     quizResults: QuizResults;
 }
 
-export default class QuizResultsComponent extends Component<QuizResultsProperties, unknown> {
+export default class QuizResultsComponent extends Component<QuizResultsProperties, QuizResultsState> {
     private quizGetterHandler: number | undefined = undefined;
 
     constructor(properties: QuizResultsProperties) {
@@ -53,7 +53,9 @@ export default class QuizResultsComponent extends Component<QuizResultsPropertie
             const item = json[key];
             result[key] = {
                 ...item,
-                timestamp: new Date(item.timestamp),
+                language: item.language as QuizLanguage,
+                quizSize: item.size as QuizSize,
+                submittedAt: new Date(item.submittedAt),
             };
         }
         this.updateState({
@@ -80,12 +82,12 @@ export default class QuizResultsComponent extends Component<QuizResultsPropertie
                     </tr>
                 </thead>
                 <tbody>
-                    {Object.entries(this.props.quizResults).map(([i, elem]) => (
+                    {this.state.quizResults.map((elem, i) => (
                         <tr key={i} onClick={() => { this.props.app.updateState({ openedQuizTeamID: elem.teamID }); }}
                             className={elem.teamID == this.props.app.state.openedQuizTeamID ? "selected" : ""}>
                             <td className="groupname">{elem.name}</td>
                             <td className="score">{elem.score}</td>
-                            <td className="timestamp">{getTimeFromDate(elem.timestamp)}</td>
+                            <td className="timestamp">{getTimeFromDate(elem.submittedAt)}</td>
                         </tr>
                     ))}
                 </tbody>
