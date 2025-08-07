@@ -29,7 +29,7 @@ def getQuestions(lang: utils.QuizLanguages, size: utils.QuizSizes) -> list[dict[
         f"SELECT buildings.id, buildings.name_{lang}, buildings.country_{lang}, buildings.city_{lang} \
         FROM buildings JOIN quizzes ON buildings.id = quizzes.building_id \
         WHERE quizzes.quiz_number = {quizNum} \
-        SORT BY buildings.name_{lang};"
+        ORDER BY buildings.name_{lang};"
     ).fetchall()
     return [{"id": entry[0], "name": entry[1], "country": entry[2], "city": entry[3]} for entry in rawQuizdata]
 
@@ -46,7 +46,7 @@ def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]
         CASE WHEN buildings.answer = answers.answer THEN 1 ELSE 0 END \
         FROM answers JOIN buildings ON answers.building_id = buildings.id \
         WHERE answers.team_id = {teamID} \
-        SORT BY buildings.name_{lang} ASC;"
+        ORDER BY buildings.name_{lang} ASC;"
     ).fetchall()
     return {
         "score": score,
@@ -75,7 +75,7 @@ def checkIfSubmittedAtIsPresent(teamID: int) -> bool:
 
 def getAllBuildingData() -> list[dict[str, str | int | None]]:
     localisedCols = ", ".join([f"name_{lang.value}, country_{lang.value}, city_{lang.value}" for lang in utils.QuizLanguages])
-    res = _quizDBcursor.execute(f"SELECT id, box, answer, {localisedCols} FROM buildings SORT BY id;").fetchall()
+    res = _quizDBcursor.execute(f"SELECT id, box, answer, {localisedCols} FROM buildings ORDER BY id;").fetchall()
     colHeaders = ["id", "box", "answer"] + localisedCols.split(", ")
     return [dict(zip(colHeaders, entry)) for entry in res]
 

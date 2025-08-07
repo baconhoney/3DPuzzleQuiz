@@ -119,7 +119,7 @@
             "name_en": "Flying Dutchman ghostship",
             "location_hu": "Hollandia",
             "location_en": "Netherlands",
-            "type": "nem-valós/hajó"
+            "type": "fiktív/hajó"
         },
         {
             "id": 6118,
@@ -329,7 +329,7 @@
             "name_en": "Harry Potter Hogwarts castle",
             "location_hu": "Egyesült Királyság, Alnwick",
             "location_en": "Alnwick, United Kingdom",
-            "type": "nem-valós/kastély"
+            "type": "fiktív/kastély"
         },
         {
             "id": 8422,

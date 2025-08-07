@@ -46,7 +46,7 @@ def JSON_to_DB():
 
 
 def DB_to_JSON():
-    quizDB.cursor.execute(f"SELECT {', '.join(jsonHeaders)} FROM buildings;")
+    quizDB.cursor.execute(f"SELECT {', '.join(jsonHeaders)} FROM buildings ORDER BY name_hu;")
     data = [dict(zip(jsonHeaders, row)) for row in quizDB.cursor.fetchall()]
     jsonData = {"lastEdited": datetime.datetime.now().isoformat(timespec="milliseconds"), "entries": data}
     with open(masterRoot / "masterList.json", "w", encoding="utf-8") as f:
