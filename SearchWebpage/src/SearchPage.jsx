@@ -1,6 +1,13 @@
 import { useState, useMemo, useEffect } from "react";
 import { masterList } from "./masterList";
-import { tokenize, parseTokens, evaluateNode, highlight, sortItems, removeAccents } from "./utils";
+import {
+    tokenize,
+    parseTokens,
+    evaluateNode,
+    highlight,
+    sortItems,
+    removeAccents,
+} from "./utils";
 
 export default function SearchPage() {
     const [data, setData] = useState([]);
@@ -10,13 +17,14 @@ export default function SearchPage() {
 
     useEffect(() => {
         const isGitHubPages = location.hostname.includes("github.io");
+
         if (isGitHubPages) {
             setData(masterList);
         } else {
             fetch("http://192.168.0.101:1006/api/admin/getAllBuildingsData")
-                .then(res => res.json())
-                .then(json => setData(json))
-                .catch(err => {
+                .then((res) => res.json())
+                .then((json) => setData(json))
+                .catch((err) => {
                     console.error("API fetch error, falling back to local data:", err);
                     setData(masterList);
                 });
@@ -28,11 +36,9 @@ export default function SearchPage() {
         { key: "box", label: "Doboz", numeric: true },
         { key: "answer", label: "Válasz", numeric: true },
         { key: "name_hu", label: "Név" },
-        { key: "country_hu", label: "Ország" },
-        { key: "city_hu", label: "Város" },
+        { key: "location_hu", label: "Helyszín" },
         { key: "name_en", label: "Angol Név" },
-        { key: "country_en", label: "Angol Ország" },
-        { key: "city_en", label: "Angol Város" },
+        { key: "location_en", label: "Angol Helyszín" },
     ];
 
     const labelToKeyMap = useMemo(() => {
@@ -47,7 +53,7 @@ export default function SearchPage() {
 
     const handleSort = (key) => {
         if (key === sortKey) {
-            setSortAsc(prev => !prev);
+            setSortAsc((prev) => !prev);
         } else {
             setSortKey(key);
             setSortAsc(true);
@@ -74,7 +80,7 @@ export default function SearchPage() {
             return sortItems(Object.values(data), sortKey, sortAsc, columns);
         }
 
-        const filteredItems = Object.values(data).filter(item =>
+        const filteredItems = Object.values(data).filter((item) =>
             evaluateNode(exprTree, item, labelToKeyMap, columns, regex)
         );
 
@@ -89,7 +95,7 @@ export default function SearchPage() {
                         type="text"
                         placeholder="🔍 Keresés minden mezőben..."
                         value={query}
-                        onChange={e => setQuery(e.target.value)}
+                        onChange={(e) => setQuery(e.target.value)}
                         autoFocus
                         className="w-full p-2 sm:p-3 pr-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-sm sm:text-base"
                     />
@@ -125,7 +131,9 @@ export default function SearchPage() {
                                         <div className="flex items-center justify-center">
                                             <span>{col.label}</span>
                                             {sortKey === col.key && (
-                                                <span className="ml-1 text-xs select-none">{sortAsc ? "▲" : "▼"}</span>
+                                                <span className="ml-1 text-xs select-none">
+                                                    {sortAsc ? "▲" : "▼"}
+                                                </span>
                                             )}
                                         </div>
                                     </th>
@@ -135,8 +143,12 @@ export default function SearchPage() {
                     </thead>
                     <tbody>
                         {filtered.length > 0 ? (
-                            filtered.map(item => (
-                                <tr key={item.id} className="even:bg-gray-50 hover:bg-blue-50 transition-shadow" style={{ height: 48 }}>
+                            filtered.map((item) => (
+                                <tr
+                                    key={item.id}
+                                    className="even:bg-gray-50 hover:bg-blue-50 transition-shadow"
+                                    style={{ height: 48 }}
+                                >
                                     {columns.map((col, idx) => {
                                         const isNumeric = col.numeric;
                                         const value = item[col.key];
@@ -156,7 +168,10 @@ export default function SearchPage() {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={columns.length} className="p-6 text-center text-gray-500 italic">
+                                <td
+                                    colSpan={columns.length}
+                                    className="p-6 text-center text-gray-500 italic"
+                                >
                                     Nincs találat a keresésre.
                                 </td>
                             </tr>
