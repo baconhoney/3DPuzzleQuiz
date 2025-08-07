@@ -147,10 +147,8 @@ export function removeAccents(str) {
 export function highlight(text, query, colLabel) {
     if (!query || typeof text !== "string") return text;
 
-    // Remove parentheses
+    // Step 1: Parse query into terms
     const flatQuery = query.replace(/[()]/g, "");
-
-    // Tokenize by & and | (not escaped)
     const parts = flatQuery
         .split(/(?<!\\)[&|]/)
         .map(s => s.trim())
@@ -158,93 +156,107 @@ export function highlight(text, query, colLabel) {
 
     const terms = [];
 
-    parts.forEach(term => {
+    for (const term of parts) {
         const regexColMatch = term.match(/^([^:]+):re:(.+)$/i);
         const regexMatch = term.match(/^re:(.+)$/i);
         const colSplit = term.split(":");
 
         if (regexColMatch) {
             const label = regexColMatch[1].toLowerCase();
-            if (label === colLabel.toLowerCase() || !term.includes(":")) {
+            if (label === colLabel.toLowerCase()) {
                 try {
                     const pattern = new RegExp(regexColMatch[2], "gi");
                     let match;
                     while ((match = pattern.exec(text)) !== null) {
-                        if (match[0] === "") {
-                            pattern.lastIndex++;
-                            continue;
-                        }
-                        terms.push(match[0]);
+                        if (match[0]) terms.push(match[0]);
                     }
                 } catch { }
             }
         } else if (regexMatch) {
             try {
-                const pattern = new RegExp(regexMatch[1], "gi"); // regex from user
+                const pattern = new RegExp(regexMatch[1], "gi");
                 let match;
                 while ((match = pattern.exec(text)) !== null) {
-                    if (match[0] === "") {
-                        pattern.lastIndex++;
-                        continue;
-                    }
-                    terms.push(match[0]);
+                    if (match[0]) terms.push(match[0]);
                 }
-            } catch {
-                // Invalid regex, skip
-            }
+            } catch { }
         } else {
             if (colSplit.length > 1) {
-                const label = colSplit[0].toLowerCase();
-                if (label === colLabel.toLowerCase()) {
+                const label = removeAccents(colSplit[0].toLowerCase());
+                const targetLabel = removeAccents(colLabel.toLowerCase());
+                if (label === targetLabel) {
                     const val = colSplit.slice(1).join(":");
                     if (val) terms.push(val);
                 }
             } else {
-                // Oszlop nélküli általános keresés
                 terms.push(term);
             }
         }
-    });
+    }
 
     if (terms.length === 0) return text;
 
-    const textLower = text.toLowerCase();
-    const textNoAccents = removeAccents(textLower);
-    const termsNoAccents = terms.map(t => removeAccents(t.toLowerCase()));
+    // Step 2: Remove accents from text and build index map
+    const original = [...text];
+    const normalized = [...removeAccents(text)];
+    const indexMap = [];
 
-    let lastIndex = 0;
-    const partsToRender = [];
+    let origIndex = 0;
+    for (let i = 0; i < normalized.length && origIndex < original.length; i++) {
+        // Advance original index to skip combining characters
+        while (
+            origIndex < original.length &&
+            removeAccents(original[origIndex]) !== normalized[i]
+        ) {
+            origIndex++;
+        }
+        indexMap[i] = origIndex;
+        origIndex++;
+    }
 
-    while (lastIndex < text.length) {
-        let earliestMatchIndex = -1;
-        let earliestMatchLength = 0;
+    // Step 3: Highlight all matches
+    const normalizedText = normalized.join("").toLowerCase();
+    const normalizedTerms = terms.map(t => removeAccents(t.toLowerCase()));
 
-        for (const term of termsNoAccents) {
-            const index = textNoAccents.indexOf(term, lastIndex);
-            if (index !== -1 && (earliestMatchIndex === -1 || index < earliestMatchIndex)) {
-                earliestMatchIndex = index;
-                earliestMatchLength = term.length;
+    let lastIdx = 0;
+    const output = [];
+
+    while (lastIdx < normalizedText.length) {
+        let matchIndex = -1;
+        let matchLength = 0;
+
+        for (const term of normalizedTerms) {
+            const idx = normalizedText.indexOf(term, lastIdx);
+            if (idx !== -1 && (matchIndex === -1 || idx < matchIndex)) {
+                matchIndex = idx;
+                matchLength = term.length;
             }
         }
 
-        if (earliestMatchIndex === -1) {
-            partsToRender.push(text.slice(lastIndex));
+        if (matchIndex === -1) {
+            const sliceStart = indexMap[lastIdx] ?? text.length;
+            output.push(text.slice(sliceStart));
             break;
         }
 
-        if (earliestMatchIndex > lastIndex) {
-            partsToRender.push(text.slice(lastIndex, earliestMatchIndex));
+        if (matchIndex > lastIdx) {
+            const sliceStart = indexMap[lastIdx] ?? text.length;
+            const sliceEnd = indexMap[matchIndex] ?? text.length;
+            output.push(text.slice(sliceStart, sliceEnd));
         }
 
-        const matchText = text.slice(earliestMatchIndex, earliestMatchIndex + earliestMatchLength);
-        partsToRender.push(
-            <mark key={earliestMatchIndex} className="bg-yellow-200">
-                {matchText}
+        const highlightStart = indexMap[matchIndex] ?? text.length;
+        const highlightEnd = indexMap[matchIndex + matchLength] ?? text.length;
+        const highlightText = text.slice(highlightStart, highlightEnd);
+
+        output.push(
+            <mark key={highlightStart} className="bg-yellow-200">
+                {highlightText}
             </mark>
         );
 
-        lastIndex = earliestMatchIndex + earliestMatchLength;
+        lastIdx = matchIndex + matchLength;
     }
 
-    return <>{partsToRender.length ? partsToRender : text}</>;
+    return <>{output}</>;
 }

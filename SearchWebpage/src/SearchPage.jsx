@@ -39,6 +39,7 @@ export default function SearchPage() {
         { key: "location_hu", label: "Helyszín" },
         { key: "name_en", label: "Angol Név" },
         { key: "location_en", label: "Angol Helyszín" },
+        { key: "type", label: "Típus" },
     ];
 
     const labelToKeyMap = useMemo(() => {
