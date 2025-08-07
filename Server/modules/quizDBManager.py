@@ -38,22 +38,29 @@ def getQuestions(lang, size) -> list[dict[str, str | int]]:
     return [{"id": entry[0], "name": entry[1], "location": entry[2]} for entry in rawQuizdata]
 
 
-def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]:
+def getAnswers(teamID: int, allData: bool = False) -> dict[str, str | int | list[dict[str, str | int]]]:
     if not teamID:
         raise InvalidParameterError(f"Missing teamID parameter")
-    res = utils.quizDB.cursor.execute(f"SELECT language, score, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
+    res = utils.quizDB.cursor.execute(f"SELECT name, language, score, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
     if not res:
         raise InvalidParameterError(f"Team with ID {teamID} not found")
-    lang: str = res[0]
-    score: int = res[1]
-    submittedAt: str = res[2]
+    lang: str = res[1]
+    score: int = res[2]
+    submittedAt: str = res[3]
     rawData: list[list[str | int]] = _quizDBcursor.execute(
         f"SELECT buildings.name_{lang}, buildings.location_{lang}, answers.answer, CASE WHEN buildings.answer = answers.answer THEN 1 ELSE 0 END \
         FROM answers JOIN buildings ON answers.building_id = buildings.id \
         WHERE answers.team_id = {teamID} \
         ORDER BY buildings.name_{lang} ASC;"
     ).fetchall()
+    extra = {}
+    if allData:
+        extra = {
+            "name": res[0],
+            "language": lang,
+        }
     return {
+        **extra,
         "score": score,
         "submittedAt": submittedAt,
         "quizdata": [{"name": entry[0], "location": entry[1], "answer": entry[2], "correct": bool(entry[3])} for entry in rawData],
@@ -80,8 +87,8 @@ def checkIfSubmittedAtIsPresent(teamID: int) -> bool:
 
 def getAllBuildingData() -> list[dict[str, str | int | None]]:
     localisedCols = ", ".join([f"name_{lang.value}, location_{lang.value}" for lang in utils.QuizLanguages])
-    res = _quizDBcursor.execute(f"SELECT id, box, answer, {localisedCols} FROM buildings ORDER BY id;").fetchall()
-    colHeaders = ["id", "box", "answer"] + localisedCols.split(", ")
+    res = _quizDBcursor.execute(f"SELECT id, box, answer, type, {localisedCols} FROM buildings ORDER BY id;").fetchall()
+    colHeaders = ["id", "box", "answer", "type"] + localisedCols.split(", ")
     return [dict(zip(colHeaders, entry)) for entry in res]
 
 

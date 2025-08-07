@@ -5,6 +5,7 @@ import WantToStart from './WantToStart';
 import Waiting from './Waiting';
 import Navbar from './Navbar';
 import Results from './Results';
+import { getQuestions } from './apiHandler';
 
 const Manager = () => {
 
@@ -17,33 +18,6 @@ const Manager = () => {
     const haveResults = true;
 
     const { t } = useGlobalContext();
-
-    const quizData = {
-        quizNumber: 3,
-        quizdata: {
-            "0": { name: "Hősök tere", country: "Magyarország", city: "Budapest", flag: "flag_hu", id: 9675 },
-            "1": { name: "Kaminarimon Kapu", country: "Japán", city: "Tokió", flag: "flag_jp", id: 5131 },
-            "2": { name: "Kanadai Nemzeti TV-Torony", country: "Kanada", city: "Toronto", flag: "flag_ca", id: 2085 },
-            "3": { name: "Keleti Gyöngy torony", country: "Kína", city: "Shanghai", flag: "flag_cn", id: 4721 },
-            "4": { name: "Kínai Nagy Fal", country: "Kína", city: "-", flag: "flag_cn", id: 5210 },
-            "5": { name: "Kölni dóm", country: "Németország", city: "Köln", flag: "flag_de", id: 3265 },
-            "6": { name: "Kul Sharif mecset", country: "Oroszország", city: "Kazán", flag: "flag_ru", id: 9010 },
-            "7": { name: "Kultúra és Tudomány Palotája", country: "Lengyelország", city: "Varsó", flag: "flag_pl", id: 5466 },
-            "8": { name: "Lincoln emlékmű", country: "USA", city: "Washington", flag: "flag_us", id: 6939 },
-            "9": { name: "Louvre Múzeum", country: "Franciaország", city: "Párizs", flag: "flag_fr", id: 9266 },
-            "10": { name: "Mátyás-templom és Halászbástya", country: "Magyarország", city: "Budapest", flag: "flag_hu", id: 8948 },
-            "11": { name: "Mayflower", country: "Hollandia", city: "[elsüllyedt]", flag: "flag_nl", id: 3278 },
-            "12": { name: "Megváltó Krisztus szobra", country: "Brazília", city: "Rio de Janeiro", flag: "flag_br", id: 4805 },
-            "13": { name: "Megváltó Krisztus-székesegyház", country: "Oroszország", city: "Moszkva", flag: "flag_ru", id: 9218 },
-            "14": { name: "Mennyei béke kapuja", country: "Kína", city: "Peking", flag: "flag_cn", id: 9483 },
-            "15": { name: "Milánói Dóm", country: "Olaszország", city: "Milánó", flag: "flag_it", id: 8053 },
-            "16": { name: "Mississippi gőzhajó", country: "USA", city: "New Orleans", flag: "flag_us", id: 4954 },
-            "17": { name: "Mustafa Kemal Atatürk mauzóleuma", country: "Törökország", city: "Ankara", flag: "flag_tr", id: 2340 },
-            "18": { name: "New York-i Szabadság szobor", country: "USA", city: "New York", flag: "flag_us", id: 2354 },
-            "19": { name: "Notre-Dame", country: "Franciaország", city: "Párizs", flag: "flag_fr", id: 7310 }
-        },
-        endTime: "21:35:00"
-    };
 
     const answerData = {
         "quizdata": {
@@ -233,18 +207,66 @@ const Manager = () => {
     const errorDiv = (<div className='text-error text-center p-4'>Hiba történt. There was an error.<br />gameState: {gameState}, wantToPlay: {wantToPlay}</div>)
 
     function lateStart() {
-        const now = new Date();
-        const endTime = new Date();
-        const [hours, minutes, seconds] = quizData.endTime.split(':');
-        endTime.setHours(parseInt(hours), parseInt(minutes), parseInt(seconds), 0);
+        const [quizData, setQuizData] = useState(null);
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState(null);
 
-        const timeRemaining = endTime - now;
-        const minutesRemaining = Math.floor(timeRemaining / (1000 * 60));
+        React.useEffect(() => {
+            const fetchQuestions = async () => {
+                try {
+                    setLoading(true);
+                    setError(null);
+                    const data = await getQuestions(localStorage.getItem("language") || "hu", 20);
+                    setQuizData(data);
+                } catch (error) {
+                    console.error("Error fetching questions:", error);
+                    setError(error.message);
+                } finally {
+                    setLoading(false);
+                }
+            };
 
-        if ((minutesRemaining <= 10 && wantToPlay === "NA") && minutesRemaining > 0) {
-            return <WantToStart setWantToPlay={setWantToPlay} />;
+            fetchQuestions();
+        }, []);
+
+        if (loading) {
+            return <div className='text-center p-4'>Loading...</div>;
         }
-        return <Quiz data={quizData} />;
+
+        if (error) {
+            return (
+                <div className='text-error text-center p-4'>
+                    Error loading quiz: {error}
+                    <br />
+                    <button
+                        onClick={() => window.location.reload()}
+                        className='mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
+                    >
+                        Retry
+                    </button>
+                </div>
+            );
+        }
+
+        if (!quizData) {
+            return <div className='text-center p-4'>No quiz data available</div>;
+        } else {
+
+            // const now = new Date();
+            // const endTime = new Date();
+            // const [hours, minutes, seconds] = quizData.endTime.split(':');
+            // endTime.setHours(parseInt(hours), parseInt(minutes), parseInt(seconds), 0);
+
+            // const timeRemaining = endTime - now;
+            // const minutesRemaining = Math.floor(timeRemaining / (1000 * 60));
+
+            // if ((minutesRemaining <= 10 && wantToPlay === "NA") && minutesRemaining > 0) {
+            //     return <WantToStart setWantToPlay={setWantToPlay} />;
+            // }
+
+
+            return <Quiz data={quizData} />;
+        }
     }
 
     return (

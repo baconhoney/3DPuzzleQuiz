@@ -6,7 +6,7 @@ const Quiz = ({ data }) => {
 
     const { t } = useGlobalContext();
     const [answerCount, setAnswerCount] = useState(0);
-    const formattedTime = data.endTime.split(':').slice(0, 2).join(':');
+    // const formattedTime = data.endTime.split(':').slice(0, 2).join(':');
 
     useEffect(() => {
         const savedTheme = localStorage.getItem("theme");
@@ -47,12 +47,12 @@ const Quiz = ({ data }) => {
         <>
             <form id="quiz-form">
                 <div className="grid grid-cols-1 gap-1 p-3">
-                    {Object.entries(data.quizdata).map(([key, value]) => (
+                    {data.map((value, key) => (
                         <div key={key} className="card bg-base-100 shadow-2xl h-22">
                             <div className="flex flex-row justify-between items-center px-3 py-0 card-body gap-4">
                                 <div>
                                     <h2 className="card-title">{value.name}</h2>
-                                    <p>{value.city === "-" ? value.country : `${value.city}, ${value.country}`}</p>
+                                    <p>{value.location}</p>
                                 </div>
                                 <Input
                                     id={value.id}
@@ -92,7 +92,7 @@ const Quiz = ({ data }) => {
                                     {isQuizActive ? formattedTime : ''}
                                 </div> */}
                     </div>
-                    <progress className="progress progress-primary w-full" value={100 / Object.keys(data.quizdata).length * answerCount} max="100"></progress>
+                    <progress className="progress progress-primary w-full" value={100 / data.length * answerCount} max="100"></progress>
                 </div>
             </form>
 

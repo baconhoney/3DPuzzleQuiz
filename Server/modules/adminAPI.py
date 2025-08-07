@@ -40,7 +40,7 @@ async def getQuizResultsHandler(request: web.Request):
 async def getQuizdataHandler(request: web.Request):
     print(f"API GET request incoming: admin/getQuizdata")
     try:
-        return web.json_response(quizDBManager.getAnswers(request.query.get("teamID")))
+        return web.json_response(quizDBManager.getAnswers(request.query.get("teamID"), True))
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
 
