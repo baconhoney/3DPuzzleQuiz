@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { masterList } from "./masterList";
+import masterList from "./masterList";
 import {
     tokenize,
     parseTokens,
@@ -19,14 +19,14 @@ export default function SearchPage() {
         const isGitHubPages = location.hostname.includes("github.io");
 
         if (isGitHubPages) {
-            setData(masterList);
+            setData(masterList.entries);
         } else {
             fetch("../api/admin/getAllBuildingsData")
                 .then((res) => res.json())
                 .then((json) => setData(json))
                 .catch((err) => {
                     console.error("API fetch error, falling back to local data:", err);
-                    setData(masterList);
+                    setData(masterList.entries);
                 });
         }
     }, []);
