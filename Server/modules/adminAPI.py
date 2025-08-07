@@ -39,14 +39,20 @@ async def getQuizResultsHandler(request: web.Request):
 @router.get(_baseURL + "/getQuizdata")
 async def getQuizdataHandler(request: web.Request):
     print(f"API GET request incoming: admin/getQuizdata")
-    return web.json_response(quizDBManager.getAnswers(request.query.get("teamID")))
+    try:
+        return web.json_response(quizDBManager.getAnswers(request.query.get("teamID")))
+    except quizDBManager.InvalidParameterError as e:
+        raise web.HTTPBadRequest(text=str(e))
 
 
 @router.post(_baseURL + "/uploadQuiz")
 async def uploadQuizHandler(request: web.Request):
     print("API POST request incoming: admin/uploadQuiz")
     data: dict[str, str | int | list[dict[str, str | int]]] = request.json()
-    quizDBManager.uploadAnswers("paper-uploadAnswers", data.get("teamID"), data.get("name"), utils.convertToQuizLanguage(data.get("lang")), data.get("answers"))
+    try:
+        quizDBManager.uploadAnswers("paper-uploadAnswers", data.get("teamID"), data.get("name"), data.get("lang"), data.get("answers"))
+    except quizDBManager.InvalidParameterError as e:
+        raise web.HTTPBadRequest(text=str(e))
     return web.HTTPOk()
 
 

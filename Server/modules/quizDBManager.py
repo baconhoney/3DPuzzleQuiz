@@ -19,22 +19,28 @@ class InvalidParameterError(Exception):
 # -------------------
 # ----- GETTERS -----
 # -------------------
-def getQuestions(lang: utils.QuizLanguages, size: utils.QuizSizes) -> list[dict[str, str | int]]:
+def getQuestions(lang, size) -> list[dict[str, str | int]]:
     if not lang:
-        raise InvalidParameterError(f"Invalid language: {lang}")
+        raise InvalidParameterError(f"Missing language parameter")
     if not size:
+        raise InvalidParameterError(f"Missing size parameter")
+    if utils.convertToQuizLanguage(lang) is None:
+        raise InvalidParameterError(f"Invalid language: {lang}")
+    if utils.convertToQuizSize(size) is None:
         raise InvalidParameterError(f"Invalid size: {size}")
-    quizNum = (size == utils.QuizSizes.SIZE_20) and _quizState.currentQuizNumber or -1  # -1 -> SIZE_100 quiz
+    quizNum = (int(size) == utils.QuizSizes.SIZE_20.value) and _quizState.currentQuizNumber or -1  # -1 -> SIZE_100 quiz
     rawQuizdata: list[list[str | int]] = utils.quizDB.cursor.execute(
-        f"SELECT buildings.id, buildings.name_{lang}, buildings.country_{lang}, buildings.city_{lang} \
+        f"SELECT buildings.id, buildings.name_{lang}, buildings.location_{lang} \
         FROM buildings JOIN quizzes ON buildings.id = quizzes.building_id \
         WHERE quizzes.quiz_number = {quizNum} \
         ORDER BY buildings.name_{lang};"
     ).fetchall()
-    return [{"id": entry[0], "name": entry[1], "country": entry[2], "city": entry[3]} for entry in rawQuizdata]
+    return [{"id": entry[0], "name": entry[1], "location": entry[2]} for entry in rawQuizdata]
 
 
 def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]:
+    if not teamID:
+        raise InvalidParameterError(f"Missing teamID parameter")
     res = utils.quizDB.cursor.execute(f"SELECT language, score, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
     if not res:
         raise InvalidParameterError(f"Team with ID {teamID} not found")
@@ -42,8 +48,7 @@ def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]
     score: int = res[1]
     submittedAt: str = res[2]
     rawData: list[list[str | int]] = _quizDBcursor.execute(
-        f"SELECT buildings.name_{lang}, buildings.country_{lang}, buildings.city_{lang}, answers.answer, \
-        CASE WHEN buildings.answer = answers.answer THEN 1 ELSE 0 END \
+        f"SELECT buildings.name_{lang}, buildings.location_{lang}, answers.answer, CASE WHEN buildings.answer = answers.answer THEN 1 ELSE 0 END \
         FROM answers JOIN buildings ON answers.building_id = buildings.id \
         WHERE answers.team_id = {teamID} \
         ORDER BY buildings.name_{lang} ASC;"
@@ -51,7 +56,7 @@ def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]
     return {
         "score": score,
         "submittedAt": submittedAt,
-        "quizdata": [{"name": entry[0], "country": entry[1], "city": entry[2], "answers": entry[3], "correct": bool(entry[4])} for entry in rawData],
+        "quizdata": [{"name": entry[0], "location": entry[1], "answer": entry[2], "correct": bool(entry[3])} for entry in rawData],
     }
 
 
@@ -74,7 +79,7 @@ def checkIfSubmittedAtIsPresent(teamID: int) -> bool:
 
 
 def getAllBuildingData() -> list[dict[str, str | int | None]]:
-    localisedCols = ", ".join([f"name_{lang.value}, country_{lang.value}, city_{lang.value}" for lang in utils.QuizLanguages])
+    localisedCols = ", ".join([f"name_{lang.value}, location_{lang.value}" for lang in utils.QuizLanguages])
     res = _quizDBcursor.execute(f"SELECT id, box, answer, {localisedCols} FROM buildings ORDER BY id;").fetchall()
     colHeaders = ["id", "box", "answer"] + localisedCols.split(", ")
     return [dict(zip(colHeaders, entry)) for entry in res]
@@ -83,25 +88,27 @@ def getAllBuildingData() -> list[dict[str, str | int | None]]:
 # -------------------
 # ----- POSTERS -----
 # -------------------
-def addEmptyTeamEntry(teamID: int, lang: utils.QuizLanguages, size: utils.QuizSizes):
+def addEmptyTeamEntry(teamID: int, lang, size):
+    if not lang or utils.convertToQuizLanguage(lang) is None:
+        raise InvalidParameterError(f"Invalid language: {lang}")
+    if not size or utils.convertToQuizSize(size) is None:
+        raise InvalidParameterError(f"Invalid size: {size}")
     if _quizDBcursor.execute("SELECT count(id) FROM teams WHERE id = (?);", (teamID,)).fetchone()[0] > 0:
         raise RuntimeError(f"Team with ID {teamID} already exists")
-    if not lang:
-        raise InvalidParameterError(f"Invalid language: {lang}")
-    if not size:
-        raise InvalidParameterError(f"Invalid size: {size}")
     _quizDBcursor.execute(
-        "INSERT INTO teams (id, quiz_number, quiz_size) VALUES (?, ?, ?);",
-        (teamID, _quizState.currentQuizNumber, size),
+        "INSERT INTO teams (id, language, quiz_number, quiz_size) VALUES (?, ?, ?, ?);",
+        (teamID, lang, utils.QuizState.currentQuizNumber, size),
     )
     _quizDBconnection.commit()
 
 
-def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = None, lang: utils.QuizLanguages = None, answers: list[dict[str, int]] = None):
+def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = None, lang: str = None, answers: list[dict[str, int]] = None):
     """mode = `paper-updateSubmittedAt` or `paper-uploadAnswers` or `digital-uploadFull`"""
     if mode == "paper-updateSubmittedAt":
         if teamID and not name and not lang and not answers:
             # uploading Paper quiz the first time (scanner reading) -> adding submittedAt
+            if teamID >= int(5e9):
+                raise InvalidParameterError(f"Invalid teamID for paper-quiz: {teamID}")
             _quizDBcursor.execute(
                 "UPDATE teams SET submitted_at = (?) WHERE id = (?);",
                 (datetime.datetime.now().isoformat(timespec="milliseconds"), teamID),
@@ -114,6 +121,7 @@ def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = None, lan
             teamID
             and name
             and lang
+            and utils.convertToQuizLanguage(lang)
             and answers
             and isinstance(answers, list)
             and len(answers) in utils.QuizSizes
@@ -134,6 +142,8 @@ def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = None, lan
                 (teamID,),
             ).fetchone()[0]
             if mode == "paper-uploadAsnwers":  # uploading paper quiz answers
+                if teamID >= int(5e9):
+                    raise InvalidParameterError(f"Invalid teamID for paper-quiz: {teamID}")
                 _quizDBcursor.execute(
                     "UPDATE teams SET name = (?), score = (?), WHERE id = (?);",
                     (name, score, teamID),
@@ -141,9 +151,11 @@ def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = None, lan
                 if not _quizDBcursor.rowcount == 1:
                     raise RuntimeError(f"Failed to update team {teamID}, name '{name}', lang {lang.value}, {str(answers)}")
             else:  # uploading full digital quiz
+                if teamID < int(5e9):
+                    raise InvalidParameterError(f"Invalid teamID for digital-quiz: {teamID}")
                 _quizDBcursor.execute(
                     f"INSERT INTO teams (id, name, language, quiz_number, quiz_size, score, submitted_at) VALUES (?, ?, ?, ?, ?, ?, ?);",
-                    (teamID, name, lang.value, _quizState.currentQuizNumber, len(answers), score, datetime.datetime.now().isoformat(timespec="milliseconds")),
+                    (teamID, name, lang, _quizState.currentQuizNumber, len(answers), score, datetime.datetime.now().isoformat(timespec="milliseconds")),
                 )
                 _quizDBconnection.commit()
         else:

@@ -37,28 +37,41 @@ connectedWSClients = set()
 # -------- ENUMS --------
 # -----------------------
 class QuizLanguages(Enum):
-    """Supported languages."""
+    """Supported languages.
+    - `HU: "hu"`
+    - `EN: "en"`
+    """
 
     HU = "hu"
     EN = "en"
 
 
 class QuizTypes(Enum):
-    """Possible types of the quiz."""
+    """Possible types of the quiz:
+    - `DIGITAL: "digital"`
+    - `PAPER: "paper"`
+    """
 
     DIGITAL = "digital"
     PAPER = "paper"
 
 
 class QuizSizes(Enum):
-    """Possible sizes of the quiz."""
+    """Possible sizes of the quiz.
+    - `SIZE_20: 20`
+    - `SIZE_100: 100`
+    """
 
     SIZE_20 = 20
     SIZE_100 = 100
 
 
 class QuizPhases(Enum):
-    """Possible phases of the quiz."""
+    """Possible phases of the quiz.
+    - `IDLE: "idle"`
+    - `RUNNING: "running"`
+    - `SCORING: "scoring"`
+    """
 
     IDLE = "idle"
     RUNNING = "running"
@@ -96,7 +109,7 @@ def convertToQuizType(type: str) -> QuizTypes | None:
 
 
 def convertToQuizSize(size: str) -> QuizSizes | None:
-    return size in QuizSizes and QuizSizes(size) or None
+    return size.isdigit() and int(size) in QuizSizes and QuizSizes(int(size)) or None
 
 
 def convertToQuizPhase(phase: str) -> QuizPhases | None:

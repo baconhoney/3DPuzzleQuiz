@@ -21,7 +21,7 @@ async def getQuizPhaseHandler(request: web.Request):
 async def getQuestionsHandler(request: web.Request):
     print(f"API GET request incoming: getQuestions")
     try:
-        return web.json_response(quizDBManager.getQuestions(utils.convertToQuizLanguage(request.query.get("lang")), utils.convertToQuizSize(request.query.get("size"))))
+        return web.json_response(quizDBManager.getQuestions(request.query.get("lang"), request.query.get("size")))
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
 
@@ -32,7 +32,7 @@ async def uploadAnswersHandler(request: web.Request):
     data: dict[str, str | list[dict[str, int]]] = await request.json()
     teamID = utils.getNewTeamID(utils.QuizTypes.DIGITAL)
     try:
-        quizDBManager.uploadAnswers("digital-uploadFull", teamID, data.get("name"), utils.convertToQuizLanguage(data.get("lang")), data.get("answers"))
+        quizDBManager.uploadAnswers("digital-uploadFull", teamID, data.get("name"), data.get("lang"), data.get("answers"))
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
     return web.json_response({"teamID": teamID})
