@@ -109,7 +109,7 @@ def convertToQuizType(type: str) -> QuizTypes | None:
 
 
 def convertToQuizSize(size: str) -> QuizSizes | None:
-    return size.isdigit() and int(size) in QuizSizes and QuizSizes(int(size)) or None
+    return str(size).isdigit() and int(size) in QuizSizes and QuizSizes(int(size)) or None
 
 
 def convertToQuizPhase(phase: str) -> QuizPhases | None:

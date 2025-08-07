@@ -118,8 +118,7 @@ def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = None, lan
         if (
             teamID
             and name
-            and (mode == "digital-uploadFull" and lang and utils.convertToQuizLanguage(lang) 
-                 or (mode == "paper-uploadAnswers" and not lang))
+            and (mode == "digital-uploadFull" and lang and utils.convertToQuizLanguage(lang) or (mode == "paper-uploadAnswers" and not lang))
             and answers
             and isinstance(answers, list)
             and len(answers) in utils.QuizSizes
@@ -135,8 +134,8 @@ def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = None, lan
             )
             _quizDBconnection.commit()
             score = _quizDBcursor.execute(
-                "SELECT count(answers.id) FROM teams JOIN answers ON teams.id = answers.team_id JOIN buildings ON answers.building_id = buildings.id \
-                WHERE teams.id = (?) AND buildings.answer = answers.answer;",
+                "SELECT count(buildings.id) FROM buildings JOIN answers ON buildings.id = answers.building_id \
+                    WHERE answers.team_id = (?) AND answers.answer = buildings.answer;",
                 (teamID,),
             ).fetchone()[0]
             if mode == "paper-uploadAsnwers":  # uploading paper quiz answers
