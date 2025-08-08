@@ -70,7 +70,7 @@ export default class QuizResultsComponent extends Component<QuizResultsPropertie
 
     render() {
         return (
-            <table className="test-results">
+            <table className="quiz-results">
                 <thead style={{ position: "sticky", top: "0" }}>
                     <tr
                         onClick={() => {
@@ -79,6 +79,7 @@ export default class QuizResultsComponent extends Component<QuizResultsPropertie
                         <th className="groupname">Csapatnév</th>
                         <th className="score">Pont</th>
                         <th className="timestamp">Leadás ideje</th>
+                        <th className="lang">Nyelv</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -88,6 +89,7 @@ export default class QuizResultsComponent extends Component<QuizResultsPropertie
                             <td className="groupname">{elem.name}</td>
                             <td className="score">{elem.score}</td>
                             <td className="timestamp">{getTimeFromDate(elem.submittedAt)}</td>
+                            <td className="lang">{elem.language}</td>
                         </tr>
                     ))}
                 </tbody>

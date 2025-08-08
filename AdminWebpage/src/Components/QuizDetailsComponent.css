@@ -3,9 +3,8 @@
         width: 100%;
     }
 
-    table th,
-    table td {
-        padding: 2px 5px;
+    .answers th, .answers td {
+        padding: 3px 3px;
     }
 
     .answers .name {

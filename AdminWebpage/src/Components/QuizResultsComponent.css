@@ -1,27 +1,33 @@
-#main-top-right-cell {
+.quiz-results {
+
     tr:hover,
     tr:hover th,
     tr:hover td {
         background-color: var(--raisedBGColor);
     }
 
-    th, td {
-        padding: 1px 5px;
+    th,
+    td {
+        padding: 5px 5px;
         cursor: pointer;
     }
 
     th {
-        font-size: 16px;
+        font-size: 1.1em;
     }
 
-    th.groupname {
+    .groupname {
         width: 100%;
     }
 
-    td.lang, td.score {
+    .score,
+    .timestamp,
+    .lang {
         text-align: center;
     }
-    .selected, .selected td {
+
+    .selected,
+    .selected td {
         background-color: var(--raisedBGColor);
     }
 }

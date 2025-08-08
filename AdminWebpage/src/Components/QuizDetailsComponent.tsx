@@ -55,9 +55,6 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
             quizDetails: json
                 ? {
                     ...json,
-                    questions: [
-                        ...(json.questions.map((val) => ({ ...val, id: 1 }))), /*TODO: fix this shit*/
-                    ],
                     language: json.language as QuizLanguage,
                     timestamp: new Date(json.timestamp),
                 }
@@ -67,7 +64,7 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
 
     render() {
         return (
-            <table style={{ width: "80%", maxWidth: "1200px" }} className="centered">
+            <table style={{ width: "80%", maxWidth: "1200px" }}>
                 <thead>
                     <tr>
                         <td style={{ width: "auto" }}>
@@ -82,7 +79,7 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
                         </td>
                         <td style={{ padding: "5px 5px", width: "150px", textAlign: "center", whiteSpace: "nowrap" }}>
                             <span id="testScore" style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
-                                {this.state.quizDetails?.score ?? "??"} / {this.state.quizDetails ? Object.values(this.state.quizDetails.questions).length : "??"}
+                                {this.state.quizDetails?.score ?? "??"} / {this.state.quizDetails?.questions.length ?? "??"}
                             </span>
                         </td>
                     </tr>
