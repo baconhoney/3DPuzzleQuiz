@@ -1,60 +1,65 @@
 import { useState } from "react";
 
-export default function ChecklistGroup({ group, state, toggle }) {
+export default function ChecklistGroup({ group, state, toggle, level = 0 }) {
     const [open, setOpen] = useState(false);
 
-    const checkedCount = group.items.filter(
-        (item) => state[`${group.title}__${item}`]
-    ).length;
-    const total = group.items.length;
-    const progress = total === 0 ? 0 : Math.round((checkedCount / total) * 100);
-
-    let progressColor = "progress-error";
-    if (progress > 60) progressColor = "progress-success";
-    else if (progress > 30) progressColor = "progress-warning";
+    const flatItems = group.items.filter(item => typeof item === "string");
+    const checkedCount = flatItems.filter(item => state[`${group.title}__${item}`]).length;
+    const allChecked = checkedCount === flatItems.length && flatItems.length > 0;
 
     return (
-        <div className="border border-base-300 rounded-lg bg-base-100 shadow p-2">
-            <div
+        <div
+            className={`border-2 rounded shadow-sm ${level > 0 ? "ml-4" : ""}
+                ${allChecked ? "border-green-500" : "border-base-300"} bg-base-100`}
+        >
+            <button
                 onClick={() => setOpen(!open)}
-                className="cursor-pointer px-4 py-2 font-semibold bg-base-200 rounded hover:bg-base-300 flex justify-between items-center select-none text-sm"
+                className="w-full flex justify-between items-center px-3 py-2 bg-base-200 hover:bg-base-300 rounded-t text-sm font-medium"
             >
-                <span>
-                    {group.title} — <strong>✅ {checkedCount}/{total}</strong>
+                <span>{group.title}</span>
+                <span className="flex items-center gap-2">
+                    <span className="text-sm font-normal text-base-content/70">{checkedCount}/{flatItems.length}</span>
+                    <span className="text-xl">{open ? "−" : "+"}</span>
                 </span>
-                <span className="text-2xl font-bold">{open ? "−" : "+"}</span>
-            </div>
-
-            <progress
-                className={`progress progress-xs w-full my-1 rounded ${progressColor}`}
-                value={progress}
-                max="100"
-            ></progress>
+            </button>
 
             {open && (
-                <div className="p-2 space-y-2">
-                    {group.items.map((item) => {
-                        const key = `${group.title}__${item}`;
-                        const checked = !!state[key];
-                        return (
-                            <label
-                                key={key}
-                                htmlFor={key}
-                                className={`flex items-center justify-between px-4 py-2 rounded cursor-pointer text-sm ${checked
-                                    ? "bg-success bg-opacity-30 border border-success"
-                                    : "bg-base-200 border border-base-300 hover:bg-base-300"
-                                    }`}
-                            >
-                                <span className="select-none">{item}</span>
-                                <input
-                                    id={key}
-                                    type="checkbox"
-                                    checked={checked}
-                                    onChange={() => toggle(key)}
-                                    className="checkbox checkbox-sm checkbox-primary"
+                <div className="p-2 space-y-1">
+                    {group.items.map((item, idx) => {
+                        if (typeof item === "string") {
+                            const key = `${group.title}__${item}`;
+                            const checked = !!state[key];
+                            return (
+                                <label
+                                    key={key}
+                                    htmlFor={key}
+                                    className="flex justify-between items-center px-3 py-2 rounded text-sm cursor-pointer border bg-base-200 border-base-300 hover:bg-base-300"
+                                >
+                                    <span>{item}</span>
+                                    <input
+                                        id={key}
+                                        type="checkbox"
+                                        checked={checked}
+                                        onChange={() => toggle(key)}
+                                        className="checkbox checkbox-sm checkbox-primary"
+                                    />
+                                </label>
+                            );
+                        }
+
+                        if (typeof item === "object" && item !== null) {
+                            return (
+                                <ChecklistGroup
+                                    key={idx}
+                                    group={item}
+                                    state={state}
+                                    toggle={toggle}
+                                    level={level + 1}
                                 />
-                            </label>
-                        );
+                            );
+                        }
+
+                        return null;
                     })}
                 </div>
             )}

@@ -23,15 +23,19 @@ def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
     with open(f'{teamID}.svg', 'wb') as f:
         Code128(str(teamID), writer=SVGWriter()).write(f)
 
+    i=0
 
     doc, tag, text, line = Doc().ttl()
-
+    Vpadding = 3.7 if quizType == utils.QuizSizes.SIZE_100 else 5
+    Hpadding = 2
     doc.asis('<!DOCTYPE html>')
     with tag('html'):
         with tag('head'):
+            doc.asis('<meta charset="UTF-8">')
             with tag('style'):
-                doc.asis('  table.content, table.content th, table.content td{ \
-                            border: 1px solid black; \
+                doc.asis('  * { font-family: "Calibri" }\
+                            table.content, table.content th, table.content td{ \
+                            border: 1.5px solid black; \
                             border-collapse: collapse; \
                             } \
                             table { width:100%; }\
@@ -43,9 +47,15 @@ def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
                                     width: 100%}  \
                             @page { \
                             size: A4; \
-                            margin: 11mm 17mm 17mm 17mm; \
+                            margin: 10mm 10mm 15mm 10mm; \
                             }            \
+                            p { font-size: 10pt}\
+                            td.humanname { font-size: 20pt}\
+                            td { font-size: 13.5pt}\
+                            \
                             ')
+                doc.asis(f'th.instruction {{font-size: 13pt}}')
+                doc.asis(f'th, td {{ padding-top: {Vpadding }pt; padding-bottom: {Vpadding }pt; padding-left: {Hpadding}pt; padding-right: {Hpadding}pt  }} ')
         with tag('body'):
             with tag('table'):
                 with tag('thead'):
@@ -56,8 +66,7 @@ def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
                             line('p',f'Kutatók éjszakája {date.today().year}', style='text-align: left;')
                 with tag('tbody'):
                     with tag('tr'):
-                        with tag('td'):
-                            line('h2',f'Név: _________________________' if lang=="hu" else f'Name: _________________________' )
+                            line('td',f'Név: _________________________' if lang=="hu" else f'Name: _________________________', klass='humanname', colspan='3' )
 
                     with tag('tr'):
                         with tag('td'):
@@ -65,10 +74,14 @@ def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
                                 with tag('thead'):
                                     if(lang == "hu"):
                                         with tag('tr'):
+                                            line('th', 'Írd az épület neve mellé a megfelelő makett mellett lévő számot!', klass='instruction', colspan='3')
+                                        with tag('tr'):
                                             line('th','Név', klass='name')
                                             line('th','Ország, Város', klass='location')
                                             line('th','Szám', klass='number')   
                                     else: #lang =="en"
+                                        with tag('tr'):
+                                            line('th', 'Write the number found at the models into the rectangle next to the correct building\'s name!', klass='instruction', colspan='3')
                                         with tag('tr'):
                                             line('th','Name', klass='name')
                                             line('th','City, Country', klass='location')
@@ -77,13 +90,13 @@ def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
                                 with tag('tbody'):
                                     if(lang == "hu"):
                                         for rows in rawData:
-                                            with tag('tr'):
+                                            with tag('tr', klass='data'):
                                                 line('td',rows[0])
                                                 line('td',rows[1] if rows[2]=="-" else rows[1]+", "+rows[2])
                                                 line('td','')
                                     else: #lang =="en"
                                         for rows in rawData:
-                                            with tag('tr'):
+                                            with tag('tr', klass='data'):
                                                 line('td',rows[0])
                                                 line('td',rows[1] if rows[2]=="-" else rows[2]+", "+rows[1])
                                                 line('td','')
@@ -96,7 +109,7 @@ def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
 
 
 def main():
-    print("fe")
+    printQuiz(1234567890, "hu", utils.QuizSizes.SIZE_100)
 
 
 if __name__ == "__main__":
