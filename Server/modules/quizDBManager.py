@@ -38,7 +38,7 @@ def getQuestions(lang, size) -> list[dict[str, str | int]]:
     return [{"id": entry[0], "name": entry[1], "location": entry[2]} for entry in rawQuizdata]
 
 
-def getAnswers(teamID: int, allData: bool = False) -> dict[str, str | int | list[dict[str, str | int]]]:
+def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]:
     if not teamID:
         raise InvalidParameterError(f"Missing teamID parameter")
     res = utils.quizDB.cursor.execute(f"SELECT name, language, score, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
@@ -53,14 +53,7 @@ def getAnswers(teamID: int, allData: bool = False) -> dict[str, str | int | list
         WHERE answers.team_id = {teamID} \
         ORDER BY buildings.name_{lang} ASC;"
     ).fetchall()
-    extra = {}
-    if allData:
-        extra = {
-            "name": res[0],
-            "language": lang,
-        }
     return {
-        **extra,
         "score": score,
         "submittedAt": submittedAt,
         "quizdata": [{"name": entry[0], "location": entry[1], "answer": entry[2], "correct": bool(entry[3])} for entry in rawData],
@@ -73,7 +66,29 @@ def getLeaderboard() -> list[dict[str, str | int]]:
         WHERE quiz_number = {utils.QuizState.currentQuizNumber} \
         ORDER BY score DESC, submitted_at ASC;",
     ).fetchall()
-    return res and [{"id": entry[0], "name": entry[1], "language": entry[2], "quizSize": entry[3], "score": entry[4], "submittedAt": entry[5]} for entry in res] or []
+    return res and [{"teamID": entry[0], "name": entry[1], "language": entry[2], "size": entry[3], "score": entry[4], "submittedAt": entry[5]} for entry in res] or []
+
+
+def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]:
+    if not teamID:
+        raise InvalidParameterError(f"Missing teamID parameter")
+    res = utils.quizDB.cursor.execute(f"SELECT name, language, score, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
+    if not res:
+        raise InvalidParameterError(f"Team with ID {teamID} not found")
+    lang: str = res[1]
+    rawData: list[list[str | int]] = _quizDBcursor.execute(
+        f"SELECT buildings.id, buildings.name_{lang}, buildings.location_{lang}, answers.answer, CASE WHEN buildings.answer = answers.answer THEN 1 ELSE 0 END \
+        FROM answers JOIN buildings ON answers.building_id = buildings.id \
+        WHERE answers.team_id = {teamID} \
+        ORDER BY buildings.name_{lang} ASC;"
+    ).fetchall()
+    return {
+        "name": res[0],
+        "language": lang,
+        "score": res[2],
+        "submittedAt": res[3],
+        "questions": [{"id": entry[0], "name": entry[1], "location": entry[2], "answer": entry[3], "correct": bool(entry[4])} for entry in rawData],
+    }
 
 
 def checkIfSubmittedAtIsPresent(teamID: int) -> bool:

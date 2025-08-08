@@ -100,12 +100,10 @@ body,
 
         >table {
             width: 100%;
-            height: 100%;
         }
 
         #printing-controls {
             width: 100%;
-            height: 100%;
 
             #copy-count {
                 margin: auto 0px;

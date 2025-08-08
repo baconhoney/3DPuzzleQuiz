@@ -3126,31 +3126,7 @@ type JSONQuizData = {
 };
 
 
-import type { QuizLanguage } from "./utils";
-
-
-export type RawQuizResults = {
-    teamID: number,
-    name: string,
-    language: string,
-    size: number,
-    score: number,
-    submittedAt: string
-}[];
-
-export type RawQuizDetails = {
-    name: string,
-    language: string,
-    score: number,
-    timestamp: string,
-    questions: {
-        id: number,
-        name: string,
-        location: string,
-        answer: number,
-        correct: boolean
-    }[]
-};
+import type { QuizLanguage, RawQuizDetails, RawQuizResults } from "./utils";
 
 
 const quizResults: RawQuizResults = [];

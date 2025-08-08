@@ -5,8 +5,8 @@ import QuizResultsComponent from "./Components/QuizResultsComponent.tsx";
 import QuizDetailsComponent from "./Components/QuizDetailsComponent.tsx";
 import { NextChangeAtComponent, ConfirmPopupComponent } from "./Components/ControllerComponents.tsx";
 
+import { getHHMMFromDate, type QuizLanguage, type QuizPhase, type QuizSize } from "./utils.ts";
 import * as actions from "./Actions.ts";
-import { getHHMMFromDate, type QuizPhase } from "./utils.ts";
 
 import "./App.css";
 
@@ -17,11 +17,15 @@ interface AppState {
     currentQuizNumber: number;
     phase: QuizPhase;
     onlyShowLeaderboard: boolean;
+    printingCopyCount: number;
+    printingLanguage: QuizLanguage;
+    printingSize: QuizSize;
 }
 
 export default class App extends Component<unknown, AppState> {
     private confirmSendPhasePopupRef = createRef<ConfirmPopupComponent>();
     private confirmSendUpdateNextChangeAtPopupRef = createRef<ConfirmPopupComponent>();
+    private confirmSendPrintRequestPopupRef = createRef<ConfirmPopupComponent>();
 
     constructor(props: unknown) {
         super(props);
@@ -33,6 +37,9 @@ export default class App extends Component<unknown, AppState> {
             currentQuizNumber: 1,
             phase: "idle",
             onlyShowLeaderboard: window.innerHeight > window.innerWidth,
+            printingCopyCount: 1,
+            printingLanguage: "hu",
+            printingSize: 20,
         };
     }
 
@@ -96,8 +103,9 @@ export default class App extends Component<unknown, AppState> {
                                                 <td colSpan={4}>
                                                     <div id="printing-controls" className="horiz-stack">
                                                         <div id="copy-count" className="horiz-stack">
-                                                            <input type="number" value={3} />
-                                                            <div>db példány</div>
+                                                            <input type="number" value={this.state.printingCopyCount}
+                                                                onChange={(e) => this.updateState({ printingCopyCount: parseInt(e.target.value) })} />
+                                                            <div>példány</div>
                                                         </div>
                                                         <div id="settings" className="horiz-stack">
                                                             <div id="quiz-lang" className="vert-stack">
@@ -105,11 +113,13 @@ export default class App extends Component<unknown, AppState> {
                                                                     Nyelv
                                                                 </div>
                                                                 <div>
-                                                                    <input type="radio" name="quiz-lang" id="select-hu" value={"hu"} />
+                                                                    <input type="radio" name="quiz-lang" id="select-hu" value={"hu"} checked={this.state.printingLanguage == "hu"}
+                                                                        onChange={(e) => this.updateState({ printingLanguage: e.target.value as QuizLanguage })} />
                                                                     <label htmlFor="select-hu">Magyar</label>
                                                                 </div>
                                                                 <div>
-                                                                    <input type="radio" name="quiz-lang" id="select-en" value={"en"} />
+                                                                    <input type="radio" name="quiz-lang" id="select-en" value={"en"} checked={this.state.printingLanguage == "en"}
+                                                                        onChange={(e) => this.updateState({ printingLanguage: e.target.value as QuizLanguage })} />
                                                                     <label htmlFor="select-en">Angol</label>
                                                                 </div>
                                                             </div>
@@ -118,17 +128,19 @@ export default class App extends Component<unknown, AppState> {
                                                                     Méret
                                                                 </div>
                                                                 <div>
-                                                                    <input type="radio" name="quiz-size" id="select-20" value={"20"} />
+                                                                    <input type="radio" name="quiz-size" id="select-20" value={"20"} checked={this.state.printingSize == 20}
+                                                                        onChange={(e) => this.updateState({ printingSize: parseInt(e.target.value) as QuizSize })} />
                                                                     <label htmlFor="select-20">20</label>
                                                                 </div>
                                                                 <div>
-                                                                    <input type="radio" name="quiz-size" id="select-100" value={"100"} />
+                                                                    <input type="radio" name="quiz-size" id="select-100" value={"100"} checked={this.state.printingSize == 100}
+                                                                        onChange={(e) => this.updateState({ printingSize: parseInt(e.target.value) as QuizSize })} />
                                                                     <label htmlFor="select-100">100</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div id="print-button-container">
-                                                            <button onClick={() => { }}>Nyomtat</button>
+                                                            <button onClick={() => this.confirmSendPrintRequestPopupRef.current?.show()}>Nyomtat</button>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -142,6 +154,8 @@ export default class App extends Component<unknown, AppState> {
                             onConfirm={() => { actions.sendNextPhase(this); }} onCancel={() => { }} />
                         <ConfirmPopupComponent app={this} ref={this.confirmSendUpdateNextChangeAtPopupRef} text="Biztosan frissíti a következő fázisváltás várható idejét?"
                             onConfirm={() => { actions.setTimeTill(this.state.nextEventAt); }} onCancel={() => { }} />
+                        <ConfirmPopupComponent app={this} ref={this.confirmSendPrintRequestPopupRef} text={"Biztosan kinyomtatja a következőt?\n" + `${this.state.printingCopyCount} példányban '${this.state.printingLanguage}' nyelven ${this.state.printingSize}-as méretűt`}
+                            onConfirm={() => { actions.queuePrint(this.state.printingCopyCount, this.state.printingLanguage, this.state.printingSize); }} onCancel={() => { }} />
                     </>
                 }
                 <button id="change-layout" onClick={() => this.updateState({ onlyShowLeaderboard: !this.state.onlyShowLeaderboard })}>

@@ -30,9 +30,9 @@ async def getAllBuildingsDataHandler(request: web.Request):
     return web.json_response(quizDBManager.getAllBuildingData())
 
 
-@router.get(_baseURL + "/getQuizResults")
-async def getQuizResultsHandler(request: web.Request):
-    print(f"API GET request incoming: admin/getResults")
+@router.get(_baseURL + "/getLeaderboard")
+async def getLeaderboardHandler(request: web.Request):
+    print(f"API GET request incoming: admin/getLeaderboard")
     return web.json_response(quizDBManager.getLeaderboard())
 
 
@@ -40,7 +40,7 @@ async def getQuizResultsHandler(request: web.Request):
 async def getQuizdataHandler(request: web.Request):
     print(f"API GET request incoming: admin/getQuizdata")
     try:
-        return web.json_response(quizDBManager.getAnswers(request.query.get("teamID"), True))
+        return web.json_response(quizDBManager.getQuizDetails(request.query.get("teamID")))
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
 
@@ -106,6 +106,25 @@ async def setNextPhaseChangeAtHandler(request: web.Request):
         raise web.HTTPBadRequest(text=f"Value 'nextPhaseChangeAt' is invalid: {data.get('nextPhaseChangeAt', '<missing>')}")
     utils.QuizState.nextPhaseChangeAt = nextPhaseChangeAt
     return web.HTTPOk()
+
+
+# websockets handler for incoming websocket connections at /api/events
+@router.get(_baseURL + "/events")
+async def eventsHandler(request: web.Request):
+    print(f"API GET request incoming: events")
+    ws = web.WebSocketResponse()
+    await ws.prepare(request)
+    # utils.connectedWSClients.add(ws)
+    _logger.debug(f"New websocket client connected: {ws}\nTotal: {len(utils.connectedWSClients)}")
+    try:
+        async for msg in ws:
+            if msg.type == web.WSMsgType.ERROR:
+                _logger.warning(f"WebSocket connection closed with error: {ws.exception()}")
+                print(f"WebSocket connection closed with error: {ws.exception()}")
+    finally:
+        # utils.connectedWSClients.remove(ws)
+        _logger.debug(f"WebSocket client disconnected: {ws}\nTotal: {len(utils.connectedWSClients)}")
+    return ws
 
 
 # ------- 404 Handlers -------
