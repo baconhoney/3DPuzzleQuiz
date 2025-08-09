@@ -1,30 +1,33 @@
 import utils
+import asyncio
+from io import BytesIO
 from yattag import Doc
 from barcode import Code128
 from barcode.writer import SVGWriter
 from datetime import date
+from pyppeteer import launch
 
 #async ??
-def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
+async def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
     print("print or do stuff idk")
     if quizType == utils.QuizSizes.SIZE_20:
         quizNumber = utils.QuizState.currentQuizNumber
     else:
         quizNumber = -1
     rawData: list[list[str | int]] = utils.quizDB.cursor.execute(
-        f"SELECT name_{lang} as Name, country_{lang}, city_{lang}  \
+        f"SELECT name_{lang} as Name, location_{lang}  \
         FROM quizzes JOIN buildings ON quizzes.building_id == buildings.id \
         WHERE quizzes.quiz_number == {quizNumber} \
         ORDER BY Name;"
     ).fetchall()
 
     # itt menetne a file egy BytesIO-ba is, és akkor nem pollutálja teli rákkal a mappáim :)
-    # for ex: `svgFile = BytesIO(); Code128().write(svgFile)` - bacon
-    with open(f'{teamID}.svg', 'wb') as f:
-        Code128(str(teamID), writer=SVGWriter()).write(f)
+    # for ex: `; Code128().write(svgFile)` - bacon
 
-    i=0
-
+    svgFile = BytesIO()
+    Code128(str(teamID), writer=SVGWriter()).write(svgFile)
+    svgStr: str = svgFile.getvalue().decode("utf-8")[146:-2]
+    
     doc, tag, text, line = Doc().ttl()
     Vpadding = 3.7 if quizType == utils.QuizSizes.SIZE_100 else 5
     Hpadding = 2
@@ -41,7 +44,7 @@ def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
                             table { width:100%; }\
                             .name, .location { width:45%; }    \
                             .number { width:10%; }    \
-                            .barcode {  float: right; }    \
+                            svg {  float: right; }    \
                             header {  \
                                     top: 0; \
                                     width: 100%}  \
@@ -61,7 +64,7 @@ def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
                 with tag('thead'):
                     with tag('tr'):
                         with tag('th'):
-                            doc.stag('img', src=f'{teamID}.svg', klass='barcode')
+                            doc.asis(f'{svgStr}')
                             line('p',f'Teszt {quizNumber}' if lang=="hu" else f'Test {quizNumber}', style='text-align: center;')
                             line('p',f'Kutatók éjszakája {date.today().year}', style='text-align: left;')
                 with tag('tbody'):
@@ -88,31 +91,29 @@ def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
                                             line('th','Number', klass='number')
 
                                 with tag('tbody'):
-                                    if(lang == "hu"):
-                                        for rows in rawData:
-                                            with tag('tr', klass='data'):
-                                                line('td',rows[0])
-                                                line('td',rows[1] if rows[2]=="-" else rows[1]+", "+rows[2])
-                                                line('td','')
-                                    else: #lang =="en"
-                                        for rows in rawData:
-                                            with tag('tr', klass='data'):
-                                                line('td',rows[0])
-                                                line('td',rows[1] if rows[2]=="-" else rows[2]+", "+rows[1])
-                                                line('td','')
+                                    for rows in rawData:
+                                        with tag('tr', klass='data'):
+                                            line('td',rows[0])
+                                            line('td',rows[1])
+                                            line('td','')
             
 
-                
+ #   with open("temp.html",mode="w",encoding="UTF-8") as f:
+ #       f.writelines(doc.getvalue())
+    
+    browser = await launch()
+    page = await browser.newPage()
+    await page.setContent(doc.getvalue())
+    await page.pdf({'path': 'temp.pdf', 'format': 'A4'})
+    await browser.close()
 
-    with open("temp.html",mode="w",encoding="UTF-8") as f:
-        f.writelines(doc.getvalue())
 
 
-def main():
-    printQuiz(1234567890, "hu", utils.QuizSizes.SIZE_100)
+async def main():
+   await printQuiz(1234567890, "hu", utils.QuizSizes.SIZE_100)
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
 
 
