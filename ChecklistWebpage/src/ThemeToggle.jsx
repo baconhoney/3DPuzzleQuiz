@@ -1,37 +1,17 @@
-import { useState, useEffect } from "react";
-import { useGlobalContext } from "./App";
-
-const LightTheme = "light";
-const DarkTheme = "dark";
-
-export default function ThemeToggle() {
-    const { t } = useGlobalContext();
-    const [theme, setTheme] = useState(LightTheme);
-
-    useEffect(() => {
-        const savedTheme = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const initialTheme = savedTheme || (prefersDark ? DarkTheme : LightTheme);
-        setTheme(initialTheme);
-        document.documentElement.setAttribute("data-theme", initialTheme);
-    }, []);
-
+export default function ThemeToggle({ theme, setTheme }) {
     const toggleTheme = () => {
-        const newTheme = theme === LightTheme ? DarkTheme : LightTheme;
+        const newTheme = theme === "light" ? "dark" : "light";
         setTheme(newTheme);
-        localStorage.setItem("theme", newTheme);
-        document.documentElement.setAttribute("data-theme", newTheme);
     };
 
     return (
         <button
-            className="btn btn-info btn-outline w-10"
+            className="btn btn-sm btn-outline btn-info w-10"
             onClick={toggleTheme}
-            aria-label={t("toggle_theme")}
-            title={t("toggle_theme")}
-            type="button"
+            aria-label="Toggle theme"
+            title="Toggle theme"
         >
-            {theme === LightTheme ? "🌙" : "☀️"}
+            {theme === "light" ? "🌙" : "☀️"}
         </button>
     );
 }

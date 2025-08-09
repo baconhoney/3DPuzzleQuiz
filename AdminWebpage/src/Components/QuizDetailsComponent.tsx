@@ -1,10 +1,11 @@
 import { Component } from "react";
 
 import App from "../App";
-import { getDetailsData } from "../Testdata";
-import type { QuizDetails, QuizLanguage } from "../utils";
+import type { QuizDetails, QuizLanguage, RawQuizDetails } from "../utils";
 
 import "./QuizDetailsComponent.css";
+
+import { getDetailsData } from "../Testdata";
 
 
 interface Properties {
@@ -39,35 +40,40 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
     }
 
     private getQuizdata() {
-        /*fetch(`/api/admin/getQuizdata?teamID=${this.props.teamID}`).then((response) => {
-            response.json().then((jsonRes: JSONQuizDetails) => {
+        const convertFn = (json: (RawQuizDetails)) => (
+            {
+                ...json,
+                language: json.language as QuizLanguage,
+                timestamp: new Date(json.timestamp),
+            }
+        );
+        if (this.props.teamID) {
+            if (import.meta.env.MODE == "production") {
+                fetch(`/api/admin/getQuizdata?teamID=${this.props.teamID ?? 'null'}`).then((response) => {
+                    response.json().then((json: RawQuizDetails) => {
+                        this.updateState({
+                            quizDetails: convertFn(json),
+                        });
+                    })
+                });
+            } else {
+                // temp code for testing
+                const json = getDetailsData(this.props.teamID);
+                if (!json) throw new Error(`No details found for teamID ${this.props.teamID}`);
                 this.updateState({
-                    quiz: {
-                        ...jsonRes,
-                        timestamp: new Date(jsonRes.timestamp),
-                    }
-                })
-            })
-        })*/
-        // temp code for testing
-        const json = getDetailsData(this.props.teamID);
-        this.updateState({
-            quizDetails: json
-                ? {
-                    ...json,
-                    questions: [
-                        ...(json.questions.map((val) => ({ ...val, id: 1 }))), /*TODO: fix this shit*/
-                    ],
-                    language: json.language as QuizLanguage,
-                    timestamp: new Date(json.timestamp),
-                }
-                : undefined,
-        });
+                    quizDetails: convertFn(json),
+                });
+            }
+        } else {
+            this.updateState({
+                quizDetails: undefined,
+            });
+        }
     }
 
     render() {
         return (
-            <table style={{ width: "80%", maxWidth: "1200px" }} className="centered">
+            <table style={{ width: "80%", maxWidth: "1200px" }}>
                 <thead>
                     <tr>
                         <td style={{ width: "auto" }}>
@@ -82,7 +88,7 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
                         </td>
                         <td style={{ padding: "5px 5px", width: "150px", textAlign: "center", whiteSpace: "nowrap" }}>
                             <span id="testScore" style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
-                                {this.state.quizDetails?.score ?? "??"} / {this.state.quizDetails ? Object.values(this.state.quizDetails.questions).length : "??"}
+                                {this.state.quizDetails?.score ?? "??"} / {this.state.quizDetails?.questions.length ?? "??"}
                             </span>
                         </td>
                     </tr>
@@ -95,7 +101,7 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
                                     <thead>
                                         <tr>
                                             <th className="name">Név</th>
-                                            <th className="location">Ország, Város</th>
+                                            <th className="location">Elhelyezkedés</th>
                                             <th className="id">ID</th>
                                             <th className="number">Válasz</th>
                                             <th className="correct">Helyes</th>

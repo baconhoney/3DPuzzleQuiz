@@ -29,13 +29,14 @@ for i, name in enumerate(team_names):
 
     for entry in selected_questions:
         correct_answer = entry["answer"]
-        user_answer = correct_answer if random.random() > 0.5 else random.randint(1, 100)  # 75% correct
+        user_answer = correct_answer if random.random() > 0.5 else random.randint(1, 100)
 
         is_correct = user_answer == correct_answer
         if is_correct:
             score += 1
 
         question = {
+            "id": entry["id"],
             "name": entry["name_en"] if language == "en" else entry["name_hu"],
             "location": entry["location_en"] if language == "en" else entry["location_hu"],
             "answer": user_answer,
