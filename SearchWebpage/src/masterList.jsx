@@ -858,7 +858,7 @@ export default {
       "answer": 50,
       "name_hu": "Szmolnij kolostor",
       "name_en": "Smolny Convent",
-      "location_hu": "Oroszország, Szentpétervár",
+      "location_hu": "Oroszorsz��g, Szentpétervár",
       "location_en": "Saint Petersburg, Russia",
       "type": "vallás/egyéb"
     },

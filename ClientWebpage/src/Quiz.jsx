@@ -47,7 +47,7 @@ const Quiz = ({ data }) => {
         <>
             <form id="quiz-form">
                 <div className="grid grid-cols-1 gap-1 p-3">
-                    {data.map((value, key) => (
+                    {Object.entries(data.questions).map(([key, value]) => (
                         <div key={key} className="card bg-base-100 shadow-2xl h-22">
                             <div className="flex flex-row justify-between items-center px-3 py-0 card-body gap-4">
                                 <div>
@@ -92,7 +92,7 @@ const Quiz = ({ data }) => {
                                     {isQuizActive ? formattedTime : ''}
                                 </div> */}
                     </div>
-                    <progress className="progress progress-primary w-full" value={100 / data.length * answerCount} max="100"></progress>
+                    <progress className="progress progress-primary w-full" value={100 / Object.keys(data.questions).length * answerCount} max="100"></progress>
                 </div>
             </form>
 
