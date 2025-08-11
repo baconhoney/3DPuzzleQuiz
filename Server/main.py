@@ -28,24 +28,29 @@ import utils
 from adminAPI import router as adminRouter
 from clientAPI import router as clientRouter
 from fileServer import router as fileServerRouter
+
+# needed so utils.py can load in the environments before we load in
 dotenv.load_dotenv()
+specsFile = pathlib.Path("./server_specifics.env").resolve()
+if specsFile.exists():
+    dotenv.load_dotenv(str(specsFile))
 
 
-port = int(os.getenv("PORT", 1006))
+port = int(os.getenv("PORT", 80))
 
-print("Path for CWD", utils.paths.cwd)
-print("Path for cfgRoot", utils.paths.cfgRoot)
-print("Path for dataRoot", utils.paths.dataRoot)
-print("Path for clientRoot", utils.paths.clientRoot)
-print("Path for searchRoot", utils.paths.searchRoot)
-print("Path for adminRoot", utils.paths.adminRoot)
+# print("Path for CWD", utils.paths.cwd)
+# print("Path for cfgRoot", utils.paths.cfgRoot)
+# print("Path for dataRoot", utils.paths.dataRoot)
+# print("Path for clientRoot", utils.paths.clientRoot)
+# print("Path for searchRoot", utils.paths.searchRoot)
+# print("Path for adminRoot", utils.paths.adminRoot)
 
 def main():
     app = web.Application()
-    # client has to be 2nd last, so sub-API requests are not refused with 404
-    # fileserver has to be the very last, so API requests are not refused with 404
     app.add_routes(adminRouter)
+    # client has to be 2nd last, so sub-API requests are not refused with 404
     app.add_routes(clientRouter)
+    # fileserver has to be the very last, so API requests are not refused with 404
     app.add_routes(fileServerRouter)
     web.run_app(app, port=port)
 
