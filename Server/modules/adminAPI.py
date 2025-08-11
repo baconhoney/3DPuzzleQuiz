@@ -1,8 +1,10 @@
 import datetime
+import json
 from aiohttp import web
 import logging
 import quizDBManager
 import utils
+import wsUtils
 
 
 router = web.RouteTableDef()
@@ -108,22 +110,38 @@ async def setNextPhaseChangeAtHandler(request: web.Request):
     return web.HTTPOk()
 
 
-# websockets handler for incoming websocket connections at /api/events
+# websockets handler for incoming websocket connections at /api/admin/events
 @router.get(_baseURL + "/events")
 async def eventsHandler(request: web.Request):
     print(f"API GET request incoming: events")
     ws = web.WebSocketResponse()
     await ws.prepare(request)
-    # utils.connectedWSClients.add(ws)
-    _logger.debug(f"New websocket client connected: {ws}\nTotal: {len(utils.connectedWSClients)}")
+    wsUtils.adminCons.append(ws)
+    _logger.debug(f"New websocket client connected: {ws}\nTotal: {len(wsUtils.adminCons)}")
     try:
         async for msg in ws:
             if msg.type == web.WSMsgType.ERROR:
                 _logger.warning(f"WebSocket connection closed with error: {ws.exception()}")
                 print(f"WebSocket connection closed with error: {ws.exception()}")
+            elif msg.type == web.WSMsgType.TEXT:
+                try:
+                    data = json.loads(msg.data)
+                except json.JSONDecodeError:
+                    _logger.warning(f"WebSocket message is not a valid JSON object: {msg.data}")
+                    continue
+                if "event" not in data:
+                    _logger.warning(f"WebSocket message is missing 'event' field: {msg.data}")
+                    continue
+                if "data" not in data:
+                    _logger.warning(f"WebSocket message is missing 'data' field: {msg.data}")
+                    continue
+                eventType = data["event"]
+                if eventType in wsUtils._adminMsgEventListeners:
+                    for listener in wsUtils._adminMsgEventListeners[eventType]:
+                        listener(data.get("data"))
     finally:
-        # utils.connectedWSClients.remove(ws)
-        _logger.debug(f"WebSocket client disconnected: {ws}\nTotal: {len(utils.connectedWSClients)}")
+        wsUtils.adminCons.remove(ws)
+        _logger.debug(f"WebSocket client disconnected: {ws}\nTotal: {len(wsUtils.adminCons)}")
     return ws
 
 

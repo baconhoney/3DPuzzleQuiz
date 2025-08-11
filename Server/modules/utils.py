@@ -30,7 +30,6 @@ class paths:
 
 
 quizDB = quizDB.QuizDB(paths.dataRoot)
-connectedWSClients = set()
 
 
 # -----------------------
