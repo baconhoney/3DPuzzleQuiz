@@ -26,7 +26,7 @@ async def getQuestionsHandler(request: web.Request):
         return web.json_response(
             {
                 "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt(),
-                "questions": quizDBManager.getQuestions(request.query.get("lang"), request.query.get("size")),
+                "questions": await quizDBManager.getQuestions(request.query.get("lang"), request.query.get("size")),
             }
         )
     except quizDBManager.InvalidParameterError as e:
@@ -39,17 +39,17 @@ async def uploadAnswersHandler(request: web.Request):
     data: dict[str, str | list[dict[str, int]]] = await request.json()
     teamID = utils.getNewTeamID(utils.QuizTypes.DIGITAL)
     try:
-        quizDBManager.uploadAnswers("digital-uploadFull", teamID=teamID, name=data.get("name"), lang=data.get("lang"), answers=data.get("answers"))
+        await quizDBManager.uploadAnswers("digital-uploadFull", teamID=teamID, name=data.get("name"), lang=data.get("lang"), answers=data.get("answers"))
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
     return web.json_response({"teamID": teamID, "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt()})
 
 
 @router.get(_baseURL + "/getAnswers")
-def getAnswersHandler(request: web.Request):
+async def getAnswersHandler(request: web.Request):
     print(f"API GET request incoming: getAnswers")
     try:
-        return web.json_response({"nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt(), "answers": quizDBManager.getAnswers(request.query.get("teamID"))})
+        return web.json_response({"nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt(), "answers": await quizDBManager.getAnswers(request.query.get("teamID"))})
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
 

@@ -29,20 +29,20 @@ async def getStatesHandler(request: web.Request):
 @router.get(_baseURL + "/getAllBuildingsData")
 async def getAllBuildingsDataHandler(request: web.Request):
     print(f"API GET request incoming: admin/getAllBuildingsData")
-    return web.json_response(quizDBManager.getAllBuildingData())
+    return web.json_response(await quizDBManager.getAllBuildingData())
 
 
 @router.get(_baseURL + "/getLeaderboard")
 async def getLeaderboardHandler(request: web.Request):
     print(f"API GET request incoming: admin/getLeaderboard")
-    return web.json_response(quizDBManager.getLeaderboard())
+    return web.json_response(await quizDBManager.getLeaderboard())
 
 
 @router.get(_baseURL + "/getQuizdata")
 async def getQuizdataHandler(request: web.Request):
     print(f"API GET request incoming: admin/getQuizdata")
     try:
-        return web.json_response(quizDBManager.getQuizDetails(request.query.get("teamID")))
+        return web.json_response(await quizDBManager.getQuizDetails(request.query.get("teamID")))
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
 
@@ -52,7 +52,7 @@ async def uploadQuizHandler(request: web.Request):
     print("API POST request incoming: admin/uploadQuiz")
     data: dict[str, str | int | list[dict[str, str | int]]] = request.json()
     try:
-        quizDBManager.uploadAnswers("paper-uploadAnswers", teamID=data.get("teamID"), name=data.get("name"), answers=data.get("answers"))
+        await quizDBManager.uploadAnswers("paper-uploadAnswers", teamID=data.get("teamID"), name=data.get("name"), answers=data.get("answers"))
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
     return web.HTTPOk()
@@ -94,8 +94,7 @@ async def nextPhaseHandler(request: web.Request):
         raise web.HTTPBadRequest(text=f"Value currentPhase is not the actual current phase: {currentPhase.value}")
     if nextPhase != utils.QuizState.getNextPhase():
         raise web.HTTPBadRequest(text=f"Value nextPhase is not the actual next phase: {nextPhase.value}")
-    utils.QuizState.phase = nextPhase
-    utils.QuizState.nextPhaseChangeAt = nextPhaseChangeAt
+    await utils.QuizState.updateState(nextPhase=nextPhase, nextPhaseChangeAt=nextPhaseChangeAt)
     return web.HTTPOk()
 
 
@@ -106,7 +105,7 @@ async def setNextPhaseChangeAtHandler(request: web.Request):
     nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")) or None
     if not nextPhaseChangeAt:
         raise web.HTTPBadRequest(text=f"Value 'nextPhaseChangeAt' is invalid: {data.get('nextPhaseChangeAt', '<missing>')}")
-    utils.QuizState.nextPhaseChangeAt = nextPhaseChangeAt
+    await utils.QuizState.updateState(nextPhaseChangeAt=nextPhaseChangeAt)
     return web.HTTPOk()
 
 

@@ -7,6 +7,7 @@ import pathlib
 import random
 
 import quizDB
+import wsUtils
 
 
 _logger = logging.getLogger(__name__)
@@ -83,7 +84,6 @@ class QuizState:
     nextPhaseChangeAt: datetime.datetime = datetime.datetime.now()
     currentQuizNumber: int = 1
     phase: QuizPhases = QuizPhases.IDLE
-    _currentQuizdata: dict[str, dict[str, dict[str, str | int]]] = None
 
     @classmethod
     def formatNextPhaseChangeAt(cls) -> str:
@@ -93,6 +93,21 @@ class QuizState:
     @classmethod
     def getNextPhase(cls) -> QuizPhases:
         return {QuizPhases.IDLE: QuizPhases.RUNNING, QuizPhases.RUNNING: QuizPhases.SCORING, QuizPhases.SCORING: QuizPhases.IDLE}[cls.phase]
+
+    @classmethod
+    async def updateState(cls, *, nextPhase: QuizPhases = None, nextPhaseChangeAt: datetime.datetime = None):
+        if nextPhase and nextPhase != cls.getNextPhase():
+            raise ValueError(f"Invalid phase change: {nextPhase.value} -> {cls.getNextPhase().value}")
+        if nextPhaseChangeAt and nextPhaseChangeAt < datetime.datetime.now():
+            raise ValueError(f"Invalid phase change: {nextPhaseChangeAt.isoformat(timespec='milliseconds')} -> {datetime.datetime.now().isoformat(timespec='milliseconds')}")
+        if nextPhase:
+            cls.phase = nextPhase
+            event = {QuizPhases.IDLE: "resultsReady", QuizPhases.RUNNING: "quizStarted", QuizPhases.SCORING: "quizEnded"}[nextPhase]
+            await wsUtils.broadcastToClients(event, {"nextPhaseChangeAt": cls.formatNextPhaseChangeAt()})
+        if nextPhaseChangeAt:
+            cls.nextPhaseChangeAt = nextPhaseChangeAt
+        if nextPhase or nextPhaseChangeAt:
+            await wsUtils.broadcastToAdmins("statusChanged", {})
 
 
 # ---------------------------

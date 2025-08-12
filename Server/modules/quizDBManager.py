@@ -2,6 +2,7 @@ from aiohttp import web
 import datetime
 import logging
 import utils
+import wsUtils
 
 
 _quizDBcursor = utils.quizDB.cursor
@@ -19,7 +20,7 @@ class InvalidParameterError(Exception):
 # -------------------
 # ----- GETTERS -----
 # -------------------
-def getQuestions(lang, size) -> list[dict[str, str | int]]:
+async def getQuestions(lang, size) -> list[dict[str, str | int]]:
     if not lang:
         raise InvalidParameterError(f"Missing language parameter")
     if not size:
@@ -38,7 +39,7 @@ def getQuestions(lang, size) -> list[dict[str, str | int]]:
     return [{"id": entry[0], "name": entry[1], "location": entry[2]} for entry in rawQuizdata]
 
 
-def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]:
+async def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]:
     if not teamID:
         raise InvalidParameterError(f"Missing teamID parameter")
     res = utils.quizDB.cursor.execute(f"SELECT name, language, score, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
@@ -60,7 +61,7 @@ def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]
     }
 
 
-def getLeaderboard() -> list[dict[str, str | int]]:
+async def getLeaderboard() -> list[dict[str, str | int]]:
     res: list[list[str | int]] = utils.quizDB.cursor.execute(
         f"SELECT id, name, language, quiz_size, score, submitted_at FROM teams \
         WHERE quiz_number = {utils.QuizState.currentQuizNumber} \
@@ -69,7 +70,7 @@ def getLeaderboard() -> list[dict[str, str | int]]:
     return res and [{"teamID": entry[0], "name": entry[1], "language": entry[2], "size": entry[3], "score": entry[4], "submittedAt": entry[5]} for entry in res] or []
 
 
-def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]:
+async def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]:
     if not teamID:
         raise InvalidParameterError(f"Missing teamID parameter")
     res = utils.quizDB.cursor.execute(f"SELECT name, language, score, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
@@ -91,7 +92,7 @@ def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, str | in
     }
 
 
-def checkIfSubmittedAtIsPresent(teamID: int) -> bool:
+async def checkIfSubmittedAtIsPresent(teamID: int) -> bool:
     if not teamID:
         raise InvalidParameterError(f"Invalid teamID: {teamID}")
     res = _quizDBcursor.execute("SELECT id, submitted_at FROM teams WHERE id = (?);", (teamID,)).fetchone()
@@ -100,7 +101,7 @@ def checkIfSubmittedAtIsPresent(teamID: int) -> bool:
     return bool(res[1])
 
 
-def getAllBuildingData() -> list[dict[str, str | int | None]]:
+async def getAllBuildingData() -> list[dict[str, str | int | None]]:
     localisedCols = ", ".join([f"name_{lang.value}, location_{lang.value}" for lang in utils.QuizLanguages])
     res = _quizDBcursor.execute(f"SELECT id, box, answer, type, {localisedCols} FROM buildings ORDER BY id;").fetchall()
     colHeaders = ["id", "box", "answer", "type"] + localisedCols.split(", ")
@@ -110,7 +111,7 @@ def getAllBuildingData() -> list[dict[str, str | int | None]]:
 # -------------------
 # ----- POSTERS -----
 # -------------------
-def addEmptyTeamEntry(teamID: int, lang, size):
+async def addEmptyTeamEntry(teamID: int, lang: str, size: int):
     if not lang or utils.convertToQuizLanguage(lang) is None:
         raise InvalidParameterError(f"Invalid language: {lang}")
     if not size or utils.convertToQuizSize(size) is None:
@@ -122,9 +123,10 @@ def addEmptyTeamEntry(teamID: int, lang, size):
         (teamID, lang, utils.QuizState.currentQuizNumber, size),
     )
     _quizDBconnection.commit()
+    await wsUtils.broadcastToAdmins("leaderboardUpdated", {})
 
 
-def updateSubmittedAt(teamID: int):
+async def updateSubmittedAt(teamID: int):
     if not teamID or teamID >= int(5e9):
         raise InvalidParameterError(f"Invalid teamID for paper-quiz: {teamID}")
     _quizDBcursor.execute(
@@ -132,9 +134,10 @@ def updateSubmittedAt(teamID: int):
         (datetime.datetime.now().isoformat(timespec="milliseconds"), teamID),
     )
     _quizDBconnection.commit()
+    await wsUtils.broadcastToAdmins("leaderboardUpdated", {})
 
 
-def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = None, lang: str = None, answers: list[dict[str, int]] = None):
+async def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = None, lang: str = None, answers: list[dict[str, int]] = None):
     """mode = `paper-updateSubmittedAt` or `paper-uploadAnswers` or `digital-uploadFull`"""
     if mode == "paper-uploadAnswers" or mode == "digital-uploadFull":
         if (
@@ -181,3 +184,4 @@ def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = None, lan
             raise InvalidParameterError(f"Invalid parameters: teamID={teamID}, name={name}, lang={lang}, answers={answers}; all 4 parameters are required for this mode")
     else:
         raise RuntimeError(f"Invalid mode: {mode}")
+    await wsUtils.broadcastToAdmins("leaderboardUpdated", {})
