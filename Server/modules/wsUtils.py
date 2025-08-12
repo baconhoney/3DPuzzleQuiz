@@ -22,9 +22,9 @@ async def broadcastToClients(eventType: str, data: dict[str, any] = None):
 
 async def broadcastToAdmins(eventType: str, data: dict[str, any] = None):
     """
-    EventTypes: "leaderboardUpdated", "statusChanged"
+    EventTypes: "leaderboardUpdated", "stateChanged"
     """
-    if eventType not in ["leaderboardUpdated", "statusChanged"]:
+    if eventType not in ["leaderboardUpdated", "stateChanged"]:
         raise ValueError(f"Invalid event type: {eventType}")
     jsonStr = json.dumps({"event": eventType, "data": data}, ensure_ascii=False, separators=(",", ":"))
     await asyncio.gather(*[client.send_str(jsonStr) for client in adminCons])

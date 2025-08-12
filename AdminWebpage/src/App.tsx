@@ -5,10 +5,12 @@ import QuizResultsComponent from "./Components/QuizResultsComponent.tsx";
 import QuizDetailsComponent from "./Components/QuizDetailsComponent.tsx";
 import { NextChangeAtComponent, ConfirmPopupComponent } from "./Components/ControllerComponents.tsx";
 
-import { getHHMMFromDate, type QuizLanguage, type QuizPhase, type QuizSize } from "./utils.ts";
+import { fetchData, getHHMMFromDate, type QuizLanguage, type QuizPhase, type QuizSize } from "./utils.ts";
+import "./websocketHandler.ts";
 import * as actions from "./Actions.ts";
 
 import "./App.css";
+import addListener, { removeListener, type listenerFunction } from "./websocketHandler.ts";
 
 
 interface AppState {
@@ -26,6 +28,7 @@ export default class App extends Component<unknown, AppState> {
     private confirmSendPhasePopupRef = createRef<ConfirmPopupComponent>();
     private confirmSendUpdateNextChangeAtPopupRef = createRef<ConfirmPopupComponent>();
     private confirmSendPrintRequestPopupRef = createRef<ConfirmPopupComponent>();
+    private stateChangedListener: listenerFunction | null = null;
 
     constructor(props: unknown) {
         super(props);
@@ -47,6 +50,28 @@ export default class App extends Component<unknown, AppState> {
         this.setState({ ...this.state, ...newState });
     }
 
+    componentDidMount(): void {
+        this.stateChangedListener = addListener("stateChanged", () => {
+            if (import.meta.env.MODE == "production") {
+                fetchData("/api/admin/getState", (data) => this.updateState({
+                    nextEventAt: new Date(data.nextEventAt as string),
+                    currentQuizNumber: data.currentQuizNumber as number,
+                    phase: data.phase as QuizPhase,
+                }));
+            } else {
+                this.updateState({
+                    nextEventAt: new Date(Date.now() + 30 * 60 * 1000),
+                    currentQuizNumber: this.state.currentQuizNumber + 1,
+                    phase: this.state.phase as QuizPhase,
+                })
+            }
+        })
+    }
+
+    componentWillUnmount(): void {
+        removeListener(this.stateChangedListener);
+    }
+
     render() {
         return (
             <>
@@ -58,10 +83,6 @@ export default class App extends Component<unknown, AppState> {
                         <div id="main-cell">
                             <div id="main-left-cell" style={{ position: "relative" }}>
                                 <QuizDetailsComponent app={this} teamID={this.state.openedQuizTeamID} />
-                                <div className="vert-stack" style={{ position: "absolute", top: "10px", right: "10px" }}>
-                                    <button>Mentés</button>
-                                    <button>Törlés</button>
-                                </div>
                             </div >
                             <div id="main-right-cell">
                                 <div id="main-top-right-cell">
@@ -150,11 +171,11 @@ export default class App extends Component<unknown, AppState> {
                                 </div>
                             </div>
                         </div >
-                        <ConfirmPopupComponent app={this} ref={this.confirmSendPhasePopupRef} text={"Biztosan kvíz fázist vált? A következő fázisváltás várható ideje " + getHHMMFromDate(this.state.nextEventAt) + " lesz."}
+                        <ConfirmPopupComponent ref={this.confirmSendPhasePopupRef} text={"Biztosan kvíz fázist vált? A következő fázisváltás várható ideje " + getHHMMFromDate(this.state.nextEventAt) + " lesz."}
                             onConfirm={() => { actions.sendNextPhase(this); }} onCancel={() => { }} />
-                        <ConfirmPopupComponent app={this} ref={this.confirmSendUpdateNextChangeAtPopupRef} text="Biztosan frissíti a következő fázisváltás várható idejét?"
+                        <ConfirmPopupComponent ref={this.confirmSendUpdateNextChangeAtPopupRef} text="Biztosan frissíti a következő fázisváltás várható idejét?"
                             onConfirm={() => { actions.setTimeTill(this.state.nextEventAt); }} onCancel={() => { }} />
-                        <ConfirmPopupComponent app={this} ref={this.confirmSendPrintRequestPopupRef} text={"Biztosan kinyomtatja a következőt?\n" + `${this.state.printingCopyCount} példányban '${this.state.printingLanguage}' nyelven ${this.state.printingSize}-as méretűt`}
+                        <ConfirmPopupComponent ref={this.confirmSendPrintRequestPopupRef} text={"Biztosan kinyomtatja a következőt?\n" + `${this.state.printingCopyCount} példányban '${this.state.printingLanguage}' nyelven ${this.state.printingSize}-as méretűt`}
                             onConfirm={() => { actions.queuePrint(this.state.printingCopyCount, this.state.printingLanguage, this.state.printingSize); }} onCancel={() => { }} />
                     </>
                 }

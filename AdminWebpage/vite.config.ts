@@ -8,5 +8,6 @@ export default defineConfig({
     server: {
         allowedHosts: true,
         port: 1006
-    }
+    },
+    appType: "mpa"
 })

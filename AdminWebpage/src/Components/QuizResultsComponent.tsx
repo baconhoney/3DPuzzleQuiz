@@ -1,11 +1,12 @@
 import { Component } from "react";
 
 import App from "../App.tsx";
-import { getTimeFromDate, type QuizLanguage, type QuizResults, type QuizSize, type RawQuizResults } from "../utils.ts";
+import { fetchData, getTimeFromDate, type QuizLanguage, type QuizResults, type QuizSize, type RawQuizResults } from "../utils.ts";
 
 import "./QuizResultsComponent.css";
 
 import { getResultsData } from "../Testdata.ts";
+import addListener, { removeListener, type listenerFunction } from "../websocketHandler.ts";
 
 
 interface QuizResultsProperties {
@@ -17,7 +18,7 @@ interface QuizResultsState {
 }
 
 export default class QuizResultsComponent extends Component<QuizResultsProperties, QuizResultsState> {
-    private quizGetterHandler: number | undefined = undefined;
+    private leaderboardUpdatedListener: listenerFunction | null = null;
 
     constructor(properties: QuizResultsProperties) {
         super(properties);
@@ -26,47 +27,39 @@ export default class QuizResultsComponent extends Component<QuizResultsPropertie
         };
     }
 
+    private updateState(newState: Partial<QuizResultsState>) {
+        this.setState({ ...this.state, ...newState });
+    }
+
     componentDidMount() {
-        this.quizGetterHandler = setTimeout(() => {
-            this.quizGetterHandler = setInterval(() => this.getQuizzes(), 10000);
-            this.getQuizzes();
-        }, 100);
+        this.leaderboardUpdatedListener = addListener("leaderboardUpdated", () => this.getLeaderboard());
+        this.getLeaderboard();
     }
 
     componentWillUnmount() {
-        clearTimeout(this.quizGetterHandler);
-        clearInterval(this.quizGetterHandler);
+        removeListener(this.leaderboardUpdatedListener);
     }
 
-    private getQuizzes() {
+    private getLeaderboard() {
         const convertFn = (json: RawQuizResults) =>
-            json.map((item) => {
-                return {
-                    ...item,
-                    language: item.language as QuizLanguage,
-                    quizSize: item.size as QuizSize,
-                    submittedAt: new Date(item.submittedAt),
-                };
-            });
+            json.map((item) => ({
+                ...item,
+                language: item.language as QuizLanguage,
+                quizSize: item.size as QuizSize,
+                submittedAt: new Date(item.submittedAt),
+            }));
         if (import.meta.env.MODE == "production") {
-            fetch("/api/admin/getLeaderboard").then((response) => {
-                response.json().then((json: RawQuizResults) => {
-                    this.updateState({
-                        quizResults: convertFn(json),
-                    });
+            fetchData("/api/admin/getLeaderboard", (data) =>
+                this.updateState({
+                    quizResults: convertFn(data as RawQuizResults),
                 })
-            })
+            );
         } else {
             // temp code for testing
             this.updateState({
                 quizResults: convertFn(getResultsData()),
             });
-            clearInterval(this.quizGetterHandler);
         }
-    }
-
-    private updateState(newState: Partial<QuizResultsState>) {
-        this.setState({ ...this.state, ...newState });
     }
 
     render() {

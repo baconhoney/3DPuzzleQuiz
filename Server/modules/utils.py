@@ -107,7 +107,7 @@ class QuizState:
         if nextPhaseChangeAt:
             cls.nextPhaseChangeAt = nextPhaseChangeAt
         if nextPhase or nextPhaseChangeAt:
-            await wsUtils.broadcastToAdmins("statusChanged", {})
+            await wsUtils.broadcastToAdmins("stateChanged", {})
 
 
 # ---------------------------

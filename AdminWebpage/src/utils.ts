@@ -27,6 +27,14 @@ export function getHHMMFromDate(date: Date) {
     return f(hh) + ":" + f(mm);
 }
 
+export function fetchData(url: string, callback: (data: any) => void) {
+    fetch(url).then((response) => {
+        response.json().then((json: any) => {
+            callback(json);
+        })
+    });
+}
+
 
 /* -------------------------------- */
 /* ----- TYPES and INTERFACES ----- */
