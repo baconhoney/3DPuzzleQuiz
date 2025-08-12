@@ -5,7 +5,7 @@ import WantToStart from './WantToStart';
 import Waiting from './Waiting';
 import Navbar from './Navbar';
 import Results from './Results';
-import { getQuestions } from './apiHandler';
+import { getAnswers, getQuestions } from './apiHandler';
 
 const Manager = () => {
 
@@ -14,157 +14,183 @@ const Manager = () => {
     const [gameState, setGameState] = useState("running");
     // TODO reset wantToPlay
     const [wantToPlay, setWantToPlay] = useState("NA"); // NA, Y, N
-    const [teamID, setTeamID] = useState("123");
-    const haveResults = true;
+    const [teamID, setTeamID] = useState(localStorage.getItem("teamID"));
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const [quizData, setQuizData] = useState(null);
+    const [answerData, setAnswerData] = useState(null);
 
     const { t } = useGlobalContext();
 
-    const answerData = {
-        "quizdata": {
-            "0": {
-                "name": "Hősök tere",
-                "country": "Magyarország",
-                "city": "Budapest",
-                "answers": 90,
-                "correct": true
-            },
-            "1": {
-                "name": "Kaminarimon Kapu",
-                "country": "Japán",
-                "city": "Tokió",
-                "answers": 1,
-                "correct": true
-            },
-            "2": {
-                "name": "Kanadai Nemzeti TV-Torony",
-                "country": "Kanada",
-                "city": "Toronto",
-                "answers": 76,
-                "correct": true
-            },
-            "3": {
-                "name": "Keleti Gyöngy torony",
-                "country": "Kína",
-                "city": "Shanghai",
-                "answers": 4,
-                "correct": true
-            },
-            "4": {
-                "name": "Kínai Nagy Fal",
-                "country": "Kína",
-                "city": "-",
-                "answers": 15,
-                "correct": true
-            },
-            "5": {
-                "name": "Kölni dóm",
-                "country": "Németország",
-                "city": "Köln",
-                "answers": 91,
-                "correct": true
-            },
-            "6": {
-                "name": "Kul Sharif mecset",
-                "country": "Oroszország",
-                "city": "Kazán",
-                "answers": 7,
-                "correct": false
-            },
-            "7": {
-                "name": "Kultúra és Tudomány Palotája",
-                "country": "Lengyelország",
-                "city": "Varsó",
-                "answers": 80,
-                "correct": true
-            },
-            "8": {
-                "name": "Lincoln emlékmű",
-                "country": "Egyesült Államok",
-                "city": "Washington",
-                "answers": 33,
-                "correct": true
-            },
-            "9": {
-                "name": "Louvre Múzeum",
-                "country": "Franciaország",
-                "city": "Párizs",
-                "answers": 93,
-                "correct": true
-            },
-            "10": {
-                "name": "Mátyás-templom és Halászbástya",
-                "country": "Magyarország",
-                "city": "Budapest",
-                "answers": 30,
-                "correct": true
-            },
-            "11": {
-                "name": "Mayflower",
-                "country": "Hollandia",
-                "city": "[elsüllyedt]",
-                "answers": 63,
-                "correct": true
-            },
-            "12": {
-                "name": "Megváltó Krisztus szobra",
-                "country": "Brazília",
-                "city": "Rio de Janeiro",
-                "answers": 59,
-                "correct": true
-            },
-            "13": {
-                "name": "Megváltó Krisztus-székesegyház",
-                "country": "Oroszország",
-                "city": "Moszkva",
-                "answers": 14,
-                "correct": false
-            },
-            "14": {
-                "name": "Mennyei béke kapuja",
-                "country": "Kína",
-                "city": "Peking",
-                "answers": 20,
-                "correct": true
-            },
-            "15": {
-                "name": "Milánói Dóm",
-                "country": "Olaszország",
-                "city": "Milánó",
-                "answers": 26,
-                "correct": true
-            },
-            "16": {
-                "name": "Mississippi gőzhajó",
-                "country": "Egyesült Államok",
-                "city": "New Orleans",
-                "answers": 52,
-                "correct": true
-            },
-            "17": {
-                "name": "Mustafa Kemal Atatürk mauzóleuma",
-                "country": "Törökország",
-                "city": "Ankara",
-                "answers": 18,
-                "correct": false
-            },
-            "18": {
-                "name": "New York-i Szabadság szobor",
-                "country": "Egyesült Államok",
-                "city": "New York",
-                "answers": 22,
-                "correct": true
-            },
-            "19": {
-                "name": "Notre-Dame",
-                "country": "Franciaország",
-                "city": "Párizs",
-                "answers": 74,
-                "correct": true
+    React.useEffect(() => {
+        const fetchQuestions = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+                const data = await getQuestions(localStorage.getItem("language") || "hu", 20);
+                setQuizData(data);
+            } catch (error) {
+                console.error("Error fetching questions:", error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
             }
-        },
-        "score": 17,
-        "submittedAt": "2025-07-30T20:27:04.929"
-    }
+        };
+
+        const fetchAnswers = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+                const data = await getAnswers(teamID);
+                setAnswerData(data);
+            } catch (error) {
+                console.error("Error fetching answers:", error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // Only fetch questions if we need to show the quiz
+        if (gameState === "running" && wantToPlay !== "N") {
+            fetchQuestions();
+        }
+        // Fetch answers if the game is idle
+        if (gameState === "idle") {
+            fetchAnswers();
+        }
+    }, [gameState, wantToPlay]);
+
+    // const answerData = {
+    //     "nextPhaseChangeAt": "2025-08-12T17:43:57.433",
+    //     "answers": {
+    //         "score": 0,
+    //         "submittedAt": "2025-08-12T18:15:35.180",
+    //         "quizdata": [
+    //             {
+    //                 "name": "Colosseum",
+    //                 "location": "Olaszország, Róma",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Eyüp Sultan mecset",
+    //                 "location": "Törökország, Isztambul",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Galata torony",
+    //                 "location": "Törökország, Isztambul",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Groupama Aréna",
+    //                 "location": "Magyarország, Budapest",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Lincoln emlékmű",
+    //                 "location": "Egyesült Államok, Washington",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Megváltó Krisztus szobra",
+    //                 "location": "Brazília, Rio de Janeiro",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Megváltó Krisztus-székesegyház",
+    //                 "location": "Oroszország, Moszkva",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Notre-Dame-székesegyház",
+    //                 "location": "Franciaország, Párizs",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Országház",
+    //                 "location": "Magyarország, Budapest",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Peles kastély",
+    //                 "location": "Románia, Szinaja",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Szent István-bazilika",
+    //                 "location": "Magyarország, Budapest",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Szent Jakab-katedrális",
+    //                 "location": "Spanyolország, Santiago d. C.",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Szent Patrik-katedrális",
+    //                 "location": "Egyesült Államok, New York",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Szent Pál-székesegyház",
+    //                 "location": "Egyesült Királyság, London",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Szent Péter-bazilika",
+    //                 "location": "Vatikán, Vatikán Város",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Tokyo Skytree",
+    //                 "location": "Japán, Tokió",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Vajdahunyad vára",
+    //                 "location": "Magyarország, Budapest",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Wat Phra Kaew",
+    //                 "location": "Thaiföld, Bangkok",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Westminsteri apátság",
+    //                 "location": "Egyesült Királyság, London",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             },
+    //             {
+    //                 "name": "Új Hattyúkő kastély",
+    //                 "location": "Németország, Schwangau",
+    //                 "answer": 0,
+    //                 "correct": false
+    //             }
+    //         ]
+    //     }
+    // }
 
     function getComponent() {
         if (!!teamID) {
@@ -178,7 +204,7 @@ const Manager = () => {
 
             } else if (gameState === "idle") {
                 // The quiz is idle, meaning results are ready
-                if (haveResults) {
+                if (!loading && answerData) {
                     // If results are available, show them
                     return <Results data={answerData} />;
                 }
@@ -207,28 +233,6 @@ const Manager = () => {
     const errorDiv = (<div className='text-error text-center p-4'>Hiba történt. There was an error.<br />gameState: {gameState}, wantToPlay: {wantToPlay}</div>)
 
     function lateStart() {
-        const [quizData, setQuizData] = useState(null);
-        const [loading, setLoading] = useState(true);
-        const [error, setError] = useState(null);
-
-        React.useEffect(() => {
-            const fetchQuestions = async () => {
-                try {
-                    setLoading(true);
-                    setError(null);
-                    const data = await getQuestions(localStorage.getItem("language") || "hu", 20);
-                    setQuizData(data);
-                } catch (error) {
-                    console.error("Error fetching questions:", error);
-                    setError(error.message);
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            fetchQuestions();
-        }, []);
-
         if (loading) {
             return <div className='text-center p-4'>Loading...</div>;
         }
@@ -265,7 +269,7 @@ const Manager = () => {
             // }
 
 
-            return <Quiz data={quizData} />;
+            return <Quiz data={quizData} setWantToPlay={setWantToPlay} />;
         }
     }
 
