@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useGlobalContext } from './App';
 import Input from './Input';
+import { uploadAnswers } from './apiHandler';
 
-const Quiz = ({ data }) => {
+const Quiz = ({ data, setWantToPlay }) => {
 
     const { t } = useGlobalContext();
     const [answerCount, setAnswerCount] = useState(0);
+    const [teamID, setTeamID] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     // const formattedTime = data.endTime.split(':').slice(0, 2).join(':');
 
     useEffect(() => {
@@ -20,17 +24,17 @@ const Quiz = ({ data }) => {
         document.getElementById('quiz_finish_modal').showModal();
     };
 
-    const sendQuiz = (e) => {
+    const sendQuiz = async (e) => {
         e.preventDefault();
         const form = document.getElementById('quiz-form');
         const inputs = form.querySelectorAll('input[type="number"]');
-        const answers = {};
+        const answers = [];
 
         inputs.forEach((input, index) => {
             const value = input.value ? parseInt(input.value, 10) : 0;
-            answers[index.toString()] = {
+            answers[index] = {
                 id: parseInt(input.id, 10),
-                num: value
+                answer: value
             };
         });
 
@@ -41,6 +45,21 @@ const Quiz = ({ data }) => {
         };
 
         console.log(formattedAnswers);
+
+        try {
+            setLoading(true);
+            setError(null);
+            const data = await uploadAnswers(formattedAnswers);
+
+            setTeamID(data.teamID);
+            localStorage.setItem("teamID", data.teamID);
+            setWantToPlay("N");
+        } catch (error) {
+            console.error("Error uploading answers:", error);
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -92,6 +111,11 @@ const Quiz = ({ data }) => {
                                     {isQuizActive ? formattedTime : ''}
                                 </div> */}
                     </div>
+                    {error && (
+                        <div className="alert alert-error">
+                            <span>Error: {error}</span>
+                        </div>
+                    )}
                     <progress className="progress progress-primary w-full" value={100 / Object.keys(data.questions).length * answerCount} max="100"></progress>
                 </div>
             </form>
@@ -101,8 +125,14 @@ const Quiz = ({ data }) => {
                     <h3 className="font-bold text-lg">{t("finish")}</h3>
                     <p className="py-4">{t("finish_modal_message")}</p>
                     <form method="dialog" className="modal-action justify-around">
-                        <button className="btn btn-soft btn-error">{t("cancel")}</button>
-                        <button className="btn btn-success" onClick={sendQuiz}>{t("continue")}</button>
+                        <button className="btn btn-soft btn-error" disabled={loading}>{t("cancel")}</button>
+                        <button
+                            className={`btn btn-success ${loading ? 'loading' : ''}`}
+                            onClick={sendQuiz}
+                            disabled={loading}
+                        >
+                            {loading ? 'Submitting...' : t("continue")}
+                        </button>
                     </form>
                 </div>
                 <form method="dialog" className="modal-backdrop">
