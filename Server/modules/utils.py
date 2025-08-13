@@ -16,18 +16,19 @@ _logger.info(f"Importing {__name__}...")
 
 # get filepath for determining the root of the program
 # this file is supposed to be in <root>/modules
-os.environ["ROOT"] = str(pathlib.Path(__file__).parent.parent.resolve().as_posix())
+if "QUIZSERVER_ROOT" not in os.environ:
+    os.environ["QUIZSERVER_ROOT"] = str(pathlib.Path(__file__).parent.parent.resolve().as_posix())
 dotenv.load_dotenv()
 
 
 # resolve paths
 class paths:
-    cwd = pathlib.Path(os.getenv("ROOT")).resolve()
-    cfgRoot = pathlib.Path(os.getenv("CFG_ROOT")).resolve()
-    dataRoot = pathlib.Path(os.getenv("DATA_ROOT")).resolve()
-    clientRoot = pathlib.Path(os.getenv("CLIENT_ROOT")).resolve()
-    searchRoot = pathlib.Path(os.getenv("SEARCH_ROOT")).resolve()
-    adminRoot = pathlib.Path(os.getenv("ADMIN_ROOT")).resolve()
+    cwd = pathlib.Path(os.getenv("QUIZSERVER_ROOT")).resolve()
+    cfgRoot = pathlib.Path(os.getenv("QUIZSERVER_CFG_ROOT")).resolve()
+    dataRoot = pathlib.Path(os.getenv("QUIZSERVER_DATA_ROOT")).resolve()
+    clientRoot = pathlib.Path(os.getenv("QUIZSERVER_CLIENT_ROOT")).resolve()
+    searchRoot = pathlib.Path(os.getenv("QUIZSERVER_SEARCH_ROOT")).resolve()
+    adminRoot = pathlib.Path(os.getenv("QUIZSERVER_ADMIN_ROOT")).resolve()
 
 
 quizDB = quizDB.QuizDB(paths.dataRoot)
