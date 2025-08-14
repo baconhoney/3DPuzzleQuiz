@@ -174,7 +174,7 @@ export default class App extends Component<unknown, AppState> {
                         <ConfirmPopupComponent ref={this.confirmSendPhasePopupRef} text={"Biztosan kvíz fázist vált? A következő fázisváltás várható ideje " + getHHMMFromDate(this.state.nextPhaseChangeAt) + " lesz."}
                             onConfirm={() => { actions.sendNextPhase(this); }} onCancel={() => { }} />
                         <ConfirmPopupComponent ref={this.confirmSendUpdateNextChangeAtPopupRef} text="Biztosan frissíti a következő fázisváltás várható idejét?"
-                            onConfirm={() => { actions.setTimeTill(this.state.nextPhaseChangeAt); }} onCancel={() => { }} />
+                            onConfirm={() => { actions.sendNewNextPhaseChangeAt(this.state.nextPhaseChangeAt); }} onCancel={() => { }} />
                         <ConfirmPopupComponent ref={this.confirmSendPrintRequestPopupRef} text={"Biztosan kinyomtatja a következőt?\n" + `${this.state.printingCopyCount} példányban '${this.state.printingLanguage}' nyelven ${this.state.printingSize}-as méretűt`}
                             onConfirm={() => { actions.queuePrint(this.state.printingCopyCount, this.state.printingLanguage, this.state.printingSize); }} onCancel={() => { }} />
                     </>

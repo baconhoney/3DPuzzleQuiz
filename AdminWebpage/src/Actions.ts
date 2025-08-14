@@ -5,7 +5,7 @@ import { getISOStringFromDate, type QuizPhase, type QuizSize, type QuizLanguage 
 function sendData(url: string, data: any) {
     if (import.meta.env.MODE == "production") {
         // prod-mode, do actual fetch
-        fetch("/api/admin/nextPhase", { method: "POST", body: JSON.stringify(data) });
+        fetch(url, { method: "POST", body: JSON.stringify(data) });
     } else {
         // dev-mode, print to console
         console.log(`Sending data to ${url}:`, data);
@@ -35,10 +35,10 @@ export function queuePrint(copyCount: number, lang: QuizLanguage, quizSize: Quiz
         });
 }
 
-export function setTimeTill(time: Date) {
-    sendData("/api/admin/setTimeTill",
+export function sendNewNextPhaseChangeAt(time: Date) {
+    sendData("/api/admin/setNextPhaseChangeAt",
         {
-            "timeTill": getISOStringFromDate(time)
+            "nextPhaseChangeAt": getISOStringFromDate(time)
         });
 }
 
