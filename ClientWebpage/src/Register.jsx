@@ -26,7 +26,10 @@ const Register = () => {
             setNameError(true);
             return;
         }
+
         localStorage.setItem("teamName", teamName);
+        localStorage.removeItem("teamID");
+
         toQuiz();
     };
 

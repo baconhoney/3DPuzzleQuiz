@@ -13,7 +13,7 @@ build_root = cwd / "Build"
 # Build flags
 build_client = True
 build_search = True
-build_admin =  False
+build_admin =  True
 build_server = True
 
 
