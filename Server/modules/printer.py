@@ -6,21 +6,37 @@ from barcode.writer import SVGWriter
 from datetime import date
 from pyppeteer import launch
 import utils
+from quizDBManager import getQuestions, getAnswers
 import os
 
-#async ??
-async def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
+localisation = {
+    'testname': {'hu' : 'Teszt', 'en': 'Test'},
+    'humanname': {'hu' : 'Név: ', 'en': 'Name: '},
+    'instruction': {'hu' : 'Írd az épület neve mellé a megfelelő makett mellett lévő számot!', 'en': 'Write the number found at the models into the rectangle next to the correct building\'s name!'},
+    'name': {'hu' : 'Név', 'en': 'Name'},
+    'location': {'hu' : 'Ország, Város', 'en': 'City, Country'},
+    'number': {'hu' : 'Szám', 'en': 'Number'},
+}
+
+
+async def printQuiz(teamID: int, quizLang: str = "hu", quizSize: utils.QuizSizes = utils.QuizSizes.SIZE_20):
     # print("print or do stuff idk")
-    if quizType == utils.QuizSizes.SIZE_20:
-        quizNumber = utils.QuizState.currentQuizNumber
+    
+    quizNumber = utils.QuizState.currentQuizNumber if quizSize == utils.QuizSizes.SIZE_20 else -1
+    res = utils.quizDB.cursor.execute(f"SELECT name, language, score, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
+    if not res:
+        isEmpty = True
+        questions = await getQuestions(quizLang,quizSize.value)
+        data = [{'name': entry['name'], 'location': entry['location']} for entry in questions]
     else:
-        quizNumber = -1
-    rawData: list[list[str | int]] = utils.quizDB.cursor.execute(
-        f"SELECT name_{lang} as Name, location_{lang}  \
-        FROM quizzes JOIN buildings ON quizzes.building_id == buildings.id \
-        WHERE quizzes.quiz_number == {quizNumber} \
-        ORDER BY Name;"
-    ).fetchall()
+        isEmpty = False
+        teamName, quizLang, score, submittedAt = res[0], res[1], res[2], res[3]
+        answers = await getAnswers(teamID)
+        data = answers['quizdata']
+        quizSize = utils.convertToQuizSize(str(len(data)))
+        if quizSize == None :
+            raise LookupError(f"Answer count does not match preexisting quiz size")
+
 
 
     svgFile = BytesIO()
@@ -29,7 +45,7 @@ async def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
 
     
     doc, tag, text, line = Doc().ttl()
-    Vpadding = 3.7 if quizType == utils.QuizSizes.SIZE_100 else 5
+    Vpadding = 3.7 if quizSize == utils.QuizSizes.SIZE_100 else 5
     Hpadding = 2
     doc.asis('<!DOCTYPE html>')
     with tag('html'):
@@ -65,42 +81,33 @@ async def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
                     with tag('tr'):
                         with tag('th'):
                             doc.asis(f'{svgStr}\n')
-                            line('p',f'Teszt {quizNumber}' if lang=="hu" else f'Test {quizNumber}', style='text-align: center;')
+                            line('p',f'{localisation['testname'][quizLang]} {quizNumber}', style='text-align: center;')
                             line('p',f'Kutatók éjszakája {date.today().year}', style='text-align: left;')
 
                 with tag('tbody'):
                     with tag('tr'):
-                            line('td',f'Név: _________________________' if lang=="hu" else f'Name: _________________________', klass='humanname', colspan='3' )
+                            line('td',localisation['humanname'][quizLang] + ("_________________________" if isEmpty else teamName), klass='humanname', colspan='3' )
 
                     with tag('tr'):
                         with tag('td'):
                             with tag('table', klass='content'):
                                 with tag('thead'):
-                                    if(lang == "hu"):
-                                        with tag('tr'):
-                                            line('th', 'Írd az épület neve mellé a megfelelő makett mellett lévő számot!', klass='instruction', colspan='3')
-                                        with tag('tr'):
-                                            line('th','Név', klass='name')
-                                            line('th','Ország, Város', klass='location')
-                                            line('th','Szám', klass='number')   
-                                    else: #lang =="en"
-                                        with tag('tr'):
-                                            line('th', 'Write the number found at the models into the rectangle next to the correct building\'s name!', klass='instruction', colspan='3')
-                                        with tag('tr'):
-                                            line('th','Name', klass='name')
-                                            line('th','City, Country', klass='location')
-                                            line('th','Number', klass='number')
-
+                                    with tag('tr'):
+                                        line('th',localisation['instruction'][quizLang], klass='instruction', colspan='3')
+                                    with tag('tr'):
+                                        line('th',localisation['name'][quizLang], klass='name')
+                                        line('th',localisation['location'][quizLang], klass='location')
+                                        line('th',localisation['number'][quizLang], klass='number')   
                                 with tag('tbody'):
-                                    for rows in rawData:
+                                    for rows in data:
                                         with tag('tr', klass='data'):
-                                            line('td',rows[0])
-                                            line('td',rows[1])
-                                            line('td','')
+                                            line('td',rows['name'])
+                                            line('td',rows['location'])
+                                            line('td','' if isEmpty else str(rows['answer']) + (' ✓' if rows['correct'] else ' X'))
             
 
-  #  with open("temp.html",mode="w",encoding="UTF-8") as f:
-  #      f.writelines(doc.getvalue())
+ #   with open("temp.html",mode="w",encoding="UTF-8") as f:
+ #       f.writelines(doc.getvalue())
     
     browser = await launch()
     page = await browser.newPage()
@@ -108,10 +115,10 @@ async def printQuiz(teamID: int, lang: str, quizType: utils.QuizSizes):
 #    await page.screenshot(path = 'temp.png', fullPage= True)
     await page.pdf({'path': 'temp.pdf', 'format': 'A4'})
     await browser.close()
-    os.system('lpr temp.pdf && rm temp.pdf')
+  #  os.system('lpr temp.pdf && rm temp.pdf') #UNCOMMENT THIS LINE TO PRINT
 
 async def main():
-   await printQuiz(1234567890, "en", utils.QuizSizes.SIZE_20)
+   await printQuiz(9634099165, "hu", utils.QuizSizes.SIZE_20)
 
 
 if __name__ == "__main__":
