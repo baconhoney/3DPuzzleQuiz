@@ -22,7 +22,7 @@ export function sendNextPhase(theApp: App) {
         {
             "currentPhase": theApp.state.phase,
             "nextPhase": getNextPhase(theApp.state.phase),
-            "timeTillNextPhase": getISOStringFromDate(theApp.state.nextEventAt),
+            "nextPhaseChangeAt": getISOStringFromDate(theApp.state.nextPhaseChangeAt),
         });
 }
 

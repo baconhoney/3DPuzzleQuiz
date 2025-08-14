@@ -15,7 +15,7 @@ import addListener, { removeListener, type listenerFunction } from "./websocketH
 
 interface AppState {
     openedQuizTeamID: number | null;
-    nextEventAt: Date;
+    nextPhaseChangeAt: Date;
     currentQuizNumber: number;
     phase: QuizPhase;
     onlyShowLeaderboard: boolean;
@@ -36,7 +36,7 @@ export default class App extends Component<unknown, AppState> {
         date.setSeconds(0, 0);
         this.state = {
             openedQuizTeamID: null,
-            nextEventAt: date,
+            nextPhaseChangeAt: date,
             currentQuizNumber: 1,
             phase: "idle",
             onlyShowLeaderboard: window.innerHeight > window.innerWidth,
@@ -53,14 +53,14 @@ export default class App extends Component<unknown, AppState> {
     componentDidMount(): void {
         this.stateChangedListener = addListener("stateChanged", () => {
             if (import.meta.env.MODE == "production") {
-                fetchData("/api/admin/getState", (data) => this.updateState({
-                    nextEventAt: new Date(data.nextEventAt as string),
+                fetchData("/api/admin/getStates", (data) => this.updateState({
+                    nextPhaseChangeAt: new Date(data.nextPhaseChangeAt as string),
                     currentQuizNumber: data.currentQuizNumber as number,
                     phase: data.phase as QuizPhase,
                 }));
             } else {
                 this.updateState({
-                    nextEventAt: new Date(Date.now() + 30 * 60 * 1000),
+                    nextPhaseChangeAt: new Date(Date.now() + 30 * 60 * 1000),
                     currentQuizNumber: this.state.currentQuizNumber + 1,
                     phase: this.state.phase as QuizPhase,
                 })
@@ -97,18 +97,18 @@ export default class App extends Component<unknown, AppState> {
                                         <tbody>
                                             <tr>
                                                 <td className="time-display-container">
-                                                    <NextChangeAtComponent app={this} timeTillNext={this.state.nextEventAt} />
+                                                    <NextChangeAtComponent app={this} timeTillNext={this.state.nextPhaseChangeAt} />
                                                 </td>
                                                 <td className="plus-minus-1-buttons">
                                                     <div className="vert-stack">
-                                                        <button style={{ width: "50px", height: "50px" }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() + 60000) })}>+1</button>
-                                                        <button style={{ width: "50px", height: "50px" }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() - 60000) })}>-1</button>
+                                                        <button style={{ width: "50px", height: "50px" }} onClick={() => this.updateState({ nextPhaseChangeAt: new Date(this.state.nextPhaseChangeAt.getTime() + 60000) })}>+1</button>
+                                                        <button style={{ width: "50px", height: "50px" }} onClick={() => this.updateState({ nextPhaseChangeAt: new Date(this.state.nextPhaseChangeAt.getTime() - 60000) })}>-1</button>
                                                     </div>
                                                 </td>
                                                 <td className="plus-minus-5-buttons">
                                                     <div className="vert-stack">
-                                                        <button style={{ width: "50px", height: "50px" }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() + 60000 * 5) })}>+5</button>
-                                                        <button style={{ width: "50px", height: "50px" }} onClick={() => this.updateState({ nextEventAt: new Date(this.state.nextEventAt.getTime() - 60000 * 5) })}>-5</button>
+                                                        <button style={{ width: "50px", height: "50px" }} onClick={() => this.updateState({ nextPhaseChangeAt: new Date(this.state.nextPhaseChangeAt.getTime() + 60000 * 5) })}>+5</button>
+                                                        <button style={{ width: "50px", height: "50px" }} onClick={() => this.updateState({ nextPhaseChangeAt: new Date(this.state.nextPhaseChangeAt.getTime() - 60000 * 5) })}>-5</button>
                                                     </div>
                                                 </td>
                                                 <td className="send-change">
@@ -171,10 +171,10 @@ export default class App extends Component<unknown, AppState> {
                                 </div>
                             </div>
                         </div >
-                        <ConfirmPopupComponent ref={this.confirmSendPhasePopupRef} text={"Biztosan kvíz fázist vált? A következő fázisváltás várható ideje " + getHHMMFromDate(this.state.nextEventAt) + " lesz."}
+                        <ConfirmPopupComponent ref={this.confirmSendPhasePopupRef} text={"Biztosan kvíz fázist vált? A következő fázisváltás várható ideje " + getHHMMFromDate(this.state.nextPhaseChangeAt) + " lesz."}
                             onConfirm={() => { actions.sendNextPhase(this); }} onCancel={() => { }} />
                         <ConfirmPopupComponent ref={this.confirmSendUpdateNextChangeAtPopupRef} text="Biztosan frissíti a következő fázisváltás várható idejét?"
-                            onConfirm={() => { actions.setTimeTill(this.state.nextEventAt); }} onCancel={() => { }} />
+                            onConfirm={() => { actions.setTimeTill(this.state.nextPhaseChangeAt); }} onCancel={() => { }} />
                         <ConfirmPopupComponent ref={this.confirmSendPrintRequestPopupRef} text={"Biztosan kinyomtatja a következőt?\n" + `${this.state.printingCopyCount} példányban '${this.state.printingLanguage}' nyelven ${this.state.printingSize}-as méretűt`}
                             onConfirm={() => { actions.queuePrint(this.state.printingCopyCount, this.state.printingLanguage, this.state.printingSize); }} onCancel={() => { }} />
                     </>

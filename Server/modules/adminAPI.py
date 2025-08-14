@@ -83,7 +83,7 @@ async def nextPhaseHandler(request: web.Request):
     data: dict[str, str] = await request.json()
     currentPhase = utils.convertToQuizPhase(data.get("currentPhase"))
     nextPhase = utils.convertToQuizPhase(data.get("nextPhase"))
-    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")) or None
+    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=datetime.timezone.utc) or None
     if not currentPhase:
         raise web.HTTPBadRequest(text=f"Value 'currentPhase' is invalid: {data.get('currentPhase', '<missing>')}")
     if not nextPhase:

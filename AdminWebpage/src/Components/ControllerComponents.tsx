@@ -27,7 +27,7 @@ export class NextChangeAtComponent extends Component<NextChangeAtProperties, unk
                     value={getHHMMFromDate(this.props.timeTillNext)}
                     onChange={e => {
                         this.props.app.updateState({
-                            nextEventAt: new Date(this.props.timeTillNext.getFullYear(), this.props.timeTillNext.getMonth(), this.props.timeTillNext.getDate(),
+                            nextPhaseChangeAt: new Date(this.props.timeTillNext.getFullYear(), this.props.timeTillNext.getMonth(), this.props.timeTillNext.getDate(),
                                 parseInt(e.target.value.substring(0, 2)), parseInt(e.target.value.substring(3, 5)), 0)
                         });
                     }}

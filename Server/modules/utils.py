@@ -99,7 +99,8 @@ class QuizState:
     async def updateState(cls, *, nextPhase: QuizPhases = None, nextPhaseChangeAt: datetime.datetime = None):
         if nextPhase and nextPhase != cls.getNextPhase():
             raise ValueError(f"Invalid phase change: {nextPhase.value} -> {cls.getNextPhase().value}")
-        if nextPhaseChangeAt and nextPhaseChangeAt < datetime.datetime.now():
+        print(f"Incoming datetime: {nextPhaseChangeAt.isoformat()}, current datetime: {datetime.datetime.now(tz=datetime.timezone.utc).isoformat()}")
+        if nextPhaseChangeAt and nextPhaseChangeAt < datetime.datetime.now(tz=datetime.timezone.utc):
             raise ValueError(f"Invalid phase change: {nextPhaseChangeAt.isoformat(timespec='milliseconds')} -> {datetime.datetime.now().isoformat(timespec='milliseconds')}")
         if nextPhase:
             cls.phase = nextPhase
