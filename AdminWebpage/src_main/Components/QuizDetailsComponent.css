@@ -1,0 +1,50 @@
+#main-left-cell {
+    table {
+        width: 100%;
+    }
+
+    .answers th, .answers td {
+        padding: 3px 3px;
+    }
+
+    .answers .name {
+        width: 50%;
+    }
+
+    .answers .location {
+        width: 50%;
+    }
+
+    .answers .id {
+        min-width: 60px;
+        width: 60px;
+        text-align: center;
+    }
+
+    .answers .answer input {
+        text-align: center;
+        width: 60px;
+        margin: 0px 10px;
+        padding: 5px;
+        border: 1px solid var(--halfwayColor);
+        border-radius: 5px;
+    }
+
+    .answers .answer input::-webkit-outer-spin-button,
+    .answers .answer input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .answers .answer input[type=number] {
+        appearance: textfield;
+        -moz-appearance: textfield;
+    }
+
+    .answers .correct {
+        min-width: 80px;
+        width: 80px;
+        text-align: center;
+    }
+}
+

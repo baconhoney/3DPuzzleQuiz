@@ -9,5 +9,13 @@ export default defineConfig({
         allowedHosts: true,
         port: 1006
     },
-    appType: "mpa"
+    appType: "mpa",
+    build: {
+        rollupOptions: {
+            input: {
+                main: "./index.html",
+                leaderboard: "./leaderboard.html"
+            }
+        }
+    }
 })

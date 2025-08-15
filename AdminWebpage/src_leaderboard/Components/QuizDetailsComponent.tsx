@@ -4,7 +4,7 @@ import App from "../App";
 import { fetchData, type QuizDetails, type QuizLanguage, type RawQuizDetails } from "../utils";
 
 import "./QuizDetailsComponent.css";
-import { ConfirmPopupComponent } from "./ControllerComponents";
+import { ConfirmPopupComponent } from "./ControllerComponents.tsx";
 import * as actions from "./../Actions.ts";
 
 import { getDetailsData } from "../Testdata";
