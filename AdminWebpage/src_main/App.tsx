@@ -1,5 +1,4 @@
-import { StrictMode, Component, createRef } from "react";
-import { createRoot } from "react-dom/client";
+import { Component, createRef } from "react";
 
 import QuizResultsComponent from "./Components/QuizResultsComponent.tsx";
 import QuizDetailsComponent from "./Components/QuizDetailsComponent.tsx";
@@ -195,7 +194,4 @@ export default class App extends Component<unknown, AppState> {
         );
     }
 }
-
-
-createRoot(document.getElementById("root")!).render(<StrictMode><App /></StrictMode>);
 

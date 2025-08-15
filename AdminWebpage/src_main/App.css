@@ -78,6 +78,7 @@ body,
     #main-left-cell {
         flex-grow: 1;
         padding: 10px;
+
         >table {
             margin: 0px auto;
         }
