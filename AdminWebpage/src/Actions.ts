@@ -43,7 +43,7 @@ export function sendNewNextPhaseChangeAt(time: Date) {
 }
 
 export function uploadAnswers(name: string, answers: { id: number, answer: number }[]) {
-    sendData("/api/admin/uploadAnswers",
+    sendData("/api/admin/uploadQuiz",
         {
             name: name,
             answers: answers

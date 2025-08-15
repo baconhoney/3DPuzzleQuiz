@@ -138,7 +138,7 @@ async def updateSubmittedAt(teamID: int):
 
 
 async def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = None, lang: str = None, answers: list[dict[str, int]] = None):
-    """mode = `paper-updateSubmittedAt` or `paper-uploadAnswers` or `digital-uploadFull`"""
+    """mode = `paper-uploadAnswers` or `digital-uploadFull`"""
     if mode == "paper-uploadAnswers" or mode == "digital-uploadFull":
         if (
             teamID

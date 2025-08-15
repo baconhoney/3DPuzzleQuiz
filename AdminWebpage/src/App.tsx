@@ -53,11 +53,7 @@ export default class App extends Component<unknown, AppState> {
     componentDidMount(): void {
         this.stateChangedListener = addListener("stateChanged", () => {
             if (import.meta.env.MODE == "production") {
-                fetchData("/api/admin/getStates", (data) => this.updateState({
-                    nextPhaseChangeAt: new Date(data.nextPhaseChangeAt as string),
-                    currentQuizNumber: data.currentQuizNumber as number,
-                    phase: data.phase as QuizPhase,
-                }));
+                this.getStatesData();
             } else {
                 this.updateState({
                     nextPhaseChangeAt: new Date(Date.now() + 30 * 60 * 1000),
@@ -65,11 +61,22 @@ export default class App extends Component<unknown, AppState> {
                     phase: this.state.phase as QuizPhase,
                 })
             }
-        })
+        });
+        if (import.meta.env.MODE == "production") {
+            this.getStatesData();
+        }
     }
 
     componentWillUnmount(): void {
         removeListener(this.stateChangedListener);
+    }
+
+    private getStatesData() {
+        fetchData("/api/admin/getStates", (data) => this.updateState({
+            nextPhaseChangeAt: new Date(data.nextPhaseChangeAt as string),
+            currentQuizNumber: data.currentQuizNumber as number,
+            phase: data.phase as QuizPhase,
+        }));
     }
 
     render() {

@@ -50,7 +50,7 @@ async def getQuizdataHandler(request: web.Request):
 @router.post(_baseURL + "/uploadQuiz")
 async def uploadQuizHandler(request: web.Request):
     print("API POST request incoming: admin/uploadQuiz")
-    data: dict[str, str | int | list[dict[str, str | int]]] = request.json()
+    data: dict[str, str | int | list[dict[str, str | int]]] = await request.json()
     try:
         await quizDBManager.uploadAnswers("paper-uploadAnswers", teamID=data.get("teamID"), name=data.get("name"), answers=data.get("answers"))
     except quizDBManager.InvalidParameterError as e:
@@ -83,7 +83,7 @@ async def nextPhaseHandler(request: web.Request):
     data: dict[str, str] = await request.json()
     currentPhase = utils.convertToQuizPhase(data.get("currentPhase"))
     nextPhase = utils.convertToQuizPhase(data.get("nextPhase"))
-    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=datetime.timezone.utc) or None
+    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=None) or None
     if not currentPhase:
         raise web.HTTPBadRequest(text=f"Value 'currentPhase' is invalid: {data.get('currentPhase', '<missing>')}")
     if not nextPhase:
