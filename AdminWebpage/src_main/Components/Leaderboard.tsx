@@ -1,33 +1,33 @@
 import { Component } from "react";
 
 import App from "../App.tsx";
-import { fetchData, getTimeFromDate, type QuizLanguage, type QuizResults, type QuizSize, type RawQuizResults } from "../utils.ts";
+import { fetchData, getTimeFromDate, type QuizLanguage, type LeaderboardItems, type JsonLeaderboardItems } from "../utils.ts";
 
-import "./QuizResultsComponent.css";
+import "./Leaderboard.css";
 
 import { getResultsData } from "../Testdata.ts";
-import addListener, { removeListener, type listenerFunction } from "../websocketHandler.ts";
+import { addListener, removeListener, type listenerFunction } from "../websocketHandler.ts";
 
 
-interface QuizResultsProperties {
+interface Props {
     app: App;
 }
 
-interface QuizResultsState {
-    quizResults: QuizResults;
+interface State {
+    leaderboardItems: LeaderboardItems;
 }
 
-export default class QuizResultsComponent extends Component<QuizResultsProperties, QuizResultsState> {
+export default class LeaderboardComponent extends Component<Props, State> {
     private leaderboardUpdatedListener: listenerFunction | null = null;
 
-    constructor(properties: QuizResultsProperties) {
-        super(properties);
+    constructor(props: Props) {
+        super(props);
         this.state = {
-            quizResults: [],
+            leaderboardItems: [],
         };
     }
 
-    private updateState(newState: Partial<QuizResultsState>) {
+    private updateState(newState: Partial<State>) {
         this.setState({ ...this.state, ...newState });
     }
 
@@ -41,23 +41,22 @@ export default class QuizResultsComponent extends Component<QuizResultsPropertie
     }
 
     private getLeaderboard() {
-        const convertFn = (json: RawQuizResults) =>
+        const convertFn = (json: JsonLeaderboardItems) =>
             json.map((item) => ({
                 ...item,
                 language: item.language as QuizLanguage,
-                quizSize: item.size as QuizSize,
                 submittedAt: new Date(item.submittedAt),
             }));
         if (import.meta.env.MODE == "production") {
             fetchData("/api/admin/getLeaderboard", (data) =>
                 this.updateState({
-                    quizResults: convertFn(data as RawQuizResults),
+                    leaderboardItems: convertFn(data as JsonLeaderboardItems),
                 })
             );
         } else {
             // temp code for testing
             this.updateState({
-                quizResults: convertFn(getResultsData()),
+                leaderboardItems: convertFn(getResultsData()),
             });
         }
     }
@@ -77,7 +76,7 @@ export default class QuizResultsComponent extends Component<QuizResultsPropertie
                     </tr>
                 </thead>
                 <tbody>
-                    {this.state.quizResults.map((elem, i) => (
+                    {this.state.leaderboardItems.map((elem, i) => (
                         <tr key={i} onClick={() => { this.props.app.updateState({ openedQuizTeamID: elem.teamID }); }}
                             className={elem.teamID === this.props.app.state.openedQuizTeamID ? "selected" : ""}>
                             <td className="groupname">{elem.name}</td>

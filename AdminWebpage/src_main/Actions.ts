@@ -26,7 +26,14 @@ export function sendNextPhase(theApp: App) {
         });
 }
 
-export function queuePrint(copyCount: number, lang: QuizLanguage, quizSize: QuizSize) {
+export function printFilledQuiz(teamID: number) {
+    sendData("/api/admin/queuePrint",
+        {
+            "teamID": teamID
+        });
+}
+
+export function printEmptyQuiz(copyCount: number, lang: QuizLanguage, quizSize: QuizSize) {
     sendData("/api/admin/queuePrint",
         {
             "copyCount": copyCount,

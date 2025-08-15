@@ -3126,11 +3126,11 @@ type JSONQuizData = {
 };
 
 
-import type { QuizLanguage, RawQuizDetails, RawQuizResults } from "./utils";
+import type { JsonQuizDetails, JsonLeaderboardItems } from "./utils";
 
 
-const quizResults: RawQuizResults = [];
-const quizDetails: { [teamID: string]: RawQuizDetails } = {};
+const quizResults: JsonLeaderboardItems = [];
+const quizDetails: { [teamID: string]: JsonQuizDetails } = {};
 
 for (const teamID in quizdata) {
     if (Object.prototype.hasOwnProperty.call(quizdata, teamID)) {
@@ -3139,26 +3139,24 @@ for (const teamID in quizdata) {
             teamID: parseInt(teamID),
             name: element.name,
             language: element.language,
-            size: element.questions.length,
             score: element.score,
             submittedAt: element.timestamp,
         })
         quizDetails[teamID] = {
-            name: element.name,
-            language: element.language as QuizLanguage,
+            teamname: element.name,
+            language: element.language,
             score: element.score,
-            timestamp: element.timestamp,
-            questions: element.questions
+            entries: element.questions
         };
     }
 }
 
 
-export function getResultsData(): RawQuizResults {
+export function getResultsData(): JsonLeaderboardItems {
     return quizResults;
 }
 
-export function getDetailsData(teamID: number | null): RawQuizDetails | null {
+export function getDetailsData(teamID: number | null): JsonQuizDetails | null {
     return teamID ? quizDetails[teamID.toString()] : null;
 }
 

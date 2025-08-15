@@ -1,33 +1,33 @@
-import { Component, createRef } from "react";
+import { Component } from "react";
 
-import App from "../App";
-import { fetchData, type QuizDetails, type QuizLanguage, type RawQuizDetails } from "../utils";
+import App from "../App.tsx";
+import { fetchData, type QuizDetails, type QuizLanguage, type JsonQuizDetails } from "../utils.ts";
 
-import "./QuizDetailsComponent.css";
-import { ConfirmPopupComponent } from "./ControllerComponents.tsx";
-import * as actions from "./../Actions.ts";
+import "./Details.css";
+import { ConfirmPopupComponent } from "./Controllers.tsx";
 
-import { getDetailsData } from "../Testdata";
+import { getDetailsData } from "../Testdata.ts";
 
 
-interface Properties {
+interface Props {
     app: App;
     teamID: number | null;
+    confirmSaveDetailsPopupRef: React.RefObject<ConfirmPopupComponent | null>;
+    confirmPrintQuizPopupRef: React.RefObject<ConfirmPopupComponent | null>;
 }
 
 interface State {
-    quizDetails: QuizDetails | undefined;
+    details: QuizDetails | undefined;
     answers: { [id: number]: number };
 }
 
-export default class QuizDetailsComponent extends Component<Properties, State> {
-    private confirmSaveQuizDetailsPopupRef = createRef<ConfirmPopupComponent>();
+export default class DetailsComponent extends Component<Props, State> {
     private inputRefs = new Map<number, HTMLInputElement | null>();
 
-    constructor(properties: Properties) {
-        super(properties);
+    constructor(props: Props) {
+        super(props);
         this.state = {
-            quizDetails: undefined,
+            details: undefined,
             answers: {},
         };
     }
@@ -40,25 +40,24 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
         this.getQuizdata();
     }
 
-    componentDidUpdate(prevProps: Readonly<Properties>): void {
+    componentDidUpdate(prevProps: Readonly<Props>): void {
         if (prevProps.teamID !== this.props.teamID) {
             this.getQuizdata();
         }
     }
 
     private getQuizdata() {
-        const convertFn = (json: (RawQuizDetails)) => ({
+        const convertFn = (json: (JsonQuizDetails)) => ({
             ...json,
             language: json.language as QuizLanguage,
-            timestamp: new Date(json.timestamp),
         });
         if (this.props.teamID) {
             if (import.meta.env.MODE == "production") {
                 fetchData(`/api/admin/getQuizdata?teamID=${this.props.teamID ?? 'null'}`, (data) => {
-                    const res = convertFn(data as RawQuizDetails);
+                    const res = convertFn(data as JsonQuizDetails);
                     this.updateState({
-                        quizDetails: res,
-                        answers: Object.fromEntries(res.questions.map((question) => [question.id, question.answer])),
+                        details: res,
+                        answers: Object.fromEntries(res.entries.map((question) => [question.id, question.answer])),
                     });
                 });
             } else {
@@ -67,13 +66,13 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
                 if (!json) throw new Error(`No details found for teamID ${this.props.teamID}`);
                 const res = convertFn(json);
                 this.updateState({
-                    quizDetails: res,
-                    answers: Object.fromEntries(res.questions.map((question) => [question.id, question.answer])),
+                    details: res,
+                    answers: Object.fromEntries(res.entries.map((question) => [question.id, question.answer])),
                 });
             }
         } else {
             this.updateState({
-                quizDetails: undefined,
+                details: undefined,
             });
         }
     }
@@ -85,10 +84,10 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
                     <tr>
                         <td style={{ width: "auto" }}>
                             {
-                                this.state.quizDetails?.name
-                                    ? <input value={this.state.quizDetails?.name} onChange={e => this.updateState({
-                                        quizDetails: {
-                                            ...this.state.quizDetails!, name: e.target.value
+                                this.state.details?.teamname
+                                    ? <input value={this.state.details?.teamname} onChange={e => this.updateState({
+                                        details: {
+                                            ...this.state.details!, teamname: e.target.value
                                         }
                                     })} />
                                     : <span id="testGroupName" style={{ padding: "0px 5px", fontSize: "1.5rem", fontWeight: "bold" }}>"Csapatnév"</span>
@@ -96,12 +95,12 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
                         </td>
                         <td style={{ padding: "5px 5px", width: "85px", textAlign: "center" }}>
                             <span id="testLang" style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-                                {this.state.quizDetails?.language.toUpperCase() ?? "Nyelv"}
+                                {this.state.details?.language.toUpperCase() ?? "Nyelv"}
                             </span>
                         </td>
                         <td style={{ padding: "5px 5px", width: "150px", textAlign: "center", whiteSpace: "nowrap" }}>
                             <span id="testScore" style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
-                                {this.state.quizDetails?.score ?? "??"} / {this.state.quizDetails?.questions.length ?? "??"}
+                                {this.state.details?.score ?? "??"} / {this.state.details?.entries.length ?? "??"}
                             </span>
                         </td>
                     </tr>
@@ -109,7 +108,7 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
                 <tbody>
                     <tr>
                         <td colSpan={3}>
-                            {this.state.quizDetails
+                            {this.state.details
                                 ? <>
                                     <table className="answers">
                                         <thead>
@@ -122,7 +121,7 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {this.state.quizDetails.questions.map((question, index) => {
+                                            {this.state.details.entries.map((question, index) => {
                                                 return (
                                                     <tr key={question.id}>
                                                         <td className="name">{question.name}</td>
@@ -149,24 +148,33 @@ export default class QuizDetailsComponent extends Component<Properties, State> {
                                         </tbody>
                                     </table>
                                     <div className="vert-stack" style={{ position: "absolute", top: "10px", right: "10px" }}>
-                                        <button onClick={() => { this.confirmSaveQuizDetailsPopupRef.current?.show() }}>Mentés</button>
+                                        <button onClick={() => {
+                                            this.props.confirmSaveDetailsPopupRef.current!.updateState({
+                                                callerData: {
+                                                    teamName: this.state.details!.teamname,
+                                                    answers: Object.entries(this.state.answers).map(
+                                                        ([id, answer]) => ({ id: parseInt(id), answer: answer })
+                                                    )
+                                                }
+                                            });
+                                            this.props.confirmSaveDetailsPopupRef.current!.show();
+                                        }}>Mentés</button>
+                                        <button onClick={() => {
+                                            this.props.confirmPrintQuizPopupRef.current!.updateState({
+                                                callerData: {
+                                                    teamID: this.props.teamID
+                                                }
+                                            });
+                                            this.props.confirmPrintQuizPopupRef.current!.show();
+                                        }}>Nyomtat</button>
                                     </div>
-                                    <ConfirmPopupComponent ref={this.confirmSaveQuizDetailsPopupRef} text="Biztosan menti a kvíz adatokat?"
-                                        onConfirm={() => {
-                                            this.state.quizDetails && actions.uploadAnswers(
-                                                this.state.quizDetails.name,
-                                                Object.entries(this.state.answers).map(
-                                                    ([id, answer]) => ({ id: parseInt(id), answer: answer })
-                                                ))
-                                        }}
-                                        onCancel={() => { }} />
                                 </>
                                 : <p>Kattints egy kvízre az részletek megjelenítésehez!</p>
                             }
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table >
         );
     }
 }
