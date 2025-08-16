@@ -1,8 +1,7 @@
-
 .confirmPopup {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
     transform: translate(-50%, -50%);
     width: 400px;
     height: 250px;
@@ -13,6 +12,7 @@
 
     p {
         font-size: 1.2em;
+        white-space: pre-line;
     }
 
     div {

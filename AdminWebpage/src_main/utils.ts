@@ -24,11 +24,11 @@ export function getISOStringFromDate(date: Date) {
  * @returns string - The formatted time as HH:MM:SS
  */
 export function getTimeFromDate(date: Date) {
-    const z = (n: number) => (n > 9 ? "" : "0") + n;
+    const f = (n: number) => (n > 9 ? "" : "0") + n;
     const hh = date.getHours();
     const mm = date.getMinutes();
     const ss = date.getSeconds();
-    return z(hh) + ":" + z(mm) + ":" + z(ss);
+    return f(hh) + ":" + f(mm) + ":" + f(ss);
 }
 
 /**

@@ -5,9 +5,9 @@ import "./Controllers.css";
 
 interface ConfirmPopupProperties {
     ref: React.RefObject<ConfirmPopupComponent | null>;
-    text: string;
-    onConfirm: () => void;
-    onCancel: () => void;
+    text?: string;
+    onConfirm?: () => void;
+    onCancel?: () => void;
 }
 
 interface ConfirmPopupState {
@@ -16,6 +16,9 @@ interface ConfirmPopupState {
 }
 
 export class ConfirmPopupComponent extends Component<ConfirmPopupProperties, ConfirmPopupState> {
+    onConfirm: () => void = () => { };
+    onCancel: () => void = () => { };
+
     constructor(properties: ConfirmPopupProperties) {
         super(properties);
         this.state = {
@@ -24,12 +27,12 @@ export class ConfirmPopupComponent extends Component<ConfirmPopupProperties, Con
         };
     }
 
-    updateState(newState: Partial<ConfirmPopupState>){
+    private updateState(newState: Partial<ConfirmPopupState>){
         this.setState({ ...this.state, ...newState });
     }
 
     show() {
-        this.setState({ isVisible: true });
+        this.updateState({ isVisible: true });
     }
 
     render() {
@@ -37,10 +40,10 @@ export class ConfirmPopupComponent extends Component<ConfirmPopupProperties, Con
             <>
                 {this.state.isVisible ? (
                     <div className="confirmPopup">
-                        <p>{this.props.text}</p>
+                        <p>{this.props.text ?? "Biztos benne?"}</p>
                         <div>
-                            <button className="cancel" onClick={() => { this.props.onCancel(); this.updateState({ isVisible: false }); }}>Nem</button>
-                            <button className="confirm" onClick={() => { this.props.onConfirm(); this.updateState({ isVisible: false }); }}>Igen</button>
+                            <button className="cancel" onClick={() => { this.onCancel?.(); this.updateState({ isVisible: false }); }}>Nem</button>
+                            <button className="confirm" onClick={() => { this.onConfirm?.(); this.updateState({ isVisible: false }); }}>Igen</button>
                         </div>
                     </div>
                 ) : null}

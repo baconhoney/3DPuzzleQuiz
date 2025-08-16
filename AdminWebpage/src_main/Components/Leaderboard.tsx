@@ -69,20 +69,20 @@ export default class LeaderboardComponent extends Component<Props, State> {
                         onClick={() => {
                             this.props.app.updateState({ openedQuizTeamID: null });
                         }}>
+                        <th className="teamID">teamID</th>
                         <th className="groupname">Csapatnév</th>
-                        <th className="score">Pont</th>
+                        <th className="score">Pont-szám</th>
                         <th className="timestamp">Leadás ideje</th>
-                        <th className="lang">Nyelv</th>
                     </tr>
                 </thead>
                 <tbody>
                     {this.state.leaderboardItems.map((elem, i) => (
                         <tr key={i} onClick={() => { this.props.app.updateState({ openedQuizTeamID: elem.teamID }); }}
                             className={elem.teamID === this.props.app.state.openedQuizTeamID ? "selected" : ""}>
+                            <td className="teamID">{elem.teamID}</td>
                             <td className="groupname">{elem.name}</td>
                             <td className="score">{elem.score}</td>
                             <td className="timestamp">{getTimeFromDate(elem.submittedAt)}</td>
-                            <td className="lang">{elem.language}</td>
                         </tr>
                     ))}
                 </tbody>
