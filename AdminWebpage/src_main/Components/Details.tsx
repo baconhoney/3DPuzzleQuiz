@@ -1,10 +1,9 @@
-import { Component, createRef } from "react";
+import { Component } from "react";
 
 import App from "../App.tsx";
 import { fetchData, type QuizDetails, type QuizLanguage, type JsonQuizDetails } from "../utils.ts";
 
 import "./Details.css";
-import { ConfirmPopupComponent } from "./Controllers.tsx";
 import * as actions from "../Actions.ts";
 
 import { getDetailsData } from "../Testdata.ts";
@@ -21,8 +20,6 @@ interface State {
 }
 
 export default class DetailsComponent extends Component<Props, State> {
-    private confirmSaveDetailsPopupRef = createRef<ConfirmPopupComponent>();
-    private confirmPrintQuizPopupRef = createRef<ConfirmPopupComponent>();
     private inputRefs = new Map<number, HTMLInputElement | null>();
 
     constructor(props: Props) {
@@ -154,10 +151,21 @@ export default class DetailsComponent extends Component<Props, State> {
                                         </table>
                                         <div className="vert-stack" style={{ position: "absolute", top: "10px", right: "10px" }}>
                                             <button onClick={() => {
-                                                this.confirmSaveDetailsPopupRef.current!.show();
+                                                this.props.app.promptConfirm("Biztos?").then(
+                                                    () => actions.uploadAnswers(
+                                                        this.state.details!.teamname,
+                                                        Object.entries(this.state.answers).map(
+                                                            ([id, answer]) => ({ id: parseInt(id), answer: answer })
+                                                        )
+                                                    ),
+                                                    () => { }
+                                                )
                                             }}>Mentés</button>
                                             <button onClick={() => {
-                                                this.confirmPrintQuizPopupRef.current!.show();
+                                                this.props.app.promptConfirm().then(
+                                                    () => actions.printFilledQuiz(this.props.teamID!),
+                                                    () => { }
+                                                )
                                             }}>Nyomtat</button>
                                         </div>
                                     </>
@@ -167,16 +175,6 @@ export default class DetailsComponent extends Component<Props, State> {
                         </tr>
                     </tbody>
                 </table>
-                <ConfirmPopupComponent ref={this.confirmSaveDetailsPopupRef} text="Biztosan menti a kvíz adatokat?"
-                    onConfirm={() => actions.printFilledQuiz(this.props.teamID!)}
-                />
-                <ConfirmPopupComponent ref={this.confirmPrintQuizPopupRef} text="Biztosan kinyomtatja a kvízt?"
-                    onConfirm={() => actions.uploadAnswers(
-                        this.state.details!.teamname,
-                        Object.entries(this.state.answers).map(
-                            ([id, answer]) => ({ id: parseInt(id), answer: answer })
-                        )
-                    )} />
             </>
         );
     }

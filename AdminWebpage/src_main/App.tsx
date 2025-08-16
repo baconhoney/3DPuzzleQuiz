@@ -1,4 +1,4 @@
-import { Component, PureComponent } from "react";
+import { Component } from "react";
 
 import LeaderboardComponent from "./Components/Leaderboard.tsx";
 import DetailsComponent from "./Components/Details.tsx";
@@ -7,10 +7,12 @@ import "./websocketHandler.ts";
 
 import "./App.css";
 import ControlsComponent from "./Components/Controls.tsx";
+import { ConfirmPopupComponent } from "./Components/Controllers.tsx";
 
 
 interface AppState {
     openedQuizTeamID: number | null;
+    currentModal?: React.ReactNode;
 }
 
 export default class App extends Component<unknown, AppState> {
@@ -26,29 +28,41 @@ export default class App extends Component<unknown, AppState> {
         this.setState({ ...this.state, ...newState });
     }
 
-    prompConfirm() {
-
+    promptConfirm(text?: string): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.updateState({
+                currentModal: <ConfirmPopupComponent
+                    text={text ?? "Biztos benne?"}
+                    onConfirm={() => {
+                        resolve();
+                        this.updateState({ currentModal: undefined });
+                    }}
+                    onCancel={() => {
+                        reject();
+                        this.updateState({ currentModal: undefined });
+                    }} />
+            })
+        });
     }
 
     render() {
         return (
-            <div id="main-cell">
-                <div id="main-left-cell" style={{ position: "relative" }}>
-                    <DetailsComponent app={this} teamID={this.state.openedQuizTeamID} />
-                </div >
-                <div id="main-right-cell">
-                    <div id="main-top-right-cell">
-                        <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-                            <div style={{ overflow: "auto" }}>
-                                <LeaderboardComponent app={this} />
-                            </div>
+            <>
+                <div id="main-cell">
+                    <div id="main-left-cell" style={{ position: "relative" }}>
+                        <DetailsComponent app={this} teamID={this.state.openedQuizTeamID} />
+                    </div >
+                    <div id="main-right-cell">
+                        <div id="main-top-right-cell">
+                            <LeaderboardComponent app={this} />
+                        </div>
+                        <div id="main-bottom-right-cell">
+                            <ControlsComponent app={this} />
                         </div>
                     </div>
-                    <div id="main-bottom-right-cell">
-                        <ControlsComponent app={this} />
-                    </div>
                 </div>
-            </div>
+                {this.state.currentModal}
+            </>
         );
     }
 }

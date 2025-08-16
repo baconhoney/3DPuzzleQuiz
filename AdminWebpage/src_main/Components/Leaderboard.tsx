@@ -63,30 +63,37 @@ export default class LeaderboardComponent extends Component<Props, State> {
 
     render() {
         return (
-            <table className="quiz-results">
-                <thead style={{ position: "sticky", top: "0" }}>
-                    <tr
-                        onClick={() => {
-                            this.props.app.updateState({ openedQuizTeamID: null });
-                        }}>
-                        <th className="teamID">teamID</th>
-                        <th className="groupname">Csapatnév</th>
-                        <th className="score">Pont-szám</th>
-                        <th className="timestamp">Leadás ideje</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.state.leaderboardItems.map((elem, i) => (
-                        <tr key={i} onClick={() => { this.props.app.updateState({ openedQuizTeamID: elem.teamID }); }}
-                            className={elem.teamID === this.props.app.state.openedQuizTeamID ? "selected" : ""}>
-                            <td className="teamID">{elem.teamID}</td>
-                            <td className="groupname">{elem.name}</td>
-                            <td className="score">{elem.score}</td>
-                            <td className="timestamp">{getTimeFromDate(elem.submittedAt)}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <>
+                <div style={{ position: "relative", maxHeight: "100%", height: "100%" }}>
+                    <div style={{ display: "flex", flexDirection: "column", height: "100%", overflow: "auto" }}>
+                        <table className="quiz-results">
+                            <thead style={{ position: "sticky", top: "0" }}>
+                                <tr
+                                    onClick={() => {
+                                        this.props.app.updateState({ openedQuizTeamID: null });
+                                    }}>
+                                    <th className="teamID">teamID</th>
+                                    <th className="groupname">Csapatnév</th>
+                                    <th className="score">Pont-szám</th>
+                                    <th className="timestamp">Leadás ideje</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.leaderboardItems.map((elem, i) => (
+                                    <tr key={i} onClick={() => { this.props.app.updateState({ openedQuizTeamID: elem.teamID }); }}
+                                        className={elem.teamID === this.props.app.state.openedQuizTeamID ? "selected" : ""}>
+                                        <td className="teamID">{elem.teamID}</td>
+                                        <td className="groupname">{elem.name}</td>
+                                        <td className="score">{elem.score}</td>
+                                        <td className="timestamp">{getTimeFromDate(elem.submittedAt)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <button style={{ position: "absolute", top: "0px", left: "0px" }} onClick={() => this.getLeaderboard()}>R</button>
+                </div>
+            </>
         );
     }
 }
