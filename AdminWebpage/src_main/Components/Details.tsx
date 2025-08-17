@@ -15,8 +15,11 @@ interface Props {
 }
 
 interface State {
-    details: QuizDetails | undefined;
-    answers: { [id: number]: number };
+    details: Omit<QuizDetails, "entries"> & {
+        entries: (Omit<QuizDetails["entries"][number], "answer"> & {
+            answer: QuizDetails["entries"][number]["answer"] | string,
+        })[]
+    } | undefined;
 }
 
 export default class DetailsComponent extends Component<Props, State> {
@@ -26,7 +29,6 @@ export default class DetailsComponent extends Component<Props, State> {
         super(props);
         this.state = {
             details: undefined,
-            answers: {},
         };
     }
 
@@ -55,7 +57,6 @@ export default class DetailsComponent extends Component<Props, State> {
                     const res = convertFn(data as JsonQuizDetails);
                     this.updateState({
                         details: res,
-                        answers: Object.fromEntries(res.entries.map((question) => [question.id, question.answer])),
                     });
                 });
             } else {
@@ -65,7 +66,6 @@ export default class DetailsComponent extends Component<Props, State> {
                 const res = convertFn(json);
                 this.updateState({
                     details: res,
-                    answers: Object.fromEntries(res.entries.map((question) => [question.id, question.answer])),
                 });
             }
         } else {
@@ -82,14 +82,16 @@ export default class DetailsComponent extends Component<Props, State> {
                     <thead>
                         <tr>
                             <td style={{ width: "auto" }}>
-                                {
-                                    this.state.details?.teamname
-                                        ? <input value={this.state.details?.teamname} onChange={e => this.updateState({
+                                {this.state.details
+                                    ? (this.state.details.score
+                                        ? <span>{this.state.details.teamname}</span>
+                                        : <input value={this.state.details?.teamname} onChange={e => this.updateState({
                                             details: {
                                                 ...this.state.details!, teamname: e.target.value
                                             }
                                         })} />
-                                        : <span id="testGroupName" style={{ padding: "0px 5px", fontSize: "1.5rem", fontWeight: "bold" }}>"Csapatnév"</span>
+                                    )
+                                    : <span id="testGroupName" style={{ padding: "0px 5px", fontSize: "1.5rem", fontWeight: "bold" }}>"Csapatnév"</span>
                                 }
                             </td>
                             <td style={{ padding: "5px 5px", width: "85px", textAlign: "center" }}>
@@ -127,23 +129,26 @@ export default class DetailsComponent extends Component<Props, State> {
                                                             <td className="location">{question.location}</td>
                                                             <td className="id">{question.id}</td>
                                                             <td className="answer">
-                                                                <input type="number" value={this.state.details!.entries[index].answer.toString()} id={question.id.toString()} className="answer-input"
-                                                                    ref={ref => { this.inputRefs.set(index, ref) }}
-                                                                    onChange={(event) => {
-                                                                        const val = parseInt(event.target.value) || 0;
-                                                                        const newEntries = structuredClone(this.state.details!.entries); // deep-copy the whole array<objects>
-                                                                        newEntries[index].answer = val;
-                                                                        this.updateState({
-                                                                            details: {
-                                                                                ...this.state.details!,
-                                                                                entries: newEntries,
-                                                                            }
-                                                                        });
-                                                                    }}
-                                                                    onKeyUp={e => e.key == "Enter" && this.inputRefs.get(index + 1)?.select()}
-                                                                />
+                                                                {this.state.details!.score
+                                                                    ? <span>{this.state.details!.entries[index].answer}</span>
+                                                                    : <input type="number" value={(this.state.details!.entries[index].answer ?? "").toString()} id={question.id.toString()} className="answer-input"
+                                                                        ref={ref => { this.inputRefs.set(index, ref) }}
+                                                                        onChange={(event) => {
+                                                                            const val = event.target.value ? parseInt(event.target.value) : "";
+                                                                            const newEntries = structuredClone(this.state.details!.entries); // deep-copy the whole array<objects>
+                                                                            newEntries[index].answer = val;
+                                                                            this.updateState({
+                                                                                details: {
+                                                                                    ...this.state.details!,
+                                                                                    entries: newEntries,
+                                                                                }
+                                                                            });
+                                                                        }}
+                                                                        onKeyUp={e => e.key == "Enter" && this.inputRefs.get(index + 1)?.select()}
+                                                                    />
+                                                                }
                                                             </td>
-                                                            <td className="correct">{question.correct ? "✅" : "❌"}</td>
+                                                            <td className="correct">{question.correct !== null ? (question.correct ? "✅" : "❌") : ""}</td>
                                                         </tr>
                                                     );
                                                 })}
@@ -151,18 +156,16 @@ export default class DetailsComponent extends Component<Props, State> {
                                         </table>
                                         <div className="vert-stack" style={{ position: "absolute", top: "10px", right: "10px" }}>
                                             <button onClick={() => {
-                                                this.props.app.promptConfirm("Biztos?").then(
+                                                this.props.app.promptConfirm("Biztosan menti a kvízt?").then(
                                                     () => actions.uploadAnswers(
                                                         this.state.details!.teamname,
-                                                        Object.entries(this.state.answers).map(
-                                                            ([id, answer]) => ({ id: parseInt(id), answer: answer })
-                                                        )
+                                                        this.state.details!.entries.map(e => ({ id: e.id, answer: e.answer as number })),
                                                     ),
                                                     () => { }
                                                 )
                                             }}>Mentés</button>
                                             <button onClick={() => {
-                                                this.props.app.promptConfirm().then(
+                                                this.props.app.promptConfirm("Biztosan kinyomtatja a kvízt?").then(
                                                     () => actions.printFilledQuiz(this.props.teamID!),
                                                     () => { }
                                                 )

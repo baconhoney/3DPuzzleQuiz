@@ -1,9 +1,8 @@
-from ast import arg
-from random import sample, shuffle
 from openpyxl import load_workbook
+from random import sample, shuffle
 from sys import argv
-import locale
 import datetime
+import locale
 locale.setlocale(locale.LC_ALL, 'hu_HU')
 
 def clean(s: str) -> str:

@@ -74,27 +74,27 @@ export type QuizDetailEntry = {
     id: number;
     name: string;
     location: string;
-    answer: number;
-    correct: boolean;
+    answer: number | null;
+    correct: boolean | null;
 }
 
 export type QuizDetails = {
     teamname: string;
     language: QuizLanguage;
-    score: number;
+    score: number | null;
     entries: QuizDetailEntry[];
 }
 
 export type JsonQuizDetails = {
     teamname: string;
     language: string;
-    score: number;
+    score: number | null;
     entries: {
         id: number;
         name: string;
         location: string;
-        answer: number;
-        correct: boolean;
+        answer: number | null;
+        correct: boolean | null;
     }[]
 };
 
@@ -102,7 +102,7 @@ export type LeaderboardItem = {
     teamID: number,
     language: QuizLanguage,
     name: string,
-    score: number,
+    score: number | null,
     submittedAt: Date
 }
 
@@ -112,7 +112,7 @@ export type JsonLeaderboardItems = {
     teamID: number,
     language: string,
     name: string,
-    score: number,
+    score: number | null,
     submittedAt: string
 }[];
 

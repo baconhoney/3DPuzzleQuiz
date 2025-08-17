@@ -2,7 +2,7 @@ import { Component} from "react";
 
 import type App from "../App";
 
-import { fetchData, getHHMMFromDate, type QuizLanguage, type QuizPhase, type QuizSize } from "../utils";
+import { fetchData, getHHMMFromDate, QuizPhases, type QuizLanguage, type QuizPhase, type QuizSize } from "../utils";
 import { addListener, removeListener, type listenerFunction } from "../websocketHandler.ts";
 import * as actions from "../Actions.ts";
 
@@ -39,6 +39,12 @@ class TimeLeftComponent extends Component<TimeLeftProps, TimeLeftState> {
 
     componentWillUnmount(): void {
         clearInterval(this.state.intervalHandler!);
+    }
+
+    componentDidUpdate(prevProps: Readonly<TimeLeftProps>): void {
+        if (prevProps.nextChangeAt !== this.props.nextChangeAt) {
+            this.updateTime();
+        }
     }
 
     private updateTime() {
@@ -176,16 +182,21 @@ export default class ControlsComponent extends Component<Props, State> {
                         </td>
                     </tr>
                     <tr>
-                        <td colSpan={4} className="next-phase-container">
+                        <td className="current-states">
+                            <div className="vert-stack">
+                                <p>Aktuális fázis: {QuizPhases[this.state.phase]}</p>
+                                <p>Aktuális kvíz: {this.state.currentQuizNumber}</p>
+                            </div>
+                        </td>
+                        <td colSpan={3} className="next-phase-container">
                             <button
-                                style={{ width: "200px", height: "120px" }}
                                 onClick={
                                     () => this.props.app.promptConfirm("Biztosan kvíz fázist vált?\nA következő fázisváltás várható ideje " +
                                         getHHMMFromDate(this.state.nextPhaseChangeAt) + " lesz.").then(
                                             () => actions.sendNextPhase(this.state.phase, this.state.nextPhaseChangeAt),
                                             () => { }
                                         )}>
-                                Pillanatnyi fázis:<br />{this.state.phase}
+                                Fázis váltása
                             </button>
                         </td>
                     </tr>
@@ -193,9 +204,10 @@ export default class ControlsComponent extends Component<Props, State> {
                         <td colSpan={4}>
                             <div id="printing-controls" className="horiz-stack">
                                 <div id="copy-count" className="horiz-stack">
-                                    <input type="number" value={this.state.printingCopyCount}
-                                        onChange={(e) => this.updateState({ printingCopyCount: parseInt(e.target.value) })} />
-                                    <div>példány</div>
+                                    <input id="copy-count-input" type="number" value={this.state.printingCopyCount}
+                                        onChange={(e) => this.updateState({ printingCopyCount: parseInt(e.target.value) })}
+                                        min={1} max={99}/>
+                                    <label htmlFor="copy-count-input">példány</label>
                                 </div>
                                 <div id="settings" className="horiz-stack">
                                     <div id="quiz-lang" className="vert-stack">

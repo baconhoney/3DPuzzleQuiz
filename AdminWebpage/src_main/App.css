@@ -85,7 +85,7 @@ body,
     }
 
     #main-right-cell {
-        width: 500px;
+        width: 700px;
         display: flex;
         flex-direction: column;
     }

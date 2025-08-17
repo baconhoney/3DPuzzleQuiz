@@ -2,12 +2,12 @@ import { getISOStringFromDate, type QuizLanguage, type QuizPhase, type QuizSize 
 
 
 function sendData(url: string, data: any) {
+    console.log(`Sending data to ${url}:\n`, data);
     if (import.meta.env.MODE == "production") {
         // prod-mode, do actual fetch
         fetch(url, { method: "POST", body: JSON.stringify(data) });
     } else {
-        // dev-mode, print to console
-        console.log(`Sending data to ${url}:\n`, data);
+        // dev-mode, doing nothing else
     }
 }
 
@@ -20,7 +20,6 @@ export function sendNextPhase(phase: QuizPhase, nextPhaseChangeAt: Date) {
     sendData("/api/admin/nextPhase",
         {
             "currentPhase": phase,
-            "nextPhase": getNextPhase(phase),
             "nextPhaseChangeAt": getISOStringFromDate(nextPhaseChangeAt),
         });
 }
