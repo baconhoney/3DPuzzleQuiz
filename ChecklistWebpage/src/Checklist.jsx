@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ChecklistGroup from "./ChecklistGroup";
 import ThemeToggle from "./ThemeToggle";
 import AutoInputPopup from "./AutoInputPopup";
+import { Eye, EyeOff } from "lucide-react"; // 👈 install lucide-react if not yet: npm i lucide-react
 
 const STORAGE_KEY = "checklist-state";
 const THEME_KEY = "theme";
@@ -16,6 +17,7 @@ export default function Checklist() {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const [showAutoInput, setShowAutoInput] = useState(false);
+    const [hideChecked, setHideChecked] = useState(false); // 👈 new state
 
     useEffect(() => {
         fetch("/checklist/data.json")
@@ -113,7 +115,17 @@ export default function Checklist() {
                 <h1 className="absolute left-1/2 transform -translate-x-1/2 text-lg font-bold">
                     Ellenőrző Lista 2025
                 </h1>
-                <ThemeToggle theme={theme} setTheme={setTheme} />
+                <div className="flex items-center gap-2">
+                    {/* 👇 new toggle button */}
+                    <button
+                        onClick={() => setHideChecked(!hideChecked)}
+                        className="btn btn-sm border border-black"
+                        title={hideChecked ? "Show Checked Items" : "Hide Checked Items"}
+                    >
+                        {hideChecked ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                    <ThemeToggle theme={theme} setTheme={setTheme} />
+                </div>
             </div>
 
             {showAutoInput && (
@@ -135,7 +147,13 @@ export default function Checklist() {
                             {sortedData
                                 .filter((g) => g.category === category)
                                 .map((group, i) => (
-                                    <ChecklistGroup key={i} group={group} state={state} toggle={toggle} />
+                                    <ChecklistGroup
+                                        key={i}
+                                        group={group}
+                                        state={state}
+                                        toggle={toggle}
+                                        hideChecked={hideChecked} // 👈 pass down
+                                    />
                                 ))}
                         </div>
                     </section>

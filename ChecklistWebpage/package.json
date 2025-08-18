@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "daisyui": "^5.0.50",
+    "lucide-react": "^0.539.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

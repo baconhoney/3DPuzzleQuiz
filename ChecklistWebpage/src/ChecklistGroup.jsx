@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function ChecklistGroup({ group, state, toggle, level = 0 }) {
+export default function ChecklistGroup({ group, state, toggle, level = 0, hideChecked = false }) {
     const [open, setOpen] = useState(false);
 
     const flatItems = group.items.filter(item => typeof item === "string");
@@ -29,6 +29,9 @@ export default function ChecklistGroup({ group, state, toggle, level = 0 }) {
                         if (typeof item === "string") {
                             const key = `${group.title}__${item}`;
                             const checked = !!state[key];
+
+                            if (hideChecked && checked) return null; // 👈 hide checked
+
                             return (
                                 <label
                                     key={key}
@@ -55,6 +58,7 @@ export default function ChecklistGroup({ group, state, toggle, level = 0 }) {
                                     state={state}
                                     toggle={toggle}
                                     level={level + 1}
+                                    hideChecked={hideChecked} // 👈 pass down
                                 />
                             );
                         }
