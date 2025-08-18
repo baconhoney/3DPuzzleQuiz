@@ -190,21 +190,18 @@ export default function SearchPage() {
             </div>
 
             {showScanner && (
-                <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-                    <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md relative">
+                <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-2">
+                    <div className="relative w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden">
                         <button
-                            onClick={() => {
-                                setShowScanner(false);
-                                stopScanner();
-                            }}
-                            className="absolute top-2 right-2 text-red-500 font-bold"
+                            onClick={() => setShowScanner(false)}
+                            className="absolute top-2 right-2 text-red-500 font-bold z-10"
                         >
                             ✕
                         </button>
-                        <h2 className="text-lg font-semibold mb-2">Scan DMC Code</h2>
+                        <h2 className="text-lg font-semibold mb-2 text-center pt-2">Scan DMC Code</h2>
                         <div
                             id="scanner-container"
-                            style={{ width: "100%", height: "320px" }}
+                            className="w-full aspect-video bg-black"
                         ></div>
                     </div>
                 </div>
