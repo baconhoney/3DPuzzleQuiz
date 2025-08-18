@@ -126,20 +126,25 @@ export default function SearchPage() {
 
         Html5Qrcode.getCameras()
             .then((cameras) => {
-                if (cameras && cameras.length) {
-                    const cameraId = cameras[0].id;
-                    html5QrCode.start(
-                        cameraId,
-                        { fps: 10, qrbox: 250 },
-                        (decodedText) => {
-                            if (!active) return;
-                            setQuery(decodedText);
-                            stopScanner();
-                            setShowScanner(false);
-                        },
-                        (err) => { }
-                    ).catch((err) => console.error("Camera start failed", err));
+                if (!cameras || cameras.length === 0) {
+                    console.error("No cameras found.");
+                    return;
                 }
+
+                let backCamera = cameras.find(cam => /back|rear|environment/i.test(cam.label));
+                const cameraId = backCamera ? backCamera.id : cameras[0].id;
+
+                html5QrCode.start(
+                    cameraId,
+                    { fps: 10, qrbox: 250 },
+                    (decodedText) => {
+                        if (!active) return;
+                        setQuery(decodedText);
+                        stopScanner();
+                        setShowScanner(false);
+                    },
+                    (err) => { }
+                ).catch((err) => console.error("Camera start failed", err));
             })
             .catch((err) => console.error("Failed to get cameras", err));
 
@@ -176,7 +181,7 @@ export default function SearchPage() {
 
                     <button
                         onClick={() => setShowScanner(true)}
-                        className="btn btn-sm flex items-center gap-1 bg-blue-500 text-white px-2 py-3 rounded-lg shadow hover:bg-blue-600 transition"
+                        className="btn btn-sm flex items-center gap-1 bg-blue-500 text-white px-2 py-2 rounded-lg shadow hover:bg-blue-600 transition"
                         type="button"
                     >
                         <Camera size={16} /> Scan
