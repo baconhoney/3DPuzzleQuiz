@@ -9,11 +9,16 @@ import {
     removeAccents,
 } from "./utils";
 
+import { Html5QrcodeScanner } from "html5-qrcode"; // 👈 scanner library
+import { Camera } from "lucide-react"; // 👈 optional icon (npm i lucide-react)
+
 export default function SearchPage() {
     const [data, setData] = useState([]);
     const [query, setQuery] = useState("");
     const [sortKey, setSortKey] = useState("name_hu");
     const [sortAsc, setSortAsc] = useState(true);
+
+    const [showScanner, setShowScanner] = useState(false); // 👈 scanner popup toggle
 
     useEffect(() => {
         const isGitHubPages = location.hostname.includes("github.io");
@@ -88,33 +93,81 @@ export default function SearchPage() {
         return sortItems(filteredItems, sortKey, sortAsc, columns);
     }, [data, query, sortKey, sortAsc, columns]);
 
+    // 👇 Setup scanner when modal opens
+    useEffect(() => {
+        if (showScanner) {
+            const scanner = new Html5QrcodeScanner("scanner-container", {
+                fps: 10,
+                qrbox: 250,
+            });
+
+            scanner.render(
+                (decodedText) => {
+                    setQuery(decodedText); // 👈 fill input with scanned text
+                    setShowScanner(false); // close modal
+                    scanner.clear();
+                },
+                (err) => {
+                    console.warn("Scan error:", err);
+                }
+            );
+
+            return () => {
+                scanner.clear().catch(() => { });
+            };
+        }
+    }, [showScanner]);
+
     return (
         <div className="w-full max-w-full bg-white p-2 rounded-2xl">
             <div className="sticky top-0 bg-white pt-4 pb-4 z-30 border-b border-gray-300">
-                <div className="relative">
+                <div className="relative flex gap-2">
                     <input
                         type="text"
                         placeholder="🔍 Keresés minden mezőben..."
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         autoFocus
-                        className="w-full p-2 sm:p-3 pr-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-sm sm:text-base"
+                        className="flex-1 p-2 sm:p-3 pr-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition text-sm sm:text-base"
                     />
+                    {/* Clear button */}
                     {query && (
                         <button
                             onMouseDown={(e) => e.preventDefault()}
-                            onClick={() => {
-                                setQuery("");
-                            }}
-                            className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 text-red-600 hover:text-red-700 transition p-2 sm:p-1 font-bold"
+                            onClick={() => setQuery("")}
+                            className="absolute right-12 top-1/2 -translate-y-1/2 text-red-600 hover:text-red-700 transition p-2 sm:p-1 font-bold"
                             aria-label="Clear search"
                             type="button"
                         >
                             <span className="text-lg sm:text-base text-red-500 font-bold">✕</span>
                         </button>
                     )}
+                    {/* Scanner button */}
+                    <button
+                        onClick={() => setShowScanner(true)}
+                        className="btn btn-sm flex items-center gap-1 bg-blue-500 text-white px-3 rounded-lg shadow hover:bg-blue-600 transition"
+                        type="button"
+                    >
+                        <Camera size={16} /> Scan
+                    </button>
                 </div>
             </div>
+
+            {/* Scanner popup */}
+            {showScanner && (
+                <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+                    <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md relative">
+                        <button
+                            onClick={() => setShowScanner(false)}
+                            className="absolute top-2 right-2 text-red-500 font-bold"
+                        >
+                            ✕
+                        </button>
+                        <h2 className="text-lg font-semibold mb-2">Scan DMC Code</h2>
+                        <div id="scanner-container" className="w-full h-64"></div>
+                    </div>
+                </div>
+            )}
 
             <div className="overflow-x-auto overflow-y-auto max-h-[80vh] rounded-lg shadow-sm mt-4">
                 <table className="min-w-full text-sm sm:text-base text-left table-auto border-collapse">

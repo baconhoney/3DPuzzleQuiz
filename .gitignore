@@ -8,6 +8,7 @@
 /**/node_modules/
 /Build/*
 /ChecklistWebpage/scripts/masterList.json
+/ChecklistWebpage/public/data.json
 /ReactTest/
 /SearchWebpage/src/masterList.jsx
 /Server/server_specifics.env
