@@ -99,21 +99,31 @@ export default function SearchPage() {
             const html5QrCode = new Html5Qrcode("scanner-container");
             scannerRef.current = html5QrCode;
 
-            html5QrCode.start(
-                { facingMode: "environment" },
-                { fps: 10, qrbox: 250 },
-                (decodedText) => {
-                    setQuery(decodedText);
-                    setShowScanner(false);
-                    html5QrCode.stop().then(() => html5QrCode.clear());
-                },
-                (err) => {
-                }
-            );
+            html5QrCode
+                .start(
+                    { facingMode: "environment" },
+                    { fps: 10, qrbox: 250 },
+                    (decodedText) => {
+                        setQuery(decodedText);
+                        setShowScanner(false);
+                        html5QrCode
+                            .stop()
+                            .then(() => html5QrCode.clear())
+                            .catch(() => { });
+                    },
+                    (err) => {
+                    }
+                )
+                .catch((err) => {
+                    console.error("Camera start failed", err);
+                });
 
             return () => {
                 if (scannerRef.current) {
-                    scannerRef.current.stop().then(() => scannerRef.current.clear());
+                    scannerRef.current
+                        .stop()
+                        .then(() => scannerRef.current.clear())
+                        .catch(() => { });
                 }
             };
         }
@@ -165,7 +175,10 @@ export default function SearchPage() {
                             ✕
                         </button>
                         <h2 className="text-lg font-semibold mb-2">Scan DMC Code</h2>
-                        <div id="scanner-container" className="w-full h-64"></div>
+                        <div
+                            id="scanner-container"
+                            style={{ width: "100%", height: "320px" }}
+                        ></div>
                     </div>
                 </div>
             )}
