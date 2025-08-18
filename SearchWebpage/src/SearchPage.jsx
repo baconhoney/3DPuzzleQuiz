@@ -19,6 +19,7 @@ export default function SearchPage() {
     const [sortAsc, setSortAsc] = useState(true);
 
     const [showScanner, setShowScanner] = useState(false);
+    const isScannerActive = useRef(false);
     const scannerRef = useRef(null);
 
     useEffect(() => {
@@ -94,37 +95,42 @@ export default function SearchPage() {
         return sortItems(filteredItems, sortKey, sortAsc, columns);
     }, [data, query, sortKey, sortAsc, columns]);
 
+    // Safe stop function
+    const stopScanner = async () => {
+        if (!scannerRef.current) return;
+        try {
+            if (scannerRef.current.getState && scannerRef.current.getState() === "SCANNING") {
+                await scannerRef.current.stop();
+                await scannerRef.current.clear();
+            }
+        } catch (e) {
+            console.warn("Scanner cleanup error:", e);
+        } finally {
+            scannerRef.current = null;
+        }
+    };
+
     useEffect(() => {
         if (showScanner) {
+            isScannerActive.current = true;
             const html5QrCode = new Html5Qrcode("scanner-container");
             scannerRef.current = html5QrCode;
 
-            html5QrCode
-                .start(
-                    { video: { facingMode: { exact: "environment" } } },
-                    { fps: 10, qrbox: 250 },
-                    (decodedText) => {
-                        setQuery(decodedText);
-                        setShowScanner(false);
-                        html5QrCode
-                            .stop()
-                            .then(() => html5QrCode.clear())
-                            .catch(() => { });
-                    },
-                    (err) => {
-                    }
-                )
-                .catch((err) => {
-                    console.error("Camera start failed", err);
-                });
+            html5QrCode.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: 250 },
+                (decodedText) => {
+                    if (!isScannerActive.current) return;
+                    setQuery(decodedText);
+                    setShowScanner(false);
+                    stopScanner();
+                },
+                (err) => { }
+            ).catch((err) => console.error("Camera start failed", err));
 
             return () => {
-                if (scannerRef.current) {
-                    scannerRef.current
-                        .stop()
-                        .then(() => scannerRef.current.clear())
-                        .catch(() => { });
-                }
+                isScannerActive.current = false;
+                stopScanner();
             };
         }
     }, [showScanner]);
@@ -157,7 +163,7 @@ export default function SearchPage() {
 
                     <button
                         onClick={() => setShowScanner(true)}
-                        className="btn btn-sm flex items-center gap-1 bg-blue-500 text-white px-3 rounded-lg shadow hover:bg-blue-600 transition"
+                        className="btn btn-sm flex items-center gap-1 bg-blue-500 text-white px-2 py-3 rounded-lg shadow hover:bg-blue-600 transition"
                         type="button"
                     >
                         <Camera size={16} /> Scan
@@ -169,7 +175,10 @@ export default function SearchPage() {
                 <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
                     <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md relative">
                         <button
-                            onClick={() => setShowScanner(false)}
+                            onClick={() => {
+                                setShowScanner(false);
+                                stopScanner();
+                            }}
                             className="absolute top-2 right-2 text-red-500 font-bold"
                         >
                             ✕
