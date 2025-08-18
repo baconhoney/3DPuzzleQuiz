@@ -109,7 +109,7 @@
             "name_en": "Saint Basil's cathedral",
             "location_hu": "Oroszország, Moszkva",
             "location_en": "Moscow, Russia",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 5517,
@@ -289,7 +289,7 @@
             "name_en": "Florence Cathedral",
             "location_hu": "Olaszország, Firenze",
             "location_en": "Firenze, Italy",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 2035,
@@ -489,7 +489,7 @@
             "name_en": "Cologne cathedral",
             "location_hu": "Németország, Köln",
             "location_en": "Cologne, Germany",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 6939,
@@ -539,7 +539,7 @@
             "name_en": "Cathedral of Christ the Savior",
             "location_hu": "Oroszország, Moszkva",
             "location_en": "Moscow, Russia",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 8053,
@@ -549,7 +549,7 @@
             "name_en": "Milan Cathedral",
             "location_hu": "Olaszország, Milánó",
             "location_en": "Milan, Italy",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 4954,
@@ -589,7 +589,7 @@
             "name_en": "The Assumption Cathedral",
             "location_hu": "Oroszország, Szergijev Poszad",
             "location_en": "Sergiyev Posad, Russia",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 7310,
@@ -599,7 +599,7 @@
             "name_en": "Notre-Dame de Paris",
             "location_hu": "Franciaország, Párizs",
             "location_en": "Paris, France",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 2615,
@@ -689,7 +689,7 @@
             "name_en": "Sagrada Familia",
             "location_hu": "Spanyolország, Barcelona",
             "location_en": "Barcelona, Spain",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 8171,
@@ -769,7 +769,7 @@
             "name_en": "St. Isaac's cathedral",
             "location_hu": "Oroszország, Szentpétervár",
             "location_en": "Saint Petersburg, Russia",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 6795,
@@ -779,7 +779,7 @@
             "name_en": "St. Jacob's cathedral",
             "location_hu": "Spanyolország, Santiago d. C.",
             "location_en": "Santiago d. C., Spain",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 3074,
@@ -799,7 +799,7 @@
             "name_en": "St. Patrick cathedral",
             "location_hu": "Egyesült Államok, New York",
             "location_en": "New York, United States of America",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 3489,
@@ -809,7 +809,7 @@
             "name_en": "St. Paul cathedral",
             "location_hu": "Egyesült Királyság, London",
             "location_en": "London, United Kingdom",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 6644,
@@ -829,17 +829,17 @@
             "name_en": "St. Vitus cathedral",
             "location_hu": "Csehország, Prága",
             "location_en": "Prague, Czech Republic",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 6558,
             "box": 1710,
             "answer": 65,
-            "name_hu": "Szmolnij kolostor",
-            "name_en": "Smolny Convent",
+            "name_hu": "Szmolnij-székesegyház",
+            "name_en": "Smolny Cathedral",
             "location_hu": "Oroszország, Szentpétervár",
             "location_en": "Saint Petersburg, Russia",
-            "type": "vallás/egyéb"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 5047,
@@ -969,7 +969,7 @@
             "name_en": "Wawel Cathedral",
             "location_hu": "Lengyelország, Krakkó",
             "location_en": "Kraków, Poland",
-            "type": "vallás/katedrális"
+            "type": "vallás/székesegyház"
         },
         {
             "id": 9596,

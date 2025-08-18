@@ -5,11 +5,11 @@ from datamatrix_modified.datamatrix import DataMatrix
 
 
 # ------ CONSTANTS ------
-DMCCONTENT = "{uid}|{box}|{name}"  # format string for the DataMatrix content, use 'ascii' mode
+#DMCCONTENT = "{uid}|{box}|{name}"  # format string for the DataMatrix content, use 'ascii' mode
 #DMCCONTENT = "{uid}" # use 'ascii' mode
-#DMCCONTENT = "{box}" # use 'text' mode
-DMCCODEC = "ascii"
-#DMCCODEC = "text"
+DMCCONTENT = "{box}" # use 'text' mode
+#DMCCODEC = "ascii"
+DMCCODEC = "text"
 NAMELENGTH = 50  # max length of the name in the DataMatrix code
 PIXELSIZES = [0.05]  # sizes of one pixel in cm
 CODESIZES = [0.5, 2, 3.5]  # sizes of one dmc in cm
@@ -39,6 +39,7 @@ def dmcToPng(dmc: DataMatrix, /, bg: tuple = (255, 255, 255), fg: tuple = (0, 0,
 cwd = pathlib.Path(__file__).parent.resolve()
 data: dict[str, str | list[dict[str, str | int]]] = json.load(open(cwd / "masterList.json", encoding="utf-8"))
 entries: list[dict[str, str | int]] = sorted(data["entries"], key=SORTKEY)
+#entries = [{"box": box, "id": 0, "name_hu": ""} for box in [1966, 1971, 1991, 1998]]
 
 valueList: list[str] = []
 for entry in entries:

@@ -14,6 +14,8 @@ dependencies = [
     "python-barcode (>=0.15.1,<0.16.0)",
     "pyppeteer (>=2.0.0,<3.0.0)",
     "openpyxl (>=3.1.5,<4.0.0)",
+    "unidecode (>=1.4.0,<2.0.0)",
+    "pillow (>=11.3.0,<12.0.0)",
 ]
 
 
