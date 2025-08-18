@@ -111,28 +111,41 @@ export default function SearchPage() {
     };
 
     useEffect(() => {
-        if (showScanner) {
-            isScannerActive.current = true;
-            const html5QrCode = new Html5Qrcode("scanner-container");
-            scannerRef.current = html5QrCode;
+        if (!showScanner) return;
 
-            html5QrCode.start(
-                { facingMode: "environment" },
-                { fps: 10, qrbox: 250 },
-                (decodedText) => {
-                    if (!isScannerActive.current) return;
-                    setQuery(decodedText);
-                    setShowScanner(false);
-                    stopScanner();
-                },
-                (err) => { }
-            ).catch((err) => console.error("Camera start failed", err));
+        let html5QrCode = new Html5Qrcode("scanner-container");
+        let active = true;
 
-            return () => {
-                isScannerActive.current = false;
-                stopScanner();
-            };
-        }
+        const stopScanner = () => {
+            if (!active) return;
+            active = false;
+            html5QrCode.stop()
+                .then(() => html5QrCode.clear())
+                .catch(() => { });
+        };
+
+        Html5Qrcode.getCameras()
+            .then((cameras) => {
+                if (cameras && cameras.length) {
+                    const cameraId = cameras[0].id;
+                    html5QrCode.start(
+                        cameraId,
+                        { fps: 10, qrbox: 250 },
+                        (decodedText) => {
+                            if (!active) return;
+                            setQuery(decodedText);
+                            stopScanner();
+                            setShowScanner(false);
+                        },
+                        (err) => { }
+                    ).catch((err) => console.error("Camera start failed", err));
+                }
+            })
+            .catch((err) => console.error("Failed to get cameras", err));
+
+        return () => {
+            stopScanner();
+        };
     }, [showScanner]);
 
     return (
