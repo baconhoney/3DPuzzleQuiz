@@ -101,7 +101,7 @@ export default function SearchPage() {
 
             html5QrCode
                 .start(
-                    { facingMode: "environment" },
+                    { video: { facingMode: { exact: "environment" } } },
                     { fps: 10, qrbox: 250 },
                     (decodedText) => {
                         setQuery(decodedText);
