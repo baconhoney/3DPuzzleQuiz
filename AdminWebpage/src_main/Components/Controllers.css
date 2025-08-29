@@ -4,29 +4,35 @@
     left: 50vw;
     transform: translate(-50%, -50%);
     width: 400px;
-    height: 250px;
+    height: 300px;
     padding: 25px;
     border: 1px solid black;
     border-style: outset;
     border-radius: 20px;
 
-    p {
-        font-size: 1.2em;
+    div.msg {
+        h1 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        font-size: 1.0em;
         white-space: pre-line;
     }
 
-    div {
+    div.buttons {
         position: absolute;
         left: 0px;
         right: 0px;
-        bottom: 25px;
+        bottom: 20px;
         display: flex;
         justify-content: space-evenly;
 
         button {
-            width: 30%;
-            height: 40px;
-            border-radius: 20px;
+            width: 110px;
+            height: 45px;
+            border-radius: 22.5px;
+            font-size: 20px;
         }
 
         .cancel {
@@ -39,3 +45,43 @@
     }
 }
 
+.errorPopup {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 300px;
+    padding: 25px;
+    border: 1px solid black;
+    border-style: outset;
+    border-radius: 20px;
+
+    div.msg {
+        overflow-x: hidden;
+        overflow-y: auto;
+        max-height: 100%;
+        font-size: 1.0em;
+        white-space: pre-line;
+
+        h1 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+    }
+
+    div.buttons {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        display: flex;
+        justify-content: space-around;
+
+        button {
+            width: 100px;
+            height: 45px;
+            border-radius: 22.5px;
+            font-size: 20px;
+        }
+    }
+}

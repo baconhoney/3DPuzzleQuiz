@@ -6,7 +6,7 @@ import { fetchData, getTimeFromDate, type QuizLanguage, type LeaderboardItems, t
 import "./Leaderboard.css";
 
 import { getResultsData } from "../Testdata.ts";
-import { addListener, removeListener, type listenerFunction } from "../websocketHandler.ts";
+import { addListener, removeListener } from "../websocketHandler.ts";
 
 
 interface Props {
@@ -18,7 +18,7 @@ interface State {
 }
 
 export default class LeaderboardComponent extends Component<Props, State> {
-    private leaderboardUpdatedListener: listenerFunction | null = null;
+    private leaderboardUpdatedListener: number | null = null;
 
     constructor(props: Props) {
         super(props);
@@ -45,10 +45,10 @@ export default class LeaderboardComponent extends Component<Props, State> {
             json.map((item) => ({
                 ...item,
                 language: item.language as QuizLanguage,
-                submittedAt: new Date(item.submittedAt),
+                submittedAt: item.submittedAt ? new Date(item.submittedAt) : null,
             }));
         if (import.meta.env.MODE == "production") {
-            fetchData("/api/admin/getLeaderboard", (data) =>
+            fetchData("/api/admin/getLeaderboard", data =>
                 this.updateState({
                     leaderboardItems: convertFn(data as JsonLeaderboardItems),
                 })
@@ -83,9 +83,9 @@ export default class LeaderboardComponent extends Component<Props, State> {
                                     <tr key={i} onClick={() => { this.props.app.updateState({ openedQuizTeamID: elem.teamID }); }}
                                         className={elem.teamID === this.props.app.state.openedQuizTeamID ? "selected" : ""}>
                                         <td className="teamID">{elem.teamID}</td>
-                                        <td className="groupname">{elem.name}</td>
+                                        <td className="groupname">{elem.teamname}</td>
                                         <td className="score">{elem.score}</td>
-                                        <td className="timestamp">{getTimeFromDate(elem.submittedAt)}</td>
+                                        <td className="timestamp">{elem.submittedAt ? getTimeFromDate(elem.submittedAt) : ""}</td>
                                     </tr>
                                 ))}
                             </tbody>

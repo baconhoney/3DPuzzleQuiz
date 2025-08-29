@@ -65,45 +65,46 @@ export function fetchData(url: string, callback: (data: any) => void) {
 /* ----- TYPES and CONSTANTS ----- */
 /* ------------------------------- */
 export type QuizLanguage = "hu" | "en";
+export const QuizLanguages = { "hu": "Magyar", "en": "Angol" };
 export type QuizSize = 20 | 100;
 export type QuizPhase = "idle" | "running" | "scoring";
 export const QuizPhases = { "idle": "Készenlét", "running": "Fut", "scoring": "Pontozás" };
 
 
 export type QuizDetailEntry = {
-    id: number;
-    name: string;
-    location: string;
-    answer: number | null;
-    correct: boolean | null;
+    id: number,
+    name: string,
+    location: string,
+    answer: number | null,
+    correct: boolean | null,
 }
 
 export type QuizDetails = {
-    teamname: string;
-    language: QuizLanguage;
-    score: number | null;
-    entries: QuizDetailEntry[];
+    teamname: string | null,
+    language: QuizLanguage,
+    score: number | null,
+    entries: QuizDetailEntry[],
 }
 
 export type JsonQuizDetails = {
-    teamname: string;
-    language: string;
-    score: number | null;
+    teamname: string | null,
+    language: string,
+    score: number | null,
     entries: {
-        id: number;
-        name: string;
-        location: string;
-        answer: number | null;
-        correct: boolean | null;
-    }[]
-};
+        id: number,
+        name: string,
+        location: string,
+        answer: number | null,
+        correct: boolean | null,
+    }[],
+}
 
 export type LeaderboardItem = {
     teamID: number,
     language: QuizLanguage,
-    name: string,
+    teamname: string | null,
     score: number | null,
-    submittedAt: Date
+    submittedAt: Date | null,
 }
 
 export type LeaderboardItems = LeaderboardItem[]
@@ -111,8 +112,8 @@ export type LeaderboardItems = LeaderboardItem[]
 export type JsonLeaderboardItems = {
     teamID: number,
     language: string,
-    name: string,
+    teamname: string | null,
     score: number | null,
-    submittedAt: string
-}[];
+    submittedAt: string | null,
+}[]
 

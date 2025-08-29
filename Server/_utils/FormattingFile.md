@@ -15,7 +15,7 @@
 |     ...    |      ...     |    ...   |      ...     |
 
 **onClick**: shows the details of that team/answer
-**onSecondScan**: shows the details of that team/answer
+**on second scan**: shows the details of that team/answer (uses `showQuiz` event)
 
 ## Details display
 

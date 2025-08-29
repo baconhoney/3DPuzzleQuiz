@@ -4320,13 +4320,13 @@ for (const teamID in quizdata) {
     const element = quizdata[teamID];
     quizResults.push({
         teamID: parseInt(teamID),
-        name: element.name,
+        teamname: element.score ? element.name : null,
         language: element.language,
         score: element.score,
-        submittedAt: element.timestamp,
+        submittedAt: element.score ? element.timestamp : null,
     })
     quizDetails[teamID] = {
-        teamname: element.name,
+        teamname: element.score ? element.name : null,
         language: element.language,
         score: element.score,
         entries: element.questions

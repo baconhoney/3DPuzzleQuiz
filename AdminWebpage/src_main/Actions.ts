@@ -24,7 +24,7 @@ export function sendNextPhase(phase: QuizPhase, nextPhaseChangeAt: Date) {
         });
 }
 
-export function printFilledQuiz(teamID: number) {
+export function printQuiz(teamID: number) {
     sendData("/api/admin/queuePrint",
         {
             "teamID": teamID

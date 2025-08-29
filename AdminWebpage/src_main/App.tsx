@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 
 import LeaderboardComponent from "./Components/Leaderboard.tsx";
 import DetailsComponent from "./Components/Details.tsx";
@@ -7,7 +7,8 @@ import "./websocketHandler.ts";
 
 import "./App.css";
 import ControlsComponent from "./Components/Controls.tsx";
-import { ConfirmPopupComponent } from "./Components/Controllers.tsx";
+import { ConfirmPopupComponent, ErrorPopupComponent } from "./Components/Controllers.tsx";
+import { addListener, removeListener } from "./websocketHandler.ts";
 
 
 interface AppState {
@@ -16,6 +17,7 @@ interface AppState {
 }
 
 export default class App extends Component<unknown, AppState> {
+    private showQuizListener: number | null = null;
 
     constructor(props: unknown) {
         super(props);
@@ -28,11 +30,23 @@ export default class App extends Component<unknown, AppState> {
         this.setState({ ...this.state, ...newState });
     }
 
-    promptConfirm(text?: string): Promise<void> {
+    componentDidMount(): void {
+        this.showQuizListener = addListener("showQuiz", (data: { teamID: number }) => {
+            if (this.state.openedQuizTeamID == null) {
+                this.updateState({ openedQuizTeamID: data.teamID });
+            }
+        })
+    }
+
+    componentWillUnmount(): void {
+        removeListener(this.showQuizListener);
+    }
+
+    promptConfirm(text?: React.ReactNode): Promise<void> {
         return new Promise((resolve, reject) => {
             this.updateState({
                 currentModal: <ConfirmPopupComponent
-                    text={text ?? "Biztos benne?"}
+                    text={text}
                     onConfirm={() => {
                         resolve();
                         this.updateState({ currentModal: undefined });
@@ -42,6 +56,14 @@ export default class App extends Component<unknown, AppState> {
                         this.updateState({ currentModal: undefined });
                     }} />
             })
+        });
+    }
+
+    showError(text?: React.ReactNode): void {
+        this.updateState({
+            currentModal: <ErrorPopupComponent
+                text={text}
+                onAck={() => this.updateState({ currentModal: undefined })} />
         });
     }
 

@@ -1,9 +1,9 @@
-import { Component} from "react";
+import { Component } from "react";
 
 import type App from "../App";
 
-import { fetchData, getHHMMFromDate, QuizPhases, type QuizLanguage, type QuizPhase, type QuizSize } from "../utils";
-import { addListener, removeListener, type listenerFunction } from "../websocketHandler.ts";
+import { fetchData, getHHMMFromDate, QuizLanguages, QuizPhases, type QuizLanguage, type QuizPhase, type QuizSize } from "../utils";
+import { addListener, removeListener } from "../websocketHandler.ts";
 import * as actions from "../Actions.ts";
 
 import "./Controls.css";
@@ -51,8 +51,8 @@ class TimeLeftComponent extends Component<TimeLeftProps, TimeLeftState> {
         const f = (n: number) => (n > 9 ? "" : "0") + n;
         let left = (this.props.nextChangeAt.valueOf() - Date.now()) / 1000; // seconds
         const sign = left < 0 ? "-" : "";
-        left = Math.abs(left);
-        const hh = Math.floor((left / 3600) % 24); // hours
+        left = left < 0 ? -left + 0.999999 : left; // adding almost one for simulating rounding up when left < 0
+        const hh = Math.floor((left / 3600)); // hours
         const mm = Math.floor((left / 60) % 60); // minutes
         const ss = Math.floor(left % 60); // seconds
         this.updateState({
@@ -82,16 +82,16 @@ interface State {
 }
 
 export default class ControlsComponent extends Component<Props, State> {
-    private stateChangedListener: listenerFunction | null = null;
+    private stateChangedListener: number | null = null;
 
     constructor(props: Props) {
         super(props);
-        let date = new Date(Date.now() + 60000);
-        date.setSeconds(0, 0);
+        let currdate = new Date(Date.now() + 60000);
+        currdate.setSeconds(0, 0);
         this.state = {
-            currentQuizNumber: 1,
+            currentQuizNumber: 0,
             phase: "idle",
-            nextPhaseChangeAt: date,
+            nextPhaseChangeAt: currdate,
             printingCopyCount: 1,
             printingLanguage: "hu",
             printingSize: 20,
@@ -173,12 +173,12 @@ export default class ControlsComponent extends Component<Props, State> {
                             <button
                                 style={{ width: "100px", height: "50px" }}
                                 onClick={
-                                    () => this.props.app.promptConfirm("Biztosan frissíti a következő fázisváltás várható idejét?").then(
+                                    () => this.props.app.promptConfirm(<h1>Biztosan frissíti a következő fázisváltás várható idejét?</h1>).then(
                                         () => actions.sendNewNextPhaseChangeAt(this.state.nextPhaseChangeAt),
                                         () => { }
-                                    )}>
-                                Beállít
-                            </button>
+                                    )
+                                }
+                            >Beállít</button>
                         </td>
                     </tr>
                     <tr>
@@ -191,13 +191,17 @@ export default class ControlsComponent extends Component<Props, State> {
                         <td colSpan={3} className="next-phase-container">
                             <button
                                 onClick={
-                                    () => this.props.app.promptConfirm("Biztosan kvíz fázist vált?\nA következő fázisváltás várható ideje " +
-                                        getHHMMFromDate(this.state.nextPhaseChangeAt) + " lesz.").then(
-                                            () => actions.sendNextPhase(this.state.phase, this.state.nextPhaseChangeAt),
-                                            () => { }
-                                        )}>
-                                Fázis váltása
-                            </button>
+                                    () => this.props.app.promptConfirm(
+                                        <>
+                                            <h1>Biztosan kvíz fázist vált?</h1>
+                                            A következő fázisváltás várható ideje {getHHMMFromDate(this.state.nextPhaseChangeAt)} lesz.
+                                        </>
+                                    ).then(
+                                        () => actions.sendNextPhase(this.state.phase, this.state.nextPhaseChangeAt),
+                                        () => { }
+                                    )
+                                }
+                            >Fázis váltása</button>
                         </td>
                     </tr>
                     <tr>
@@ -206,7 +210,7 @@ export default class ControlsComponent extends Component<Props, State> {
                                 <div id="copy-count" className="horiz-stack">
                                     <input id="copy-count-input" type="number" value={this.state.printingCopyCount}
                                         onChange={(e) => this.updateState({ printingCopyCount: parseInt(e.target.value) })}
-                                        min={1} max={99}/>
+                                        min={1} max={99} />
                                     <label htmlFor="copy-count-input">példány</label>
                                 </div>
                                 <div id="settings" className="horiz-stack">
@@ -244,15 +248,19 @@ export default class ControlsComponent extends Component<Props, State> {
                                 <div id="print-button-container">
                                     <button
                                         onClick={
-                                            () => this.props.app.promptConfirm(`Biztosan kinyomtatja?\n` + 
-                                                `Példányszám: ${this.state.printingCopyCount} db\n` + 
-                                                `Nyelv: ${{hu: "magyar", en: "angol"}[this.state.printingLanguage]}\n` + 
-                                                `Méret: ${this.state.printingSize}-as`).then(
-                                                    () => actions.printEmptyQuiz(this.state.printingCopyCount, this.state.printingLanguage, this.state.printingSize),
-                                                    () => { }
-                                                )}>
-                                        Nyomtat
-                                    </button>
+                                            () => this.props.app.promptConfirm(
+                                                <>
+                                                    <h1>Biztosan kinyomtatja?</h1>
+                                                    Példányszám: {this.state.printingCopyCount} db<br />
+                                                    Nyelv: {QuizLanguages[this.state.printingLanguage]}<br />
+                                                    Méret: {this.state.printingSize}-as
+                                                </>
+                                            ).then(
+                                                () => actions.printEmptyQuiz(this.state.printingCopyCount, this.state.printingLanguage, this.state.printingSize),
+                                                () => { }
+                                            )
+                                        }
+                                    >Nyomtat</button>
                                 </div>
                             </div>
                         </td>
