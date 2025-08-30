@@ -31,11 +31,11 @@ export function printQuiz(teamID: number) {
         });
 }
 
-export function printEmptyQuiz(copyCount: number, lang: QuizLanguage, quizSize: QuizSize) {
-    sendData("/api/admin/queuePrint",
+export function queuePrintjob(copyCount: number, language: QuizLanguage, quizSize: QuizSize) {
+    sendData("/api/admin/queuePrintjob",
         {
             "copyCount": copyCount,
-            "lang": lang,
+            "language": language,
             "quizSize": quizSize
         });
 }
@@ -47,9 +47,10 @@ export function sendNewNextPhaseChangeAt(time: Date) {
         });
 }
 
-export function uploadAnswers(name: string, answers: { id: number, answer: number }[]) {
+export function uploadAnswers(teamID: number, name: string, answers: { id: number, answer: number }[]) {
     sendData("/api/admin/uploadQuiz",
         {
+            teamID: teamID,
             name: name,
             answers: answers
         });

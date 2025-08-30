@@ -71,7 +71,7 @@ export type QuizPhase = "idle" | "running" | "scoring";
 export const QuizPhases = { "idle": "Készenlét", "running": "Fut", "scoring": "Pontozás" };
 
 
-export type QuizDetailEntry = {
+export type QuizDetailQuestions = {
     id: number,
     name: string,
     location: string,
@@ -83,14 +83,14 @@ export type QuizDetails = {
     teamname: string | null,
     language: QuizLanguage,
     score: number | null,
-    entries: QuizDetailEntry[],
+    questions: QuizDetailQuestions[],
 }
 
 export type JsonQuizDetails = {
     teamname: string | null,
     language: string,
     score: number | null,
-    entries: {
+    questions: {
         id: number,
         name: string,
         location: string,

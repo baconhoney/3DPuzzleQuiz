@@ -22,7 +22,7 @@ async def broadcastToClients(eventType: str, data: dict[str, any] = None):
 
 async def broadcastToAdmins(eventType: str, data: dict[str, any] = None):
     """
-    EventTypes: "leaderboardUpdated", "stateChanged"
+    EventTypes: "leaderboardUpdated", "stateChanged", "showQuiz"
     """
     if eventType not in ["leaderboardUpdated", "stateChanged"]:
         raise ValueError(f"Invalid event type: {eventType}")
@@ -44,3 +44,4 @@ def addAdminMsgEventListener(eventType: str, listener: Callable):
     if eventType not in _adminMsgEventListeners:
         _adminMsgEventListeners[eventType] = []
     _adminMsgEventListeners[eventType].add(listener)
+

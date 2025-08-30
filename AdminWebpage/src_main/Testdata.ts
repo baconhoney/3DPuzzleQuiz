@@ -4330,7 +4330,7 @@ for (const teamID in quizdata) {
         teamname: element.score ? element.name : null,
         language: element.language,
         score: element.score,
-        entries: element.questions
+        questions: element.questions
     };
 }
 

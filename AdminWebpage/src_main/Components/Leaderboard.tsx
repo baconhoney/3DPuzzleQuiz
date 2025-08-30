@@ -74,6 +74,7 @@ export default class LeaderboardComponent extends Component<Props, State> {
                                         this.props.app.updateState({ openedQuizTeamID: null });
                                     }}>
                                     <th className="teamID">teamID</th>
+                                    <th className="language">Ny</th>
                                     <th className="groupname">Csapatnév</th>
                                     <th className="score">Pont-szám</th>
                                     <th className="timestamp">Leadás ideje</th>
@@ -84,6 +85,7 @@ export default class LeaderboardComponent extends Component<Props, State> {
                                     <tr key={i} onClick={() => { this.props.app.updateState({ openedQuizTeamID: elem.teamID }); }}
                                         className={elem.teamID === this.props.app.state.openedQuizTeamID ? "selected" : ""}>
                                         <td className="teamID">{elem.teamID}</td>
+                                        <td className="language">{elem.language.toUpperCase()}</td>
                                         <td className="groupname">{elem.teamname}</td>
                                         <td className="score">{elem.score}</td>
                                         <td className="timestamp">{elem.submittedAt ? getTimeFromDate(elem.submittedAt) : ""}</td>

@@ -256,7 +256,7 @@ export default class ControlsComponent extends Component<Props, State> {
                                                     Méret: {this.state.printingSize}-as
                                                 </>
                                             ).then(
-                                                () => actions.printEmptyQuiz(this.state.printingCopyCount, this.state.printingLanguage, this.state.printingSize),
+                                                () => actions.queuePrintjob(this.state.printingCopyCount, this.state.printingLanguage, this.state.printingSize),
                                                 () => { }
                                             )
                                         }

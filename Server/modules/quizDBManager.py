@@ -70,7 +70,7 @@ async def getLeaderboard() -> list[dict[str, str | int]]:
         WHERE quiz_number = {utils.QuizState.currentQuizNumber} \
         ORDER BY score DESC, submitted_at ASC;",
     ).fetchall()
-    return res and [{"teamID": entry[0], "name": entry[1], "language": entry[2], "size": entry[3], "score": entry[4], "submittedAt": entry[5]} for entry in res] or []
+    return res and [{"teamID": entry[0], "teamname": entry[1], "language": entry[2], "size": entry[3], "score": entry[4], "submittedAt": entry[5]} for entry in res] or []
 
 
 async def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]:
@@ -83,8 +83,9 @@ async def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, st
     lang: str = res[1]
     rawData: list[list[str | int]] = _quizDBcursor.execute(
         f"SELECT buildings.id, buildings.name_{lang}, buildings.location_{lang}, answers.answer, CASE WHEN buildings.answer = answers.answer THEN 1 ELSE 0 END \
-        FROM answers JOIN buildings ON answers.building_id = buildings.id \
-        WHERE answers.team_id = {teamID} \
+        FROM buildings JOIN quizzes ON buildings.id = quizzes.building_id \
+        LEFT JOIN answers ON buildings.id = answers.building_id AND answers.team_id = {teamID} \
+        WHERE quizzes.quiz_number = {utils.QuizState.currentQuizNumber} \
         ORDER BY buildings.name_{lang} ASC;"
     ).fetchall()
     return {
@@ -171,11 +172,11 @@ async def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = Non
                     WHERE answers.team_id = (?) AND answers.answer = buildings.answer;",
                 (teamID,),
             ).fetchone()[0]
-            if mode == "paper-uploadAsnwers":  # uploading paper quiz answers
+            if mode == "paper-uploadAnswers":  # uploading paper quiz answers
                 if teamID >= int(5e9):
                     raise InvalidParameterError(f"Invalid teamID for paper-quiz: {teamID}")
                 _quizDBcursor.execute(
-                    "UPDATE teams SET name = (?), score = (?), WHERE id = (?);",
+                    "UPDATE teams SET name = (?), score = (?) WHERE id = (?);",
                     (name, score, teamID),
                 )
                 if not _quizDBcursor.rowcount == 1:

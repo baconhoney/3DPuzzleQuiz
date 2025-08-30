@@ -38,9 +38,9 @@ async def getLeaderboardHandler(request: web.Request):
     return web.json_response(await quizDBManager.getLeaderboard())
 
 
-@router.get(_baseURL + "/getQuizdata")
+@router.get(_baseURL + "/getQuizDetails")
 async def getQuizdataHandler(request: web.Request):
-    print(f"API GET request incoming: admin/getQuizdata")
+    print(f"API GET request incoming: admin/getQuizDetails")
     try:
         return web.json_response(await quizDBManager.getQuizDetails(request.query.get("teamID")))
     except quizDBManager.InvalidParameterError as e:
@@ -71,7 +71,7 @@ async def queuePrintjobHandler(request: web.Request):
         raise web.HTTPBadRequest(text=f"Value 'language' is invalid: {data.get('language', '<missing>')}")
     if not size:
         raise web.HTTPBadRequest(text=f"Value 'quizSize' is invalid: {data.get('quizSize', '<missing>')}")
-    print(f"New print job: {copyCount} copies of type {size.name} in lang {lang.name}")
+    print(f"New print job: {copyCount} copies of {size.name} in lang {lang.name}")
     for _ in range(copyCount):
         pass  # call print function
     return web.HTTPOk()
@@ -82,19 +82,14 @@ async def nextPhaseHandler(request: web.Request):
     print(f"API GET request incoming: admin/nextPhase")
     data: dict[str, str] = await request.json()
     currentPhase = utils.convertToQuizPhase(data.get("currentPhase"))
-    nextPhase = utils.convertToQuizPhase(data.get("nextPhase"))
     nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=None) or None
     if not currentPhase:
         raise web.HTTPBadRequest(text=f"Value 'currentPhase' is invalid: {data.get('currentPhase', '<missing>')}")
-    if not nextPhase:
-        raise web.HTTPBadRequest(text=f"Value 'nextPhase' is invalid: {data.get('nextPhase', '<missing>')}")
     if not nextPhaseChangeAt:
         raise web.HTTPBadRequest(text=f"Value 'nextPhaseChangeAt' is invalid: {data.get('nextPhaseChangeAt', '<missing>')}")
     if currentPhase != utils.QuizState.phase:
         raise web.HTTPBadRequest(text=f"Value currentPhase is not the actual current phase: {currentPhase.value}")
-    if nextPhase != utils.QuizState.getNextPhase():
-        raise web.HTTPBadRequest(text=f"Value nextPhase is not the actual next phase: {nextPhase.value}")
-    await utils.QuizState.updateState(nextPhase=nextPhase, nextPhaseChangeAt=nextPhaseChangeAt)
+    await utils.QuizState.updateState(nextPhase=utils.QuizState.getNextPhase(), nextPhaseChangeAt=nextPhaseChangeAt)
     return web.HTTPOk()
 
 
@@ -123,6 +118,7 @@ async def eventsHandler(request: web.Request):
                 _logger.warning(f"WebSocket connection closed with error: {ws.exception()}")
                 print(f"WebSocket connection closed with error: {ws.exception()}")
             elif msg.type == web.WSMsgType.TEXT:
+                print("Received message on admin websocket.\nData is: " + str(msg.data))
                 try:
                     data = json.loads(msg.data)
                 except json.JSONDecodeError:

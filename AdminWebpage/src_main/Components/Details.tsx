@@ -29,6 +29,7 @@ export default class DetailsComponent extends Component<Props, State> {
 
     private updateState(newState: Partial<State>) {
         this.setState({ ...this.state, ...newState });
+        //this.setState({details: newState.details});
     }
 
     componentDidMount() {
@@ -42,17 +43,18 @@ export default class DetailsComponent extends Component<Props, State> {
     }
 
     private getQuizdata() {
-        const convertFn = (json: (JsonQuizDetails)) => ({
+        const convertFn = (json: JsonQuizDetails) => ({
             ...json,
             language: json.language as QuizLanguage,
         });
         if (this.props.teamID) {
             if (import.meta.env.MODE == "production") {
-                fetchData(`/api/admin/getQuizdata?teamID=${this.props.teamID ?? 'null'}`, (data) => {
+                fetchData(`/api/admin/getQuizDetails?teamID=${this.props.teamID ?? 'null'}`, (data) => {
                     const res = convertFn(data as JsonQuizDetails);
                     this.updateState({
                         details: res,
                     });
+                    //console.log("Received details:", res);
                 });
             } else {
                 // temp code for testing
@@ -95,7 +97,7 @@ export default class DetailsComponent extends Component<Props, State> {
                         </td>
                         <td style={{ padding: "5px 5px", width: "150px", textAlign: "center", whiteSpace: "nowrap" }}>
                             <span id="testScore" style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
-                                {this.state.details?.score ?? "??"} / {this.state.details?.entries.length ?? "??"}
+                                {this.state.details?.score ?? "??"} / {this.state.details?.questions.length ?? "??"}
                             </span>
                         </td>
                     </tr>
@@ -105,7 +107,7 @@ export default class DetailsComponent extends Component<Props, State> {
                         <td colSpan={3}>
                             {this.state.details
                                 ? <>
-                                    <table className="answers">
+                                    <table className="answers" key={this.props.teamID}>
                                         <thead>
                                             <tr>
                                                 <th className="name">Név</th>
@@ -116,30 +118,30 @@ export default class DetailsComponent extends Component<Props, State> {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {this.state.details.entries.map((question, index) => {
+                                            {this.state.details.questions.map((question, index) => {
                                                 return (
-                                                    <tr key={question.id}>
+                                                    <tr key={question.id + "_" + index}>
                                                         <td className="name">{question.name}</td>
                                                         <td className="location">{question.location}</td>
                                                         <td className="id">{question.id}</td>
                                                         <td className="answer">
                                                             {this.state.details!.score
-                                                                ? this.state.details!.entries[index].answer
+                                                                ? this.state.details!.questions[index].answer
                                                                 : <input
                                                                     type="number"
-                                                                    value={(this.state.details!.entries[index].answer ?? "").toString()}
+                                                                    value={(this.state.details!.questions[index].answer ?? "").toString()}
                                                                     id={question.id.toString()}
                                                                     className="answer-input"
                                                                     ref={ref => { this.inputRefs.set(index, ref) }}
                                                                     onKeyUp={e => e.key == "Enter" && this.inputRefs.get(index + 1)?.select()}
                                                                     onChange={(event) => {
                                                                         const val = event.target.value ? parseInt(event.target.value) : null;
-                                                                        const newEntries = structuredClone(this.state.details!.entries); // deep-copy the whole array<objects>
+                                                                        const newEntries = structuredClone(this.state.details!.questions); // deep-copy the whole array<objects>
                                                                         newEntries[index].answer = val;
                                                                         this.updateState({
                                                                             details: {
                                                                                 ...this.state.details!,
-                                                                                entries: newEntries,
+                                                                                questions: newEntries,
                                                                             }
                                                                         });
                                                                     }}
@@ -154,27 +156,28 @@ export default class DetailsComponent extends Component<Props, State> {
                                     </table>
                                     <div style={{ position: "absolute", top: "10px", right: "10px" }}>
                                         {!this.state.details.score
-                                            // no teamname -> need to save and upload it first
+                                            // no score -> need to save and upload it first
                                             ? <button onClick={() => {
                                                 if (this.state.details!.teamname == null) {
                                                     this.props.app.showError(<h1>Csapatnév hiányzik</h1>);
-                                                } else if (this.state.details!.entries.some(entry => entry.answer == null)) {
+                                                } else if (this.state.details!.questions.some(entry => entry.answer == null)) {
                                                     this.props.app.showError(<>
                                                         <h1>A következő válaszok hiányoznak:</h1>
-                                                        {this.state.details!.entries.map((entry, index) => entry.answer == null ? <p key={entry.id}>{index + 1}. válasz (id: {entry.id}) hiányzik</p> : "")}
+                                                        {this.state.details!.questions.map((entry, index) => entry.answer == null ? <p key={entry.id}>{index + 1}. válasz (id: {entry.id}) hiányzik</p> : "")}
                                                     </>
                                                     );
                                                 } else {
                                                     this.props.app.promptConfirm(<h1>Biztosan menti a kvízt?</h1>).then(
                                                         () => actions.uploadAnswers(
+                                                            this.props.teamID!,
                                                             this.state.details!.teamname!,
-                                                            this.state.details!.entries.map(e => ({ id: e.id, answer: e.answer as number })),
+                                                            this.state.details!.questions.map(e => ({ id: e.id, answer: e.answer as number })),
                                                         ),
                                                         () => { }
                                                     );
                                                 }
                                             }}>Mentés</button>
-                                            // teamname present -> printable
+                                            // score present -> printable
                                             : <button onClick={() => {
                                                 this.props.app.promptConfirm(<h1>Biztosan kinyomtatja a kvízt?</h1>).then(
                                                     () => actions.printQuiz(this.props.teamID!),

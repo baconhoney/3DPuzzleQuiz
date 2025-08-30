@@ -10,7 +10,7 @@ import quizDBManager
 import utils
 
 
-num_teams: int = random.randint(10, 40)
+num_teams: int = random.randint(30, 40)
 buildingData = asyncio.run(quizDBManager.getAllBuildingData())
 correctAnswers: dict[int, int] = {e["id"]: e["answer"] for e in buildingData}
 for i in range(num_teams):
@@ -21,7 +21,7 @@ for i in range(num_teams):
     size = 20
 
     if isDigital:
-        questions = quizDBManager.getQuestions(lang, size)
+        questions = asyncio.run(quizDBManager.getQuestions(lang, size))
         if len(questions) != 20:
             print(f"⚠️ Team {name}: Expected 20 questions but got {len(questions)}")
             continue
@@ -38,5 +38,6 @@ for i in range(num_teams):
     else:
         asyncio.run(quizDBManager.addEmptyTeamEntry(team_id, lang, size))
         asyncio.run(quizDBManager.updateSubmittedAt(team_id))
+        asyncio.run(asyncio.sleep(random.randint(1, 5)))
         print(f"✅ Uploaded paper data for ID: {team_id}, lang: {lang}")
 
