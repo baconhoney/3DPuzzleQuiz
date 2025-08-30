@@ -1,6 +1,12 @@
 /* --------------------- */
 /* ----- FUNCTIONS ----- */
 /* --------------------- */
+
+/**
+ * Formats a Date object to ISO timestring format.
+ * @param date - the Date object to format
+ * @returns ISO timestring
+ */
 export function getISOStringFromDate(date: Date) {
     const f = (n: number) => (n > 9 ? "" : "0") + n;
     const y = date.getFullYear();
@@ -9,17 +15,27 @@ export function getISOStringFromDate(date: Date) {
     const hour = f(date.getHours());
     const min = f(date.getMinutes());
     const sec = f(date.getSeconds());
-    return `${y}-${m}-${d}T${hour}:${min}:${sec}Z`;
+    return `${y}-${m}-${d}T${hour}:${min}:${sec}`;
 }
 
+/**
+ * Formats a Date object for HH:MM:SS
+ * @param date - the Date object to format
+ * @returns string - The formatted time as HH:MM:SS
+ */
 export function getTimeFromDate(date: Date) {
-    const z = (n: number) => (n > 9 ? "" : "0") + n;
-    const hh = date.getUTCHours();
-    const mm = date.getUTCMinutes();
-    const ss = date.getUTCSeconds();
-    return z(hh) + ":" + z(mm) + ":" + z(ss);
+    const f = (n: number) => (n > 9 ? "" : "0") + n;
+    const hh = date.getHours();
+    const mm = date.getMinutes();
+    const ss = date.getSeconds();
+    return f(hh) + ":" + f(mm) + ":" + f(ss);
 }
 
+/**
+ * Formats a Date object for HH:MM
+ * @param date - the Date object to format
+ * @returns string - The formatted time as HH:MM
+ */
 export function getHHMMFromDate(date: Date) {
     const f = (n: number) => (n > 9 ? "" : "0") + n;
     const hh = date.getHours();
@@ -27,72 +43,79 @@ export function getHHMMFromDate(date: Date) {
     return f(hh) + ":" + f(mm);
 }
 
+/**
+ * Fetches some data from `url` in GET mode, then calls the `callback` function with the data.
+ * @param url - the url to fetch from
+ * @param callback - the function to call with the data
+ */
 export function fetchData(url: string, callback: (data: any) => void) {
     fetch(url).then((response) => {
-        response.json().then((json: any) => {
-            callback(json);
-        })
+        if (response.status === 200) {
+            response.json().then((json: any) => {
+                callback(json);
+            }, (error: string) => console.error(`Failed to parse JSON from ${url}: ${error}`));
+        } else {
+            console.error(`Failed to fetch data from ${url}: ${response.status} ${response.statusText}`);
+        }
     });
 }
 
 
-/* -------------------------------- */
-/* ----- TYPES and INTERFACES ----- */
-/* -------------------------------- */
+/* ------------------------------- */
+/* ----- TYPES and CONSTANTS ----- */
+/* ------------------------------- */
 export type QuizLanguage = "hu" | "en";
-
+export const QuizLanguages = { "hu": "Magyar", "en": "Angol" };
 export type QuizSize = 20 | 100;
-
 export type QuizPhase = "idle" | "running" | "scoring";
+export const QuizPhases = { "idle": "Készenlét", "running": "Fut", "scoring": "Pontozás" };
 
 
-export type Question = {
-    id: number;
-    name: string;
-    location: string;
-    answer: number;
-    correct: boolean;
+export type QuizDetailQuestions = {
+    id: number,
+    name: string,
+    location: string,
+    answer: number | null,
+    correct: boolean | null,
 }
 
 export type QuizDetails = {
-    name: string;
-    language: QuizLanguage;
-    score: number;
-    timestamp: Date;
-    questions: Question[];
-}
-
-export type QuizResult = {
-    teamID: number,
-    name: string,
+    teamname: string | null,
     language: QuizLanguage,
-    quizSize: QuizSize,
-    score: number,
-    submittedAt: Date
+    score: number | null,
+    questions: QuizDetailQuestions[],
 }
 
-export type QuizResults = QuizResult[]
-
-export type RawQuizResults = {
-    teamID: number,
-    name: string,
+export type JsonQuizDetails = {
+    teamname: string | null,
     language: string,
-    size: number,
-    score: number,
-    submittedAt: string
-}[];
-
-export type RawQuizDetails = {
-    name: string,
-    language: string,
-    score: number,
-    timestamp: string,
+    score: number | null,
     questions: {
         id: number,
         name: string,
         location: string,
-        answer: number,
-        correct: boolean
-    }[]
-};
+        answer: number | null,
+        correct: boolean | null,
+    }[],
+}
+
+export type LeaderboardItem = {
+    teamID: number,
+    teamname: string | null,
+    language: QuizLanguage,
+    size: QuizSize,
+    score: number | null,
+    submittedAt: Date | null,
+}
+
+export type LeaderboardItems = LeaderboardItem[]
+
+export type JsonLeaderboardItems = {
+    teamID: number,
+    teamname: string | null,
+    language: string,
+    size: number,
+    score: number | null,
+    submittedAt: string | null,
+}[]
 

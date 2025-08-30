@@ -2,31 +2,55 @@ import { ArrayQueue, ConstantBackoff, Websocket, WebsocketBuilder, WebsocketEven
 
 
 declare global {
-    function sendWSMessage(data: string): void;
+    function sendLeaderboardUpdated(data: any): void;
+    function sendStateChanged(data: any): void;
+    function sendShowQuiz(data: number): void;
 }
 
-export type eventType = "leaderboardUpdated" | "stateChanged";
-export type listenerFunction = (data: any) => void;
 
-const listeners: Map<eventType, Set<(data: any) => void>> = new Map();
+type eventType = "leaderboardUpdated" | "stateChanged" | "showQuiz";
+type listenerFunction = (data: any) => void;
 
-export default function addListener(event: eventType, func: listenerFunction) {
+const listeners: Map<eventType, Map<number, (data: any) => void>> = new Map();
+const idSet = new Set<number>();
+
+
+/**
+ * Add a new listener-function to the Websocket Handler. Remove it with `removeListener`.
+ * @param event - the event to call back on
+ * @param func - the listener function to add
+ * @returns the id of the function just added for later removal
+ */
+export function addListener(event: eventType, func: listenerFunction): number {
     console.log("Adding listener for", event);
+    let id = null;
+    do {
+        id = Math.floor(Math.random() * 1000000);
+    } while (idSet.has(id));
+    idSet.add(id);
     if (!listeners.has(event)) {
-        listeners.set(event, new Set());
+        listeners.set(event, new Map);
     }
-    listeners.get(event)!.add(func);
-    return func;
+    listeners.get(event)!.set(id, func);
+    return id;
 }
 
-export function removeListener(func: listenerFunction | null) {
-    console.log("Removing listener");
-    if (func) {
+
+/**
+ * Removes a previously added listener-function from the Websocket Handler.
+ * If the function is not found, nothing happens.
+ * @param id - the id of the listener function to remove
+ */
+export function removeListener(id: number | null): void {
+    if (id) {
+        console.log("Removing listener");
         for (const elem of listeners.values()) {
-            if (elem.delete(func)) return;
+            if (elem.delete(id)) return;
         }
+        console.error("Could not remove listener with id", id);
     }
 }
+
 
 function handleMessage(_: Websocket | null, msgEvent: MessageEvent | { data: string }) {
     // callback function for handling incoming messages and calling the registered listeners
@@ -37,11 +61,13 @@ function handleMessage(_: Websocket | null, msgEvent: MessageEvent | { data: str
     }
     const event = eventData.event as eventType;
     if (listeners.has(event)) {
-        for (const listener of listeners.get(event)!) {
+        for (const listener of listeners.get(event)!.values()) {
             listener(eventData.data);
         }
     }
 }
+
+
 
 if (import.meta.env.MODE == "production") {
     // prod-mode, connect and initialize websockets
@@ -52,9 +78,10 @@ if (import.meta.env.MODE == "production") {
     ws.addEventListener(WebsocketEvent.open, () => console.log("WS opened"));
     ws.addEventListener(WebsocketEvent.close, () => console.log("WS closed"));
     ws.addEventListener(WebsocketEvent.message, handleMessage);
-
 } else {
     // dev-mode, set global functions for testing
-    window.sendWSMessage = (data: Object) => handleMessage(null, { data: JSON.stringify(data) });
+    window.sendLeaderboardUpdated = () => handleMessage(null, { data: JSON.stringify({ event: "leaderboardUpdated", data: {} }) });
+    window.sendStateChanged = (data: any) => handleMessage(null, { data: JSON.stringify({ event: "stateChanged", data: { data } }) });
+    window.sendShowQuiz = (data: number) => handleMessage(null, { data: JSON.stringify({ event: "showQuiz", data: { "teamID": data } }) });
 }
 
