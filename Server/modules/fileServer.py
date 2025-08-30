@@ -34,7 +34,9 @@ def handleFile(request: web.Request, root: pathlib.Path) -> web.Response:
 
     # return file
     mimetype, encoding = mimetypes.guess_type(filepath)
-    return web.Response(body=filepath.read_text(encoding=encoding or "utf-8"), content_type=mimetype or "text/plain", charset=encoding or "utf-8")
+    print(f"Returning file '{filepath}' with mimetype '{mimetype}' and encoding '{encoding}'")
+    data = encoding and filepath.read_text(encoding=encoding or "utf-8") or filepath.read_bytes()
+    return web.Response(body=data, content_type=mimetype or "text/plain", charset=encoding or "utf-8")
 
 
 # Search webpage

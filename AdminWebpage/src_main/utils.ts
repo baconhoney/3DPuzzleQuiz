@@ -101,8 +101,9 @@ export type JsonQuizDetails = {
 
 export type LeaderboardItem = {
     teamID: number,
-    language: QuizLanguage,
     teamname: string | null,
+    language: QuizLanguage,
+    size: QuizSize,
     score: number | null,
     submittedAt: Date | null,
 }
@@ -111,8 +112,9 @@ export type LeaderboardItems = LeaderboardItem[]
 
 export type JsonLeaderboardItems = {
     teamID: number,
-    language: string,
     teamname: string | null,
+    language: string,
+    size: number,
     score: number | null,
     submittedAt: string | null,
 }[]

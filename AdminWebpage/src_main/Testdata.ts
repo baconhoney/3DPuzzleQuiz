@@ -4322,6 +4322,7 @@ for (const teamID in quizdata) {
         teamID: parseInt(teamID),
         teamname: element.score ? element.name : null,
         language: element.language,
+        size: element.questions.length,
         score: element.score,
         submittedAt: element.score ? element.timestamp : null,
     })

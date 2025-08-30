@@ -1,7 +1,7 @@
 import { Component } from "react";
 
 import App from "../App.tsx";
-import { fetchData, getTimeFromDate, type QuizLanguage, type LeaderboardItems, type JsonLeaderboardItems } from "../utils.ts";
+import { fetchData, getTimeFromDate, type QuizLanguage, type LeaderboardItems, type JsonLeaderboardItems, type QuizSize } from "../utils.ts";
 
 import "./Leaderboard.css";
 
@@ -45,6 +45,7 @@ export default class LeaderboardComponent extends Component<Props, State> {
             json.map((item) => ({
                 ...item,
                 language: item.language as QuizLanguage,
+                size: item.size as QuizSize,
                 submittedAt: item.submittedAt ? new Date(item.submittedAt) : null,
             }));
         if (import.meta.env.MODE == "production") {

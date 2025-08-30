@@ -33,9 +33,9 @@ logging.getLogger("asyncio").setLevel("INFO")
 
 
 #################### START OF MAIN ####################
-import quizDBManager
-import utils
 from scanner import Scanner
+import quizDBManager
+import wsUtils
 
 # import the routers from the modules
 from fileServer import router as fileServerRouter
@@ -43,18 +43,23 @@ from clientAPI import router as clientRouter
 from adminAPI import router as adminRouter
 
 
-print("Path for CWD", utils.paths.cwd)
-print("Path for cfgRoot", utils.paths.cfgRoot)
-print("Path for dataRoot", utils.paths.dataRoot)
-print("Path for clientRoot", utils.paths.clientRoot)
-print("Path for searchRoot", utils.paths.searchRoot)
-print("Path for adminRoot", utils.paths.adminRoot)
+# print("Path for CWD", utils.paths.cwd)
+# print("Path for cfgRoot", utils.paths.cfgRoot)
+# print("Path for dataRoot", utils.paths.dataRoot)
+# print("Path for clientRoot", utils.paths.clientRoot)
+# print("Path for searchRoot", utils.paths.searchRoot)
+# print("Path for adminRoot", utils.paths.adminRoot)
 
 
 def callbackFn(value: str):
     if not value or not value.isdigit():
         print(f"Scanner input is not a teamID: {value}")
-    asyncio.run(quizDBManager.updateSubmittedAt(int(value)))
+    if asyncio.run(quizDBManager.checkIfSubmittedAtIsPresent(int(value))):
+        # team has already submitted, show quiz on admin page
+        wsUtils.broadcastToAdmins("showQuiz", {"teamID": int(value)})
+    else:
+        # team is not yet registered, register it
+        asyncio.run(quizDBManager.updateSubmittedAt(int(value)))
 
 
 async def startScannerListener(_: web.Application):
