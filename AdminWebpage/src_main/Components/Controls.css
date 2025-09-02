@@ -1,6 +1,160 @@
-#main-bottom-right-cell {
-    input.timeLeftInput {
-        width: 100px;
+.controls {
+    border: 1px solid var(--borderColor1);
+    padding: 10px;
+
+    div.title {
+        margin-bottom: 10px;
+        text-align: center;
+        /*font-size: 1.3rem;*/
+        font-weight: bold;
+    }
+
+    div.content {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        width: 100%;
+
+        div {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+
+        .left-cell {
+            width: 50%;
+            margin-right: 5px;
+
+            .time-settings {
+                width: 100%;
+                padding: 8px;
+                margin-bottom: 15px;
+                border: 1px solid var(--borderColor1);
+                /*border-radius: 15px;*/
+
+                .time-display-container {
+                    width: 80%;
+                    margin-bottom: 5px;
+                    align-items: flex-start;
+
+                    tr {
+                        height: 32px;
+                    }
+                }
+
+                .plus-minus-buttons {
+                    width: 100%;
+                    flex-direction: row;
+                    justify-content: space-evenly;
+
+                    >button {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 20px;
+                    }
+                }
+
+                .send-change {
+                    width: 100px;
+                    height: 40px;
+                    margin: 3px;
+                    border-radius: 20px;
+                }
+            }
+
+            .states {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid var(--borderColor1);
+                /*border-radius: 15px;*/
+
+                .current-states {
+                    width: 100%;
+                    margin-bottom: 10px;
+
+                    >table {
+                        width: 90%;
+
+                        .label {
+                            width: 130px;
+                        }
+                    }
+                }
+
+                .next-phase-button {
+                    >button {
+                        width: 200px;
+                        height: 50px;
+                        font-size: 1.1rem;
+                        color: #f44;
+                        border-radius: 25px;
+                    }
+                }
+            }
+        }
+
+        .printing {
+            width: 50%;
+            margin-left: 5px;
+            padding: 8px;
+            border: 1px solid var(--borderColor1);
+            /*border-radius: 15px;*/
+
+            .copy-count {
+                width: 100%;
+                margin-bottom: 20px;
+                flex-direction: row;
+                align-items: flex-start;
+                >label {
+                    margin-right: 8px;
+                }
+
+                >input {
+                    text-align: right;
+                    width: 70px;
+                }
+            }
+
+            .settings {
+                width: 90%;
+                margin-bottom: 20px;
+                flex-direction: row;
+                justify-content: space-between;
+
+                >div {
+                    width: 45%;
+                    align-items: flex-start;
+
+                    .text {
+                        margin-bottom: 8px;
+                        font-size: 0.8rem;
+                    }
+
+                    .inputs {
+                        align-items: flex-start;
+
+                        .radio-input {
+                            flex-direction: row;
+                            margin-bottom: 5px;
+
+                            >input {
+                                margin-left: 5px;
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .print-button-container {
+                >button {
+                    width: 150px;
+                    height: 50px;
+                    border-radius: 25px;
+                }
+            }
+        }
     }
 }
-

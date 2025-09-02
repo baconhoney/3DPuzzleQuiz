@@ -31,8 +31,8 @@ export function printQuiz(teamID: number) {
         });
 }
 
-export function queuePrintjob(copyCount: number, language: QuizLanguage, quizSize: QuizSize) {
-    sendData("/api/admin/queuePrintjob",
+export function queuePrint(copyCount: number, language: QuizLanguage, quizSize: QuizSize) {
+    sendData("/api/admin/queuePrint",
         {
             "copyCount": copyCount,
             "language": language,

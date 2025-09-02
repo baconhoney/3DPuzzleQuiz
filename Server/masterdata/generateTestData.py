@@ -52,7 +52,7 @@ for i in range(num_teams):
             entry["correct"] = is_correct
 
     # Add to output list
-    quizData[str(team_id)] = {"name": name, "language": lang, "score": score, "timestamp": datetime.now().isoformat(), "questions": q}
+    quizData[str(team_id)] = {"name": name, "language": lang, "score": score, "timestamp": datetime.now().isoformat() if not (not isDigital and random.random() < 0.1) else None, "questions": q}
 
 with open("real_testdata.json", "w", encoding="utf-8") as f:
     json.dump(quizData, f, indent=4, ensure_ascii=False)

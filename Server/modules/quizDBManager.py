@@ -30,11 +30,11 @@ async def getQuestions(lang, size) -> list[dict[str, str | int]]:
         raise InvalidParameterError(f"Invalid language: {lang}")
     if utils.convertToQuizSize(size) is None:
         raise InvalidParameterError(f"Invalid size: {size}")
-    quizNum = (int(size) == utils.QuizSizes.SIZE_20.value) and _quizState.currentQuizNumber or -1  # -1 -> SIZE_100 quiz
+    quizRound = (int(size) == utils.QuizSizes.SIZE_20.value) and _quizState.currentQuizRound or -1  # -1 -> SIZE_100 quiz
     rawQuizdata: list[list[str | int]] = utils.quizDB.cursor.execute(
         f"SELECT buildings.id, buildings.name_{lang}, buildings.location_{lang} \
         FROM buildings JOIN quizzes ON buildings.id = quizzes.building_id \
-        WHERE quizzes.quiz_number = {quizNum} \
+        WHERE quizzes.quiz_round = {quizRound} \
         ORDER BY buildings.name_{lang};"
     ).fetchall()
     return [{"id": entry[0], "name": entry[1], "location": entry[2]} for entry in rawQuizdata]
@@ -63,11 +63,13 @@ async def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | 
     }
 
 
-async def getLeaderboard() -> list[dict[str, str | int]]:
+async def getLeaderboard(*, size: int = None, quizRound: int = None) -> list[dict[str, str | int]]:
     """admin side"""
+    if size and not utils.convertToQuizSize(size):
+        raise InvalidParameterError(f"Invalid size parameter: '{size}'")
     res: list[list[str | int]] = utils.quizDB.cursor.execute(
         f"SELECT id, name, language, quiz_size, score, submitted_at FROM teams \
-        WHERE quiz_number = {utils.QuizState.currentQuizNumber} \
+        WHERE quiz_round = {quizRound or utils.QuizState.currentQuizRound} {size and "AND quiz_size = " + str(size) or ""} \
         ORDER BY score DESC, submitted_at ASC;",
     ).fetchall()
     return res and [{"teamID": entry[0], "teamname": entry[1], "language": entry[2], "size": entry[3], "score": entry[4], "submittedAt": entry[5]} for entry in res] or []
@@ -77,21 +79,24 @@ async def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, st
     """admin side"""
     if not teamID:
         raise InvalidParameterError(f"Missing teamID parameter")
-    res = utils.quizDB.cursor.execute(f"SELECT name, language, score FROM teams WHERE teams.id = {teamID};").fetchone()
+    res = utils.quizDB.cursor.execute(f"SELECT name, language, score, quiz_round, quiz_size, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
     if not res:
         raise InvalidParameterError(f"Team with ID {teamID} not found")
     lang: str = res[1]
+    quizRound = res[3]
+    quizSize = res[4]
     rawData: list[list[str | int]] = _quizDBcursor.execute(
         f"SELECT buildings.id, buildings.name_{lang}, buildings.location_{lang}, answers.answer, CASE WHEN buildings.answer = answers.answer THEN 1 ELSE 0 END \
         FROM buildings JOIN quizzes ON buildings.id = quizzes.building_id \
         LEFT JOIN answers ON buildings.id = answers.building_id AND answers.team_id = {teamID} \
-        WHERE quizzes.quiz_number = {utils.QuizState.currentQuizNumber} \
+        WHERE quizzes.quiz_round = {quizSize == utils.QuizSizes.SIZE_20.value and quizRound or -1} \
         ORDER BY buildings.name_{lang} ASC;"
     ).fetchall()
     return {
         "teamname": res[0],
         "language": lang,
         "score": res[2],
+        "submittedAt": res[5],
         "questions": [{"id": entry[0], "name": entry[1], "location": entry[2], "answer": entry[3], "correct": bool(entry[4])} for entry in rawData],
     }
 
@@ -126,8 +131,8 @@ async def addEmptyTeamEntry(teamID: int, lang: str, size: int):
     if _quizDBcursor.execute("SELECT count(id) FROM teams WHERE id = (?);", (teamID,)).fetchone()[0] > 0:
         raise RuntimeError(f"Team with ID {teamID} already exists")
     _quizDBcursor.execute(
-        "INSERT INTO teams (id, language, quiz_number, quiz_size) VALUES (?, ?, ?, ?);",
-        (teamID, lang, utils.QuizState.currentQuizNumber, size),
+        "INSERT INTO teams (id, language, quiz_round, quiz_size) VALUES (?, ?, ?, ?);",
+        (teamID, lang, utils.QuizState.currentQuizRound, size),
     )
     _quizDBconnection.commit()
     await wsUtils.broadcastToAdmins("leaderboardUpdated", {})
@@ -185,8 +190,8 @@ async def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = Non
                 if teamID < int(5e9):
                     raise InvalidParameterError(f"Invalid teamID for digital-quiz: {teamID}")
                 _quizDBcursor.execute(
-                    f"INSERT INTO teams (id, name, language, quiz_number, quiz_size, score, submitted_at) VALUES (?, ?, ?, ?, ?, ?, ?);",
-                    (teamID, name, lang, _quizState.currentQuizNumber, len(answers), score, datetime.datetime.now().isoformat(timespec="milliseconds")),
+                    f"INSERT INTO teams (id, name, language, quiz_round, quiz_size, score, submitted_at) VALUES (?, ?, ?, ?, ?, ?, ?);",
+                    (teamID, name, lang, _quizState.currentQuizRound, len(answers), score, datetime.datetime.now().isoformat(timespec="milliseconds")),
                 )
             _quizDBconnection.commit()
             await wsUtils.broadcastToAdmins("leaderboardUpdated", {})

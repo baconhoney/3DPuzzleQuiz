@@ -1,6 +1,6 @@
+from aiohttp import web
 import datetime
 import json
-from aiohttp import web
 import logging
 import quizDBManager
 import utils
@@ -20,7 +20,7 @@ async def getStatesHandler(request: web.Request):
     return web.json_response(
         {
             "phase": utils.QuizState.phase.value,
-            "currentQuizNumber": utils.QuizState.currentQuizNumber,
+            "currentQuizRound": utils.QuizState.currentQuizRound,
             "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt(),
         }
     )
@@ -35,7 +35,10 @@ async def getAllBuildingsDataHandler(request: web.Request):
 @router.get(_baseURL + "/getLeaderboard")
 async def getLeaderboardHandler(request: web.Request):
     print(f"API GET request incoming: admin/getLeaderboard")
-    return web.json_response(await quizDBManager.getLeaderboard())
+    try:
+        return web.json_response(await quizDBManager.getLeaderboard(size=request.query.get("size"), quizRound=request.query.get("round")))
+    except quizDBManager.InvalidParameterError as e:
+        raise web.HTTPBadRequest(text=str(e))
 
 
 @router.get(_baseURL + "/getQuizDetails")
@@ -58,9 +61,11 @@ async def uploadQuizHandler(request: web.Request):
     return web.HTTPOk()
 
 
-@router.post(_baseURL + "/queuePrintjob")
-async def queuePrintjobHandler(request: web.Request):
-    print(f"API POST request incoming: admin/queuePrintjob")
+@router.post(_baseURL + "/queuePrint")
+async def queuePrintHandler(request: web.Request):
+    print(f"API POST request incoming: admin/queuePrint")
+    def printQuiz(teamID, quizLang, quizSize):
+        print(f"New print job: ID {teamID}, {quizLang} in lang {quizSize}")
     data: dict[str, str | int] = await request.json()
     copyCount = data.get("copyCount")
     lang = utils.convertToQuizLanguage(data.get("language"))
@@ -71,9 +76,10 @@ async def queuePrintjobHandler(request: web.Request):
         raise web.HTTPBadRequest(text=f"Value 'language' is invalid: {data.get('language', '<missing>')}")
     if not size:
         raise web.HTTPBadRequest(text=f"Value 'quizSize' is invalid: {data.get('quizSize', '<missing>')}")
-    print(f"New print job: {copyCount} copies of {size.name} in lang {lang.name}")
     for _ in range(copyCount):
-        pass  # call print function
+        teamID = utils.getNewTeamID(utils.QuizTypes.PAPER)
+        await quizDBManager.addEmptyTeamEntry(teamID, lang.value, size.value)
+        printQuiz(teamID, lang.value, size.value)
     return web.HTTPOk()
 
 
@@ -85,7 +91,7 @@ async def nextPhaseHandler(request: web.Request):
     nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=None) or None
     if not currentPhase:
         raise web.HTTPBadRequest(text=f"Value 'currentPhase' is invalid: {data.get('currentPhase', '<missing>')}")
-    if not nextPhaseChangeAt:
+    if not nextPhaseChangeAt or nextPhaseChangeAt < datetime.datetime.now():
         raise web.HTTPBadRequest(text=f"Value 'nextPhaseChangeAt' is invalid: {data.get('nextPhaseChangeAt', '<missing>')}")
     if currentPhase != utils.QuizState.phase:
         raise web.HTTPBadRequest(text=f"Value currentPhase is not the actual current phase: {currentPhase.value}")

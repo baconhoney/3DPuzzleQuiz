@@ -7,7 +7,7 @@ export default defineConfig({
     plugins: [react()],
     server: {
         allowedHosts: true,
-        port: 1006
+        port: 1005
     },
     appType: "mpa",
     build: {

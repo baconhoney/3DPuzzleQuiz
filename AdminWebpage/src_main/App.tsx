@@ -71,7 +71,7 @@ export default class App extends Component<unknown, AppState> {
         return (
             <>
                 <div id="main-cell">
-                    <div id="main-left-cell" style={{ position: "relative" }}>
+                    <div id="main-left-cell">
                         <DetailsComponent app={this} teamID={this.state.openedQuizTeamID} />
                     </div >
                     <div id="main-right-cell">

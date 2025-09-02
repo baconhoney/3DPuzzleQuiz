@@ -51,7 +51,7 @@ const Manager = () => {
 
         const initializeWebSocket = () => {
             // Determine WebSocket URL (adjust based on your backend configuration)
-            const wsUrl = `http://localhost:80/api/client/events`;
+            const wsUrl = `./api/client/events`;
 
             console.log("Connecting to WebSocket:", wsUrl);
 

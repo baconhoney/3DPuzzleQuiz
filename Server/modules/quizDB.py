@@ -28,7 +28,7 @@ _quizzesSQL = """
 CREATE TABLE quizzes
 (
     id          INTEGER PRIMARY KEY NOT NULL,
-    quiz_number INTEGER             NOT NULL,
+    quiz_round  INTEGER             NOT NULL,
     building_id INTEGER             NOT NULL,
     
     FOREIGN KEY (building_id) REFERENCES buildings (id)
@@ -41,7 +41,7 @@ CREATE TABLE teams
     id           INTEGER PRIMARY KEY NOT NULL,
     name         TEXT,
     language     TEXT                NOT NULL,
-    quiz_number  INTEGER             NOT NULL,
+    quiz_round   INTEGER             NOT NULL,
     quiz_size    INTEGER             NOT NULL,
     score        INTEGER,
     submitted_at TEXT

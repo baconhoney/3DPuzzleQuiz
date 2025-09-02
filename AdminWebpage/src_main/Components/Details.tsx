@@ -46,6 +46,7 @@ export default class DetailsComponent extends Component<Props, State> {
         const convertFn = (json: JsonQuizDetails) => ({
             ...json,
             language: json.language as QuizLanguage,
+            submittedAt: json.submittedAt ? new Date(json.submittedAt) : null,
         });
         if (this.props.teamID) {
             if (import.meta.env.MODE == "production") {
@@ -74,125 +75,118 @@ export default class DetailsComponent extends Component<Props, State> {
 
     render() {
         return (
-            <table style={{ width: "80%", maxWidth: "1200px" }}>
-                <thead>
-                    <tr>
-                        <td style={{ width: "auto" }}>
-                            {this.state.details
-                                ? (this.state.details.score
-                                    ? <span>{this.state.details.teamname}</span>
-                                    : <input id={this.props.teamID?.toString() ?? "null"} value={this.state.details?.teamname ?? ""} onChange={e => this.updateState({
-                                        details: {
-                                            ...this.state.details!, teamname: e.target.value
-                                        }
-                                    })} />
-                                )
-                                : <span id="testGroupName" style={{ padding: "0px 5px", fontSize: "1.5rem", fontWeight: "bold" }}>"Csapatnév"</span>
-                            }
-                        </td>
-                        <td style={{ padding: "5px 5px", width: "85px", textAlign: "center" }}>
-                            <span id="testLang" style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-                                {this.state.details?.language.toUpperCase() ?? "Nyelv"}
-                            </span>
-                        </td>
-                        <td style={{ padding: "5px 5px", width: "150px", textAlign: "center", whiteSpace: "nowrap" }}>
-                            <span id="testScore" style={{ fontSize: "1.8rem", fontWeight: "bold" }}>
-                                {this.state.details?.score ?? "??"} / {this.state.details?.questions.length ?? "??"}
-                            </span>
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colSpan={3}>
-                            {this.state.details
-                                ? <>
-                                    <table className="answers" key={this.props.teamID}>
-                                        <thead>
-                                            <tr>
-                                                <th className="name">Név</th>
-                                                <th className="location">Elhelyezkedés</th>
-                                                <th className="id">ID</th>
-                                                <th className="number">Válasz</th>
-                                                <th className="correct">Helyes</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {this.state.details.questions.map((question, index) => {
-                                                return (
-                                                    <tr key={question.id + "_" + index}>
-                                                        <td className="name">{question.name}</td>
-                                                        <td className="location">{question.location}</td>
-                                                        <td className="id">{question.id}</td>
-                                                        <td className="answer">
-                                                            {this.state.details!.score
-                                                                ? this.state.details!.questions[index].answer
-                                                                : <input
-                                                                    type="number"
-                                                                    value={(this.state.details!.questions[index].answer ?? "").toString()}
-                                                                    id={question.id.toString()}
-                                                                    className="answer-input"
-                                                                    ref={ref => { this.inputRefs.set(index, ref) }}
-                                                                    onKeyUp={e => e.key == "Enter" && this.inputRefs.get(index + 1)?.select()}
-                                                                    onChange={(event) => {
-                                                                        const val = event.target.value ? parseInt(event.target.value) : null;
-                                                                        const newEntries = structuredClone(this.state.details!.questions); // deep-copy the whole array<objects>
-                                                                        newEntries[index].answer = val;
-                                                                        this.updateState({
-                                                                            details: {
-                                                                                ...this.state.details!,
-                                                                                questions: newEntries,
-                                                                            }
-                                                                        });
-                                                                    }}
-                                                                />
-                                                            }
-                                                        </td>
-                                                        <td className="correct">{question.correct !== null ? (question.correct ? "✅" : "❌") : ""}</td>
-                                                    </tr>
-                                                );
-                                            })}
-                                        </tbody>
-                                    </table>
-                                    <div style={{ position: "absolute", top: "10px", right: "10px" }}>
-                                        {!this.state.details.score
-                                            // no score -> need to save and upload it first
-                                            ? <button onClick={() => {
-                                                if (this.state.details!.teamname == null) {
-                                                    this.props.app.showError(<h1>Csapatnév hiányzik</h1>);
-                                                } else if (this.state.details!.questions.some(entry => entry.answer == null)) {
-                                                    this.props.app.showError(<>
-                                                        <h1>A következő válaszok hiányoznak:</h1>
-                                                        {this.state.details!.questions.map((entry, index) => entry.answer == null ? <p key={entry.id}>{index + 1}. válasz (id: {entry.id}) hiányzik</p> : "")}
-                                                    </>
-                                                    );
-                                                } else {
-                                                    this.props.app.promptConfirm(<h1>Biztosan menti a kvízt?</h1>).then(
-                                                        () => actions.uploadAnswers(
-                                                            this.props.teamID!,
-                                                            this.state.details!.teamname!,
-                                                            this.state.details!.questions.map(e => ({ id: e.id, answer: e.answer as number })),
-                                                        ),
-                                                        () => { }
-                                                    );
-                                                }
-                                            }}>Mentés</button>
-                                            // score present -> printable
-                                            : <button onClick={() => {
-                                                this.props.app.promptConfirm(<h1>Biztosan kinyomtatja a kvízt?</h1>).then(
-                                                    () => actions.printQuiz(this.props.teamID!),
-                                                    () => { }
-                                                )
-                                            }}>Nyomtat</button>
-                                        }
-                                    </div>
-                                </>
-                                : <p>Kattints egy kvízre az részletek megjelenítésehez!</p>
-                            }
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div className="details">
+                <div className="header">
+                    <div className="teamname">
+                        {this.state.details
+                            ? (this.state.details.score !== null
+                                ? <span>{this.state.details.teamname}</span>
+                                : <input id={this.props.teamID?.toString() ?? "null"} value={this.state.details?.teamname ?? ""}
+                                    onChange={
+                                        e => this.updateState({ details: { ...this.state.details!, teamname: e.target.value } })
+                                    }
+                                />
+                            )
+                            : <span>Csapatnév</span>
+                        }
+                    </div>
+                    <div className="button">
+                        {this.state.details && this.state.details.submittedAt ? (
+                            this.state.details.score !== null ? (
+                                // score present -> printable
+                                <button onClick={() => {
+                                    this.props.app.promptConfirm(<h1>Biztosan kinyomtatja a kvízt?</h1>).then(
+                                        () => actions.printQuiz(this.props.teamID!),
+                                        () => { }
+                                    )
+                                }}><img src="print_icon.svg" /></button>
+                            ) : (
+                                // score present -> printable
+                                <button onClick={() => {
+                                    if (this.state.details!.teamname == null) {
+                                        this.props.app.showError(<h1>Csapatnév hiányzik</h1>);
+                                    } else if (this.state.details!.questions.some(entry => entry.answer == null)) {
+                                        this.props.app.showError(<>
+                                            <h1>A következő válaszok hiányoznak:</h1>
+                                            {this.state.details!.questions.map((entry, index) => entry.answer == null ? <p key={entry.id}>{index + 1}. válasz (id: {entry.id}) hiányzik</p> : "")}
+                                        </>
+                                        );
+                                    } else {
+                                        this.props.app.promptConfirm(<h1>Biztosan menti a kvízt?</h1>).then(
+                                            () => actions.uploadAnswers(
+                                                this.props.teamID!,
+                                                this.state.details!.teamname!,
+                                                this.state.details!.questions.map(e => ({ id: e.id, answer: e.answer as number })),
+                                            ),
+                                            () => { }
+                                        );
+                                    }
+                                }}><img src="save_icon.svg" /></button>
+                            )
+                        ) : null}
+                    </div>
+                    <div className="language">
+                        {this.state.details?.language.toUpperCase() ?? "Ny"}
+                    </div>
+                    <div className="score">
+                        {this.state.details?.score ?? "??"} / {this.state.details?.questions.length ?? "??"}
+                    </div>
+                </div>
+                <div className="table-container">
+                    {this.state.details
+                        ? <div className="inner-div">
+                            <table key={this.props.teamID}>
+                                <thead>
+                                    <tr>
+                                        <th className="name">Név</th>
+                                        <th className="location">Elhelyezkedés</th>
+                                        <th className="id">ID</th>
+                                        <th className="number">Válasz</th>
+                                        <th className="correct">Helyes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.details.questions.map((question, index) => {
+                                            return (
+                                                <tr key={question.id + "_" + index}>
+                                                    <td className="name">{question.name}</td>
+                                                    <td className="location">{question.location}</td>
+                                                    <td className="id">{question.id}</td>
+                                                    <td className="answer">
+                                                        {this.state.details!.score !== null
+                                                            ? question.answer
+                                                            : <input
+                                                                type="text"
+                                                                value={(question.answer ?? "").toString()}
+                                                                id={question.id.toString()}
+                                                                className="answer-input"
+                                                                ref={ref => { this.inputRefs.set(index, ref) }}
+                                                                onKeyUp={e => e.key == "Enter" && this.inputRefs.get(index + 1)?.select()}
+                                                                onChange={(event) => {
+                                                                    const val = event.target.value ? parseInt(event.target.value) : null;
+                                                                    const newEntries = structuredClone(this.state.details!.questions); // deep-copy the whole array<objects>
+                                                                    newEntries[index].answer = val;
+                                                                    this.updateState({
+                                                                        details: {
+                                                                            ...this.state.details!,
+                                                                            questions: newEntries,
+                                                                        }
+                                                                    });
+                                                                }}
+                                                            />
+                                                        }
+                                                    </td>
+                                                    <td className="correct">{question.correct !== null ? (question.correct ? "✅" : "❌") : ""}</td>
+                                                </tr>
+                                            );
+                                        })}
+                                </tbody>
+                            </table>
+                        </div>
+                        : <div className="text">Kattints egy kvízre a részletek megjelenítéséhez!</div>
+                    }
+                </div>
+            </div>
         );
     }
 }

@@ -83,7 +83,7 @@ class QuizState:
     """Stores the state of the quiz."""
 
     nextPhaseChangeAt: datetime.datetime = datetime.datetime.now()
-    currentQuizNumber: int = 1
+    currentQuizRound: int = 1
     phase: QuizPhases = QuizPhases.IDLE
 
     @classmethod
@@ -96,19 +96,25 @@ class QuizState:
         return {QuizPhases.IDLE: QuizPhases.RUNNING, QuizPhases.RUNNING: QuizPhases.SCORING, QuizPhases.SCORING: QuizPhases.IDLE}[cls.phase]
 
     @classmethod
-    async def updateState(cls, *, nextPhase: QuizPhases = None, nextPhaseChangeAt: datetime.datetime = None):
+    async def updateState(cls, *, nextPhase: QuizPhases = None, nextPhaseChangeAt: datetime.datetime = None, newQuizRound: int = None):
+        # Validate incoming data
         if nextPhase and nextPhase != cls.getNextPhase():
             raise ValueError(f"Invalid phase change: {nextPhase.value} -> {cls.getNextPhase().value}")
-        # print(f"Incoming datetime: {nextPhaseChangeAt.isoformat()}, current datetime: {datetime.datetime.now().isoformat()}")
         if nextPhaseChangeAt and nextPhaseChangeAt < datetime.datetime.now():
             raise ValueError(f"Invalid phase change: {nextPhaseChangeAt.isoformat(timespec='milliseconds')} -> {datetime.datetime.now().isoformat(timespec='milliseconds')}")
+        if newQuizRound and (not str(newQuizRound).isdigit() or newQuizRound < 1 or newQuizRound > 100):
+            raise ValueError(f"Invalid quiz round: {newQuizRound}")
+        # Make the requested change(s)
         if nextPhase:
             cls.phase = nextPhase
             event = {QuizPhases.IDLE: "resultsReady", QuizPhases.RUNNING: "quizStarted", QuizPhases.SCORING: "quizEnded"}[nextPhase]
+            _logger.debug(f"Sending event {event} to clients with data: {str({"nextPhaseChangeAt": cls.formatNextPhaseChangeAt()})}")
             await wsUtils.broadcastToClients(event, {"nextPhaseChangeAt": cls.formatNextPhaseChangeAt()})
         if nextPhaseChangeAt:
             cls.nextPhaseChangeAt = nextPhaseChangeAt
-        if nextPhase or nextPhaseChangeAt:
+        if newQuizRound:
+            cls.currentQuizRound = newQuizRound
+        if nextPhase or nextPhaseChangeAt or newQuizRound:
             await wsUtils.broadcastToAdmins("stateChanged", {})
 
 
@@ -116,19 +122,19 @@ class QuizState:
 # -------- FUNCTIONS --------
 # ---------------------------
 # ----- Converters -----
-def convertToQuizLanguage(lang: str) -> QuizLanguages | None:
+def convertToQuizLanguage(lang) -> QuizLanguages | None:
     return lang in QuizLanguages and QuizLanguages(lang) or None
 
 
-def convertToQuizType(type: str) -> QuizTypes | None:
-    return type in QuizTypes and QuizTypes(type) or None
+def convertToQuizType(quizType) -> QuizTypes | None:
+    return quizType in QuizTypes and QuizTypes(quizType) or None
 
 
-def convertToQuizSize(size: str) -> QuizSizes | None:
+def convertToQuizSize(size) -> QuizSizes | None:
     return str(size).isdigit() and int(size) in QuizSizes and QuizSizes(int(size)) or None
 
 
-def convertToQuizPhase(phase: str) -> QuizPhases | None:
+def convertToQuizPhase(phase) -> QuizPhases | None:
     return phase in QuizPhases and QuizPhases(phase) or None
 
 
@@ -144,8 +150,7 @@ def getNewTeamID(type: QuizTypes):
             uuid = random.randint(int(1e9), int(5e9 - 1))
         else:
             raise ValueError(f"Invalid quizType {type}")
-        quizDB.cursor.execute(f"SELECT count(id) FROM teams WHERE id={uuid};")
-        if quizDB.cursor.fetchone()[0] == 0:
+        if quizDB.cursor.execute(f"SELECT count(id) FROM teams WHERE id={uuid};").fetchone()[0] == 0:
             return uuid
 
 

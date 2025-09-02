@@ -1,50 +1,209 @@
-#main-left-cell {
-    table {
+.details {
+    width: 80%;
+    min-width: 750px;
+    max-width: 1200px;
+    height: 100%;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    .header {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        flex: none;
+        height: 60px;
+        margin-bottom: 10px;
+        border: 2px solid var(--borderColor1);
+
+        * {
+            background-color: var(--raisedBGColor);
+        }
+
+        .teamname {
+            flex-grow: 1;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+
+            >span {
+                font-size: 30px;
+                margin-left: 10px;
+            }
+
+            >input {
+                font-size: 30px;
+                margin-left: 5px;
+                padding: 3px;
+                border: 2px solid var(--inputBorderColor);
+                border-radius: 10px;
+            }
+        }
+
+        .button {
+            flex-grow: 0;
+            width: 80px;
+            display: flex;
+            align-items: center;
+
+            >button>img {
+                display: block;
+                height: 40px;
+                width: 40px;
+            }
+        }
+
+        .language {
+            flex-grow: 0;
+            width: 70px;
+            font-size: 1.5em;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .score {
+            flex-grow: 0;
+            width: 220px;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: right;
+        }
+    }
+
+    .table-container {
         width: 100%;
-    }
+        min-height: 0px;
 
-    .answers th, .answers td {
-        padding: 3px 3px;
-    }
+        >div.inner-div {
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            border: 1px solid var(--borderColor1);
 
-    .answers .name {
-        width: 50%;
-    }
+            >table {
+                /* table is made so only the right and bottom cells have border to simulate collapsing, */
+                /* this is needed for the stickied thead > ths */
+                border-spacing: 0px;
+                border-collapse: separate;
 
-    .answers .location {
-        width: 50%;
-    }
+                /* add background to all td */
+                th {
+                    position: sticky;
+                    top: 0px;
+                    z-index: 2;
+                }
 
-    .answers .id {
-        min-width: 60px;
-        width: 60px;
-        text-align: center;
-    }
+                th,
+                td {
+                    background-color: var(--backroundColor);
+                }
 
-    .answers .answer input {
-        text-align: center;
-        width: 60px;
-        margin: 0px 10px;
-        padding: 5px;
-        border: 1px solid var(--halfwayColor);
-        border-radius: 5px;
-    }
+                tr:nth-child(odd) td {
+                    background-color: var(--raisedBGColor);
+                }
 
-    .answers .answer input::-webkit-outer-spin-button,
-    .answers .answer input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
+                /* overwrite hovered tr's ths/tds with hoverBG */
+                tr:hover td {
+                    background-color: var(--hoverBGColor);
+                }
 
-    .answers .answer input[type=number] {
-        appearance: textfield;
-        -moz-appearance: textfield;
-    }
+                /* add borders to everything */
+                th,
+                td {
+                    border-right: 1px solid var(--borderColor1);
+                    border-bottom: 1px solid var(--borderColor1);
+                }
 
-    .answers .correct {
-        min-width: 80px;
-        width: 80px;
-        text-align: center;
+                th {
+                    border-top: 1px solid var(--borderColor1);
+                }
+
+                th:first-child,
+                td:first-child {
+                    border-left: 1px solid var(--borderColor1);
+                }
+
+                width: 100%;
+
+                tr {
+                    height: 45px;
+                }
+
+                th,
+                td {
+                    background-color: var(--backroundColor);
+                    border: 1px solid var(--borderColor1);
+                    padding: 0px 5px;
+                }
+
+                tr:nth-child(odd) td {
+                    background-color: var(--raisedBGColor);
+                }
+
+                tr:hover td {
+                    background-color: var(--hoverBGColor);
+                }
+
+                .name {
+                    width: 45%;
+                }
+
+                .location {
+                    width: 45%;
+                }
+
+                .id {
+                    min-width: 65px;
+                    width: 65px;
+                    text-align: center;
+                }
+
+                .answer {
+                    min-width: 80px;
+                    width: 80px;
+                    text-align: center;
+                }
+
+                .correct {
+                    min-width: 80px;
+                    width: 80px;
+                    text-align: center;
+                }
+
+                .answer-input {
+                    text-align: center;
+                    width: 55px;
+                    padding: 3px;
+                    font-size: 1.1rem;
+                    border: 2px solid var(--inputBorderColor);
+                    border-radius: 10px;
+                    /* hide white border when clicked */
+                    outline: none;
+                }
+
+                .answer-input::-webkit-outer-spin-button,
+                .answer-input::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+
+                .answer-input[type=number] {
+                    appearance: textfield;
+                    -moz-appearance: textfield;
+                }
+            }
+        }
+
+        >div.text {
+            text-align: center;
+        }
     }
 }
-

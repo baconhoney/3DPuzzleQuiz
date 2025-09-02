@@ -1,2983 +1,199 @@
 const quizdata: JSONQuizData = {
-    "6921720198": {
-        "name": "Team Zeta #1",
-        "language": "hu",
-        "score": 8,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 3,
-                "correct": true
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 70,
-                "correct": false
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 24,
-                "correct": true
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 8,
-                "correct": false
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": 54,
-                "correct": false
-            },
-            {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": 77,
-                "correct": true
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 2,
-                "correct": false
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 36,
-                "correct": true
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 17,
-                "correct": false
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 13,
-                "correct": false
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 83,
-                "correct": true
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 73,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 54,
-                "correct": false
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 16,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 88,
-                "correct": true
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 73,
-                "correct": false
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 58,
-                "correct": true
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 65,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 44,
-                "correct": true
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 38,
-                "correct": false
-            }
-        ]
-    },
-    "9263516190": {
-        "name": "Team Testing #2",
-        "language": "hu",
-        "score": 13,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 3,
-                "correct": true
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 23,
-                "correct": true
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 24,
-                "correct": true
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 22,
-                "correct": true
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": 4,
-                "correct": true
-            },
-            {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": 77,
-                "correct": true
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 68,
-                "correct": false
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 36,
-                "correct": true
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 29,
-                "correct": true
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 85,
-                "correct": true
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 66,
-                "correct": false
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 76,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 54,
-                "correct": false
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 48,
-                "correct": true
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 88,
-                "correct": true
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 54,
-                "correct": true
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 64,
-                "correct": false
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 17,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 44,
-                "correct": true
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 78,
-                "correct": false
-            }
-        ]
-    },
-    "6026182089": {
-        "name": "Team Testing #3",
-        "language": "hu",
-        "score": 8,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 3,
-                "correct": true
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 38,
-                "correct": false
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 24,
-                "correct": true
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 86,
-                "correct": false
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": 41,
-                "correct": false
-            },
-            {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": 37,
-                "correct": false
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 38,
-                "correct": true
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 36,
-                "correct": true
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 48,
-                "correct": false
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 93,
-                "correct": false
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 83,
-                "correct": true
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 64,
-                "correct": true
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 11,
-                "correct": true
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 48,
-                "correct": true
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 98,
-                "correct": false
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 67,
-                "correct": false
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 68,
-                "correct": false
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 38,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 2,
-                "correct": false
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 46,
-                "correct": false
-            }
-        ]
-    },
-    "3208715062": {
-        "name": "Team Zeta #4",
+    "7461373202": {
+        "name": "Team Alpha #1",
         "language": "en",
-        "score": null,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern castle",
-                "location": "Bisingen, Germany",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 7619,
-                "name": "Florence Cathedral",
-                "location": "Firenze, Italy",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "United Kingdom [sank]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 2354,
-                "name": "Statue of Liberty",
-                "location": "New York, United States of America",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4721,
-                "name": "Oriental Pearl tower",
-                "location": "Shanghai, China",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4638,
-                "name": "Prague Astronomical Clock and Town Hall",
-                "location": "Prague, Czech Republic",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6381,
-                "name": "The Moscow Kremlin Wall",
-                "location": "Moscow, Russia",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn bridge",
-                "location": "New York, United States of America",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spain [sank]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká castle",
-                "location": "Hluboká nad Vltavou, Czech Republic",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 5408,
-                "name": "Peles castle",
-                "location": "Sinaia, Romania",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6114,
-                "name": "The Assumption Cathedral",
-                "location": "Sergiyev Posad, Russia",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "United Kingdom [sank]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 2340,
-                "name": "Mausoleum of Mustafa Kemal Atatürk",
-                "location": "Ankara, Turkey",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8790,
-                "name": "Roman warship",
-                "location": "Italy [sank]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Hogwarts castle",
-                "location": "Alnwick, United Kingdom",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6653,
-                "name": "Basilica of Esztergom",
-                "location": "Esztergom, Hungary",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 7805,
-                "name": "Church of the Savior on Blood",
-                "location": "Saint Petersburg, Russia",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 5517,
-                "name": "Flying Dutchman ghostship",
-                "location": "Netherlands",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4190,
-                "name": "Neuschwanstein castle",
-                "location": "Schwangau, Germany",
-                "answer": null,
-                "correct": null
-            }
-        ]
-    },
-    "6172963228": {
-        "name": "Team Testing #5",
-        "language": "hu",
-        "score": 7,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 36,
-                "correct": false
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 9,
-                "correct": false
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 74,
-                "correct": false
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 12,
-                "correct": false
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": 41,
-                "correct": false
-            },
-            {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": 66,
-                "correct": false
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 38,
-                "correct": true
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 36,
-                "correct": true
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 29,
-                "correct": true
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 85,
-                "correct": true
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 83,
-                "correct": true
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 64,
-                "correct": true
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 79,
-                "correct": false
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 48,
-                "correct": true
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 4,
-                "correct": false
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 26,
-                "correct": false
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 81,
-                "correct": false
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 48,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 85,
-                "correct": false
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 22,
-                "correct": false
-            }
-        ]
-    },
-    "4324588653": {
-        "name": "Team Zeta #6",
-        "language": "hu",
-        "score": null,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": null,
-                "correct": null
-            }
-        ]
-    },
-    "5419468855": {
-        "name": "Team Beta #7",
-        "language": "hu",
-        "score": 14,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 37,
-                "correct": false
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 23,
-                "correct": true
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 89,
-                "correct": false
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 13,
-                "correct": false
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": 4,
-                "correct": true
-            },
-            {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": 77,
-                "correct": true
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 38,
-                "correct": true
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 36,
-                "correct": true
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 29,
-                "correct": true
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 85,
-                "correct": true
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 83,
-                "correct": true
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 64,
-                "correct": true
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 42,
-                "correct": false
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 48,
-                "correct": true
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 50,
-                "correct": false
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 54,
-                "correct": true
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 58,
-                "correct": true
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 62,
-                "correct": true
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 94,
-                "correct": false
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 41,
-                "correct": true
-            }
-        ]
-    },
-    "7382464390": {
-        "name": "Team LongNameLoremIpsum #8",
-        "language": "en",
-        "score": 8,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern castle",
-                "location": "Bisingen, Germany",
-                "answer": 17,
-                "correct": false
-            },
-            {
-                "id": 7619,
-                "name": "Florence Cathedral",
-                "location": "Firenze, Italy",
-                "answer": 97,
-                "correct": false
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "United Kingdom [sank]",
-                "answer": 24,
-                "correct": true
-            },
-            {
-                "id": 2354,
-                "name": "Statue of Liberty",
-                "location": "New York, United States of America",
-                "answer": 85,
-                "correct": false
-            },
-            {
-                "id": 4721,
-                "name": "Oriental Pearl tower",
-                "location": "Shanghai, China",
-                "answer": 61,
-                "correct": false
-            },
-            {
-                "id": 4638,
-                "name": "Prague Astronomical Clock and Town Hall",
-                "location": "Prague, Czech Republic",
-                "answer": 77,
-                "correct": true
-            },
-            {
-                "id": 6381,
-                "name": "The Moscow Kremlin Wall",
-                "location": "Moscow, Russia",
-                "answer": 38,
-                "correct": true
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn bridge",
-                "location": "New York, United States of America",
-                "answer": 36,
-                "correct": true
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spain [sank]",
-                "answer": 29,
-                "correct": true
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká castle",
-                "location": "Hluboká nad Vltavou, Czech Republic",
-                "answer": 65,
-                "correct": false
-            },
-            {
-                "id": 5408,
-                "name": "Peles castle",
-                "location": "Sinaia, Romania",
-                "answer": 50,
-                "correct": false
-            },
-            {
-                "id": 6114,
-                "name": "The Assumption Cathedral",
-                "location": "Sergiyev Posad, Russia",
-                "answer": 20,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "United Kingdom [sank]",
-                "answer": 11,
-                "correct": true
-            },
-            {
-                "id": 2340,
-                "name": "Mausoleum of Mustafa Kemal Atatürk",
-                "location": "Ankara, Turkey",
-                "answer": 79,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Roman warship",
-                "location": "Italy [sank]",
-                "answer": 88,
-                "correct": true
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Hogwarts castle",
-                "location": "Alnwick, United Kingdom",
-                "answer": 29,
-                "correct": false
-            },
-            {
-                "id": 6653,
-                "name": "Basilica of Esztergom",
-                "location": "Esztergom, Hungary",
-                "answer": 97,
-                "correct": false
-            },
-            {
-                "id": 7805,
-                "name": "Church of the Savior on Blood",
-                "location": "Saint Petersburg, Russia",
-                "answer": 27,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Flying Dutchman ghostship",
-                "location": "Netherlands",
-                "answer": 44,
-                "correct": true
-            },
-            {
-                "id": 4190,
-                "name": "Neuschwanstein castle",
-                "location": "Schwangau, Germany",
-                "answer": 53,
-                "correct": false
-            }
-        ]
-    },
-    "9871855137": {
-        "name": "Team Hello #9",
-        "language": "hu",
-        "score": 8,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 52,
-                "correct": false
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 23,
-                "correct": true
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 24,
-                "correct": true
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 22,
-                "correct": true
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": 98,
-                "correct": false
-            },
-            {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": 99,
-                "correct": false
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 24,
-                "correct": false
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 36,
-                "correct": true
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 29,
-                "correct": true
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 28,
-                "correct": false
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 29,
-                "correct": false
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 95,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 11,
-                "correct": true
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 41,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 32,
-                "correct": false
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 66,
-                "correct": false
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 58,
-                "correct": true
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 92,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 28,
-                "correct": false
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 41,
-                "correct": true
-            }
-        ]
-    },
-    "6672755007": {
-        "name": "Team Null #10",
-        "language": "en",
-        "score": 13,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern castle",
-                "location": "Bisingen, Germany",
-                "answer": 24,
-                "correct": false
-            },
-            {
-                "id": 7619,
-                "name": "Florence Cathedral",
-                "location": "Firenze, Italy",
-                "answer": 23,
-                "correct": true
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "United Kingdom [sank]",
-                "answer": 29,
-                "correct": false
-            },
-            {
-                "id": 2354,
-                "name": "Statue of Liberty",
-                "location": "New York, United States of America",
-                "answer": 22,
-                "correct": true
-            },
-            {
-                "id": 4721,
-                "name": "Oriental Pearl tower",
-                "location": "Shanghai, China",
-                "answer": 4,
-                "correct": true
-            },
-            {
-                "id": 4638,
-                "name": "Prague Astronomical Clock and Town Hall",
-                "location": "Prague, Czech Republic",
-                "answer": 77,
-                "correct": true
-            },
-            {
-                "id": 6381,
-                "name": "The Moscow Kremlin Wall",
-                "location": "Moscow, Russia",
-                "answer": 89,
-                "correct": false
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn bridge",
-                "location": "New York, United States of America",
-                "answer": 36,
-                "correct": true
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spain [sank]",
-                "answer": 29,
-                "correct": true
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká castle",
-                "location": "Hluboká nad Vltavou, Czech Republic",
-                "answer": 85,
-                "correct": true
-            },
-            {
-                "id": 5408,
-                "name": "Peles castle",
-                "location": "Sinaia, Romania",
-                "answer": 83,
-                "correct": true
-            },
-            {
-                "id": 6114,
-                "name": "The Assumption Cathedral",
-                "location": "Sergiyev Posad, Russia",
-                "answer": 64,
-                "correct": true
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "United Kingdom [sank]",
-                "answer": 10,
-                "correct": false
-            },
-            {
-                "id": 2340,
-                "name": "Mausoleum of Mustafa Kemal Atatürk",
-                "location": "Ankara, Turkey",
-                "answer": 38,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Roman warship",
-                "location": "Italy [sank]",
-                "answer": 88,
-                "correct": true
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Hogwarts castle",
-                "location": "Alnwick, United Kingdom",
-                "answer": 54,
-                "correct": true
-            },
-            {
-                "id": 6653,
-                "name": "Basilica of Esztergom",
-                "location": "Esztergom, Hungary",
-                "answer": 95,
-                "correct": false
-            },
-            {
-                "id": 7805,
-                "name": "Church of the Savior on Blood",
-                "location": "Saint Petersburg, Russia",
-                "answer": 25,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Flying Dutchman ghostship",
-                "location": "Netherlands",
-                "answer": 44,
-                "correct": true
-            },
-            {
-                "id": 4190,
-                "name": "Neuschwanstein castle",
-                "location": "Schwangau, Germany",
-                "answer": 41,
-                "correct": true
-            }
-        ]
-    },
-    "1825717914": {
-        "name": "Team LongNameLoremIpsum #11",
-        "language": "hu",
-        "score": null,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": null,
-                "correct": null
-            }
-        ]
-    },
-    "8122765129": {
-        "name": "Team Zeta #12",
-        "language": "hu",
-        "score": 8,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 31,
-                "correct": false
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 65,
-                "correct": false
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 24,
-                "correct": true
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 11,
-                "correct": false
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": 92,
-                "correct": false
-            },
-            {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": 57,
-                "correct": false
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 70,
-                "correct": false
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 85,
-                "correct": false
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 49,
-                "correct": false
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 20,
-                "correct": false
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 83,
-                "correct": true
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 64,
-                "correct": true
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 11,
-                "correct": true
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 77,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 88,
-                "correct": true
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 54,
-                "correct": true
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 97,
-                "correct": false
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 62,
-                "correct": true
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 24,
-                "correct": false
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 41,
-                "correct": true
-            }
-        ]
-    },
-    "5869482233": {
-        "name": "Team Hello #13",
-        "language": "hu",
         "score": 12,
-        "timestamp": "2025-08-16T21:06:51.524532",
+        "timestamp": "2025-08-31T00:40:56.322556",
         "questions": [
             {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 3,
+                "id": 6389,
+                "name": "Vajdahunyad Castle",
+                "location": "Budapest, Hungary",
+                "answer": 32,
                 "correct": true
             },
             {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 8,
-                "correct": false
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 24,
+                "id": 5641,
+                "name": "Himeji castle",
+                "location": "Himeji, Japan",
+                "answer": 7,
                 "correct": true
             },
             {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 39,
-                "correct": false
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": 4,
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spain [sank]",
+                "answer": 57,
                 "correct": true
             },
             {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": 77,
-                "correct": true
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 38,
-                "correct": true
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 86,
-                "correct": false
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 29,
-                "correct": true
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 85,
-                "correct": true
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 45,
-                "correct": false
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 64,
-                "correct": true
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 11,
-                "correct": true
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 99,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 88,
-                "correct": true
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 12,
-                "correct": false
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 58,
-                "correct": true
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 62,
-                "correct": true
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 29,
-                "correct": false
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 11,
-                "correct": false
-            }
-        ]
-    },
-    "3167619549": {
-        "name": "Team Alpha #14",
-        "language": "hu",
-        "score": null,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": null,
-                "correct": null
-            }
-        ]
-    },
-    "2558682526": {
-        "name": "Team Alpha #15",
-        "language": "hu",
-        "score": null,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": null,
-                "correct": null
-            }
-        ]
-    },
-    "5081681552": {
-        "name": "Team Alpha #16",
-        "language": "en",
-        "score": 9,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern castle",
-                "location": "Bisingen, Germany",
-                "answer": 58,
-                "correct": false
-            },
-            {
-                "id": 7619,
-                "name": "Florence Cathedral",
-                "location": "Firenze, Italy",
+                "id": 8422,
+                "name": "Château de Chenonceau",
+                "location": "Chenonceaux, France",
                 "answer": 60,
                 "correct": false
             },
             {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "United Kingdom [sank]",
-                "answer": 75,
+                "id": 4638,
+                "name": "Prague Astronomical Clock and Town Hall",
+                "location": "Prague, Czech Republic",
+                "answer": 97,
+                "correct": true
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln memorial",
+                "location": "Washington, United States of America",
+                "answer": 20,
                 "correct": false
             },
             {
-                "id": 2354,
-                "name": "Statue of Liberty",
-                "location": "New York, United States of America",
-                "answer": 16,
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "United Kingdom [sank]",
+                "answer": 29,
                 "correct": false
+            },
+            {
+                "id": 8465,
+                "name": "White House",
+                "location": "Washington, United States of America",
+                "answer": 36,
+                "correct": true
             },
             {
                 "id": 4721,
                 "name": "Oriental Pearl tower",
                 "location": "Shanghai, China",
-                "answer": 4,
+                "answer": 58,
+                "correct": false
+            },
+            {
+                "id": 2987,
+                "name": "Osaka castle",
+                "location": "Osaka, Japan",
+                "answer": 45,
                 "correct": true
             },
             {
-                "id": 4638,
-                "name": "Prague Astronomical Clock and Town Hall",
-                "location": "Prague, Czech Republic",
-                "answer": 91,
+                "id": 6144,
+                "name": "St. Stephen's basilica",
+                "location": "Budapest, Hungary",
+                "answer": 25,
                 "correct": false
             },
-            {
-                "id": 6381,
-                "name": "The Moscow Kremlin Wall",
-                "location": "Moscow, Russia",
-                "answer": 38,
-                "correct": true
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn bridge",
-                "location": "New York, United States of America",
-                "answer": 19,
-                "correct": false
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spain [sank]",
-                "answer": 29,
-                "correct": true
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká castle",
-                "location": "Hluboká nad Vltavou, Czech Republic",
-                "answer": 85,
-                "correct": true
-            },
-            {
-                "id": 5408,
-                "name": "Peles castle",
-                "location": "Sinaia, Romania",
-                "answer": 83,
-                "correct": true
-            },
-            {
-                "id": 6114,
-                "name": "The Assumption Cathedral",
-                "location": "Sergiyev Posad, Russia",
-                "answer": 33,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "United Kingdom [sank]",
-                "answer": 74,
-                "correct": false
-            },
-            {
-                "id": 2340,
-                "name": "Mausoleum of Mustafa Kemal Atatürk",
-                "location": "Ankara, Turkey",
-                "answer": 92,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Roman warship",
-                "location": "Italy [sank]",
-                "answer": 49,
-                "correct": false
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Hogwarts castle",
-                "location": "Alnwick, United Kingdom",
-                "answer": 54,
-                "correct": true
-            },
-            {
-                "id": 6653,
-                "name": "Basilica of Esztergom",
-                "location": "Esztergom, Hungary",
-                "answer": 98,
-                "correct": false
-            },
-            {
-                "id": 7805,
-                "name": "Church of the Savior on Blood",
-                "location": "Saint Petersburg, Russia",
-                "answer": 62,
-                "correct": true
-            },
-            {
-                "id": 5517,
-                "name": "Flying Dutchman ghostship",
-                "location": "Netherlands",
-                "answer": 44,
-                "correct": true
-            },
-            {
-                "id": 4190,
-                "name": "Neuschwanstein castle",
-                "location": "Schwangau, Germany",
-                "answer": 41,
-                "correct": true
-            }
-        ]
-    },
-    "6245781660": {
-        "name": "Team Zeta #17",
-        "language": "hu",
-        "score": 7,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 3,
-                "correct": true
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 23,
-                "correct": true
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 24,
-                "correct": true
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 36,
-                "correct": false
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": 4,
-                "correct": true
-            },
-            {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": 77,
-                "correct": true
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 35,
-                "correct": false
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 87,
-                "correct": false
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 69,
-                "correct": false
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 12,
-                "correct": false
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 84,
-                "correct": false
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 78,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 11,
-                "correct": true
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 36,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 88,
-                "correct": true
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 21,
-                "correct": false
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 42,
-                "correct": false
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 79,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 18,
-                "correct": false
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 35,
-                "correct": false
-            }
-        ]
-    },
-    "9452942635": {
-        "name": "Team Zeta #18",
-        "language": "en",
-        "score": 11,
-        "timestamp": "2025-08-16T21:06:51.524532",
-        "questions": [
             {
                 "id": 6841,
                 "name": "Hohenzollern castle",
                 "location": "Bisingen, Germany",
-                "answer": 3,
-                "correct": true
+                "answer": 100,
+                "correct": false
             },
             {
-                "id": 7619,
-                "name": "Florence Cathedral",
-                "location": "Firenze, Italy",
-                "answer": 23,
-                "correct": true
+                "id": 4837,
+                "name": "Eyüp Sultan mosque",
+                "location": "Istanbul, Turkey",
+                "answer": 79,
+                "correct": false
             },
             {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "United Kingdom [sank]",
-                "answer": 24,
-                "correct": true
-            },
-            {
-                "id": 2354,
-                "name": "Statue of Liberty",
+                "id": 2795,
+                "name": "St. Patrick cathedral",
                 "location": "New York, United States of America",
-                "answer": 75,
-                "correct": false
+                "answer": 69,
+                "correct": true
             },
             {
-                "id": 4721,
-                "name": "Oriental Pearl tower",
-                "location": "Shanghai, China",
-                "answer": 32,
-                "correct": false
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Dubai, United Arab Emirates",
+                "answer": 34,
+                "correct": true
             },
             {
-                "id": 4638,
-                "name": "Prague Astronomical Clock and Town Hall",
-                "location": "Prague, Czech Republic",
-                "answer": 35,
-                "correct": false
-            },
-            {
-                "id": 6381,
-                "name": "The Moscow Kremlin Wall",
-                "location": "Moscow, Russia",
+                "id": 5466,
+                "name": "Palace of Culture and Science",
+                "location": "Warsaw, Poland",
                 "answer": 38,
                 "correct": true
             },
             {
-                "id": 3095,
-                "name": "Brooklyn bridge",
-                "location": "New York, United States of America",
-                "answer": 36,
-                "correct": true
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spain [sank]",
-                "answer": 29,
-                "correct": true
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká castle",
-                "location": "Hluboká nad Vltavou, Czech Republic",
-                "answer": 66,
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Mekka, Saudi Arabia",
+                "answer": 87,
                 "correct": false
             },
             {
-                "id": 5408,
-                "name": "Peles castle",
-                "location": "Sinaia, Romania",
-                "answer": 83,
+                "id": 2366,
+                "name": "Leaning Tower of Pisa",
+                "location": "Pisa, Italy",
+                "answer": 6,
                 "correct": true
             },
             {
-                "id": 6114,
-                "name": "The Assumption Cathedral",
-                "location": "Sergiyev Posad, Russia",
-                "answer": 64,
-                "correct": true
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "United Kingdom [sank]",
-                "answer": 64,
-                "correct": false
-            },
-            {
-                "id": 2340,
-                "name": "Mausoleum of Mustafa Kemal Atatürk",
-                "location": "Ankara, Turkey",
-                "answer": 45,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Roman warship",
-                "location": "Italy [sank]",
-                "answer": 88,
-                "correct": true
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Hogwarts castle",
-                "location": "Alnwick, United Kingdom",
-                "answer": 54,
-                "correct": true
-            },
-            {
-                "id": 6653,
-                "name": "Basilica of Esztergom",
-                "location": "Esztergom, Hungary",
-                "answer": 68,
-                "correct": false
-            },
-            {
-                "id": 7805,
-                "name": "Church of the Savior on Blood",
-                "location": "Saint Petersburg, Russia",
-                "answer": 90,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Flying Dutchman ghostship",
-                "location": "Netherlands",
-                "answer": 73,
-                "correct": false
-            },
-            {
-                "id": 4190,
-                "name": "Neuschwanstein castle",
-                "location": "Schwangau, Germany",
-                "answer": 41,
-                "correct": true
-            }
-        ]
-    },
-    "9564511178": {
-        "name": "Team Beta #19",
-        "language": "hu",
-        "score": 12,
-        "timestamp": "2025-08-16T21:06:51.525533",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 3,
-                "correct": true
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 23,
-                "correct": true
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
+                "id": 5519,
+                "name": "Royal Castle",
+                "location": "Warsaw, Poland",
                 "answer": 16,
-                "correct": false
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 22,
                 "correct": true
             },
             {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": 4,
+                "id": 9010,
+                "name": "Kul Sharif mosque",
+                "location": "Kazan, Russia",
+                "answer": 26,
                 "correct": true
-            },
+            }
+        ]
+    },
+    "7658960360": {
+        "name": "Team Hello #2",
+        "language": "hu",
+        "score": 9,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
             {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": 77,
-                "correct": true
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 56,
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 44,
                 "correct": false
             },
             {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 61,
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 34,
                 "correct": false
             },
             {
-                "id": 8171,
-                "name": "San Felipe 1690",
+                "id": 2154,
+                "name": "Santa Maria 1492",
                 "location": "Spanyolország [elsüllyedt]",
-                "answer": 29,
+                "answer": 57,
                 "correct": true
             },
             {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 85,
-                "correct": true
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 83,
-                "correct": true
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 70,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 19,
-                "correct": false
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 48,
-                "correct": true
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 88,
-                "correct": true
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
                 "answer": 68,
                 "correct": false
             },
             {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 58,
-                "correct": true
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 13,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 44,
-                "correct": true
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 80,
-                "correct": false
-            }
-        ]
-    },
-    "6860149001": {
-        "name": "Team Zeta #20",
-        "language": "hu",
-        "score": 10,
-        "timestamp": "2025-08-16T21:06:51.525533",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 69,
-                "correct": false
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 23,
-                "correct": true
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 24,
-                "correct": true
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 22,
-                "correct": true
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": 4,
-                "correct": true
-            },
-            {
                 "id": 4638,
                 "name": "Prágai Csillagászati óra és városháza",
                 "location": "Csehország, Prága",
-                "answer": 4,
-                "correct": false
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 75,
-                "correct": false
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 36,
-                "correct": true
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 73,
-                "correct": false
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 15,
-                "correct": false
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 83,
-                "correct": true
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 71,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
                 "answer": 83,
                 "correct": false
             },
             {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 48,
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
                 "correct": true
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 69,
-                "correct": false
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 54,
-                "correct": true
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 58,
-                "correct": true
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 84,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 44,
-                "correct": true
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 14,
-                "correct": false
-            }
-        ]
-    },
-    "7945708879": {
-        "name": "Team Hello #21",
-        "language": "hu",
-        "score": 8,
-        "timestamp": "2025-08-16T21:06:51.525533",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 3,
-                "correct": true
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 57,
-                "correct": false
             },
             {
                 "id": 8922,
@@ -2987,608 +203,1905 @@ const quizdata: JSONQuizData = {
                 "correct": false
             },
             {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 19,
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 56,
                 "correct": false
             },
             {
                 "id": 4721,
                 "name": "Keleti Gyöngy torony",
                 "location": "Kína, Shanghai",
-                "answer": 91,
+                "answer": 57,
                 "correct": false
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 45,
+                "correct": true
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 3,
+                "correct": true
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 74,
+                "correct": true
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 15,
+                "correct": true
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 78,
+                "correct": false
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 34,
+                "correct": true
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 38,
+                "correct": true
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 81,
+                "correct": false
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 88,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 42,
+                "correct": false
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 26,
+                "correct": true
+            }
+        ]
+    },
+    "7039888144": {
+        "name": "Team Null #3",
+        "language": "hu",
+        "score": 14,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 32,
+                "correct": true
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 7,
+                "correct": true
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 30,
+                "correct": false
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 24,
+                "correct": true
             },
             {
                 "id": 4638,
                 "name": "Prágai Csillagászati óra és városháza",
                 "location": "Csehország, Prága",
-                "answer": 67,
-                "correct": false
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 69,
-                "correct": false
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 36,
+                "answer": 97,
                 "correct": true
             },
             {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 24,
-                "correct": false
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 85,
-                "correct": true
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 83,
-                "correct": true
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 23,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 99,
-                "correct": false
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 48,
-                "correct": true
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 98,
-                "correct": false
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 54,
-                "correct": true
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 58,
-                "correct": true
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 34,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 53,
-                "correct": false
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 41,
-                "correct": true
-            }
-        ]
-    },
-    "6928243130": {
-        "name": "Team Testing #22",
-        "language": "hu",
-        "score": 13,
-        "timestamp": "2025-08-16T21:06:51.525533",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 79,
-                "correct": false
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 23,
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
                 "correct": true
             },
             {
                 "id": 8922,
                 "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 24,
-                "correct": true
-            },
-            {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 22,
-                "correct": true
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": 4,
-                "correct": true
-            },
-            {
-                "id": 4638,
-                "name": "Prágai Csillagászati óra és városháza",
-                "location": "Csehország, Prága",
-                "answer": 43,
-                "correct": false
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 38,
-                "correct": true
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 36,
-                "correct": true
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 29,
-                "correct": true
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 93,
-                "correct": false
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 45,
-                "correct": false
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 29,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
                 "location": "Egyesült Királyság [elsüllyedt]",
                 "answer": 40,
                 "correct": false
             },
             {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 48,
-                "correct": true
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 88,
-                "correct": true
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 54,
-                "correct": true
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 92,
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 60,
                 "correct": false
             },
             {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 62,
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 30,
                 "correct": true
             },
             {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 44,
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 45,
                 "correct": true
             },
             {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 41,
-                "correct": true
-            }
-        ]
-    },
-    "9346798078": {
-        "name": "Team Testing #23",
-        "language": "hu",
-        "score": 12,
-        "timestamp": "2025-08-16T21:06:51.525533",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
                 "answer": 3,
                 "correct": true
             },
             {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 67,
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 19,
                 "correct": false
             },
             {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 15,
+                "correct": true
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 69,
+                "correct": true
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 34,
+                "correct": true
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 38,
+                "correct": true
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 21,
+                "correct": true
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 91,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
+                "correct": true
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 13,
+                "correct": false
+            }
+        ]
+    },
+    "8029281583": {
+        "name": "Team Rockets #4",
+        "language": "en",
+        "score": 9,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad Castle",
+                "location": "Budapest, Hungary",
+                "answer": 32,
+                "correct": true
+            },
+            {
+                "id": 5641,
+                "name": "Himeji castle",
+                "location": "Himeji, Japan",
+                "answer": 7,
+                "correct": true
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spain [sank]",
+                "answer": 57,
+                "correct": true
+            },
+            {
+                "id": 8422,
+                "name": "Château de Chenonceau",
+                "location": "Chenonceaux, France",
                 "answer": 24,
                 "correct": true
             },
             {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 13,
+                "id": 4638,
+                "name": "Prague Astronomical Clock and Town Hall",
+                "location": "Prague, Czech Republic",
+                "answer": 97,
+                "correct": true
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln memorial",
+                "location": "Washington, United States of America",
+                "answer": 81,
+                "correct": true
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "United Kingdom [sank]",
+                "answer": 44,
                 "correct": false
             },
             {
+                "id": 8465,
+                "name": "White House",
+                "location": "Washington, United States of America",
+                "answer": 36,
+                "correct": true
+            },
+            {
                 "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": 83,
+                "name": "Oriental Pearl tower",
+                "location": "Shanghai, China",
+                "answer": 30,
+                "correct": true
+            },
+            {
+                "id": 2987,
+                "name": "Osaka castle",
+                "location": "Osaka, Japan",
+                "answer": 42,
+                "correct": false
+            },
+            {
+                "id": 6144,
+                "name": "St. Stephen's basilica",
+                "location": "Budapest, Hungary",
+                "answer": 89,
+                "correct": false
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern castle",
+                "location": "Bisingen, Germany",
+                "answer": 52,
+                "correct": false
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mosque",
+                "location": "Istanbul, Turkey",
+                "answer": 15,
+                "correct": true
+            },
+            {
+                "id": 2795,
+                "name": "St. Patrick cathedral",
+                "location": "New York, United States of America",
+                "answer": 81,
+                "correct": false
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Dubai, United Arab Emirates",
+                "answer": 80,
+                "correct": false
+            },
+            {
+                "id": 5466,
+                "name": "Palace of Culture and Science",
+                "location": "Warsaw, Poland",
+                "answer": 72,
+                "correct": false
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Mekka, Saudi Arabia",
+                "answer": 35,
+                "correct": false
+            },
+            {
+                "id": 2366,
+                "name": "Leaning Tower of Pisa",
+                "location": "Pisa, Italy",
+                "answer": 3,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Royal Castle",
+                "location": "Warsaw, Poland",
+                "answer": 77,
+                "correct": false
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mosque",
+                "location": "Kazan, Russia",
+                "answer": 36,
+                "correct": false
+            }
+        ]
+    },
+    "9464158617": {
+        "name": "Team Alpha #5",
+        "language": "hu",
+        "score": 12,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 32,
+                "correct": true
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 7,
+                "correct": true
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 44,
+                "correct": false
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 28,
                 "correct": false
             },
             {
                 "id": 4638,
                 "name": "Prágai Csillagászati óra és városháza",
                 "location": "Csehország, Prága",
-                "answer": 77,
+                "answer": 46,
+                "correct": false
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
                 "correct": true
             },
             {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 38,
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 96,
                 "correct": true
             },
             {
-                "id": 3095,
-                "name": "Brooklyn híd",
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 91,
+                "correct": false
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 30,
+                "correct": true
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 45,
+                "correct": true
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 3,
+                "correct": true
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 28,
+                "correct": false
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 15,
+                "correct": true
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
                 "location": "Egyesült Államok, New York",
+                "answer": 69,
+                "correct": true
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 35,
+                "correct": false
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
                 "answer": 9,
                 "correct": false
             },
             {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 24,
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 21,
+                "correct": true
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 59,
                 "correct": false
             },
             {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 85,
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
                 "correct": true
             },
             {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 37,
-                "correct": false
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 64,
-                "correct": true
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 11,
-                "correct": true
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 38,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 88,
-                "correct": true
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 47,
-                "correct": false
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 58,
-                "correct": true
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 62,
-                "correct": true
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 44,
-                "correct": true
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 41,
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 26,
                 "correct": true
             }
         ]
     },
-    "1030155876": {
-        "name": "Team LongNameLoremIpsum #24",
+    "8609952023": {
+        "name": "Team Alpha #6",
         "language": "hu",
-        "score": null,
-        "timestamp": "2025-08-16T21:06:51.525533",
+        "score": 13,
+        "timestamp": "2025-08-31T00:40:56.323556",
         "questions": [
             {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": null,
-                "correct": null
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 83,
+                "correct": false
             },
             {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": null,
-                "correct": null
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 7,
+                "correct": true
             },
             {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": null,
-                "correct": null
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 57,
+                "correct": true
             },
             {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4721,
-                "name": "Keleti Gyöngy torony",
-                "location": "Kína, Shanghai",
-                "answer": null,
-                "correct": null
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 24,
+                "correct": true
             },
             {
                 "id": 4638,
                 "name": "Prágai Csillagászati óra és városháza",
                 "location": "Csehország, Prága",
-                "answer": null,
-                "correct": null
+                "answer": 97,
+                "correct": true
             },
             {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": null,
-                "correct": null
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": null,
-                "correct": null
-            }
-        ]
-    },
-    "5930125343": {
-        "name": "Team Null #25",
-        "language": "hu",
-        "score": 8,
-        "timestamp": "2025-08-16T21:06:51.525533",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern kastély",
-                "location": "Németország, Bisingen",
-                "answer": 25,
-                "correct": false
-            },
-            {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 23,
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
                 "correct": true
             },
             {
                 "id": 8922,
                 "name": "HMS Beagle 1918",
                 "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 83,
+                "answer": 96,
+                "correct": true
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 36,
+                "correct": true
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 30,
+                "correct": true
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 45,
+                "correct": true
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 3,
+                "correct": true
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 74,
+                "correct": true
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 15,
+                "correct": true
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 77,
                 "correct": false
             },
             {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 54,
+                "correct": false
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 37,
+                "correct": false
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 90,
+                "correct": false
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 6,
+                "correct": true
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 59,
+                "correct": false
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 13,
+                "correct": false
+            }
+        ]
+    },
+    "8194151771": {
+        "name": "Team Beta #7",
+        "language": "hu",
+        "score": 8,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 98,
+                "correct": false
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 7,
+                "correct": true
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 93,
+                "correct": false
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 44,
+                "correct": false
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 97,
+                "correct": true
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
+                "correct": true
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 2,
+                "correct": false
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 36,
+                "correct": true
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 30,
+                "correct": true
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
                 "answer": 45,
+                "correct": true
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 3,
+                "correct": true
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 69,
+                "correct": false
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 11,
+                "correct": false
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 23,
+                "correct": false
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 43,
+                "correct": false
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 46,
+                "correct": false
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 64,
+                "correct": false
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 40,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
+                "correct": true
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 96,
+                "correct": false
+            }
+        ]
+    },
+    "6576128343": {
+        "name": "Team Null #8",
+        "language": "hu",
+        "score": 9,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 33,
+                "correct": false
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 55,
+                "correct": false
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 57,
+                "correct": true
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 100,
+                "correct": false
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 62,
+                "correct": false
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
+                "correct": true
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 93,
+                "correct": false
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 36,
+                "correct": true
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 30,
+                "correct": true
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 97,
+                "correct": false
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 99,
+                "correct": false
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 89,
+                "correct": false
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 15,
+                "correct": true
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 69,
+                "correct": true
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 19,
+                "correct": false
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 67,
+                "correct": false
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 93,
+                "correct": false
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 6,
+                "correct": true
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
+                "correct": true
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 26,
+                "correct": true
+            }
+        ]
+    },
+    "6646589696": {
+        "name": "Team Beta #9",
+        "language": "hu",
+        "score": 11,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 71,
+                "correct": false
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 7,
+                "correct": true
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 25,
+                "correct": false
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 54,
+                "correct": false
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 97,
+                "correct": true
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 98,
+                "correct": false
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 96,
+                "correct": true
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 18,
                 "correct": false
             },
             {
                 "id": 4721,
                 "name": "Keleti Gyöngy torony",
                 "location": "Kína, Shanghai",
+                "answer": 2,
+                "correct": false
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 45,
+                "correct": true
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 10,
+                "correct": false
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 74,
+                "correct": true
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 15,
+                "correct": true
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 54,
+                "correct": false
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 34,
+                "correct": true
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 38,
+                "correct": true
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 29,
+                "correct": false
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 6,
+                "correct": true
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
+                "correct": true
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 26,
+                "correct": true
+            }
+        ]
+    },
+    "5538496557": {
+        "name": "Team Zeta #10",
+        "language": "hu",
+        "score": 10,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 32,
+                "correct": true
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 15,
+                "correct": false
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 57,
+                "correct": true
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 24,
+                "correct": true
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 97,
+                "correct": true
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
+                "correct": true
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 43,
+                "correct": false
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 27,
+                "correct": false
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 76,
+                "correct": false
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 22,
+                "correct": false
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 3,
+                "correct": true
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 28,
+                "correct": false
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 15,
+                "correct": true
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 65,
+                "correct": false
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 34,
+                "correct": true
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 44,
+                "correct": false
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 76,
+                "correct": false
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 1,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
+                "correct": true
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 26,
+                "correct": true
+            }
+        ]
+    },
+    "8080416298": {
+        "name": "Team Testing #11",
+        "language": "hu",
+        "score": 10,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 32,
+                "correct": true
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 70,
+                "correct": false
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 57,
+                "correct": true
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 24,
+                "correct": true
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 69,
+                "correct": false
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 8,
+                "correct": false
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 52,
+                "correct": false
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 71,
+                "correct": false
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 48,
+                "correct": false
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 45,
+                "correct": true
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 3,
+                "correct": true
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 83,
+                "correct": false
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 15,
+                "correct": true
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 69,
+                "correct": true
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 45,
+                "correct": false
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 67,
+                "correct": false
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 21,
+                "correct": true
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 4,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
+                "correct": true
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 26,
+                "correct": true
+            }
+        ]
+    },
+    "1690169916": {
+        "name": "Team Hello #12",
+        "language": "en",
+        "score": null,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad Castle",
+                "location": "Budapest, Hungary",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5641,
+                "name": "Himeji castle",
+                "location": "Himeji, Japan",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spain [sank]",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8422,
+                "name": "Château de Chenonceau",
+                "location": "Chenonceaux, France",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4638,
+                "name": "Prague Astronomical Clock and Town Hall",
+                "location": "Prague, Czech Republic",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln memorial",
+                "location": "Washington, United States of America",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "United Kingdom [sank]",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8465,
+                "name": "White House",
+                "location": "Washington, United States of America",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4721,
+                "name": "Oriental Pearl tower",
+                "location": "Shanghai, China",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2987,
+                "name": "Osaka castle",
+                "location": "Osaka, Japan",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6144,
+                "name": "St. Stephen's basilica",
+                "location": "Budapest, Hungary",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern castle",
+                "location": "Bisingen, Germany",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mosque",
+                "location": "Istanbul, Turkey",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2795,
+                "name": "St. Patrick cathedral",
+                "location": "New York, United States of America",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Dubai, United Arab Emirates",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5466,
+                "name": "Palace of Culture and Science",
+                "location": "Warsaw, Poland",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Mekka, Saudi Arabia",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2366,
+                "name": "Leaning Tower of Pisa",
+                "location": "Pisa, Italy",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5519,
+                "name": "Royal Castle",
+                "location": "Warsaw, Poland",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mosque",
+                "location": "Kazan, Russia",
+                "answer": null,
+                "correct": null
+            }
+        ]
+    },
+    "8328583495": {
+        "name": "Team Rockets #13",
+        "language": "hu",
+        "score": 10,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 32,
+                "correct": true
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 7,
+                "correct": true
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 69,
+                "correct": false
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 46,
+                "correct": false
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 97,
+                "correct": true
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
+                "correct": true
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 10,
+                "correct": false
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 87,
+                "correct": false
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 30,
+                "correct": true
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 42,
+                "correct": false
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 40,
+                "correct": false
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 74,
+                "correct": true
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 58,
+                "correct": false
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 11,
+                "correct": false
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 8,
+                "correct": false
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 38,
+                "correct": true
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 21,
+                "correct": true
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 6,
+                "correct": true
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 45,
+                "correct": false
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 26,
+                "correct": true
+            }
+        ]
+    },
+    "5810190041": {
+        "name": "Team Beta #14",
+        "language": "hu",
+        "score": 6,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 32,
+                "correct": true
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 98,
+                "correct": false
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 57,
+                "correct": true
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 47,
+                "correct": false
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 73,
+                "correct": false
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 40,
+                "correct": false
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 96,
+                "correct": true
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 55,
+                "correct": false
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 19,
+                "correct": false
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 9,
+                "correct": false
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 85,
+                "correct": false
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 16,
+                "correct": false
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 53,
+                "correct": false
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 69,
+                "correct": true
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 34,
+                "correct": true
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 38,
+                "correct": true
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 74,
+                "correct": false
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 18,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 36,
+                "correct": false
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 17,
+                "correct": false
+            }
+        ]
+    },
+    "8955624820": {
+        "name": "Team Alpha #15",
+        "language": "hu",
+        "score": 14,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 28,
+                "correct": false
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 7,
+                "correct": true
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 57,
+                "correct": true
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
                 "answer": 53,
                 "correct": false
             },
@@ -3596,115 +2109,495 @@ const quizdata: JSONQuizData = {
                 "id": 4638,
                 "name": "Prágai Csillagászati óra és városháza",
                 "location": "Csehország, Prága",
-                "answer": 77,
+                "answer": 6,
+                "correct": false
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
                 "correct": true
             },
             {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 96,
+                "correct": true
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 36,
+                "correct": true
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 28,
+                "correct": false
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 45,
+                "correct": true
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 3,
+                "correct": true
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 74,
+                "correct": true
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 15,
+                "correct": true
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 69,
+                "correct": true
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 34,
+                "correct": true
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 61,
+                "correct": false
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 21,
+                "correct": true
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 83,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
+                "correct": true
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 26,
+                "correct": true
+            }
+        ]
+    },
+    "5682858442": {
+        "name": "Team Hello #16",
+        "language": "hu",
+        "score": 15,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 85,
+                "correct": false
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 7,
+                "correct": true
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 57,
+                "correct": true
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 13,
+                "correct": false
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 97,
+                "correct": true
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
+                "correct": true
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 96,
+                "correct": true
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 83,
+                "correct": false
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 30,
+                "correct": true
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 45,
+                "correct": true
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 3,
+                "correct": true
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 74,
+                "correct": true
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 29,
+                "correct": false
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 6,
+                "correct": false
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 34,
+                "correct": true
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
                 "answer": 38,
                 "correct": true
             },
             {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 73,
-                "correct": false
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 29,
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 21,
                 "correct": true
             },
             {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 72,
-                "correct": false
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 96,
-                "correct": false
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 77,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 11,
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 6,
                 "correct": true
             },
             {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 67,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 88,
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
                 "correct": true
             },
             {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 73,
-                "correct": false
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 87,
-                "correct": false
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 62,
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 26,
                 "correct": true
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 44,
-                "correct": true
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 1,
-                "correct": false
             }
         ]
     },
-    "8758873785": {
-        "name": "Team Null #26",
-        "language": "hu",
-        "score": 4,
-        "timestamp": "2025-08-16T21:06:51.525533",
+    "2108760170": {
+        "name": "Team Hello #17",
+        "language": "en",
+        "score": null,
+        "timestamp": "2025-08-31T00:40:56.323556",
         "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad Castle",
+                "location": "Budapest, Hungary",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5641,
+                "name": "Himeji castle",
+                "location": "Himeji, Japan",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spain [sank]",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8422,
+                "name": "Château de Chenonceau",
+                "location": "Chenonceaux, France",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4638,
+                "name": "Prague Astronomical Clock and Town Hall",
+                "location": "Prague, Czech Republic",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln memorial",
+                "location": "Washington, United States of America",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "United Kingdom [sank]",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8465,
+                "name": "White House",
+                "location": "Washington, United States of America",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4721,
+                "name": "Oriental Pearl tower",
+                "location": "Shanghai, China",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2987,
+                "name": "Osaka castle",
+                "location": "Osaka, Japan",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6144,
+                "name": "St. Stephen's basilica",
+                "location": "Budapest, Hungary",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern castle",
+                "location": "Bisingen, Germany",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mosque",
+                "location": "Istanbul, Turkey",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2795,
+                "name": "St. Patrick cathedral",
+                "location": "New York, United States of America",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Dubai, United Arab Emirates",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5466,
+                "name": "Palace of Culture and Science",
+                "location": "Warsaw, Poland",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Mekka, Saudi Arabia",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2366,
+                "name": "Leaning Tower of Pisa",
+                "location": "Pisa, Italy",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5519,
+                "name": "Royal Castle",
+                "location": "Warsaw, Poland",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mosque",
+                "location": "Kazan, Russia",
+                "answer": null,
+                "correct": null
+            }
+        ]
+    },
+    "6243509303": {
+        "name": "Team Hello #18",
+        "language": "hu",
+        "score": 8,
+        "timestamp": "2025-08-31T00:40:56.323556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 59,
+                "correct": false
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 41,
+                "correct": false
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 74,
+                "correct": false
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 74,
+                "correct": false
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 97,
+                "correct": true
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
+                "correct": true
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 96,
+                "correct": true
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 36,
+                "correct": true
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 30,
+                "correct": true
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 71,
+                "correct": false
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 84,
+                "correct": false
+            },
             {
                 "id": 6841,
                 "name": "Hohenzollern kastély",
@@ -3713,580 +2606,1835 @@ const quizdata: JSONQuizData = {
                 "correct": false
             },
             {
-                "id": 7619,
-                "name": "Firenzei Dóm",
-                "location": "Olaszország, Firenze",
-                "answer": 36,
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 45,
                 "correct": false
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 69,
+                "correct": true
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 44,
+                "correct": false
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 61,
+                "correct": false
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 21,
+                "correct": true
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 85,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
+                "correct": true
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 72,
+                "correct": false
+            }
+        ]
+    },
+    "6249718654": {
+        "name": "Team Alpha #19",
+        "language": "hu",
+        "score": 11,
+        "timestamp": "2025-08-31T00:40:56.324556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 32,
+                "correct": true
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 21,
+                "correct": false
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 57,
+                "correct": true
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 24,
+                "correct": true
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 6,
+                "correct": false
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
+                "correct": true
             },
             {
                 "id": 8922,
                 "name": "HMS Beagle 1918",
                 "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 37,
+                "answer": 23,
                 "correct": false
             },
             {
-                "id": 2354,
-                "name": "Szabadság-szobor",
-                "location": "Egyesült Államok, New York",
-                "answer": 22,
-                "correct": true
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 52,
+                "correct": false
             },
             {
                 "id": 4721,
                 "name": "Keleti Gyöngy torony",
                 "location": "Kína, Shanghai",
-                "answer": 38,
+                "answer": 30,
+                "correct": true
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 37,
+                "correct": false
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 3,
+                "correct": true
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 74,
+                "correct": true
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 83,
+                "correct": false
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 69,
+                "correct": true
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 40,
+                "correct": false
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 12,
+                "correct": false
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 21,
+                "correct": true
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 6,
+                "correct": true
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
+                "correct": true
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 62,
+                "correct": false
+            }
+        ]
+    },
+    "7966063900": {
+        "name": "Team Alpha #20",
+        "language": "hu",
+        "score": 8,
+        "timestamp": "2025-08-31T00:40:56.324556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 100,
+                "correct": false
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 59,
+                "correct": false
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 41,
+                "correct": false
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 18,
                 "correct": false
             },
             {
                 "id": 4638,
                 "name": "Prágai Csillagászati óra és városháza",
                 "location": "Csehország, Prága",
-                "answer": 77,
-                "correct": true
-            },
-            {
-                "id": 6381,
-                "name": "A moszkvai Kreml Fala",
-                "location": "Oroszország, Moszkva",
-                "answer": 3,
-                "correct": false
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn híd",
-                "location": "Egyesült Államok, New York",
-                "answer": 49,
-                "correct": false
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spanyolország [elsüllyedt]",
-                "answer": 100,
-                "correct": false
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká kastély",
-                "location": "Csehország, Hluboká nad Vltavou",
-                "answer": 85,
-                "correct": true
-            },
-            {
-                "id": 5408,
-                "name": "Peles kastély",
-                "location": "Románia, Szinaja",
-                "answer": 65,
-                "correct": false
-            },
-            {
-                "id": 6114,
-                "name": "Nagyboldogasszony-székesegyház",
-                "location": "Oroszország, Szergijev Poszad",
-                "answer": 37,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "Egyesült Királyság [elsüllyedt]",
-                "answer": 22,
-                "correct": false
-            },
-            {
-                "id": 2340,
-                "name": "Mustafa Kemal Atatürk Mauzóleuma",
-                "location": "Törökország, Ankara",
-                "answer": 73,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Római csatahajó",
-                "location": "Olaszország [elsüllyedt]",
-                "answer": 25,
-                "correct": false
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Roxfort Kastély",
-                "location": "Egyesült Királyság, Alnwick",
-                "answer": 54,
-                "correct": true
-            },
-            {
-                "id": 6653,
-                "name": "Esztergomi Bazilika",
-                "location": "Magyarország, Esztergom",
-                "answer": 56,
-                "correct": false
-            },
-            {
-                "id": 7805,
-                "name": "A Vérző Megváltó temploma",
-                "location": "Oroszország, Szentpétervár",
-                "answer": 14,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Bolygó Hollandi szellemhajó",
-                "location": "Hollandia",
-                "answer": 64,
-                "correct": false
-            },
-            {
-                "id": 4190,
-                "name": "Új Hattyúkő kastély",
-                "location": "Németország, Schwangau",
-                "answer": 67,
-                "correct": false
-            }
-        ]
-    },
-    "5923426279": {
-        "name": "Team Zeta #27",
-        "language": "en",
-        "score": 8,
-        "timestamp": "2025-08-16T21:06:51.526533",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern castle",
-                "location": "Bisingen, Germany",
-                "answer": 3,
-                "correct": true
-            },
-            {
-                "id": 7619,
-                "name": "Florence Cathedral",
-                "location": "Firenze, Italy",
-                "answer": 77,
-                "correct": false
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "United Kingdom [sank]",
-                "answer": 85,
-                "correct": false
-            },
-            {
-                "id": 2354,
-                "name": "Statue of Liberty",
-                "location": "New York, United States of America",
-                "answer": 22,
-                "correct": true
-            },
-            {
-                "id": 4721,
-                "name": "Oriental Pearl tower",
-                "location": "Shanghai, China",
-                "answer": 24,
-                "correct": false
-            },
-            {
-                "id": 4638,
-                "name": "Prague Astronomical Clock and Town Hall",
-                "location": "Prague, Czech Republic",
-                "answer": 77,
-                "correct": true
-            },
-            {
-                "id": 6381,
-                "name": "The Moscow Kremlin Wall",
-                "location": "Moscow, Russia",
-                "answer": 38,
-                "correct": true
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn bridge",
-                "location": "New York, United States of America",
-                "answer": 34,
-                "correct": false
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spain [sank]",
-                "answer": 29,
-                "correct": true
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká castle",
-                "location": "Hluboká nad Vltavou, Czech Republic",
-                "answer": 85,
-                "correct": true
-            },
-            {
-                "id": 5408,
-                "name": "Peles castle",
-                "location": "Sinaia, Romania",
-                "answer": 35,
-                "correct": false
-            },
-            {
-                "id": 6114,
-                "name": "The Assumption Cathedral",
-                "location": "Sergiyev Posad, Russia",
-                "answer": 78,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "United Kingdom [sank]",
-                "answer": 11,
-                "correct": true
-            },
-            {
-                "id": 2340,
-                "name": "Mausoleum of Mustafa Kemal Atatürk",
-                "location": "Ankara, Turkey",
-                "answer": 1,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Roman warship",
-                "location": "Italy [sank]",
-                "answer": 31,
-                "correct": false
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Hogwarts castle",
-                "location": "Alnwick, United Kingdom",
-                "answer": 30,
-                "correct": false
-            },
-            {
-                "id": 6653,
-                "name": "Basilica of Esztergom",
-                "location": "Esztergom, Hungary",
-                "answer": 58,
-                "correct": true
-            },
-            {
-                "id": 7805,
-                "name": "Church of the Savior on Blood",
-                "location": "Saint Petersburg, Russia",
-                "answer": 29,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Flying Dutchman ghostship",
-                "location": "Netherlands",
-                "answer": 45,
-                "correct": false
-            },
-            {
-                "id": 4190,
-                "name": "Neuschwanstein castle",
-                "location": "Schwangau, Germany",
-                "answer": 66,
-                "correct": false
-            }
-        ]
-    },
-    "6499211977": {
-        "name": "Team Rockets #28",
-        "language": "en",
-        "score": 7,
-        "timestamp": "2025-08-16T21:06:51.526533",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern castle",
-                "location": "Bisingen, Germany",
-                "answer": 64,
-                "correct": false
-            },
-            {
-                "id": 7619,
-                "name": "Florence Cathedral",
-                "location": "Firenze, Italy",
-                "answer": 15,
-                "correct": false
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "United Kingdom [sank]",
-                "answer": 24,
-                "correct": true
-            },
-            {
-                "id": 2354,
-                "name": "Statue of Liberty",
-                "location": "New York, United States of America",
-                "answer": 58,
-                "correct": false
-            },
-            {
-                "id": 4721,
-                "name": "Oriental Pearl tower",
-                "location": "Shanghai, China",
-                "answer": 55,
-                "correct": false
-            },
-            {
-                "id": 4638,
-                "name": "Prague Astronomical Clock and Town Hall",
-                "location": "Prague, Czech Republic",
-                "answer": 12,
-                "correct": false
-            },
-            {
-                "id": 6381,
-                "name": "The Moscow Kremlin Wall",
-                "location": "Moscow, Russia",
-                "answer": 29,
-                "correct": false
-            },
-            {
-                "id": 3095,
-                "name": "Brooklyn bridge",
-                "location": "New York, United States of America",
-                "answer": 43,
-                "correct": false
-            },
-            {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spain [sank]",
-                "answer": 29,
-                "correct": true
-            },
-            {
-                "id": 4512,
-                "name": "Hluboká castle",
-                "location": "Hluboká nad Vltavou, Czech Republic",
-                "answer": 12,
-                "correct": false
-            },
-            {
-                "id": 5408,
-                "name": "Peles castle",
-                "location": "Sinaia, Romania",
-                "answer": 83,
-                "correct": true
-            },
-            {
-                "id": 6114,
-                "name": "The Assumption Cathedral",
-                "location": "Sergiyev Posad, Russia",
-                "answer": 33,
-                "correct": false
-            },
-            {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "United Kingdom [sank]",
-                "answer": 11,
-                "correct": true
-            },
-            {
-                "id": 2340,
-                "name": "Mausoleum of Mustafa Kemal Atatürk",
-                "location": "Ankara, Turkey",
-                "answer": 34,
-                "correct": false
-            },
-            {
-                "id": 8790,
-                "name": "Roman warship",
-                "location": "Italy [sank]",
-                "answer": 57,
-                "correct": false
-            },
-            {
-                "id": 8550,
-                "name": "Harry Potter Hogwarts castle",
-                "location": "Alnwick, United Kingdom",
-                "answer": 54,
-                "correct": true
-            },
-            {
-                "id": 6653,
-                "name": "Basilica of Esztergom",
-                "location": "Esztergom, Hungary",
-                "answer": 58,
-                "correct": true
-            },
-            {
-                "id": 7805,
-                "name": "Church of the Savior on Blood",
-                "location": "Saint Petersburg, Russia",
-                "answer": 22,
-                "correct": false
-            },
-            {
-                "id": 5517,
-                "name": "Flying Dutchman ghostship",
-                "location": "Netherlands",
-                "answer": 44,
-                "correct": true
-            },
-            {
-                "id": 4190,
-                "name": "Neuschwanstein castle",
-                "location": "Schwangau, Germany",
-                "answer": 45,
-                "correct": false
-            }
-        ]
-    },
-    "9611948341": {
-        "name": "Team Testing #29",
-        "language": "en",
-        "score": 9,
-        "timestamp": "2025-08-16T21:06:51.526533",
-        "questions": [
-            {
-                "id": 6841,
-                "name": "Hohenzollern castle",
-                "location": "Bisingen, Germany",
-                "answer": 3,
-                "correct": true
-            },
-            {
-                "id": 7619,
-                "name": "Florence Cathedral",
-                "location": "Firenze, Italy",
-                "answer": 23,
-                "correct": true
-            },
-            {
-                "id": 8922,
-                "name": "HMS Beagle 1918",
-                "location": "United Kingdom [sank]",
-                "answer": 13,
-                "correct": false
-            },
-            {
-                "id": 2354,
-                "name": "Statue of Liberty",
-                "location": "New York, United States of America",
-                "answer": 31,
-                "correct": false
-            },
-            {
-                "id": 4721,
-                "name": "Oriental Pearl tower",
-                "location": "Shanghai, China",
-                "answer": 4,
-                "correct": true
-            },
-            {
-                "id": 4638,
-                "name": "Prague Astronomical Clock and Town Hall",
-                "location": "Prague, Czech Republic",
                 "answer": 26,
                 "correct": false
             },
             {
-                "id": 6381,
-                "name": "The Moscow Kremlin Wall",
-                "location": "Moscow, Russia",
-                "answer": 12,
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
+                "correct": true
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 33,
                 "correct": false
             },
             {
-                "id": 3095,
-                "name": "Brooklyn bridge",
-                "location": "New York, United States of America",
-                "answer": 58,
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 11,
                 "correct": false
             },
             {
-                "id": 8171,
-                "name": "San Felipe 1690",
-                "location": "Spain [sank]",
-                "answer": 87,
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 19,
                 "correct": false
             },
             {
-                "id": 4512,
-                "name": "Hluboká castle",
-                "location": "Hluboká nad Vltavou, Czech Republic",
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
                 "answer": 45,
+                "correct": true
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 3,
+                "correct": true
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 100,
                 "correct": false
             },
             {
-                "id": 5408,
-                "name": "Peles castle",
-                "location": "Sinaia, Romania",
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 15,
+                "correct": true
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 69,
+                "correct": true
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
                 "answer": 79,
                 "correct": false
             },
             {
-                "id": 6114,
-                "name": "The Assumption Cathedral",
-                "location": "Sergiyev Posad, Russia",
-                "answer": 64,
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 93,
+                "correct": false
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 21,
                 "correct": true
             },
             {
-                "id": 8261,
-                "name": "Titanic",
-                "location": "United Kingdom [sank]",
-                "answer": 11,
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 6,
                 "correct": true
             },
             {
-                "id": 2340,
-                "name": "Mausoleum of Mustafa Kemal Atatürk",
-                "location": "Ankara, Turkey",
-                "answer": 48,
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
                 "correct": true
             },
             {
-                "id": 8790,
-                "name": "Roman warship",
-                "location": "Italy [sank]",
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 39,
+                "correct": false
+            }
+        ]
+    },
+    "6732545514": {
+        "name": "Team Testing #21",
+        "language": "hu",
+        "score": 8,
+        "timestamp": "2025-08-31T00:40:56.324556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 32,
+                "correct": true
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 7,
+                "correct": true
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 6,
+                "correct": false
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
                 "answer": 7,
                 "correct": false
             },
             {
-                "id": 8550,
-                "name": "Harry Potter Hogwarts castle",
-                "location": "Alnwick, United Kingdom",
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 8,
+                "correct": false
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 34,
+                "correct": false
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 96,
+                "correct": true
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 45,
+                "correct": false
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 58,
+                "correct": false
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 5,
+                "correct": false
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 55,
+                "correct": false
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 74,
+                "correct": true
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 15,
+                "correct": true
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 45,
+                "correct": false
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 60,
+                "correct": false
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 38,
+                "correct": true
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 21,
+                "correct": true
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 66,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 97,
+                "correct": false
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 26,
+                "correct": true
+            }
+        ]
+    },
+    "2066917952": {
+        "name": "Team Beta #22",
+        "language": "hu",
+        "score": null,
+        "timestamp": "2025-08-31T00:40:56.324556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": null,
+                "correct": null
+            }
+        ]
+    },
+    "2294518845": {
+        "name": "Team Beta #23",
+        "language": "en",
+        "score": null,
+        "timestamp": "2025-08-31T00:40:56.324556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad Castle",
+                "location": "Budapest, Hungary",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5641,
+                "name": "Himeji castle",
+                "location": "Himeji, Japan",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spain [sank]",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8422,
+                "name": "Château de Chenonceau",
+                "location": "Chenonceaux, France",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4638,
+                "name": "Prague Astronomical Clock and Town Hall",
+                "location": "Prague, Czech Republic",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln memorial",
+                "location": "Washington, United States of America",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "United Kingdom [sank]",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8465,
+                "name": "White House",
+                "location": "Washington, United States of America",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4721,
+                "name": "Oriental Pearl tower",
+                "location": "Shanghai, China",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2987,
+                "name": "Osaka castle",
+                "location": "Osaka, Japan",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6144,
+                "name": "St. Stephen's basilica",
+                "location": "Budapest, Hungary",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern castle",
+                "location": "Bisingen, Germany",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mosque",
+                "location": "Istanbul, Turkey",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2795,
+                "name": "St. Patrick cathedral",
+                "location": "New York, United States of America",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Dubai, United Arab Emirates",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5466,
+                "name": "Palace of Culture and Science",
+                "location": "Warsaw, Poland",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Mekka, Saudi Arabia",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2366,
+                "name": "Leaning Tower of Pisa",
+                "location": "Pisa, Italy",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5519,
+                "name": "Royal Castle",
+                "location": "Warsaw, Poland",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mosque",
+                "location": "Kazan, Russia",
+                "answer": null,
+                "correct": null
+            }
+        ]
+    },
+    "8393160069": {
+        "name": "Team Testing #24",
+        "language": "hu",
+        "score": 9,
+        "timestamp": "2025-08-31T00:40:56.324556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 83,
+                "correct": false
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 7,
+                "correct": true
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 66,
+                "correct": false
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 89,
+                "correct": false
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 97,
+                "correct": true
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
+                "correct": true
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 96,
+                "correct": true
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 36,
+                "correct": true
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 30,
+                "correct": true
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 43,
+                "correct": false
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 3,
+                "correct": true
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 50,
+                "correct": false
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 93,
+                "correct": false
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 92,
+                "correct": false
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 34,
+                "correct": true
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 38,
+                "correct": true
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 28,
+                "correct": false
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 37,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 22,
+                "correct": false
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 78,
+                "correct": false
+            }
+        ]
+    },
+    "8029547103": {
+        "name": "Team Beta #25",
+        "language": "hu",
+        "score": 12,
+        "timestamp": "2025-08-31T00:40:56.324556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 32,
+                "correct": true
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 7,
+                "correct": true
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 57,
+                "correct": true
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 49,
+                "correct": false
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 86,
+                "correct": false
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
+                "correct": true
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 96,
+                "correct": true
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 36,
+                "correct": true
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 30,
+                "correct": true
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 45,
+                "correct": true
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 56,
+                "correct": false
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 98,
+                "correct": false
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 43,
+                "correct": false
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 69,
+                "correct": true
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 34,
+                "correct": true
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 38,
+                "correct": true
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 49,
+                "correct": false
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 21,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
+                "correct": true
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 86,
+                "correct": false
+            }
+        ]
+    },
+    "9722230468": {
+        "name": "Team Testing #26",
+        "language": "en",
+        "score": 9,
+        "timestamp": "2025-08-31T00:40:56.324556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad Castle",
+                "location": "Budapest, Hungary",
+                "answer": 32,
+                "correct": true
+            },
+            {
+                "id": 5641,
+                "name": "Himeji castle",
+                "location": "Himeji, Japan",
+                "answer": 7,
+                "correct": true
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spain [sank]",
+                "answer": 66,
+                "correct": false
+            },
+            {
+                "id": 8422,
+                "name": "Château de Chenonceau",
+                "location": "Chenonceaux, France",
+                "answer": 24,
+                "correct": true
+            },
+            {
+                "id": 4638,
+                "name": "Prague Astronomical Clock and Town Hall",
+                "location": "Prague, Czech Republic",
+                "answer": 97,
+                "correct": true
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln memorial",
+                "location": "Washington, United States of America",
+                "answer": 12,
+                "correct": false
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "United Kingdom [sank]",
+                "answer": 96,
+                "correct": true
+            },
+            {
+                "id": 8465,
+                "name": "White House",
+                "location": "Washington, United States of America",
+                "answer": 77,
+                "correct": false
+            },
+            {
+                "id": 4721,
+                "name": "Oriental Pearl tower",
+                "location": "Shanghai, China",
+                "answer": 33,
+                "correct": false
+            },
+            {
+                "id": 2987,
+                "name": "Osaka castle",
+                "location": "Osaka, Japan",
+                "answer": 1,
+                "correct": false
+            },
+            {
+                "id": 6144,
+                "name": "St. Stephen's basilica",
+                "location": "Budapest, Hungary",
+                "answer": 4,
+                "correct": false
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern castle",
+                "location": "Bisingen, Germany",
+                "answer": 29,
+                "correct": false
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mosque",
+                "location": "Istanbul, Turkey",
+                "answer": 78,
+                "correct": false
+            },
+            {
+                "id": 2795,
+                "name": "St. Patrick cathedral",
+                "location": "New York, United States of America",
+                "answer": 82,
+                "correct": false
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Dubai, United Arab Emirates",
+                "answer": 34,
+                "correct": true
+            },
+            {
+                "id": 5466,
+                "name": "Palace of Culture and Science",
+                "location": "Warsaw, Poland",
+                "answer": 38,
+                "correct": true
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Mekka, Saudi Arabia",
+                "answer": 41,
+                "correct": false
+            },
+            {
+                "id": 2366,
+                "name": "Leaning Tower of Pisa",
+                "location": "Pisa, Italy",
+                "answer": 25,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Royal Castle",
+                "location": "Warsaw, Poland",
+                "answer": 16,
+                "correct": true
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mosque",
+                "location": "Kazan, Russia",
+                "answer": 26,
+                "correct": true
+            }
+        ]
+    },
+    "8724539784": {
+        "name": "Team Rockets #27",
+        "language": "hu",
+        "score": 7,
+        "timestamp": "2025-08-31T00:40:56.324556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": 26,
+                "correct": false
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": 77,
+                "correct": false
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": 57,
+                "correct": true
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": 3,
+                "correct": false
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": 97,
+                "correct": true
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": 81,
+                "correct": true
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": 96,
+                "correct": true
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": 35,
+                "correct": false
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": 12,
+                "correct": false
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": 32,
+                "correct": false
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": 3,
+                "correct": true
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": 14,
+                "correct": false
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": 91,
+                "correct": false
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": 86,
+                "correct": false
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": 2,
+                "correct": false
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": 38,
+                "correct": true
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": 34,
+                "correct": false
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": 26,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": 16,
+                "correct": true
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": 35,
+                "correct": false
+            }
+        ]
+    },
+    "4194465339": {
+        "name": "Team Null #28",
+        "language": "hu",
+        "score": null,
+        "timestamp": null,
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad vára",
+                "location": "Magyarország, Budapest",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5641,
+                "name": "Himedzsi várkastély",
+                "location": "Japán, Himedzsi",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spanyolország [elsüllyedt]",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8422,
+                "name": "Hat Hölgy kastély",
+                "location": "Franciaország, Chenonceaux",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4638,
+                "name": "Prágai Csillagászati óra és városháza",
+                "location": "Csehország, Prága",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln emlékmű",
+                "location": "Egyesült Államok, Washington",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "Egyesült Királyság [elsüllyedt]",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 8465,
+                "name": "Fehér Ház",
+                "location": "Egyesült Államok, Washington",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4721,
+                "name": "Keleti Gyöngy torony",
+                "location": "Kína, Shanghai",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2987,
+                "name": "Oszakai várkastély",
+                "location": "Japán, Oszaka",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6144,
+                "name": "Szent István-bazilika",
+                "location": "Magyarország, Budapest",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern kastély",
+                "location": "Németország, Bisingen",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mecset",
+                "location": "Törökország, Isztambul",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2795,
+                "name": "Szent Patrik-katedrális",
+                "location": "Egyesült Államok, New York",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Egyesült Arab Emírségek, Dubai",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5466,
+                "name": "Kultúra és Tudomány Palotája",
+                "location": "Lengyelország, Varsó",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Szaúd-Arábia, Mekka",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 2366,
+                "name": "Pisai Ferde Torony",
+                "location": "Olaszország, Pisa",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 5519,
+                "name": "Királyi palota",
+                "location": "Lengyelország, Varsó",
+                "answer": null,
+                "correct": null
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mecset",
+                "location": "Oroszország, Kazán",
+                "answer": null,
+                "correct": null
+            }
+        ]
+    },
+    "8347070483": {
+        "name": "Team Zeta #29",
+        "language": "en",
+        "score": 6,
+        "timestamp": "2025-08-31T00:40:56.325556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad Castle",
+                "location": "Budapest, Hungary",
+                "answer": 37,
+                "correct": false
+            },
+            {
+                "id": 5641,
+                "name": "Himeji castle",
+                "location": "Himeji, Japan",
+                "answer": 33,
+                "correct": false
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spain [sank]",
+                "answer": 57,
+                "correct": true
+            },
+            {
+                "id": 8422,
+                "name": "Château de Chenonceau",
+                "location": "Chenonceaux, France",
+                "answer": 48,
+                "correct": false
+            },
+            {
+                "id": 4638,
+                "name": "Prague Astronomical Clock and Town Hall",
+                "location": "Prague, Czech Republic",
+                "answer": 99,
+                "correct": false
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln memorial",
+                "location": "Washington, United States of America",
+                "answer": 24,
+                "correct": false
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "United Kingdom [sank]",
+                "answer": 93,
+                "correct": false
+            },
+            {
+                "id": 8465,
+                "name": "White House",
+                "location": "Washington, United States of America",
+                "answer": 48,
+                "correct": false
+            },
+            {
+                "id": 4721,
+                "name": "Oriental Pearl tower",
+                "location": "Shanghai, China",
+                "answer": 30,
+                "correct": true
+            },
+            {
+                "id": 2987,
+                "name": "Osaka castle",
+                "location": "Osaka, Japan",
+                "answer": 62,
+                "correct": false
+            },
+            {
+                "id": 6144,
+                "name": "St. Stephen's basilica",
+                "location": "Budapest, Hungary",
+                "answer": 22,
+                "correct": false
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern castle",
+                "location": "Bisingen, Germany",
+                "answer": 54,
+                "correct": false
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mosque",
+                "location": "Istanbul, Turkey",
+                "answer": 7,
+                "correct": false
+            },
+            {
+                "id": 2795,
+                "name": "St. Patrick cathedral",
+                "location": "New York, United States of America",
+                "answer": 69,
+                "correct": true
+            },
+            {
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Dubai, United Arab Emirates",
+                "answer": 34,
+                "correct": true
+            },
+            {
+                "id": 5466,
+                "name": "Palace of Culture and Science",
+                "location": "Warsaw, Poland",
+                "answer": 38,
+                "correct": true
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Mekka, Saudi Arabia",
+                "answer": 21,
+                "correct": true
+            },
+            {
+                "id": 2366,
+                "name": "Leaning Tower of Pisa",
+                "location": "Pisa, Italy",
+                "answer": 62,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Royal Castle",
+                "location": "Warsaw, Poland",
+                "answer": 64,
+                "correct": false
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mosque",
+                "location": "Kazan, Russia",
+                "answer": 60,
+                "correct": false
+            }
+        ]
+    },
+    "8804041079": {
+        "name": "Team Beta #30",
+        "language": "en",
+        "score": 10,
+        "timestamp": "2025-08-31T00:40:56.325556",
+        "questions": [
+            {
+                "id": 6389,
+                "name": "Vajdahunyad Castle",
+                "location": "Budapest, Hungary",
+                "answer": 32,
+                "correct": true
+            },
+            {
+                "id": 5641,
+                "name": "Himeji castle",
+                "location": "Himeji, Japan",
+                "answer": 7,
+                "correct": true
+            },
+            {
+                "id": 2154,
+                "name": "Santa Maria 1492",
+                "location": "Spain [sank]",
+                "answer": 35,
+                "correct": false
+            },
+            {
+                "id": 8422,
+                "name": "Château de Chenonceau",
+                "location": "Chenonceaux, France",
+                "answer": 62,
+                "correct": false
+            },
+            {
+                "id": 4638,
+                "name": "Prague Astronomical Clock and Town Hall",
+                "location": "Prague, Czech Republic",
+                "answer": 25,
+                "correct": false
+            },
+            {
+                "id": 6939,
+                "name": "Lincoln memorial",
+                "location": "Washington, United States of America",
+                "answer": 70,
+                "correct": false
+            },
+            {
+                "id": 8922,
+                "name": "HMS Beagle 1918",
+                "location": "United Kingdom [sank]",
+                "answer": 96,
+                "correct": true
+            },
+            {
+                "id": 8465,
+                "name": "White House",
+                "location": "Washington, United States of America",
                 "answer": 31,
                 "correct": false
             },
             {
-                "id": 6653,
-                "name": "Basilica of Esztergom",
-                "location": "Esztergom, Hungary",
-                "answer": 46,
+                "id": 4721,
+                "name": "Oriental Pearl tower",
+                "location": "Shanghai, China",
+                "answer": 30,
+                "correct": true
+            },
+            {
+                "id": 2987,
+                "name": "Osaka castle",
+                "location": "Osaka, Japan",
+                "answer": 100,
                 "correct": false
             },
             {
-                "id": 7805,
-                "name": "Church of the Savior on Blood",
-                "location": "Saint Petersburg, Russia",
-                "answer": 62,
+                "id": 6144,
+                "name": "St. Stephen's basilica",
+                "location": "Budapest, Hungary",
+                "answer": 74,
+                "correct": false
+            },
+            {
+                "id": 6841,
+                "name": "Hohenzollern castle",
+                "location": "Bisingen, Germany",
+                "answer": 68,
+                "correct": false
+            },
+            {
+                "id": 4837,
+                "name": "Eyüp Sultan mosque",
+                "location": "Istanbul, Turkey",
+                "answer": 15,
                 "correct": true
             },
             {
-                "id": 5517,
-                "name": "Flying Dutchman ghostship",
-                "location": "Netherlands",
-                "answer": 44,
+                "id": 2795,
+                "name": "St. Patrick cathedral",
+                "location": "New York, United States of America",
+                "answer": 69,
                 "correct": true
             },
             {
-                "id": 4190,
-                "name": "Neuschwanstein castle",
-                "location": "Schwangau, Germany",
-                "answer": 41,
+                "id": 4355,
+                "name": "Burj Kalifa",
+                "location": "Dubai, United Arab Emirates",
+                "answer": 34,
+                "correct": true
+            },
+            {
+                "id": 5466,
+                "name": "Palace of Culture and Science",
+                "location": "Warsaw, Poland",
+                "answer": 38,
+                "correct": true
+            },
+            {
+                "id": 3316,
+                "name": "Al-Masjid al-Haram",
+                "location": "Mekka, Saudi Arabia",
+                "answer": 21,
+                "correct": true
+            },
+            {
+                "id": 2366,
+                "name": "Leaning Tower of Pisa",
+                "location": "Pisa, Italy",
+                "answer": 23,
+                "correct": false
+            },
+            {
+                "id": 5519,
+                "name": "Royal Castle",
+                "location": "Warsaw, Poland",
+                "answer": 100,
+                "correct": false
+            },
+            {
+                "id": 9010,
+                "name": "Kul Sharif mosque",
+                "location": "Kazan, Russia",
+                "answer": 26,
                 "correct": true
             }
         ]
@@ -4298,7 +4446,7 @@ type JSONQuizData = {
         name: string,
         language: string,
         score: number | null,
-        timestamp: string,
+        timestamp: string | null,
         questions: {
             id: number,
             name: string,
@@ -4324,12 +4472,13 @@ for (const teamID in quizdata) {
         language: element.language,
         size: element.questions.length,
         score: element.score,
-        submittedAt: element.score ? element.timestamp : null,
+        submittedAt: element.timestamp ? element.timestamp : null,
     })
     quizDetails[teamID] = {
         teamname: element.score ? element.name : null,
         language: element.language,
         score: element.score,
+        submittedAt: element.timestamp ? element.timestamp : null,
         questions: element.questions
     };
 }

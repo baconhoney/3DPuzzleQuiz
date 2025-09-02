@@ -10,7 +10,7 @@ import sys
 locale.setlocale(locale.LC_ALL, "hu_HU")
 
 sys.path.insert(1, str(pathlib.Path("./modules").resolve()))
-import quizDB as quizDB
+import quizDB
 
 cwd = pathlib.Path(__file__).parent.resolve()
 DBRoot = cwd / "data"
@@ -63,14 +63,14 @@ def DB_to_XLSX():
     def getBuildingsDataSortedBy(order: str) -> list[dict[str, str | int | None]]:
         return [dict(zip(jsonHeaders, row)) for row in quizDB.cursor.execute(f"SELECT {','.join(jsonHeaders)} FROM buildings ORDER BY ?;", (order,)).fetchall()]
 
-    def getQuizDataSortedBy(order: str, quiz_number: int) -> list[dict[str, str | int | None]]:
+    def getQuizDataSortedBy(order: str, quiz_round: int) -> list[dict[str, str | int | None]]:
         return [
             dict(zip(jsonHeaders, row))
             for row in quizDB.cursor.execute(
                 f"SELECT {','.join([f"buildings.{v}" for v in jsonHeaders])} FROM buildings JOIN quizzes ON buildings.id = quizzes.building_id \
-                    WHERE quizzes.quiz_number = ? \
+                    WHERE quizzes.quiz_round = ? \
                     ORDER BY buildings.{order};",
-                (quiz_number,),
+                (quiz_round,),
             ).fetchall()
         ]
 
@@ -93,7 +93,7 @@ def DB_to_XLSX():
     ws_name.title = "Név"
     ws_id.title = "ID"
     ws_box.title = "Doboz"
-    ws_answer.title = "Szám"
+    ws_answer.title = "Válasz"
     # sorting by name_hu
     for rowindex, row in enumerate(getBuildingsDataSortedBy("name_hu")):
         for c, d in enumerate(txtHeaders.values()):
@@ -159,7 +159,7 @@ def DB_to_XLSX():
     wsSol_en = wbSol.copy_worksheet(wsSol_hu)
     wsSol_hu.title = "Kulcs HU"
     wsSol_en.title = "Kulcs EN"
-    testnums: list[int] = [r[0] for r in quizDB.cursor.execute("SELECT quiz_number FROM quizzes WHERE quiz_number > 0 GROUP BY quiz_number;").fetchall()]
+    testnums: list[int] = [r[0] for r in quizDB.cursor.execute("SELECT quiz_round FROM quizzes WHERE quiz_round > 0 GROUP BY quiz_round;").fetchall()]
     for testnum in testnums:
         print(f"Generating test {testnum}...")
         hu = wbTest.copy_worksheet(wsTest_hu)
@@ -220,10 +220,12 @@ def regenerateQuizzes(quizCount: int = 8, questionsCount: int = 20):
         raise RuntimeError(f"Too few questions in the database ({len(availableBuildings)}) to generate {questionsCount} questions")
     quizzes = [random.sample(availableBuildings, questionsCount) for _ in range(quizCount)]
     quizDB.cursor.execute("DELETE FROM quizzes;")
-    quizDB.cursor.executemany("INSERT INTO quizzes (quiz_number, building_id) VALUES (?, ?);", [(-1, b) for b in availableBuildings])
+    quizDB.cursor.execute("DELETE FROM teams;")
+    quizDB.cursor.execute("DELETE FROM answers;")
+    quizDB.cursor.executemany("INSERT INTO quizzes (quiz_round, building_id) VALUES (?, ?);", [(-1, b) for b in availableBuildings])
     print(f"Generated the 'SIZE_100' quiz with {quizDB.cursor.rowcount} questions")
     for quizNum, quiz in enumerate(quizzes):
-        quizDB.cursor.executemany("INSERT INTO quizzes (quiz_number, building_id) VALUES (?, ?);", [(quizNum + 1, b) for b in quiz])
+        quizDB.cursor.executemany("INSERT INTO quizzes (quiz_round, building_id) VALUES (?, ?);", [(quizNum + 1, b) for b in quiz])
     print(f"Generated {quizCount} quizzes with {quizDB.cursor.rowcount} questions each (taken from the last quiz)")
     quizDB.connection.commit()
 
