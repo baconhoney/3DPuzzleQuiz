@@ -51,21 +51,28 @@ from adminAPI import router as adminRouter
 # print("Path for adminRoot", utils.paths.adminRoot)
 
 
-def callbackFn(value: str):
+async def callbackFn(value: str):
+    logging.debug("Executing callbackFunction")
     if not value or not value.isdigit():
         print(f"Scanner input is not a teamID: {value}")
-    if asyncio.run(quizDBManager.checkIfSubmittedAtIsPresent(int(value))):
-        # team has already submitted, show quiz on admin page
-        wsUtils.broadcastToAdmins("showQuiz", {"teamID": int(value)})
-    else:
-        # team is not yet registered, register it
-        asyncio.run(quizDBManager.updateSubmittedAt(int(value)))
+    try:
+        if await quizDBManager.checkIfSubmittedAtIsPresent(int(value)):
+            # team has already submitted, show quiz on admin page
+            logging.debug(f"Scanned team has already submitted: {value}")
+            await wsUtils.broadcastToAdmins("showQuiz", {"teamID": int(value)})
+        else:
+            # team is not yet registered, register it
+            logging.debug(f"Scanned team needs registering: {value}")
+            await quizDBManager.updateSubmittedAt(int(value))
+    except quizDBManager.InvalidParameterError:
+        logging.info(f"Scanned teamID cannot be found: {value}")
 
 
 async def startScannerListener(_: web.Application):
     logging.info("Starting scanner listener...")
     stopEvent = threading.Event()
-    scannerTask = asyncio.create_task(Scanner(callbackFn).run_forever(stopEvent))
+    loop = asyncio.get_event_loop()
+    scannerTask = asyncio.create_task(Scanner(callbackFn, loop).run_forever(stopEvent))
     logging.info("Scanner listener started")
     yield
     logging.info("Stopping scanner listener...")

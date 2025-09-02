@@ -95,7 +95,7 @@ export default class LeaderboardComponent extends Component<Props, State> {
                     </div>
                     <div className="size-filter">
                         <button className="text" onClick={() => this.updateState({ sizeFilter: _sizeFilters[_sizeFilters.indexOf(this.state.sizeFilter) > 0 ? (_sizeFilters.indexOf(this.state.sizeFilter) - 1) : _sizeFilters.length - 1] })}>{"<"}</button>
-                        <button className="text" onClick={() => this.updateState({ sizeFilter: 20 })}>{this.state.sizeFilter ?? "-"}</button>
+                        <button className="text" onClick={() => this.updateState({ sizeFilter: null })}>{this.state.sizeFilter ?? "-"}</button>
                         <button className="text" onClick={() => this.updateState({ sizeFilter: _sizeFilters[(_sizeFilters.indexOf(this.state.sizeFilter) + 1) % _sizeFilters.length] })}>{">"}</button>
                     </div>
                     <div className="round-filter">

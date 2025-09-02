@@ -105,9 +105,10 @@ async def checkIfSubmittedAtIsPresent(teamID: int) -> bool:
     """internal"""
     if not teamID:
         raise InvalidParameterError(f"Invalid teamID: {teamID}")
-    res = _quizDBcursor.execute("SELECT id, submitted_at FROM teams WHERE id = (?);", (teamID,)).fetchone()
+    res: list[int | str | None] = _quizDBcursor.execute("SELECT id, submitted_at FROM teams WHERE id = (?);", (teamID,)).fetchone()
     if not res or not res[0] == teamID:
         raise InvalidParameterError(f"Team with ID {teamID} not found")
+    print(f"Checkdata: {res}")
     return bool(res[1])
 
 

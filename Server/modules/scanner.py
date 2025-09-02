@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Any, Callable
 import asyncio
 import logging
 import sys
@@ -25,13 +25,15 @@ if sys.platform == "win32":
         - `asyncio.create_task(Scanner(callbackFunction).run_forever(stopEvent))`
         """
 
-        def __init__(self, callbackFn: Callable[[str], None] = None):
+        def __init__(self, callbackFn: Callable[[str], Any] = None, loop = None):
             self._callbackFunction = callbackFn or (lambda x: None)
+            self._loop = loop
 
         def _callback(self):
             value = self._inputVar.get()
             if value:
-                self._callbackFunction(value)
+                _logger.debug(f"Calling cbf from scanner.py with value: {value}")
+                asyncio.run_coroutine_threadsafe(self._callbackFunction(value), self._loop)
             self._inputVar.set("")
             self._inputbox.focus()
 
@@ -67,7 +69,7 @@ if sys.platform == "win32":
             try:
                 while not stopEvent.is_set():
                     self._root.update()
-                    time.sleep(0.01)
+                    time.sleep(0.1)
                 _logger.info("Closing window...")
                 self._root.after(0, self._root.destroy())
             except tk.TclError:

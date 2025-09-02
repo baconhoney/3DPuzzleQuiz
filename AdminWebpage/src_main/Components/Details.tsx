@@ -6,6 +6,7 @@ import * as actions from "../Actions.ts";
 import { getDetailsData } from "../Testdata.ts";
 
 import "./Details.css";
+//import { addListener, removeListener } from "../websocketHandler.ts";
 
 
 interface Props {
@@ -19,6 +20,7 @@ interface State {
 
 export default class DetailsComponent extends Component<Props, State> {
     private inputRefs = new Map<number, HTMLInputElement | null>();
+    //private leaderboardUpdatedListener: number | null = null;
 
     constructor(props: Props) {
         super(props);
@@ -33,7 +35,12 @@ export default class DetailsComponent extends Component<Props, State> {
     }
 
     componentDidMount() {
+        //this.leaderboardUpdatedListener = addListener("leaderboardUpdated", () => this.getQuizdata());
         this.getQuizdata();
+    }
+
+    componentWillUnmount() {
+        //removeListener(this.leaderboardUpdatedListener);
     }
 
     componentDidUpdate(prevProps: Readonly<Props>): void {
@@ -105,19 +112,22 @@ export default class DetailsComponent extends Component<Props, State> {
                                 <button onClick={() => {
                                     if (this.state.details!.teamname == null) {
                                         this.props.app.showError(<h1>Csapatnév hiányzik</h1>);
-                                    } else if (this.state.details!.questions.some(entry => entry.answer == null)) {
+                                    } else if (this.state.details!.questions.some(entry => entry.answer === null)) {
                                         this.props.app.showError(<>
                                             <h1>A következő válaszok hiányoznak:</h1>
-                                            {this.state.details!.questions.map((entry, index) => entry.answer == null ? <p key={entry.id}>{index + 1}. válasz (id: {entry.id}) hiányzik</p> : "")}
+                                            {this.state.details!.questions.map((entry, index) => entry.answer === null ? <p key={entry.id}>{index + 1}. válasz (id: {entry.id}) hiányzik</p> : "")}
                                         </>
                                         );
                                     } else {
                                         this.props.app.promptConfirm(<h1>Biztosan menti a kvízt?</h1>).then(
-                                            () => actions.uploadAnswers(
-                                                this.props.teamID!,
-                                                this.state.details!.teamname!,
-                                                this.state.details!.questions.map(e => ({ id: e.id, answer: e.answer as number })),
-                                            ),
+                                            () => {
+                                                actions.uploadAnswers(
+                                                    this.props.teamID!,
+                                                    this.state.details!.teamname!,
+                                                    this.state.details!.questions.map(e => ({ id: e.id, answer: e.answer as number })),
+                                                );
+                                                this.props.app.updateState({ openedQuizTeamID: null });
+                                            },
                                             () => { }
                                         );
                                     }
@@ -147,39 +157,40 @@ export default class DetailsComponent extends Component<Props, State> {
                                 </thead>
                                 <tbody>
                                     {this.state.details.questions.map((question, index) => {
-                                            return (
-                                                <tr key={question.id + "_" + index}>
-                                                    <td className="name">{question.name}</td>
-                                                    <td className="location">{question.location}</td>
-                                                    <td className="id">{question.id}</td>
-                                                    <td className="answer">
-                                                        {this.state.details!.score !== null
-                                                            ? question.answer
-                                                            : <input
-                                                                type="text"
-                                                                value={(question.answer ?? "").toString()}
-                                                                id={question.id.toString()}
-                                                                className="answer-input"
-                                                                ref={ref => { this.inputRefs.set(index, ref) }}
-                                                                onKeyUp={e => e.key == "Enter" && this.inputRefs.get(index + 1)?.select()}
-                                                                onChange={(event) => {
-                                                                    const val = event.target.value ? parseInt(event.target.value) : null;
-                                                                    const newEntries = structuredClone(this.state.details!.questions); // deep-copy the whole array<objects>
-                                                                    newEntries[index].answer = val;
-                                                                    this.updateState({
-                                                                        details: {
-                                                                            ...this.state.details!,
-                                                                            questions: newEntries,
-                                                                        }
-                                                                    });
-                                                                }}
-                                                            />
-                                                        }
-                                                    </td>
-                                                    <td className="correct">{question.correct !== null ? (question.correct ? "✅" : "❌") : ""}</td>
-                                                </tr>
-                                            );
-                                        })}
+                                        return (
+                                            <tr key={question.id + "_" + index}>
+                                                <td className="name">{question.name}</td>
+                                                <td className="location">{question.location}</td>
+                                                <td className="id">{question.id}</td>
+                                                <td className="answer">
+                                                    {this.state.details!.score !== null
+                                                        ? question.answer
+                                                        : <input
+                                                            type="number"
+                                                            autoComplete="off"
+                                                            value={(question.answer ?? "").toString()}
+                                                            id={question.id.toString()}
+                                                            className="answer-input"
+                                                            ref={ref => { this.inputRefs.set(index, ref) }}
+                                                            onKeyUp={e => e.key == "Enter" && this.inputRefs.get(index + 1)?.select()}
+                                                            onChange={(event) => {
+                                                                const val = event.target.value ? parseInt(event.target.value) : null;
+                                                                const newEntries = structuredClone(this.state.details!.questions); // deep-copy the whole array<objects>
+                                                                newEntries[index].answer = val;
+                                                                this.updateState({
+                                                                    details: {
+                                                                        ...this.state.details!,
+                                                                        questions: newEntries,
+                                                                    }
+                                                                });
+                                                            }}
+                                                        />
+                                                    }
+                                                </td>
+                                                <td className="correct">{question.correct !== null ? (question.correct ? "✅" : "❌") : ""}</td>
+                                            </tr>
+                                        );
+                                    })}
                                 </tbody>
                             </table>
                         </div>

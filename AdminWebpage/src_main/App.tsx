@@ -13,7 +13,7 @@ import { addListener, removeListener } from "./websocketHandler.ts";
 
 interface AppState {
     openedQuizTeamID: number | null;
-    currentModal?: React.ReactNode;
+    currentModal: React.ReactNode | undefined;
 }
 
 export default class App extends Component<unknown, AppState> {
@@ -23,6 +23,7 @@ export default class App extends Component<unknown, AppState> {
         super(props);
         this.state = {
             openedQuizTeamID: null,
+            currentModal: undefined,
         };
     }
 
@@ -48,12 +49,12 @@ export default class App extends Component<unknown, AppState> {
                 currentModal: <ConfirmPopupComponent
                     text={text}
                     onConfirm={() => {
-                        resolve();
                         this.updateState({ currentModal: undefined });
+                        resolve();
                     }}
                     onCancel={() => {
-                        reject();
                         this.updateState({ currentModal: undefined });
+                        reject();
                     }} />
             })
         });
