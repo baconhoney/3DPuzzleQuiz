@@ -16,5 +16,7 @@
     "waiting_error": "Ismeretlen hiba történt, kérjük próbálja újra később.",
     "want_to_play_late": "Biztosan el szeretné kezdeni a játékot? Már kevesebb mint 10 perc van hátra a kvízből.",
     "want_to_play_yes": "Kvíz indítása",
-    "want_to_play_no": "Majd később"
+    "want_to_play_no": "Majd később",
+    "questions": "kérdés",
+    "quiz_type": "Kérdések száma"
 }

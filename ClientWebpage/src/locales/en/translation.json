@@ -16,5 +16,7 @@
     "waiting_error": "An unknown error occurred, please try again later.",
     "want_to_play_late": "Are you sure you want to start the game? Less than 10 minutes are left in the quiz.",
     "want_to_play_yes": "Start quiz",
-    "want_to_play_no": "Maybe later"
+    "want_to_play_no": "Maybe later",
+    "questions": "questions",
+    "quiz_type": "Quiz size"
 }

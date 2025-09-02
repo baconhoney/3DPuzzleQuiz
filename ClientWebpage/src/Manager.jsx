@@ -12,7 +12,6 @@ const Manager = () => {
     // running,     scoring,   idle
     // quizStarted, quizEnded, resultsReady
     const [gameState, setGameState] = useState("idle");
-    // TODO reset wantToPlay
     const [wantToPlay, setWantToPlay] = useState("NA"); // NA, Y, N
     const [teamID, setTeamID] = useState(localStorage.getItem("teamID"));
     const [loading, setLoading] = useState(true);
@@ -70,6 +69,7 @@ const Manager = () => {
                     // Handle different message types
                     switch (data.event) {
                         case "quizStarted":
+                            localStorage.removeItem("quizAnswers");
                             setGameState("running");
                             break;
                         case "quizEnded":
@@ -128,7 +128,8 @@ const Manager = () => {
             try {
                 setLoading(true);
                 setError(null);
-                const data = await getQuestions(localStorage.getItem("language") || "hu", 20);
+
+                const data = await getQuestions(localStorage.getItem("language") || "hu", localStorage.getItem("quizSize") || 20);
                 setQuizData(data);
             } catch (error) {
                 console.error("Error fetching questions:", error);

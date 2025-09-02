@@ -6,6 +6,7 @@ import ThemeToggle from "./ThemeToggle";
 const Register = () => {
     const { changeLng, t, toQuiz, teamName, setTeamName } = useGlobalContext();
     const [language, setLanguage] = useState(i18n.language);
+    const [quizSize, setQuizSize] = useState(20);
     const [nameError, setNameError] = useState(false);
 
     useEffect(() => {
@@ -13,6 +14,8 @@ const Register = () => {
         i18n.on("languageChanged", onLangChanged);
         return () => i18n.off("languageChanged", onLangChanged);
     }, []);
+
+    const quizSizes = [20, 100];
 
     const isLanguageSelected = (lng) => (language === lng ? " btn-active" : "");
 
@@ -28,6 +31,7 @@ const Register = () => {
         }
 
         localStorage.setItem("teamName", teamName);
+        localStorage.setItem("quizSize", quizSize);
         localStorage.removeItem("teamID");
 
         toQuiz();
@@ -56,7 +60,7 @@ const Register = () => {
                 </div>
             </div>
 
-            <form
+            <div
                 onSubmit={handleButtonClick}
                 className="flex flex-col items-center content-center gap-5 w-2/3"
             >
@@ -73,11 +77,27 @@ const Register = () => {
                     {nameError && (
                         <p className="label text-error">{t("team_name_required")}</p>
                     )}
+
+                    <legend className="fieldset-legend">{t("quiz_type")}</legend>
+                    <div className="flex flex-col gap-2">
+                        {quizSizes.map((type) => (
+                            <button
+                                key={type}
+                                className={"btn btn-info btn-outline" + (type === quizSize ? " btn-active" : "")}
+                                onClick={() => setQuizSize(type)}
+                            >
+                                {type} {t("questions")}
+                            </button>
+                        ))}
+                    </div>
                 </fieldset>
-                <button type="submit" className="btn btn-primary btn-wide">
+
+                <button
+                    onClick={handleButtonClick}
+                    className="btn btn-primary btn-wide">
                     {t("continue")}
                 </button>
-            </form>
+            </div>
         </div>
     );
 };
