@@ -139,6 +139,10 @@ const Manager = () => {
         };
 
         const fetchAnswers = async () => {
+            if (!teamID) {
+                console.warn("No teamID available, skipping fetchAnswers");
+                return;
+            }
             try {
                 console.log("Fetching answers for teamID:", teamID);
                 setLoading(true);
@@ -162,136 +166,6 @@ const Manager = () => {
             fetchAnswers();
         }
     }, [gameState, wantToPlay, teamID]);
-
-    // const answerData = {
-    //     "nextPhaseChangeAt": "2025-08-12T17:43:57.433",
-    //     "answers": {
-    //         "score": 0,
-    //         "submittedAt": "2025-08-12T18:15:35.180",
-    //         "quizdata": [
-    //             {
-    //                 "name": "Colosseum",
-    //                 "location": "Olaszország, Róma",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Eyüp Sultan mecset",
-    //                 "location": "Törökország, Isztambul",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Galata torony",
-    //                 "location": "Törökország, Isztambul",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Groupama Aréna",
-    //                 "location": "Magyarország, Budapest",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Lincoln emlékmű",
-    //                 "location": "Egyesült Államok, Washington",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Megváltó Krisztus szobra",
-    //                 "location": "Brazília, Rio de Janeiro",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Megváltó Krisztus-székesegyház",
-    //                 "location": "Oroszország, Moszkva",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Notre-Dame-székesegyház",
-    //                 "location": "Franciaország, Párizs",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Országház",
-    //                 "location": "Magyarország, Budapest",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Peles kastély",
-    //                 "location": "Románia, Szinaja",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Szent István-bazilika",
-    //                 "location": "Magyarország, Budapest",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Szent Jakab-katedrális",
-    //                 "location": "Spanyolország, Santiago d. C.",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Szent Patrik-katedrális",
-    //                 "location": "Egyesült Államok, New York",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Szent Pál-székesegyház",
-    //                 "location": "Egyesült Királyság, London",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Szent Péter-bazilika",
-    //                 "location": "Vatikán, Vatikán Város",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Tokyo Skytree",
-    //                 "location": "Japán, Tokió",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Vajdahunyad vára",
-    //                 "location": "Magyarország, Budapest",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Wat Phra Kaew",
-    //                 "location": "Thaiföld, Bangkok",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Westminsteri apátság",
-    //                 "location": "Egyesült Királyság, London",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             },
-    //             {
-    //                 "name": "Új Hattyúkő kastély",
-    //                 "location": "Németország, Schwangau",
-    //                 "answer": 0,
-    //                 "correct": false
-    //             }
-    //         ]
-    //     }
-    // }
 
     function getComponent() {
         console.log("Game state:", gameState, "Want to play:", wantToPlay, "Team ID:", teamID);
