@@ -10,7 +10,12 @@ const Quiz = ({ data, setWantToPlay }) => {
     const [teamID, setTeamID] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [retryState, setRetryState] = useState(null); // 'failed' when showing retry page
+    const [retryAttempts, setRetryAttempts] = useState(0);
     // const formattedTime = data.endTime.split(':').slice(0, 2).join(':');
+
+    const MAX_RETRY_ATTEMPTS = 3;
+    const RETRY_DELAY = 1000; // 1 second delay between retries
 
     useEffect(() => {
         const savedTheme = localStorage.getItem("theme");
@@ -22,6 +27,27 @@ const Quiz = ({ data, setWantToPlay }) => {
     const openModal = (e) => {
         e.preventDefault();
         document.getElementById('quiz_finish_modal').showModal();
+    };
+
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    const attemptUpload = async (formattedAnswers, attemptNumber = 1) => {
+        try {
+            console.log(`Upload attempt ${attemptNumber}/${MAX_RETRY_ATTEMPTS + 1}`);
+            setRetryAttempts(attemptNumber);
+            const data = await uploadAnswers(formattedAnswers);
+            return data;
+        } catch (error) {
+            console.error(`Upload attempt ${attemptNumber} failed:`, error);
+
+            if (attemptNumber <= MAX_RETRY_ATTEMPTS) {
+                console.log(`Retrying in ${RETRY_DELAY}ms...`);
+                await sleep(RETRY_DELAY);
+                return attemptUpload(formattedAnswers, attemptNumber + 1);
+            } else {
+                throw error;
+            }
+        }
     };
 
     const sendQuiz = async (e) => {
@@ -49,18 +75,32 @@ const Quiz = ({ data, setWantToPlay }) => {
         try {
             setLoading(true);
             setError(null);
-            const data = await uploadAnswers(formattedAnswers);
+            setRetryState(null);
+            setRetryAttempts(0);
+
+            const data = await attemptUpload(formattedAnswers);
 
             setTeamID(data.teamID);
             localStorage.setItem("teamID", data.teamID);
+            localStorage.removeItem("quizAnswers");
             setWantToPlay("N");
         } catch (error) {
-            console.error("Error uploading answers:", error);
+            console.error("All upload attempts failed:", error);
             setError(error.message);
+            setRetryState('failed');
+            setRetryAttempts(MAX_RETRY_ATTEMPTS + 1);
         } finally {
             setLoading(false);
         }
     };
+
+    // const handleRetry = () => {
+    //     setRetryState(null);
+    //     setError(null);
+    //     setRetryAttempts(0);
+    //     // Re-open the modal to try again
+    //     document.getElementById('quiz_finish_modal').showModal();
+    // };
 
     return (
         <>
@@ -111,7 +151,7 @@ const Quiz = ({ data, setWantToPlay }) => {
                                     {isQuizActive ? formattedTime : ''}
                                 </div> */}
                     </div>
-                    {error && (
+                    {error && retryState !== 'failed' && (
                         <div className="alert alert-error">
                             <span>Error: {error}</span>
                         </div>
@@ -123,7 +163,16 @@ const Quiz = ({ data, setWantToPlay }) => {
             <dialog id="quiz_finish_modal" className="modal">
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">{t("finish")}</h3>
-                    <p className="py-4">{t("finish_modal_message")}</p>
+                    {retryState === 'failed' ? (
+                        <>
+                            <p className="py-4 text-error">{t("upload_failed")}</p>
+                            <p className="py-4 text-error">{t("check_connection")}</p>
+                            <br />
+                            <small>Error: {error}</small>
+                        </>
+                    ) : (
+                        <p className="py-4">{t("finish_modal_message")}</p>
+                    )}
                     <form method="dialog" className="modal-action justify-around">
                         <button className="btn btn-soft btn-error" disabled={loading}>{t("cancel")}</button>
                         <button
@@ -131,7 +180,7 @@ const Quiz = ({ data, setWantToPlay }) => {
                             onClick={sendQuiz}
                             disabled={loading}
                         >
-                            {loading ? 'Submitting...' : t("continue")}
+                            {loading ? '' : t("continue")}
                         </button>
                     </form>
                 </div>

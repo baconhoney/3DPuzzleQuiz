@@ -18,5 +18,7 @@
     "want_to_play_yes": "Kvíz indítása",
     "want_to_play_no": "Majd később",
     "questions": "kérdés",
-    "quiz_type": "Kérdések száma"
+    "quiz_type": "Kérdések száma",
+    "upload_failed": "A válaszok beküldése többszöri próbálkozás után sem sikerült.",
+    "check_connection": "Kérjük ellenőrizd a kapcsolatodat és próbáld újra."
 }

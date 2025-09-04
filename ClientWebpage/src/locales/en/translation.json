@@ -18,5 +18,7 @@
     "want_to_play_yes": "Start quiz",
     "want_to_play_no": "Maybe later",
     "questions": "questions",
-    "quiz_type": "Quiz size"
+    "quiz_type": "Quiz size",
+    "upload_failed": "Failed to submit answers after multiple attempts.",
+    "check_connection": "Please check your connection and try again."
 }
