@@ -2,8 +2,8 @@ import React from 'react'
 
 const Input = ({ id, type, className, min, max, defaultValue, onInput }) => {
 
-    const defaultClass = "focus-visible:border-gray-400 border-gray-500 focus:border-gray-500 focus-visible:ring-0 focus:outline-none";
-    const validateClass = "border-info focus:border-info focus-visible:ring-0 focus:outline-none";
+    const defaultClass = "focus-visible:border-gray-400 border-gray-500 focus:border-gray-500 focus-visible:ring-0 focus:outline-none answer-input";
+    const validateClass = "border-info focus:border-info focus-visible:ring-0 focus:outline-none answer-input";
 
     const [extraClass, setExtraClass] = React.useState(() => {
         return defaultValue ? validateClass : defaultClass;
