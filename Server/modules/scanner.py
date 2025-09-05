@@ -1,3 +1,4 @@
+import re
 from typing import Any, Callable
 import asyncio
 import logging
@@ -25,7 +26,7 @@ if sys.platform == "win32":
         - `asyncio.create_task(Scanner(callbackFunction).run_forever(stopEvent))`
         """
 
-        def __init__(self, callbackFn: Callable[[str], Any] = None, loop = None):
+        def __init__(self, callbackFn: Callable[[str], Any] = None, loop=None):
             self._callbackFunction = callbackFn or (lambda x: None)
             self._loop = loop
 
@@ -87,6 +88,8 @@ if sys.platform == "win32":
 elif sys.platform == "linux":
     _logger.info("Scanner running on linux, using real code")
 
+    import evdev
+
     class Scanner:
         """
         Real scanner class for using the barcode-scanner.
@@ -96,15 +99,58 @@ elif sys.platform == "linux":
         - `asyncio.create_task(Scanner(callbackFunction).run_forever(stopEvent))`
         """
 
-        def __init__(self, callbackFn: Callable[[str], None] = None):
+        codeToNum = {41: "0", 2: "1", 3: "2", 4: "3", 5: "4", 6: "5", 7: "6", 8: "7", 9: "8", 10: "9"}
+
+        def __init__(self, callbackFn: Callable[[str], Any] = None, loop: asyncio.AbstractEventLoop = None):
             self._callbackFunction = callbackFn or (lambda x: None)
+            self._loop = loop
+
+        async def innerLoop(self, dev: evdev.InputDevice):
+            with dev.grab_context():
+                presses = ""
+                ev: evdev.InputEvent
+                async for ev in dev.async_read_loop():
+                    if ev.type == 1 and ev.value == 0:
+                        if ev.code == 28: # enter key
+                            self._callbackFunction(presses)
+                            presses = ""
+                        elif ev.code in self.codeToNum:
+                            presses += self.codeToNum[ev.code]
+                        else:
+                            _logger.debug(f"unknown code from {ev.code}, {ev.code in evdev.ecodes.KEY and evdev.ecodes.KEY[ev.code] or "<unknown>"}")
 
         async def run_forever(self, stopEvent: threading.Event):
-            # Placeholder: later will use evdev or similar async code
             _logger.info("Starting the 'evdev' loop")
-            while not stopEvent.is_set():
-                await asyncio.sleep(10)
-                self._callbackFunction("linux scanner placeholder")
+            devs: list[evdev.InputDevice] = []
+            preselected = -1
+            for i, path in enumerate(evdev.list_devices()):
+                dev = evdev.InputDevice(path)
+                devs.append(dev)
+                print(f"{i:02}: {dev.path}\t, {dev.name:50} ({dev.phys})")
+                if re.match(r"\bBarCode\b", dev.name):
+                    preselected = i
+
+            while True:
+                if preselected > -1:
+                    inp = input(f"Select device (0-{i}): use {preselected}?")
+                else:
+                    inp = input(f"Select device (0-{i}): ")
+                try:
+                    device = devs[int(inp or str(preselected))]
+                    break
+                except:
+                    print(f"Invalid input: {inp}, try again.")
+            try:
+                task = self._loop.create_task(self.innerLoop(device))
+                while not task.done():
+                    await asyncio.sleep(1)
+                    if stopEvent.is_set():
+                        task.cancel()
+                        _logger.info("Scanner Task is cancelled")
+                _logger.info("Scanner stopped, quitting")
+                stopEvent.set()
+            except Exception as e:
+                _logger.error("in run_forever:", str(e))
 
 
 ######################################################################
@@ -124,7 +170,8 @@ async def _exiterFn(stopEvent: threading.Event):
 
 async def _main(stopEvent: threading.Event):
     async with asyncio.TaskGroup() as tg:
-        tg.create_task(Scanner(lambda x: print(f"Scanner: {x}")).run_forever(stopEvent))
+        loop = asyncio.get_event_loop()
+        tg.create_task(Scanner(lambda x: print(f"Scanner: {x}"), loop).run_forever(stopEvent))
         tg.create_task(_exiterFn(stopEvent))
 
 

@@ -6,12 +6,18 @@ from barcode import Code128
 from datetime import date
 from io import BytesIO
 from pyppeteer import launch
+import pyppeteer
 from quizDBManager import getQuestions, getAnswers
 from yattag import Doc
 import asyncio
-import utils
 import atexit
+import utils
 
+import logging
+
+pyppeteer.DEBUG = True
+
+logging.basicConfig()
 
 localisation = {
     "testname": {"hu": "Teszt", "en": "Test"},
@@ -115,19 +121,22 @@ class Printer:
                                                 line("td", rows["location"])
                                                 line("td", "" if isEmpty else str(rows["answer"]) + (" ✓" if rows["correct"] else " X"))
 
-        #   with open("temp.html",mode="w",encoding="UTF-8") as f:
-        #       f.writelines(doc.getvalue())
+        with open("temp.html", mode="w", encoding="UTF-8") as f:
+            f.writelines(doc.getvalue())
+        return
 
         page = await self.browser.newPage()
         await page.setContent(doc.getvalue())
-        #    await page.screenshot(path = 'temp.png', fullPage= True)
-        await page.pdf({"path": "temp.pdf", "format": "A4"})
-        # os.system('lpr temp.pdf && rm temp.pdf') #UNCOMMENT THIS LINE TO PRINT
+        # await page.screenshot(path = 'temp.png', fullPage= True)
+        await page.pdf(path="temp.pdf", format="A4")
+        # os.system("lpr -P DCPL2510D -o sides=two-sided-long-edge -r temp.pdf")
+
 
 async def main():
     printer = Printer()
     await printer.realInit()
-    await printer.printQuiz(9999999999, utils.QuizLanguages.EN, utils.QuizSizes.SIZE_20)
+    await printer.printQuiz(9999999999, utils.QuizLanguages.HU, utils.QuizSizes.SIZE_100)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
