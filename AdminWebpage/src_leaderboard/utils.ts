@@ -64,14 +64,15 @@ export function fetchData(url: string, callback: (data: any) => void) {
 /* ------------------------------- */
 /* ----- TYPES and CONSTANTS ----- */
 /* ------------------------------- */
-export type QuizLanguage = "hu" | "en";
-export const QuizLanguages = { "hu": "Magyar", "en": "Angol" };
-export type QuizSize = 20 | 100;
-export type QuizPhase = "idle" | "running" | "scoring";
-export const QuizPhases = { "idle": "Készenlét", "running": "Fut", "scoring": "Pontozás" };
+export const QuizLanguages = { "hu": "Magyar", "en": "Angol" } as const;
+export type QuizLanguage = keyof typeof QuizLanguages;
+export const QuizSizes = [20, 100] as const;
+export type QuizSize = typeof QuizSizes[number];
+export const QuizPhases = { "idle": "Készenlét", "running": "Fut", "scoring": "Pontozás" } as const;
+export type QuizPhase = keyof typeof QuizPhases;
 
 
-export type QuizDetailQuestions = {
+export type QuizDetailQuestion = {
     id: number,
     name: string,
     location: string,
@@ -83,13 +84,15 @@ export type QuizDetails = {
     teamname: string | null,
     language: QuizLanguage,
     score: number | null,
-    questions: QuizDetailQuestions[],
+    submittedAt: Date | null,
+    questions: QuizDetailQuestion[],
 }
 
 export type JsonQuizDetails = {
     teamname: string | null,
     language: string,
     score: number | null,
+    submittedAt: string | null,
     questions: {
         id: number,
         name: string,

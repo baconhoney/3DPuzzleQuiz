@@ -8,6 +8,7 @@ import "./Leaderboard.css";
 import { getResultsData } from "../Testdata.ts";
 import { addListener, removeListener } from "../websocketHandler.ts";
 
+
 const _sizeFilters = [...QuizSizes, null];
 
 interface Props {
@@ -72,7 +73,7 @@ export default class LeaderboardComponent extends Component<Props, State> {
             if (this.state.sizeFilter) params.push(`size=${this.state.sizeFilter}`);
             if (this.state.roundFilter) params.push(`round=${this.state.roundFilter}`);
             const url = "/api/admin/getLeaderboard" + (params.length > 0 ? "?" + params.join("&") : "");
-            console.log("Request url is:", url);
+            //console.log("Request url is:", url);
             fetchData(url, data =>
                 this.updateState({
                     leaderboardItems: convertFn(data as JsonLeaderboardItems),
