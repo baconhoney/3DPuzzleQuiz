@@ -74,7 +74,7 @@ async def queuePrintHandler(request: web.Request):
     lang = utils.convertToQuizLanguage(data.get("language"))
     size = utils.convertToQuizSize(data.get("quizSize"))
     if teamID and not copyCount and not lang and not size: # printing filled-out digital quiz
-        _currentPrinter.printQuiz(teamID)
+        await _currentPrinter.printQuiz(teamID)
     elif not teamID and copyCount and isinstance(copyCount, int) and copyCount > 0 and lang and size: # printing empty paper quiz(zes)
         for _ in range(copyCount):
             teamID = utils.getNewTeamID(utils.QuizTypes.PAPER)
