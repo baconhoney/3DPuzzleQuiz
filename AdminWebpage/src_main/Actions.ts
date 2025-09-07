@@ -1,11 +1,11 @@
 import { getISOStringFromDate, type QuizLanguage, type QuizPhase, type QuizSize } from "./utils";
 
 
-function sendData(url: string, data: any) {
+function sendData(url: string, data: unknown) {
     console.log(`Sending data to ${url}:\n`, data);
     if (import.meta.env.MODE == "production") {
         // prod-mode, do actual fetch
-        fetch(url, { method: "POST", body: JSON.stringify(data) });
+        fetch(url, { method: "POST", body: JSON.stringify(data) }).then(() => { }, error => console.error(error));
     } else {
         // dev-mode, doing nothing else
     }

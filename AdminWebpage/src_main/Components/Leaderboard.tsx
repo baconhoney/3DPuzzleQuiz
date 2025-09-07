@@ -54,7 +54,7 @@ export default class LeaderboardComponent extends Component<Props, State> {
 
     private updateQuizRound() {
         if (import.meta.env.MODE == "production") {
-            fetchData("/api/admin/getStates", data => this.updateState({ roundFilter: data.currentQuizRound }));
+            fetchData("/api/admin/getStates", (data: { currentQuizRound: number }) => this.updateState({ roundFilter: data.currentQuizRound }));
         } else {
             this.updateState({ roundFilter: 2 });
         }

@@ -2,12 +2,15 @@ from aiohttp import web
 import datetime
 import json
 import logging
+import printer
 import quizDBManager
 import utils
 import wsUtils
 
 
 router = web.RouteTableDef()
+_currentPrinter = printer.Printer()
+_currentPrinter.realInit()
 
 _logger = logging.getLogger(__name__)
 _logger.info(f"Importing {__name__}...")
@@ -64,22 +67,18 @@ async def uploadQuizHandler(request: web.Request):
 @router.post(_baseURL + "/queuePrint")
 async def queuePrintHandler(request: web.Request):
     print(f"API POST request incoming: admin/queuePrint")
-    def printQuiz(teamID, quizLang, quizSize):
-        print(f"New print job: ID {teamID}, {quizLang} in lang {quizSize}")
     data: dict[str, str | int] = await request.json()
+    teamID = data.get("teamID")
     copyCount = data.get("copyCount")
     lang = utils.convertToQuizLanguage(data.get("language"))
     size = utils.convertToQuizSize(data.get("quizSize"))
-    if not copyCount or not isinstance(copyCount, int) or copyCount < 1:
-        raise web.HTTPBadRequest(text=f"Value 'copyCount' is invalid: {data.get('copyCount', '<missing>')}")
-    if not lang:
-        raise web.HTTPBadRequest(text=f"Value 'language' is invalid: {data.get('language', '<missing>')}")
-    if not size:
-        raise web.HTTPBadRequest(text=f"Value 'quizSize' is invalid: {data.get('quizSize', '<missing>')}")
-    for _ in range(copyCount):
-        teamID = utils.getNewTeamID(utils.QuizTypes.PAPER)
-        await quizDBManager.addEmptyTeamEntry(teamID, lang.value, size.value)
-        printQuiz(teamID, lang.value, size.value)
+    if teamID and not copyCount and not lang and not size: # printing filled-out digital quiz
+        _currentPrinter.printQuiz(teamID)
+    elif not teamID and copyCount and isinstance(copyCount, int) and copyCount > 0 and lang and size: # printing empty paper quiz(zes)
+        for _ in range(copyCount):
+            teamID = utils.getNewTeamID(utils.QuizTypes.PAPER)
+            await quizDBManager.addEmptyTeamEntry(teamID, lang.value, size.value)
+            _currentPrinter.printQuiz(teamID, lang, size)
     return web.HTTPOk()
 
 

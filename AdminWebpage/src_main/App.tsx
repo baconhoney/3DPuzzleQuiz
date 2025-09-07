@@ -54,6 +54,7 @@ export default class App extends Component<unknown, AppState> {
                     }}
                     onCancel={() => {
                         this.updateState({ currentModal: undefined });
+                        // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
                         reject();
                     }} />
             })

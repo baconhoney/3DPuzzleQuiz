@@ -2,16 +2,17 @@ import { ArrayQueue, ConstantBackoff, Websocket, WebsocketBuilder, WebsocketEven
 
 
 declare global {
-    function sendLeaderboardUpdated(data: any): void;
-    function sendStateChanged(data: any): void;
+    function sendLeaderboardUpdated(data: unknown): void;
+    function sendStateChanged(data: unknown): void;
     function sendShowQuiz(data: number): void;
 }
 
 
 type eventType = "leaderboardUpdated" | "stateChanged" | "showQuiz";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type listenerFunction = (data: any) => void;
 
-const listeners: Map<eventType, Map<number, (data: any) => void>> = new Map();
+const listeners: Map<eventType, Map<number, (data: unknown) => void>> = new Map();
 const idSet = new Set<number>();
 
 
@@ -54,12 +55,12 @@ export function removeListener(id: number | null): void {
 
 function handleMessage(_: Websocket | null, msgEvent: MessageEvent | { data: string }) {
     // callback function for handling incoming messages and calling the registered listeners
-    const eventData: { event: eventType, data: Object } = JSON.parse(msgEvent.data);
+    const eventData = JSON.parse(msgEvent.data as string) as { event: eventType, data: object };
     if (!eventData || !eventData.event || !eventData.data) {
         console.error("Failed to parse JSON:", msgEvent.data);
         return;
     }
-    const event = eventData.event as eventType;
+    const event = eventData.event;
     if (listeners.has(event)) {
         for (const listener of listeners.get(event)!.values()) {
             listener(eventData.data);
@@ -81,7 +82,7 @@ if (import.meta.env.MODE == "production") {
 } else {
     // dev-mode, set global functions for testing
     window.sendLeaderboardUpdated = () => handleMessage(null, { data: JSON.stringify({ event: "leaderboardUpdated", data: {} }) });
-    window.sendStateChanged = (data: any) => handleMessage(null, { data: JSON.stringify({ event: "stateChanged", data: { data } }) });
+    window.sendStateChanged = (data: unknown) => handleMessage(null, { data: JSON.stringify({ event: "stateChanged", data: { data } }) });
     window.sendShowQuiz = (data: number) => handleMessage(null, { data: JSON.stringify({ event: "showQuiz", data: { "teamID": data } }) });
 }
 

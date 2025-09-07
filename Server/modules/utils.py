@@ -118,6 +118,65 @@ class QuizState:
             await wsUtils.broadcastToAdmins("stateChanged", {})
 
 
+class Localisation:
+    _locals: dict[str, dict[str, str]] = {
+        "test_name": {
+            "hu": "Teszt",
+            "en": "Test",
+        },
+        "test_legend": {
+            "hu": "Kutatók éjszakája",
+            "en": "Researchers’ Night",
+        },
+        "teamname": {
+            "hu": "Csapatnév",
+            "en": "Team name",
+        },
+        "instruction": {
+            "hu": "Írd be minden épület neve mellé azt a számot,<br>ami a kiállításon a makettje mellett látható!",
+            "en": "Next to each building’s name write the number<br>that is shown beside its model in the exhibition!",
+        },
+        "questionCol_name_name": {
+            "hu": "Név",
+            "en": "Name",
+        },
+        "questionCol_location_name": {
+            "hu": "Elhelyezkedés",
+            "en": "Location",
+        },
+        "questionCol_answer_name": {
+            "hu": "Válasz",
+            "en": "Answer",
+        },
+        "score_name": {
+            "hu": "Pontszám",
+            "en": "Score",
+        },
+        "submittedAt_name": {
+            "hu": "Leadva",
+            "en": "Submitted at",
+        }
+    }
+
+    def __init__(self) -> str:
+        self._logger = _logger
+        self.lang = None
+
+    def setlang(self, lang: QuizLanguages):
+        self.lang = lang.value
+
+    def getlang(self):
+        return self.lang
+
+    def __call__(self, key: str):
+        if not self.lang:
+            raise RuntimeError("Language not set")
+        if not self._locals.get(key):
+            self._logger.warning(f"Translator: unknown key: {key}")
+            return f"<{key}>"
+        return self._locals.get(key)[self.lang]
+
+
 # ---------------------------
 # -------- FUNCTIONS --------
 # ---------------------------
