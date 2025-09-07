@@ -122,7 +122,7 @@ class Printer:
             pass
         elif sys.platform == "linux":
             self._logger.debug(f"Printing pdf to printer {self._printerName}, with id {teamID}, lang {quizLang}, size {quizSize}")
-            subprocess.run(f"lpr -P {self._printerName} -o sides=two-sided-long-edge -o print-quality=5 -r temp.pdf", shell=True, check=True)
+            subprocess.run(f"lpr -P {self._printerName} -o media=A4 -o sides=two-sided-long-edge -o print-quality=5 temp.pdf", shell=True, check=True)
             pass
         else:
             raise RuntimeError(f"Unsupported platform: {sys.platform}")

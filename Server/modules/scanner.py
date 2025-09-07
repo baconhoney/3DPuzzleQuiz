@@ -112,7 +112,7 @@ elif sys.platform == "linux":
                 async for ev in dev.async_read_loop():
                     if ev.type == 1 and ev.value == 0:
                         if ev.code == 28:  # enter key
-                            self._callbackFunction(presses)
+                            await self._callbackFunction(presses)
                             presses = ""
                         elif ev.code in self.codeToNum:
                             presses += self.codeToNum[ev.code]
