@@ -38,12 +38,12 @@ const Register = () => {
     };
 
     return (
-        <div className="flex flex-col items-center min-h-screen gap-10 w-full">
+        <div className="flex flex-col items-center min-h-screen gap-6 w-full">
             <div className="absolute top-4 right-4 z-50">
                 <ThemeToggle />
             </div>
 
-            <div className="flex flex-col items-center gap-2 mt-25">
+            <div className="flex flex-col items-center gap-2 mt-20">
                 <div className="flex items-center gap-2">
                     <button
                         className={"btn btn-info btn-outline" + isLanguageSelected("hu")}
@@ -79,11 +79,11 @@ const Register = () => {
                     )}
 
                     <legend className="fieldset-legend">{t("quiz_type")}</legend>
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-row justify-between gap-2">
                         {quizSizes.map((type) => (
                             <button
                                 key={type}
-                                className={"btn btn-info btn-outline" + (type === quizSize ? " btn-active" : "")}
+                                className={"btn btn-info btn-outline flex-1" + (type === quizSize ? " btn-active" : "")}
                                 onClick={() => setQuizSize(type)}
                             >
                                 {type} {t("questions")}
@@ -94,7 +94,7 @@ const Register = () => {
 
                 <button
                     onClick={handleButtonClick}
-                    className="btn btn-primary btn-wide">
+                    className="btn btn-primary w-full">
                     {t("continue")}
                 </button>
             </div>
