@@ -1,4 +1,5 @@
 from aiohttp import web
+import asyncio
 import datetime
 import json
 import logging
@@ -10,7 +11,7 @@ import wsUtils
 
 router = web.RouteTableDef()
 _currentPrinter = printer.Printer()
-_currentPrinter.realInit()
+asyncio.run(_currentPrinter.realInit())
 
 _logger = logging.getLogger(__name__)
 _logger.info(f"Importing {__name__}...")
@@ -77,8 +78,8 @@ async def queuePrintHandler(request: web.Request):
     elif not teamID and copyCount and isinstance(copyCount, int) and copyCount > 0 and lang and size: # printing empty paper quiz(zes)
         for _ in range(copyCount):
             teamID = utils.getNewTeamID(utils.QuizTypes.PAPER)
+            await _currentPrinter.printQuiz(teamID, lang, size)
             await quizDBManager.addEmptyTeamEntry(teamID, lang.value, size.value)
-            _currentPrinter.printQuiz(teamID, lang, size)
     return web.HTTPOk()
 
 

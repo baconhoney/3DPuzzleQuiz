@@ -34,33 +34,37 @@ class Printer:
         if sys.platform == "win32":
             from win32 import win32print
 
-            printers = win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL, None, 1)
+            printers = [i[2] for i in win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL, None, 1)]
         elif sys.platform == "linux":
-            result = subprocess.run("lpstat -p | grep '^printer' | awk '{print $2}'", stdout=subprocess.PIPE).stdout.decode("utf-8")
-            print(result)
-            exit()
+            printers = subprocess.run("lpstat -p | grep '^printer' | awk '{print $2}'", stdout=subprocess.PIPE, shell=True).stdout.decode("utf-8").strip().split("\n")
         else:
             raise RuntimeError(f"Unsupported platform: {sys.platform}")
         # print all printers and ask for selecting one
         print("-----------------\nAvailable printers:")
+        preselected = -1
         for index, printer in enumerate(printers):
-            print(f"{index:2}: {printer[2]}")
+            print(f"{index:2}: {printer}")
+            if printer == "DCPL2510D":
+                preselected = index
         while True:
-            inp = input(f"Select printer (0-{index}): ")
+            if preselected > -1:
+                inp = input(f"Select device (0-{index}): use {preselected}?")
+            else:
+                inp = input(f"Select device (0-{index}): ")
             try:
-                self._printerName = printers[int(inp)][2]
+                self._printerName = printers[int(inp or str(preselected))]
+                break
             except:
                 print(f"Invalid input: {inp}, try again.")
-            else:
-                break
         print(f"Selected printer: {self._printerName}")
 
     async def realInit(self):
-        self._browser = await launch()
+        self._browser = await launch(args=['--no-sandbox'])
         atexit.register(lambda: asyncio.run(self._browser.close()))
 
     async def printQuiz(self, teamID: int, lang: utils.QuizLanguages = None, size: utils.QuizSizes = None):
-        if await quizDBManager.checkIfTeamExists(teamID):
+        if (await quizDBManager.checkIfTeamExists(teamID)):
+            self._logger.debug(f"Printing filled-out quiz for team {teamID}\nwith lang '{lang}' and size '{size}' (should be None)")
             if lang or size:
                 raise RuntimeError("Parameters `lang` and `size` are not allowed when printing filled-out quiz")
             details = await quizDBManager.getQuizDetails(teamID)
@@ -68,6 +72,7 @@ class Printer:
             quizLang = details["language"]
             quizSize = len(details["questions"])
         else:
+            self._logger.debug(f"Printing empty paper quiz for team {teamID}\nwith lang '{lang}' and size '{size}' (should not be None)")
             if not lang:
                 raise RuntimeError(f"Parameter `lang` is missing")
             if not size:
@@ -110,11 +115,11 @@ class Printer:
         # await page.screenshot(path="temp.png", fullPage=True)
         await page.pdf(path="temp.pdf", format="A4", printBackground=True, preferCSSPageSize=True)
         if sys.platform == "win32":
-            subprocess.run(f"\"{utils.paths.appRoot / "PDFToPrinter.exe"}\" temp.pdf \"{self._printerName}\"", shell=True, check=True)
+            subprocess.run(f'"{utils.paths.appRoot / "PDFToPrinter.exe"}" temp.pdf "{self._printerName}"', shell=True, check=True)
             os.unlink("temp.pdf")
             pass
         elif sys.platform == "linux":
-            subprocess.run(f"lpr -P {self._printerName} -o sides=two-sided-long-edge -r temp.pdf")
+            subprocess.run(f"lpr -P {self._printerName} -o sides=two-sided-long-edge -o print-quality=5 -r temp.pdf", shell=True, check=True)
             pass
         else:
             raise RuntimeError(f"Unsupported platform: {sys.platform}")
@@ -130,8 +135,8 @@ async def main():
     )
     printer = Printer()
     await printer.realInit()
-    # await printer.printQuiz(int(5e10 - 1), utils.QuizLanguages.EN, utils.QuizSizes.SIZE_20)
-    await printer.printQuiz(5434615008)
+    await printer.printQuiz(int(5e10 - 1), utils.QuizLanguages.EN, utils.QuizSizes.SIZE_20)
+    # await printer.printQuiz(5434615008)
 
 
 if __name__ == "__main__":

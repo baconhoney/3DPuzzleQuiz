@@ -179,9 +179,12 @@ async def checkIfTeamExists(teamID: int) -> bool:
 
     Returns `True` if team exists, else `False`
     """
+    _logger.debug(f"Checking if team with ID {teamID} exists...")
     if not teamID or not isinstance(teamID, int):
         raise InvalidParameterError("TeamID missing or invalid")
-    return bool(_quizDBcursor.execute("SELECT id FROM teams WHERE id = (?);", (teamID,)).fetchone())
+    res = _quizDBcursor.execute("SELECT id FROM teams WHERE id = (?);", (teamID,)).fetchone()
+    _logger.debug(f"Query result: {res}")
+    return res and len(res) == 1 and res[0] == teamID
 
 
 async def checkIfSubmittedAtIsPresent(teamID: int) -> bool:
