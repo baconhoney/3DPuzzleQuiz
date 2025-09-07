@@ -40,8 +40,8 @@ class Printer:
         else:
             raise RuntimeError(f"Unsupported platform: {sys.platform}")
         # print all printers and ask for selecting one
-        print("-----------------\nAvailable printers:")
         preselected = -1
+        print("-----------------\nAvailable printers:")
         for index, printer in enumerate(printers):
             print(f"{index:2}: {printer}")
             if printer == "DCPL2510D":
@@ -64,7 +64,7 @@ class Printer:
 
     async def printQuiz(self, teamID: int, lang: utils.QuizLanguages = None, size: utils.QuizSizes = None):
         if (await quizDBManager.checkIfTeamExists(teamID)):
-            self._logger.debug(f"Printing filled-out quiz for team {teamID}\nwith lang '{lang}' and size '{size}' (should be None)")
+            self._logger.debug(f"Printing filled-out quiz for team {teamID} with lang '{lang}' and size '{size}' (should be None)")
             if lang or size:
                 raise RuntimeError("Parameters `lang` and `size` are not allowed when printing filled-out quiz")
             details = await quizDBManager.getQuizDetails(teamID)
@@ -72,7 +72,7 @@ class Printer:
             quizLang = details["language"]
             quizSize = len(details["questions"])
         else:
-            self._logger.debug(f"Printing empty paper quiz for team {teamID}\nwith lang '{lang}' and size '{size}' (should not be None)")
+            self._logger.debug(f"Printing empty paper quiz for team {teamID} with lang '{lang}' and size '{size}' (should not be None)")
             if not lang:
                 raise RuntimeError(f"Parameter `lang` is missing")
             if not size:
@@ -114,16 +114,18 @@ class Printer:
         await page.setContent(html)
         # await page.screenshot(path="temp.png", fullPage=True)
         await page.pdf(path="temp.pdf", format="A4", printBackground=True, preferCSSPageSize=True)
+        await page.close()
         if sys.platform == "win32":
+            self._logger.debug(f"Printing pdf to printer {self._printerName}, with id {teamID}, lang {quizLang}, size {quizSize}")
             subprocess.run(f'"{utils.paths.appRoot / "PDFToPrinter.exe"}" temp.pdf "{self._printerName}"', shell=True, check=True)
             os.unlink("temp.pdf")
             pass
         elif sys.platform == "linux":
+            self._logger.debug(f"Printing pdf to printer {self._printerName}, with id {teamID}, lang {quizLang}, size {quizSize}")
             subprocess.run(f"lpr -P {self._printerName} -o sides=two-sided-long-edge -o print-quality=5 -r temp.pdf", shell=True, check=True)
             pass
         else:
             raise RuntimeError(f"Unsupported platform: {sys.platform}")
-        await page.close()
 
 
 async def main():

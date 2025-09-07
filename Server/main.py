@@ -31,6 +31,7 @@ logging.debug("Testing logger")
 logging.getLogger("aiohttp").setLevel("WARNING")
 logging.getLogger("asyncio").setLevel("INFO")
 
+loop = asyncio.get_event_loop()
 
 #################### START OF MAIN ####################
 from scanner import Scanner
@@ -71,12 +72,12 @@ async def callbackFn(value: str):
 async def startScannerListener(_: web.Application):
     logging.info("Starting scanner listener...")
     stopEvent = threading.Event()
-    loop = asyncio.get_event_loop()
-    scannerTask = asyncio.create_task(Scanner(callbackFn, loop).run_forever(stopEvent))
+    scannerTask = asyncio.create_task(Scanner(callbackFn, asyncio.get_event_loop()).run_forever(stopEvent))
     logging.info("Scanner listener started")
     yield
     logging.info("Stopping scanner listener...")
     stopEvent.set()
+    loop.stop()
     await scannerTask
     logging.info("Scanner listener stopped")
 
@@ -89,7 +90,7 @@ def main():
     app.add_routes(clientRouter)
     # fileserver has to be the very last, so API requests are not refused with 404
     app.add_routes(fileServerRouter)
-    web.run_app(app, port=port)
+    web.run_app(app, port=port, loop=asyncio.get_event_loop())
 
 
 # ------- Entrypoint -------
