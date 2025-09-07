@@ -111,7 +111,7 @@ elif sys.platform == "linux":
                 ev: evdev.InputEvent
                 async for ev in dev.async_read_loop():
                     if ev.type == 1 and ev.value == 0:
-                        if ev.code == 28: # enter key
+                        if ev.code == 28:  # enter key
                             self._callbackFunction(presses)
                             presses = ""
                         elif ev.code in self.codeToNum:
@@ -130,6 +130,7 @@ elif sys.platform == "linux":
                 if re.match(r"\bBarCode\b", dev.name):
                     preselected = i
 
+            print("-----------------\nAvailable input devices:")
             while True:
                 if preselected > -1:
                     inp = input(f"Select device (0-{i}): use {preselected}?")
@@ -152,6 +153,9 @@ elif sys.platform == "linux":
             except Exception as e:
                 _logger.error("in run_forever:", str(e))
 
+# Throw error on unsupported platforms
+else:
+    raise RuntimeError(f"Unsupported platform: {sys.platform}")
 
 ######################################################################
 ############################## MAIN ##################################

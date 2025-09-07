@@ -24,6 +24,7 @@ dotenv.load_dotenv()
 # resolve paths
 class paths:
     cwd = pathlib.Path(os.getenv("QUIZSERVER_ROOT")).resolve()
+    appRoot = pathlib.Path(os.getenv("QUIZSERVER_APP_ROOT")).resolve()
     cfgRoot = pathlib.Path(os.getenv("QUIZSERVER_CFG_ROOT")).resolve()
     dataRoot = pathlib.Path(os.getenv("QUIZSERVER_DATA_ROOT")).resolve()
     clientRoot = pathlib.Path(os.getenv("QUIZSERVER_CLIENT_ROOT")).resolve()

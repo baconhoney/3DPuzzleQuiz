@@ -14,6 +14,7 @@ import htmlReplacer
 import logging
 import math
 import quizDBManager
+import subprocess
 import sys
 import utils
 
@@ -29,6 +30,30 @@ class Printer:
         self._logger = logging.getLogger(__name__)
         self._locals = utils.Localisation()
         self._browser = None
+        # collect all printers
+        if sys.platform == "win32":
+            from win32 import win32print
+
+            printers = win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL, None, 1)
+        elif sys.platform == "linux":
+            result = subprocess.run("lpstat -p | grep '^printer' | awk '{print $2}'", stdout=subprocess.PIPE).stdout.decode("utf-8")
+            print(result)
+            exit()
+        else:
+            raise RuntimeError(f"Unsupported platform: {sys.platform}")
+        # print all printers and ask for selecting one
+        print("-----------------\nAvailable printers:")
+        for index, printer in enumerate(printers):
+            print(f"{index:2}: {printer[2]}")
+        while True:
+            inp = input(f"Select printer (0-{index}): ")
+            try:
+                self._printerName = printers[int(inp)][2]
+            except:
+                print(f"Invalid input: {inp}, try again.")
+            else:
+                break
+        print(f"Selected printer: {self._printerName}")
 
     async def realInit(self):
         self._browser = await launch()
@@ -36,10 +61,8 @@ class Printer:
 
     async def printQuiz(self, teamID: int, lang: utils.QuizLanguages = None, size: utils.QuizSizes = None):
         if await quizDBManager.checkIfTeamExists(teamID):
-            if lang:
-                raise RuntimeError(f"Parameter `lang` ({lang}) is not allowed when teamID is given")
-            if size:
-                raise RuntimeError(f"Parameter `size` ({size}) is not allowed when teamID is given")
+            if lang or size:
+                raise RuntimeError("Parameters `lang` and `size` are not allowed when printing filled-out quiz")
             details = await quizDBManager.getQuizDetails(teamID)
             details["questions"] = [{**row, "correct": row["correct"] and "✓" or "X"} for row in details["questions"]]
             quizLang = details["language"]
@@ -86,11 +109,15 @@ class Printer:
         await page.setContent(html)
         # await page.screenshot(path="temp.png", fullPage=True)
         await page.pdf(path="temp.pdf", format="A4", printBackground=True, preferCSSPageSize=True)
-        if sys.platform == "linux":
-            os.system("lpr -P DCPL2510D -o sides=two-sided-long-edge -r temp.pdf")
+        if sys.platform == "win32":
+            subprocess.run(f"\"{utils.paths.appRoot / "PDFToPrinter.exe"}\" temp.pdf \"{self._printerName}\"", shell=True, check=True)
+            os.unlink("temp.pdf")
+            pass
+        elif sys.platform == "linux":
+            subprocess.run(f"lpr -P {self._printerName} -o sides=two-sided-long-edge -r temp.pdf")
             pass
         else:
-            print("temp.pdf generated")
+            raise RuntimeError(f"Unsupported platform: {sys.platform}")
         await page.close()
 
 
