@@ -114,6 +114,7 @@ class Printer:
         await page.setContent(html)
         # await page.screenshot(path="temp.png", fullPage=True)
         await page.pdf(path="temp.pdf", format="A4", printBackground=True, preferCSSPageSize=True)
+        await page.close()
         if sys.platform == "win32":
             subprocess.run(f'"{utils.paths.appRoot / "PDFToPrinter.exe"}" temp.pdf "{self._printerName}"', shell=True, check=True)
             os.unlink("temp.pdf")
@@ -123,7 +124,6 @@ class Printer:
             pass
         else:
             raise RuntimeError(f"Unsupported platform: {sys.platform}")
-        await page.close()
 
 
 async def main():

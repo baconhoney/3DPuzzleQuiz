@@ -11,7 +11,7 @@ import wsUtils
 
 router = web.RouteTableDef()
 _currentPrinter = printer.Printer()
-asyncio.run(_currentPrinter.realInit())
+asyncio.run_coroutine_threadsafe(_currentPrinter.realInit(), asyncio.get_event_loop())
 
 _logger = logging.getLogger(__name__)
 _logger.info(f"Importing {__name__}...")
