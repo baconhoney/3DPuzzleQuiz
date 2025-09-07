@@ -83,7 +83,7 @@ export default class ControlsComponent extends Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
-        let currdate = new Date(Date.now() + 60000);
+        const currdate = new Date(Date.now() + 60000);
         currdate.setSeconds(0, 0);
         this.state = {
             currentQuizRound: 0,
@@ -121,10 +121,10 @@ export default class ControlsComponent extends Component<Props, State> {
     }
 
     private getStatesData() {
-        fetchData("/api/admin/getStates", (data) => this.updateState({
-            nextPhaseChangeAt: new Date(data.nextPhaseChangeAt as string),
-            currentQuizRound: data.currentQuizRound as number,
-            phase: data.phase as QuizPhase,
+        fetchData("/api/admin/getStates", (data: { nextPhaseChangeAt: string, currentQuizRound: number, phase: QuizPhase }) => this.updateState({
+            nextPhaseChangeAt: new Date(data.nextPhaseChangeAt),
+            currentQuizRound: data.currentQuizRound,
+            phase: data.phase,
         }));
     }
 
@@ -171,7 +171,7 @@ export default class ControlsComponent extends Component<Props, State> {
                             </div>
                             <button className="send-change"
                                 onClick={
-                                    () => this.props.app.promptConfirm(<h1>Biztosan frissíti a következő fázisváltás várható idejét?</h1>).then(
+                                    () => void this.props.app.promptConfirm(<h1>Biztosan frissíti a következő fázisváltás várható idejét?</h1>).then(
                                         () => actions.sendNewNextPhaseChangeAt(this.state.nextPhaseChangeAt),
                                         () => { }
                                     )
@@ -196,7 +196,7 @@ export default class ControlsComponent extends Component<Props, State> {
                             <div className="next-phase-button">
                                 <button
                                     onClick={
-                                        () => this.props.app.promptConfirm(
+                                        () => void this.props.app.promptConfirm(
                                             <>
                                                 <h1>Biztosan kvíz fázist vált?</h1>
                                                 Következő fázis: {QuizPhases[actions.getNextPhase(this.state.phase)]}<br/>
@@ -257,7 +257,7 @@ export default class ControlsComponent extends Component<Props, State> {
                         <div className="print-button-container">
                             <button
                                 onClick={
-                                    () => this.props.app.promptConfirm(
+                                    () => void this.props.app.promptConfirm(
                                         <>
                                             <h1>Biztosan kinyomtatja?</h1>
                                             Példányszám: {this.state.printingCopyCount} db<br />

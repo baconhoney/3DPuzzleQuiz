@@ -21,7 +21,21 @@ class InvalidParameterError(Exception):
 # ----- GETTERS -----
 # -------------------
 async def getQuestions(lang, size) -> list[dict[str, str | int]]:
-    """client side"""
+    """
+    Client-side
+
+    Returns
+    ```
+    [
+        {
+            "id": int,
+            "name": str,
+            "location": str
+        },
+        ...
+    ]
+    ```
+    """
     if not lang:
         raise InvalidParameterError(f"Missing language parameter")
     if not size:
@@ -41,7 +55,26 @@ async def getQuestions(lang, size) -> list[dict[str, str | int]]:
 
 
 async def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]:
-    """client side"""
+    """
+    Client-side
+
+    Returns
+    ```
+    {
+        "score": int,
+        "submittedAt": str,
+        "quizdata": [
+            {
+                "name": str,
+                "location": str,
+                "answer": str,
+                "correct": bool
+            },
+            ...
+        ]
+    }
+    ```
+    """
     if not teamID:
         raise InvalidParameterError(f"Missing teamID parameter")
     res = utils.quizDB.cursor.execute(f"SELECT name, language, score, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
@@ -64,7 +97,24 @@ async def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | 
 
 
 async def getLeaderboard(*, size: int = None, quizRound: int = None) -> list[dict[str, str | int]]:
-    """admin side"""
+    """
+    Admin-side
+
+    Returns
+    ```
+    [
+        {
+            "teamID": int,
+            "teamname": str,
+            "language": str,
+            "size": int,
+            "score": int,
+            "submittedAt": str
+        },
+        ...
+    ]
+    ```
+    """
     if size and not utils.convertToQuizSize(size):
         raise InvalidParameterError(f"Invalid size parameter: '{size}'")
     res: list[list[str | int]] = utils.quizDB.cursor.execute(
@@ -76,7 +126,29 @@ async def getLeaderboard(*, size: int = None, quizRound: int = None) -> list[dic
 
 
 async def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]:
-    """admin side"""
+    """
+    Admin-side
+
+    Returns
+    ```
+    {
+        "teamname": str,
+        "language": str,
+        "score": int,
+        "submittedAt": str,
+        "questions": [
+            {
+                "id": int,
+                "name": str,
+                "location": str,
+                "answer": str,
+                "correct": bool
+            },
+            ...
+        ]
+    }
+    ```
+    """
     if not teamID:
         raise InvalidParameterError(f"Missing teamID parameter")
     res = utils.quizDB.cursor.execute(f"SELECT name, language, score, quiz_round, quiz_size, submitted_at FROM teams WHERE teams.id = {teamID};").fetchone()
@@ -101,22 +173,55 @@ async def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, st
     }
 
 
+async def checkIfTeamExists(teamID: int) -> bool:
+    """
+    Internal
+
+    Returns `True` if team exists, else `False`
+    """
+    if not teamID or not isinstance(teamID, int):
+        raise InvalidParameterError("TeamID missing or invalid")
+    return bool(_quizDBcursor.execute("SELECT id FROM teams WHERE id = (?);", (teamID,)).fetchone())
+
+
 async def checkIfSubmittedAtIsPresent(teamID: int) -> bool:
-    """internal"""
+    """
+    Internal
+
+    Returns `True` if submitted_at is present, else `False`
+    """
     if not teamID:
         raise InvalidParameterError(f"Invalid teamID: {teamID}")
     res: list[int | str | None] = _quizDBcursor.execute("SELECT id, submitted_at FROM teams WHERE id = (?);", (teamID,)).fetchone()
     if not res or not res[0] == teamID:
         raise InvalidParameterError(f"Team with ID {teamID} not found")
-    print(f"Checkdata: {res}")
+    # print(f"Checkdata: {res}")
     return bool(res[1])
 
 
 async def getAllBuildingData() -> list[dict[str, str | int | None]]:
-    """utility"""
-    localisedCols = ", ".join([f"name_{lang.value}, location_{lang.value}" for lang in utils.QuizLanguages])
-    res = _quizDBcursor.execute(f"SELECT id, box, answer, type, {localisedCols} FROM buildings ORDER BY id;").fetchall()
-    colHeaders = ["id", "box", "answer", "type"] + localisedCols.split(", ")
+    """
+    Utility
+
+    Returns
+    ```
+    [
+        {
+            "id": int,
+            "box": int,
+            "answer": str,
+            "type": int,
+            "name_*": str,
+            "location_*": str
+        },
+        ...
+    ]
+    ```
+    where `*` is the available languages
+    """
+    colHeaders = ["id", "box", "answer", "type"] + [f"name_{lang.value}, location_{lang.value}" for lang in utils.QuizLanguages]
+    colsString = ", ".join(colHeaders)
+    res = _quizDBcursor.execute(f"SELECT {colsString} FROM buildings ORDER BY id;").fetchall()
     return [dict(zip(colHeaders, entry)) for entry in res]
 
 
