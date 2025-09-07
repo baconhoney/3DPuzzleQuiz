@@ -51,7 +51,9 @@ const Manager = () => {
 
         const initializeWebSocket = () => {
             // Determine WebSocket URL (adjust based on your backend configuration)
-            const wsUrl = `./api/client/events`;
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const host = window.location.host;
+            const wsUrl = `${protocol}//${host}/api/client/events`;
 
             console.log("Connecting to WebSocket:", wsUrl);
 
