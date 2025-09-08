@@ -94,7 +94,7 @@ const Register = () => {
 
                 <button
                     onClick={handleButtonClick}
-                    className="btn btn-primary w-full">
+                    className="btn btn-primary btn-wide">
                     {t("continue")}
                 </button>
             </div>
