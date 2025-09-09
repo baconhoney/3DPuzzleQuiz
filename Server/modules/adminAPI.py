@@ -124,7 +124,7 @@ async def eventsHandler(request: web.Request):
                 _logger.warning(f"WebSocket connection closed with error: {ws.exception()}")
                 print(f"WebSocket connection closed with error: {ws.exception()}")
             elif msg.type == web.WSMsgType.TEXT:
-                print("Received message on admin websocket.\nData is: " + str(msg.data))
+                # print("Received message on admin websocket.\nData is: " + str(msg.data))
                 try:
                     data = json.loads(msg.data)
                 except json.JSONDecodeError:

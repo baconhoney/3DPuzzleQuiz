@@ -40,6 +40,7 @@ CREATE TABLE teams
 (
     id           INTEGER PRIMARY KEY NOT NULL,
     name         TEXT,
+    codeword     TEXT,
     language     TEXT                NOT NULL,
     quiz_round   INTEGER             NOT NULL,
     quiz_size    INTEGER             NOT NULL,
@@ -71,7 +72,9 @@ class QuizDB:
         if not Path.exists(self._dataRoot):
             makedirs(self._dataRoot)
 
-        self._dbExisted = (self._dataRoot / "quizData.sqlite").exists()
+        dbInitiatedFlagPath = self._dataRoot / "db_initiated"
+
+        self._dbExisted = dbInitiatedFlagPath.exists()
         self.connection = sqlite3.connect(self._dataRoot / "quizData.sqlite")
         if not self.connection:
             raise RuntimeError("Database not found")
@@ -84,6 +87,7 @@ class QuizDB:
         self._checkDBTable("quizzes", _quizzesSQL)
         self._checkDBTable("teams", _teamsSQL)
         self._checkDBTable("answers", _answersSQL)
+        dbInitiatedFlagPath.touch()
 
     def _checkDBTable(self, tableName: str, tableSQL: str) -> None:
         if not self.cursor.execute(f"SELECT count(name) FROM sqlite_master WHERE type='table' AND name='{tableName}';").fetchone()[0] == 1:
@@ -92,4 +96,3 @@ class QuizDB:
                 print(f"Table '{tableName}' created successfully")
             else:
                 print(f"Table creation aborted")
-

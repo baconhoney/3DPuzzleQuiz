@@ -37,12 +37,12 @@ async def getQuestionsHandler(request: web.Request):
 async def uploadAnswersHandler(request: web.Request):
     print("API POST request incoming: uploadAnswers")
     data: dict[str, str | list[dict[str, int]]] = await request.json()
-    teamID = utils.getNewTeamID(utils.QuizTypes.DIGITAL)
+    teamID, codeword = utils.getNewTeamID(utils.QuizTypes.DIGITAL, lang=data.get("lang"), teamName=data.get("name"))
     try:
         await quizDBManager.uploadAnswers("digital-uploadFull", teamID=teamID, name=data.get("name"), lang=data.get("lang"), answers=data.get("answers"))
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
-    return web.json_response({"teamID": teamID, "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt()})
+    return web.json_response({"teamID": teamID, "codeword": codeword, "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt()})
 
 
 @router.get(_baseURL + "/getAnswers")
@@ -68,7 +68,7 @@ async def eventsHandler(request: web.Request):
                 _logger.warning(f"WebSocket connection closed with error: {ws.exception()}")
                 print(f"WebSocket connection closed with error: {ws.exception()}")
             elif msg.type == web.WSMsgType.TEXT:
-                print("Received message on admin websocket.\nData is: " + str(msg.data))
+                # print("Received message on admin websocket.\nData is: " + str(msg.data))
                 try:
                     data = json.loads(msg.data)
                 except json.JSONDecodeError:

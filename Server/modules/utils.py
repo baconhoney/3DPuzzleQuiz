@@ -1,5 +1,6 @@
 from enum import Enum
 import datetime
+import json
 import dotenv
 import logging
 import os
@@ -156,7 +157,7 @@ class Localisation:
         "submittedAt_name": {
             "hu": "Leadva",
             "en": "Submitted at",
-        }
+        },
     }
 
     def __init__(self) -> str:
@@ -176,6 +177,26 @@ class Localisation:
             self._logger.warning(f"Translator: unknown key: {key}")
             return f"<{key}>"
         return self._locals.get(key)[self.lang]
+
+
+# ----- data loaders -----
+if (path := pathlib.Path(paths.dataRoot / "CodewordParts.json").resolve()).exists():
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            codewordParts: dict[str, dict[str, list[str]]] = json.load(f)
+        for lang in QuizLanguages:
+            if not codewordParts.get(lang.value):
+                raise ValueError(f"Missing language {lang.value} in CodewordParts.json file")
+            if not codewordParts[lang.value].get("adjectives"):
+                raise ValueError(f"Missing adjectives in {lang.value} language in CodewordParts.json file")
+            if not codewordParts[lang.value].get("nouns"):
+                raise ValueError(f"Missing nouns in {lang.value} language in CodewordParts.json file")
+            if not all([isinstance(part, str) for part in codewordParts[lang.value]["adjectives"] + codewordParts[lang.value]["nouns"]]):
+                raise ValueError(f"Non-string parts in {lang.value} language in CodewordParts.json file")
+    except json.JSONDecodeError:
+        raise ValueError("Invalid CodewordParts.json file")
+else:
+    raise FileNotFoundError("CodewordParts.json file not found")
 
 
 # ---------------------------
@@ -199,19 +220,27 @@ def convertToQuizPhase(phase) -> QuizPhases | None:
 
 
 # ----- Generators -----
-def getNewTeamID(type: QuizTypes):
-    """Generate a new unique identifier."""
-    while True:
-        if type == QuizTypes.DIGITAL:
-            # generating from 5000000000 to 9999999999
+def getNewTeamID(type: QuizTypes, lang: str = None, teamName: str = None):
+    """Generate a new unique identifier and a codeword for digital quizzes."""
+    if type == QuizTypes.DIGITAL:
+        # generating from 5000000000 to 9999999999
+        if not lang or not convertToQuizLanguage(lang):
+            raise ValueError("Parameter lang is required for digital quizzes")
+        if not teamName:
+            raise ValueError("Parameter teamName is required for digital quizzes")
+        while True:
             uuid = random.randint(int(5e9), int(1e10 - 1))
-        elif type == QuizTypes.PAPER:
-            # generating from 1000000000 to 4999999999
+            codeword = random.choice(codewordParts[lang]["adjectives"]) + " " + random.choice(codewordParts[lang]["nouns"])
+            if quizDB.cursor.execute("SELECT count(id) FROM teams WHERE id=(?) OR (teamname=(?) AND codeword='(?)');", (uuid, teamName, codeword)).fetchone()[0] == 0:
+                return (uuid, codeword)
+    elif type == QuizTypes.PAPER:
+        # generating from 1000000000 to 4999999999
+        while True:
             uuid = random.randint(int(1e9), int(5e9 - 1))
-        else:
-            raise ValueError(f"Invalid quizType {type}")
-        if quizDB.cursor.execute(f"SELECT count(id) FROM teams WHERE id={uuid};").fetchone()[0] == 0:
-            return uuid
+            if quizDB.cursor.execute("SELECT count(id) FROM teams WHERE id=(?);", (uuid,)).fetchone()[0] == 0:
+                return (uuid, None)
+    else:
+        raise ValueError(f"Invalid quizType {type}")
 
 
 # ----- Main -----
