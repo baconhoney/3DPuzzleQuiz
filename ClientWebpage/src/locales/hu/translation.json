@@ -20,5 +20,6 @@
     "questions": "kérdés",
     "quiz_type": "Kérdések száma",
     "upload_failed": "A válaszok beküldése többszöri próbálkozás után sem sikerült.",
-    "check_connection": "Kérjük ellenőrizd a kapcsolatodat és próbáld újra."
+    "check_connection": "Kérjük ellenőrizd a kapcsolatodat és próbáld újra.",
+    "remember_codeword": "Jegyezd meg a jeligéd:"
 }
