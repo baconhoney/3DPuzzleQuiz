@@ -39,7 +39,7 @@ async def uploadAnswersHandler(request: web.Request):
     data: dict[str, str | list[dict[str, int]]] = await request.json()
     teamID, codeword = utils.getNewTeamID(utils.QuizTypes.DIGITAL, lang=data.get("lang"), teamName=data.get("name"))
     try:
-        await quizDBManager.uploadAnswers("digital-uploadFull", teamID=teamID, name=data.get("name"), lang=data.get("lang"), answers=data.get("answers"))
+        await quizDBManager.uploadAnswers("digital-uploadFull", teamID=teamID, name=data.get("name"), codeword=codeword, lang=data.get("lang"), answers=data.get("answers"))
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
     return web.json_response({"teamID": teamID, "codeword": codeword, "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt()})

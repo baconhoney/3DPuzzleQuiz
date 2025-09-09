@@ -292,6 +292,7 @@ async def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = Non
     """mode = `paper-uploadAnswers` or `digital-uploadFull`
     client+admin side"""
     if mode == "paper-uploadAnswers" or mode == "digital-uploadFull":
+        # _logger.debug(f"uploadAnswers(mode={mode}, teamID={teamID}, name={name}, codeword={codeword}, lang={lang}, len of answers={len(answers)})")
         if (
             teamID
             and name
@@ -335,6 +336,6 @@ async def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = Non
             _quizDBconnection.commit()
             await wsUtils.broadcastToAdmins("leaderboardUpdated", {})
         else:
-            raise InvalidParameterError(f"Invalid parameters: teamID={teamID}, name={name}, lang={lang}, answers={answers}; all 4 parameters are required for this mode")
+            raise InvalidParameterError(f"Invalid parameters: teamID={teamID}, name={name}, codeword={codeword}, lang={lang}, len of answers={len(answers)}; all are required")
     else:
         raise RuntimeError(f"Invalid mode: {mode}")
