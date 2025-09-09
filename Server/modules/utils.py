@@ -85,7 +85,7 @@ class QuizState:
     """Stores the state of the quiz."""
 
     nextPhaseChangeAt: datetime.datetime = datetime.datetime.now()
-    currentQuizRound: int = 1
+    currentQuizRound: int = 2
     phase: QuizPhases = QuizPhases.IDLE
 
     @classmethod
@@ -231,7 +231,7 @@ def getNewTeamID(type: QuizTypes, lang: str = None, teamName: str = None):
         while True:
             uuid = random.randint(int(5e9), int(1e10 - 1))
             codeword = random.choice(codewordParts[lang]["adjectives"]) + " " + random.choice(codewordParts[lang]["nouns"])
-            if quizDB.cursor.execute("SELECT count(id) FROM teams WHERE id=(?) OR (teamname=(?) AND codeword='(?)');", (uuid, teamName, codeword)).fetchone()[0] == 0:
+            if quizDB.cursor.execute("SELECT count(id) FROM teams WHERE id=(?) OR (name=(?) AND codeword=(?));", (uuid, teamName, codeword)).fetchone()[0] == 0:
                 return (uuid, codeword)
     elif type == QuizTypes.PAPER:
         # generating from 1000000000 to 4999999999

@@ -84,7 +84,7 @@ async def startScannerListener(_: web.Application):
 
 def main():
     app = web.Application()
-    app.cleanup_ctx.append(startScannerListener)
+    # app.cleanup_ctx.append(startScannerListener)
     app.add_routes(adminRouter)
     # client has to be 2nd last, so sub-API requests are not refused with 404
     app.add_routes(clientRouter)

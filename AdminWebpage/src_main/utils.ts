@@ -83,6 +83,7 @@ export type QuizDetailQuestion = {
 
 export type QuizDetails = {
     teamname: string | null,
+    codeword: string | null,
     language: QuizLanguage,
     score: number | null,
     submittedAt: Date | null,
@@ -91,6 +92,7 @@ export type QuizDetails = {
 
 export type JsonQuizDetails = {
     teamname: string | null,
+    codeword: string | null,
     language: string,
     score: number | null,
     submittedAt: string | null,
@@ -106,6 +108,7 @@ export type JsonQuizDetails = {
 export type LeaderboardItem = {
     teamID: number,
     teamname: string | null,
+    codeword: string | null,
     language: QuizLanguage,
     size: QuizSize,
     score: number | null,
@@ -117,6 +120,7 @@ export type LeaderboardItems = LeaderboardItem[]
 export type JsonLeaderboardItems = {
     teamID: number,
     teamname: string | null,
+    codeword: string | null,
     language: string,
     size: number,
     score: number | null,

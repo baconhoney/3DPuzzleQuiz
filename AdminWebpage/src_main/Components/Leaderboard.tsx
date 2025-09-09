@@ -1,7 +1,7 @@
 import { Component } from "react";
 
 import App from "../App.tsx";
-import { fetchData, getTimeFromDate, type QuizLanguage, type LeaderboardItems, type JsonLeaderboardItems, type QuizSize, QuizSizes } from "../utils.ts";
+import { fetchData, getTimeFromDate, type QuizLanguage, type LeaderboardItems, type JsonLeaderboardItems, type QuizSize, QuizSizes, type LeaderboardItem } from "../utils.ts";
 
 import "./Leaderboard.css";
 
@@ -52,14 +52,6 @@ export default class LeaderboardComponent extends Component<Props, State> {
         }
     }
 
-    private updateQuizRound() {
-        if (import.meta.env.MODE == "production") {
-            fetchData("/api/admin/getStates", (data: { currentQuizRound: number }) => this.updateState({ roundFilter: data.currentQuizRound }));
-        } else {
-            this.updateState({ roundFilter: 2 });
-        }
-    }
-
     private updateLeaderboard() {
         const convertFn = (json: JsonLeaderboardItems) =>
             json.map((item) => ({
@@ -70,8 +62,8 @@ export default class LeaderboardComponent extends Component<Props, State> {
             }));
         if (import.meta.env.MODE == "production") {
             const params = new Array<string>();
-            if (this.state.sizeFilter) params.push(`size=${this.state.sizeFilter}`);
-            if (this.state.roundFilter) params.push(`round=${this.state.roundFilter}`);
+            if (this.state.sizeFilter !== null) params.push(`size=${this.state.sizeFilter}`);
+            if (this.state.roundFilter !== null) params.push(`round=${this.state.roundFilter}`);
             const url = "/api/admin/getLeaderboard" + (params.length > 0 ? "?" + params.join("&") : "");
             //console.log("Request url is:", url);
             fetchData(url, data =>
@@ -87,6 +79,18 @@ export default class LeaderboardComponent extends Component<Props, State> {
         }
     }
 
+    private formatExtraData(data: LeaderboardItem){
+        return <div className="extra">
+            <p>teamID: {data.teamID}</p>
+            <p>teamname: {data.teamname}</p>
+            <p>codeword: {data.codeword}</p>
+            <p>language: {data.language}</p>
+            <p>size: {data.size}</p>
+            <p>score: {data.score}</p>
+            <p>submittedAt: {data.submittedAt ? getTimeFromDate(data.submittedAt) : ""}</p>
+        </div>
+    }
+
     render() {
         return (
             <div className="leaderboard">
@@ -100,9 +104,13 @@ export default class LeaderboardComponent extends Component<Props, State> {
                         <button className="text" onClick={() => this.updateState({ sizeFilter: _sizeFilters[(_sizeFilters.indexOf(this.state.sizeFilter) + 1) % _sizeFilters.length] })}>{">"}</button>
                     </div>
                     <div className="round-filter">
-                        <button className="text" onClick={() => this.updateState({ roundFilter: this.state.roundFilter! > 1 ? this.state.roundFilter! - 1 : 1 })}>{"<"}</button>
-                        <button className="text" onClick={() => this.updateQuizRound()}>{this.state.roundFilter}</button>
-                        <button className="text" onClick={() => this.updateState({ roundFilter: this.state.roundFilter! < 100 ? this.state.roundFilter! + 1 : 100 })}>{">"}</button>
+                        <button className="text" onClick={() => this.updateState({
+                            roundFilter: this.state.roundFilter === null ? 0 : (this.state.roundFilter > 0 ? this.state.roundFilter - 1 : 0)
+                        })}>{"<"}</button>
+                        <button className="text" onClick={() => this.updateState({ roundFilter: null })}>{this.state.roundFilter === null ? "-" : (this.state.roundFilter || "C").toString()}</button>
+                        <button className="text" onClick={() => this.updateState({
+                            roundFilter: this.state.roundFilter === null ? 0 : (this.state.roundFilter < 100 ? this.state.roundFilter + 1 : 100)
+                        })}>{">"}</button>
                     </div>
                 </div>
                 <div className="display">
@@ -120,7 +128,7 @@ export default class LeaderboardComponent extends Component<Props, State> {
                             {this.state.leaderboardItems.map((elem, i) => (
                                 <tr key={i} onClick={() => { this.props.app.updateState({ openedQuizTeamID: elem.teamID }); }}
                                     className={elem.teamID === this.props.app.state.openedQuizTeamID ? "selected" : ""}>
-                                    <td className="teamID">{elem.teamID}</td>
+                                    <td className="teamID">{elem.teamID}{this.formatExtraData(elem)}</td>
                                     <td className="language">{elem.language.toUpperCase()}</td>
                                     <td className="teamname">{elem.teamname}</td>
                                     <td className="score">{elem.score}</td>

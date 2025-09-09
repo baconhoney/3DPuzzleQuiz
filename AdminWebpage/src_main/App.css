@@ -3,8 +3,10 @@
     --raisedBGColor: #272727;
     --hoverBGColor: #343;
     --selectedBGColor: #334;
+    --popupBGColor: #443;
     --foregroundColor: #fff;
     --borderColor1: #444;
+    --raisedBorderColor: #aaa;
     --inputBorderColor: #aaa;
 }
 

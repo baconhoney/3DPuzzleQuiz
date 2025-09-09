@@ -82,17 +82,17 @@ class QuizDB:
         self.cursor = self.connection.cursor()
         if not self.cursor:
             raise RuntimeError("Database cursor cannot be created")
+        if not self._dbExisted:
+            self._makeDBTable("buildings", _buildingsSQL)
+            self._makeDBTable("quizzes", _quizzesSQL)
+            self._makeDBTable("teams", _teamsSQL)
+            self._makeDBTable("answers", _answersSQL)
+            dbInitiatedFlagPath.touch()
 
-        self._checkDBTable("buildings", _buildingsSQL)
-        self._checkDBTable("quizzes", _quizzesSQL)
-        self._checkDBTable("teams", _teamsSQL)
-        self._checkDBTable("answers", _answersSQL)
-        dbInitiatedFlagPath.touch()
-
-    def _checkDBTable(self, tableName: str, tableSQL: str) -> None:
-        if not self.cursor.execute(f"SELECT count(name) FROM sqlite_master WHERE type='table' AND name='{tableName}';").fetchone()[0] == 1:
-            if not self._dbExisted or input(f"WARNING: Table '{tableName}' does not exist, are you sure to create it? (YES/NO) > ") == "YES":
-                self.cursor.execute(tableSQL)
-                print(f"Table '{tableName}' created successfully")
-            else:
-                print(f"Table creation aborted")
+    def _makeDBTable(self, tableName: str, tableSQL: str) -> None:
+        try:
+            self.cursor.execute(f"DROP TABLE IF EXISTS {tableName}")
+            self.cursor.execute(tableSQL)
+            print(f"Table '{tableName}' created successfully")
+        except Exception as e:
+            print(f"Table creation aborted: {e}")

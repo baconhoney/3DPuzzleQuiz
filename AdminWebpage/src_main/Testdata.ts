@@ -4469,6 +4469,7 @@ for (const teamID in quizdata) {
     quizResults.push({
         teamID: parseInt(teamID),
         teamname: element.score ? element.name : null,
+        codeword: "CodeWord",
         language: element.language,
         size: element.questions.length,
         score: element.score,
@@ -4476,6 +4477,7 @@ for (const teamID in quizdata) {
     })
     quizDetails[teamID] = {
         teamname: element.score ? element.name : null,
+        codeword: "CodeWord",
         language: element.language,
         score: element.score,
         submittedAt: element.timestamp ? element.timestamp : null,

@@ -85,10 +85,14 @@ export default class DetailsComponent extends Component<Props, State> {
             <div className="details">
                 <div className="header">
                     <div className="teamname">
-                        {this.state.details
+                        {this.props.teamID !== null && this.state.details !== undefined
                             ? (this.state.details.score !== null
-                                ? <span>{this.state.details.teamname}</span>
-                                : <input id={this.props.teamID?.toString() ?? "null"} value={this.state.details?.teamname ?? ""}
+                                ? <span>{this.state.details.teamname}{
+                                    this.state.details.codeword
+                                        ? (("aeiouéáűőúüóí".includes(this.state.details.codeword[0]) ? ", az " : ", a ") + this.state.details.codeword)
+                                        : ""
+                                }</span>
+                                : <input id={this.props.teamID.toString() ?? "null"} value={this.state.details.teamname ?? ""}
                                     onChange={
                                         e => this.updateState({ details: { ...this.state.details!, teamname: e.target.value } })
                                     }
@@ -98,7 +102,7 @@ export default class DetailsComponent extends Component<Props, State> {
                         }
                     </div>
                     <div className="button">
-                        {this.state.details && this.state.details.submittedAt ? (
+                        {this.props.teamID !== null && this.state.details !== undefined && this.state.details.submittedAt ? (
                             this.state.details.score !== null ? (
                                 // score present -> printable
                                 <button onClick={() => {
@@ -143,7 +147,7 @@ export default class DetailsComponent extends Component<Props, State> {
                     </div>
                 </div>
                 <div className="table-container">
-                    {this.state.details
+                    {this.props.teamID !== null && this.state.details !== undefined
                         ? <div className="inner-div">
                             <table key={this.props.teamID}>
                                 <thead>
