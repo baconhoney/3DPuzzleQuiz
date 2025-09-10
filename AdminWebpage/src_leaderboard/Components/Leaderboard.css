@@ -1,7 +1,7 @@
 .leaderboard {
-    position: relative;
-    max-height: 100%;
+    width: 100%;
     height: 100%;
+    max-height: 100%;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -36,27 +36,49 @@
     }
 
     >div.display {
+        width: 100%;
         height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
 
         table {
-            font-size: max(min(3.6vw, 36px), 14px);
+            /* table is made so only the right and bottom cells have border to simulate collapsing, */
+            /* this is needed for the stickied thead > ths */
             border-spacing: 0px;
             border-collapse: separate;
 
-            thead th {
+            /* add background to all td */
+            th {
                 position: sticky;
                 top: 0px;
-                background-color: var(--backroundColor);
                 z-index: 2;
             }
 
             th,
             td {
+                background-color: var(--backroundColor);
+            }
+
+            tr:nth-child(odd) td {
+                background-color: var(--raisedBGColor);
+            }
+
+            /* overwrite hovered tr's ths/tds with hoverBG */
+            tr:hover th,
+            tr:hover td {
+                background-color: var(--hoverBGColor);
+            }
+
+            /* overwrite selected tr's tds with selectedBG */
+            tr.selected td {
+                background-color: var(--selectedBGColor);
+            }
+
+            /* add borders to everything */
+            th,
+            td {
                 border-right: 1px solid var(--borderColor1);
                 border-bottom: 1px solid var(--borderColor1);
-                padding: 2px 4px;
             }
 
             th {
@@ -68,27 +90,87 @@
                 border-left: 1px solid var(--borderColor1);
             }
 
-            th {
-                font-size: 0.8em;
+            /* set manual widths so css can clip the long texts */
+            .language {
+                width: min(10%, 100px);
             }
 
-            tr:nth-child(odd) td {
-                background-color: var(--raisedBGColor);
-            }
-
-            .groupname {
+            .teamname {
                 width: 100%;
             }
 
+            .score {
+                width: min(10%, 100px);
+            }
+
+            .timestamp {
+                width: min(20%, 200px);
+            }
+
+            /* set other stuff */
+            width: 100%;
+            height: 100%;
+
+            
+            * {
+                font-size: max(min(3.5vw, 36px), 12px);
+            }
+
+            tr {
+                height: max(5.0vw, 30px);
+                position: relative;
+            }
+
+            thead>tr {
+                height: 50px;
+            }
+
+            th,
+            td {
+                padding: 2px 4px;
+                cursor: pointer;
+                overflow: hidden;
+            }
+
+
+            div.extra {
+                position: absolute;
+                top: 3px;
+                left: 3px;
+                text-align: left;
+                z-index: 1;
+                padding: 5px;
+                background-color: var(--popupBGColor);
+                border: 3px outset var(--raisedBorderColor);
+                border-radius: 10px;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0s, visibility 0s;
+
+                >p {
+                    background-color: var(--popupBGColor);
+                    margin-bottom: 3px;
+                }
+            }
+
+            tr:hover div.extra,
+            td:hover div.extra,
+            div.extra:hover {
+                opacity: 1;
+                visibility: visible;
+                transition-delay: 1s;
+            }
+
+
             .teamID,
+            .language,
             .score,
-            .timestamp,
-            .language {
+            .timestamp {
                 text-align: center;
             }
 
-            .groupname,
-            .language {
+            th.score,
+            th.timestamp {
                 font-size: 0.9em;
             }
         }

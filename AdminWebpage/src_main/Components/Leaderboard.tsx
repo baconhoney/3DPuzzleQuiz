@@ -79,7 +79,7 @@ export default class LeaderboardComponent extends Component<Props, State> {
         }
     }
 
-    private formatExtraData(data: LeaderboardItem){
+    private formatExtraData(data: LeaderboardItem) {
         return <div className="extra">
             <p>teamID: {data.teamID}</p>
             <p>teamname: {data.teamname}</p>
@@ -99,15 +99,23 @@ export default class LeaderboardComponent extends Component<Props, State> {
                         <button className="image" onClick={() => this.updateLeaderboard()}><img src="refresh_icon.svg" /></button>
                     </div>
                     <div className="size-filter">
-                        <button className="text" onClick={() => this.updateState({ sizeFilter: _sizeFilters[_sizeFilters.indexOf(this.state.sizeFilter) > 0 ? (_sizeFilters.indexOf(this.state.sizeFilter) - 1) : _sizeFilters.length - 1] })}>{"<"}</button>
-                        <button className="text" onClick={() => this.updateState({ sizeFilter: null })}>{this.state.sizeFilter ?? "-"}</button>
-                        <button className="text" onClick={() => this.updateState({ sizeFilter: _sizeFilters[(_sizeFilters.indexOf(this.state.sizeFilter) + 1) % _sizeFilters.length] })}>{">"}</button>
+                        <button className="text" onClick={() => this.updateState({
+                            sizeFilter: _sizeFilters[_sizeFilters.indexOf(this.state.sizeFilter) > 0 ? (_sizeFilters.indexOf(this.state.sizeFilter) - 1) : _sizeFilters.length - 1]
+                        })}>{"<"}</button>
+                        <button className="text" onClick={() => this.updateState({
+                            sizeFilter: null
+                        })}>{this.state.sizeFilter ?? "-"}</button>
+                        <button className="text" onClick={() => this.updateState({
+                            sizeFilter: _sizeFilters[(_sizeFilters.indexOf(this.state.sizeFilter) + 1) % _sizeFilters.length]
+                        })}>{">"}</button>
                     </div>
                     <div className="round-filter">
                         <button className="text" onClick={() => this.updateState({
                             roundFilter: this.state.roundFilter === null ? 0 : (this.state.roundFilter > 0 ? this.state.roundFilter - 1 : 0)
                         })}>{"<"}</button>
-                        <button className="text" onClick={() => this.updateState({ roundFilter: null })}>{this.state.roundFilter === null ? "-" : (this.state.roundFilter || "C").toString()}</button>
+                        <button className="text" onClick={() => this.updateState({
+                            roundFilter: null
+                        })}>{this.state.roundFilter === null ? "-" : (this.state.roundFilter || "C").toString()}</button>
                         <button className="text" onClick={() => this.updateState({
                             roundFilter: this.state.roundFilter === null ? 0 : (this.state.roundFilter < 100 ? this.state.roundFilter + 1 : 100)
                         })}>{">"}</button>

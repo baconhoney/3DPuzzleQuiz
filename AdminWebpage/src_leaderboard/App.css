@@ -1,17 +1,22 @@
 :root {
-    --foregroundColor: #fff;
-    --halfwayColor: #888;
     --backroundColor: #222;
     --raisedBGColor: #272727;
-    --borderColor1: #446;
-    --borderColor2: #557;
+    --hoverBGColor: #343;
+    --selectedBGColor: #334;
+    --popupBGColor: #443;
+    --foregroundColor: #fff;
+    --borderColor1: #444;
+    --raisedBorderColor: #aaa;
+    --inputBorderColor: #aaa;
 }
 
 * {
+    background-color: var(--backroundColor);
+    color: var(--foregroundColor);
     padding: 0;
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -47,11 +52,11 @@ body,
     background-color: var(--backroundColor);
     color: var(--foregroundColor);
     width: 100vw;
-    height: 90vh;
-    min-width: 400px;
+    height: 95vh;
+    min-width: 360px;
     font-size: 14px;
 }
 
 #root {
-    padding: 20px;
+    padding: 10px;
 }

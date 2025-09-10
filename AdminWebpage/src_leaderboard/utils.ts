@@ -48,10 +48,11 @@ export function getHHMMFromDate(date: Date) {
  * @param url - the url to fetch from
  * @param callback - the function to call with the data
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function fetchData(url: string, callback: (data: any) => void) {
-    fetch(url).then((response) => {
+    void fetch(url).then((response) => {
         if (response.status === 200) {
-            response.json().then((json: any) => {
+            response.json().then((json: unknown) => {
                 callback(json);
             }, (error: string) => console.error(`Failed to parse JSON from ${url}: ${error}`));
         } else {
@@ -82,6 +83,7 @@ export type QuizDetailQuestion = {
 
 export type QuizDetails = {
     teamname: string | null,
+    codeword: string | null,
     language: QuizLanguage,
     score: number | null,
     submittedAt: Date | null,
@@ -90,6 +92,7 @@ export type QuizDetails = {
 
 export type JsonQuizDetails = {
     teamname: string | null,
+    codeword: string | null,
     language: string,
     score: number | null,
     submittedAt: string | null,
@@ -105,6 +108,7 @@ export type JsonQuizDetails = {
 export type LeaderboardItem = {
     teamID: number,
     teamname: string | null,
+    codeword: string | null,
     language: QuizLanguage,
     size: QuizSize,
     score: number | null,
@@ -116,6 +120,7 @@ export type LeaderboardItems = LeaderboardItem[]
 export type JsonLeaderboardItems = {
     teamID: number,
     teamname: string | null,
+    codeword: string | null,
     language: string,
     size: number,
     score: number | null,
