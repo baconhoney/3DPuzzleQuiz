@@ -82,6 +82,7 @@ const Quiz = ({ data, setWantToPlay }) => {
 
             setTeamID(data.teamID);
             localStorage.setItem("teamID", data.teamID);
+            localStorage.setItem("codeword", data.codeword);
             localStorage.removeItem("quizAnswers");
             setWantToPlay("N");
         } catch (error) {

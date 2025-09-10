@@ -20,5 +20,6 @@
     "questions": "questions",
     "quiz_type": "Quiz size",
     "upload_failed": "Failed to submit answers after multiple attempts.",
-    "check_connection": "Please check your connection and try again."
+    "check_connection": "Please check your connection and try again.",
+    "remember_codeword": "Remember your codeword:"
 }
