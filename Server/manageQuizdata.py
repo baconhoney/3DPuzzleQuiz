@@ -7,7 +7,7 @@ import pathlib
 import random
 import sys
 
-locale.setlocale(locale.LC_ALL, "hu_HU")
+locale.setlocale(locale.LC_ALL, "hu_HU.utf8")
 
 sys.path.insert(1, str(pathlib.Path("./modules").resolve()))
 import quizDB
