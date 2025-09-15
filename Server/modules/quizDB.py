@@ -1,5 +1,7 @@
 from os import makedirs
 from pathlib import Path
+import atexit
+import locale
 import logging
 import sqlite3
 
@@ -16,11 +18,11 @@ CREATE TABLE buildings
     id          INTEGER PRIMARY KEY NOT NULL,
     box         INTEGER,
     answer      INTEGER UNIQUE,
-    name_hu     TEXT                NOT NULL,
-    name_en     TEXT                NOT NULL,
-    location_hu TEXT                NOT NULL,
-    location_en TEXT                NOT NULL,
-    type        TEXT                NOT NULL
+    name_hu     TEXT NOT NULL COLLATE LANG_HU,
+    name_en     TEXT NOT NULL COLLATE LANG_HU,
+    location_hu TEXT NOT NULL COLLATE LANG_HU,
+    location_en TEXT NOT NULL COLLATE LANG_HU,
+    type        TEXT NOT NULL
 ) STRICT;
 """
 
@@ -39,11 +41,11 @@ _teamsSQL = """
 CREATE TABLE teams
 (
     id           INTEGER PRIMARY KEY NOT NULL,
-    name         TEXT,
+    name         TEXT COLLATE LANG_HU,
     codeword     TEXT,
-    language     TEXT                NOT NULL,
-    quiz_round   INTEGER             NOT NULL,
-    quiz_size    INTEGER             NOT NULL,
+    language     TEXT NOT NULL,
+    quiz_round   INTEGER NOT NULL,
+    quiz_size    INTEGER NOT NULL,
     score        INTEGER,
     submitted_at TEXT
 ) STRICT;
@@ -79,6 +81,8 @@ class QuizDB:
         if not self.connection:
             raise RuntimeError("Database not found")
 
+        locale.setlocale(locale.LC_ALL, "hu_HU.utf8")
+        self.connection.create_collation("LANG_HU", locale.strcoll)
         self.cursor = self.connection.cursor()
         if not self.cursor:
             raise RuntimeError("Database cursor cannot be created")
@@ -88,11 +92,16 @@ class QuizDB:
             self._makeDBTable("teams", _teamsSQL)
             self._makeDBTable("answers", _answersSQL)
             dbInitiatedFlagPath.touch()
+        atexit.register(lambda: self.connection.close())
 
     def _makeDBTable(self, tableName: str, tableSQL: str) -> None:
         try:
             self.cursor.execute(f"DROP TABLE IF EXISTS {tableName}")
             self.cursor.execute(tableSQL)
-            print(f"Table '{tableName}' created successfully")
+            res = self.cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{tableName}';").fetchone()
+            if res and len(res) == 1 and res[0] == tableName:
+                print(f"Table '{tableName}' created successfully")
+            else:
+                print(f"Table '{tableName}' creation failed")
         except Exception as e:
             print(f"Table creation aborted: {e}")

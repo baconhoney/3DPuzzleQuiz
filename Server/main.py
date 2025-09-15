@@ -7,6 +7,7 @@ import pathlib
 import sys
 import threading
 
+
 # add local modules to pythonpath (each top level file needs this)
 sys.path.insert(1, str(pathlib.Path("./modules").resolve()))
 os.environ["QUIZSERVER_ROOT"] = str(pathlib.Path(__file__).parent.resolve().as_posix())
@@ -20,18 +21,17 @@ if specsFile.exists():
 port = int(os.getenv("QUIZSERVER_PORT", 80))
 
 # set up logging before importing modules, so they can log
-loggingLevel = "DEBUG"
 logging.basicConfig(
-    level=loggingLevel.upper(),
+    level=logging.WARNING,
     stream=sys.stdout,
     format="%(asctime)s %(name)-20s %(levelname)-7s> %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
-logging.debug("Testing logger")
-logging.getLogger("aiohttp").setLevel("WARNING")
-logging.getLogger("asyncio").setLevel("INFO")
 
-loop = asyncio.get_event_loop()
+logger = logging.getLogger(__name__)
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
 
 #################### START OF MAIN ####################
 from scanner import Scanner
@@ -43,6 +43,23 @@ from fileServer import router as fileServerRouter
 from clientAPI import router as clientRouter
 from adminAPI import router as adminRouter
 
+# set level of logging for each module
+
+loggingLevel = logging.DEBUG
+
+logging.getLogger("scanner").setLevel(loggingLevel)
+logging.getLogger("quizDB").setLevel(loggingLevel)
+logging.getLogger("quizDBManager").setLevel(loggingLevel)
+logging.getLogger("utils").setLevel(loggingLevel)
+logging.getLogger("wsUtils").setLevel(loggingLevel)
+logging.getLogger("htmlReplacer").setLevel(loggingLevel)
+logging.getLogger("printer").setLevel(loggingLevel)
+logging.getLogger("fileServer").setLevel(loggingLevel)
+logging.getLogger("clientAPI").setLevel(loggingLevel)
+logging.getLogger("adminAPI").setLevel(loggingLevel)
+
+logger.setLevel(logging.DEBUG)
+logger.debug("Testing logger")
 
 # print("Path for CWD", utils.paths.cwd)
 # print("Path for cfgRoot", utils.paths.cfgRoot)
@@ -53,33 +70,33 @@ from adminAPI import router as adminRouter
 
 
 async def callbackFn(value: str):
-    logging.debug("Executing callbackFunction")
+    logger.debug("Executing callbackFunction")
     if not value or not value.isdigit():
         print(f"Scanner input is not a teamID: {value}")
     try:
         if await quizDBManager.checkIfSubmittedAtIsPresent(int(value)):
             # team has already submitted, show quiz on admin page
-            logging.debug(f"Scanned team has already submitted: {value}")
+            logger.debug(f"Scanned team has already submitted: {value}")
             await wsUtils.broadcastToAdmins("showQuiz", {"teamID": int(value)})
         else:
             # team is not yet registered, register it
-            logging.debug(f"Scanned team needs registering: {value}")
+            logger.debug(f"Scanned team needs registering: {value}")
             await quizDBManager.updateSubmittedAt(int(value))
     except quizDBManager.InvalidParameterError:
-        logging.info(f"Scanned teamID cannot be found: {value}")
+        logger.info(f"Scanned teamID cannot be found: {value}")
 
 
 async def startScannerListener(_: web.Application):
-    logging.info("Starting scanner listener...")
+    logger.info("Starting scanner listener...")
     stopEvent = threading.Event()
     scannerTask = asyncio.create_task(Scanner(callbackFn, asyncio.get_event_loop()).run_forever(stopEvent))
-    logging.info("Scanner listener started")
+    logger.info("Scanner listener started")
     yield
-    logging.info("Stopping scanner listener...")
+    logger.info("Stopping scanner listener...")
     stopEvent.set()
     loop.stop()
     await scannerTask
-    logging.info("Scanner listener stopped")
+    logger.info("Scanner listener stopped")
 
 
 def main():

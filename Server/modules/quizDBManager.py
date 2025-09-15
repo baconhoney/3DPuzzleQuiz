@@ -145,7 +145,7 @@ async def getLeaderboard(*, size: str = None, quizRound: str = None) -> list[dic
     res: list[list[str | int]] = utils.quizDB.cursor.execute(
         f"SELECT {', '.join(cols.keys())} FROM teams \
         {conditions and ("WHERE " + ' AND '.join(conditions))} \
-        ORDER BY score DESC, submitted_at ASC;",
+        ORDER BY score DESC NULLS LAST, submitted_at ASC NULLS LAST;",
     ).fetchall()
     # _logger.debug(f"Query result: {res}")
     return res and [dict(zip(cols.values(), entry)) for entry in res] or []
@@ -190,7 +190,7 @@ async def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, st
         FROM buildings JOIN quizzes ON buildings.id = quizzes.building_id \
         LEFT JOIN answers ON buildings.id = answers.building_id AND answers.team_id = {teamID} \
         WHERE quizzes.quiz_round = {quizSize == utils.QuizSizes.SIZE_20.value and quizRound or -1} \
-        ORDER BY buildings.name_{lang} ASC;"
+        ORDER BY buildings.name_{lang} COLLATE LANG_HU ASC;"
     ).fetchall()
     return {
         "teamname": res["name"],
