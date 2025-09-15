@@ -1,19 +1,22 @@
 import logging
-import re
-import sys
-
 
 _logger = logging.getLogger(__name__)
 _logger.info(f"Importing {__name__}...")
 
 
+import re
+import sys
+
+
 def tokenize(template_str):
+    _logger.debug(f"Starting tokenization of template string: {template_str[:50]}...")
     # Handle escaped braces first
     template_str = template_str.replace("{{{{", "__LITERAL_LEFT__").replace("}}}}", "__LITERAL_RIGHT__")
 
     # Match all template tags
     pattern = re.compile(r"(\{\{.*?\}\})", re.DOTALL)
     parts = pattern.split(template_str)
+    _logger.debug(f"Template split into {len(parts)} parts.")
 
     tokens = []
     for part in parts:
@@ -23,24 +26,32 @@ def tokenize(template_str):
             inner = part[2:-2].strip()
             if inner.startswith("foreach "):
                 tokens.append(("tag", ("foreach_start", inner[8:].strip())))
+                _logger.debug(f"Detected foreach start: {inner[8:].strip()}")
             elif inner == "endforeach":
                 tokens.append(("tag", ("foreach_end", None)))
+                _logger.debug("Detected foreach end.")
             elif inner.startswith("if "):
                 tokens.append(("tag", ("if_start", inner[3:].strip())))
+                _logger.debug(f"Detected if start: {inner[3:].strip()}")
             elif inner == "else":
                 tokens.append(("tag", ("else", None)))
+                _logger.debug("Detected else tag.")
             elif inner == "endif":
                 tokens.append(("tag", ("if_end", None)))
+                _logger.debug("Detected endif tag.")
             else:
                 tokens.append(("var", inner))
+                _logger.debug(f"Detected variable: {inner}")
         else:
             tokens.append(("text", part))
+            _logger.debug(f"Detected text: {part[:30]}...")
 
     # Restore escaped braces
     for i, (ttype, tval) in enumerate(tokens):
         if ttype == "text":
             tokens[i] = ("text", tval.replace("__LITERAL_LEFT__", "{{").replace("__LITERAL_RIGHT__", "}}"))
 
+    _logger.info(f"Tokenization complete with {len(tokens)} tokens.")
     return tokens
 
 
@@ -57,6 +68,7 @@ def tokenize(template_str):
 
 
 def parse_template(template_str):
+    _logger.debug("Starting parsing of template.")
     stack = [{"type": "root", "body": []}]
     tokens = tokenize(template_str)
 
@@ -66,16 +78,21 @@ def parse_template(template_str):
         if ttype in ("text", "var"):
             if current["type"] == "if" and current.get("in_else"):
                 current["false"].append((ttype, tval))
+                _logger.debug(f"Appending to false branch: {(ttype, tval)}")
             elif current["type"] == "if":
                 current["true"].append((ttype, tval))
+                _logger.debug(f"Appending to true branch: {(ttype, tval)}")
             else:
                 current["body"].append((ttype, tval))
+                _logger.debug(f"Appending to body: {(ttype, tval)}")
 
         elif ttype == "tag":
             tag, val = tval
+            _logger.debug(f"Processing tag: {tag}, value: {val}")
 
             if tag == "foreach_start":
                 stack.append({"type": "foreach", "iterable": val, "body": []})
+                _logger.info(f"Pushed foreach block for iterable '{val}' onto stack.")
             elif tag == "foreach_end":
                 if stack[-1]["type"] != "foreach":
                     raise SyntaxError("Mismatched {{endforeach}} tag")
@@ -89,13 +106,15 @@ def parse_template(template_str):
                         curr["true"].append(newblock)
                 else:
                     curr["body"].append(newblock)
-
+                _logger.info(f"Closed foreach block for iterable '{block['iterable']}'.")
             elif tag == "if_start":
                 stack.append({"type": "if", "cond": val, "true": [], "false": [], "in_else": False})
+                _logger.info(f"Pushed if block with condition '{val}' onto stack.")
             elif tag == "else":
                 if stack[-1]["type"] != "if":
                     raise SyntaxError("Misplaced {{else}} tag")
                 stack[-1]["in_else"] = True
+                _logger.info("Switching to else branch in if block.")
             elif tag == "if_end":
                 if stack[-1]["type"] != "if":
                     raise SyntaxError("Mismatched {{endif}} tag")
@@ -109,32 +128,40 @@ def parse_template(template_str):
                         curr["true"].append(newblock)
                 else:
                     curr["body"].append(newblock)
+                _logger.info(f"Closed if block with condition '{block['cond']}'.")
             else:
                 raise SyntaxError(f"Unknown tag: {tag}")
 
     if len(stack) != 1:
         raise SyntaxError("Unclosed block(s) in template")
 
+    _logger.info("Parsing complete.")
     return stack[0]["body"]
 
 
 def resolve_var(key: str, context: dict, parents: list):
+    _logger.debug(f"Resolving variable '{key}' from context and parents.")
     if key in context:
+        _logger.debug(f"Found '{key}' in current context.")
         return context[key]
     for parent in reversed(parents):
         if key in parent:
+            _logger.debug(f"Found '{key}' in parent context.")
             return parent[key]
     raise KeyError(f"Variable '{key}' not found in context or parents")
 
 
 def build_scope(context, parents):
+    _logger.debug("Building scope from context and parents.")
     scope = {}
     for parent in parents + [context]:
         scope.update(parent)
+    _logger.debug(f"Scope built with keys: {list(scope.keys())}")
     return scope
 
 
 def render_ast(ast, context: dict, parents: list):
+    _logger.debug("Starting AST rendering.")
     output = []
     for node in ast:
         ntype = node[0]
@@ -147,6 +174,7 @@ def render_ast(ast, context: dict, parents: list):
             iterable = resolve_var(node[1], context, parents)
             if not isinstance(iterable, list):
                 raise TypeError(f"Expected list for foreach '{node[1]}', got {type(iterable)}")
+            _logger.info(f"Rendering foreach block for '{node[1]}' with {len(iterable)} items.")
             for item in iterable:
                 output.append(render_ast(node[2], item, parents + [context]).strip())
         elif ntype == "if":
@@ -156,6 +184,7 @@ def render_ast(ast, context: dict, parents: list):
                 result = eval(cond, {}, scope)
             except Exception as e:
                 raise ValueError(f"Error evaluating condition '{cond}': {e}")
+            _logger.debug(f"If condition '{cond}' evaluated to {result}.")
             if result:
                 output.append(render_ast(true_body, context, parents).strip())
             else:
@@ -163,14 +192,18 @@ def render_ast(ast, context: dict, parents: list):
         else:
             raise ValueError(f"Unknown AST node type: {ntype}")
 
+    _logger.debug("AST rendering complete.")
     return "".join(output)
 
 
 def render_template(template_str: str, context: dict, parents: list = None) -> str:
     if parents is None:
         parents = []
+    _logger.info("Rendering template started.")
     ast = parse_template(template_str)
-    return render_ast(ast, context, parents)
+    final_output = render_ast(ast, context, parents)
+    _logger.info("Rendering template finished.")
+    return final_output
 
 
 # Example usage

@@ -1,14 +1,15 @@
-import re
-from typing import Any, Callable
-import asyncio
 import logging
-import sys
-import threading
-import time
-
 
 _logger = logging.getLogger(__name__)
 _logger.info(f"Importing {__name__}...")
+
+
+import re
+from typing import Any, Callable
+import asyncio
+import sys
+import threading
+import time
 
 
 ######################################################################
@@ -26,9 +27,10 @@ if sys.platform == "win32":
         - `asyncio.create_task(Scanner(callbackFunction).run_forever(stopEvent))`
         """
 
-        def __init__(self, callbackFn: Callable[[str], Any] = None, loop=None):
+        def __init__(self, callbackFn: Callable[[str], Any] = None, loop: asyncio.AbstractEventLoop = None):
             self._callbackFunction = callbackFn or (lambda x: None)
             self._loop = loop
+            _logger.debug(f"Scanner initialized with callbackFn={callbackFn.__name__} loop={loop}")
 
         def _callback(self):
             value = self._inputVar.get()
@@ -37,22 +39,25 @@ if sys.platform == "win32":
                 asyncio.run_coroutine_threadsafe(self._callbackFunction(value), self._loop)
             self._inputVar.set("")
             self._inputbox.focus()
+            _logger.debug("Input box cleared and focus set")
 
         def _innerLoop(self, stopEvent: threading.Event):
             import tkinter as tk
 
             _logger.info("Starting the Tk loop")
-            if stopEvent is None:
+            if stopEvent is None or not isinstance(stopEvent, threading.Event):
                 raise ValueError("stopEvent is required")
             # set up basic tk interface
             self._root = tk.Tk()
             self._root.title("Dummy Scanner Input")
             self._root.geometry("400x150")
             self._root.resizable(False, False)
+            _logger.debug("Tk root window created and configured")
 
             self._inputVar = tk.StringVar(self._root, "")
             self._frame = tk.Frame(self._root)
             self._frame.pack()
+            _logger.debug("Tk frame and inputVar initialized")
 
             self._label = tk.Label(self._frame, text="Enter the scanned code:", font=("Arial", 14))
             self._label.pack(padx=5, pady=5)
@@ -61,11 +66,14 @@ if sys.platform == "win32":
             self._inputbox.pack(padx=5, pady=5)
             self._inputbox.bind("<Return>", lambda _: self._callback())
             self._inputbox.focus()
+            _logger.debug("Input box and label configured")
 
             self._submitBtn = tk.Button(self._frame, text="Submit", font=("Arial", 14), command=lambda: self._callback())
             self._submitBtn.pack(padx=5, pady=5)
+            _logger.debug("Submit button configured")
 
             self._root.protocol("WM_DELETE_WINDOW", lambda: stopEvent.set())
+            _logger.debug("WM_DELETE_WINDOW protocol set")
 
             try:
                 while not stopEvent.is_set():
@@ -73,12 +81,13 @@ if sys.platform == "win32":
                     time.sleep(0.1)
                 _logger.info("Closing window...")
                 self._root.after(0, self._root.destroy())
-            except tk.TclError:
+            except tk.TclError as e:
                 stopEvent.set()
-                _logger.info("Tcl error caught")
+                _logger.error(f"Tcl error caught in _innerLoop: {e}")
             _logger.info("Window closed")
 
         async def run_forever(self, stopEvent: threading.Event):
+            _logger.info("Starting _innerLoop in thread")
             await asyncio.to_thread(self._innerLoop, stopEvent)
 
 
@@ -104,8 +113,10 @@ elif sys.platform == "linux":
         def __init__(self, callbackFn: Callable[[str], Any] = None, loop: asyncio.AbstractEventLoop = None):
             self._callbackFunction = callbackFn or (lambda x: None)
             self._loop = loop
+            _logger.debug(f"Scanner initialized with callbackFn={callbackFn} loop={loop}")
 
         async def innerLoop(self, dev: evdev.InputDevice):
+            _logger.info(f"Starting innerLoop for device {dev.path} ({dev.name})")
             with dev.grab_context():
                 presses = ""
                 ev: evdev.InputEvent
@@ -113,11 +124,13 @@ elif sys.platform == "linux":
                     if ev.type == 1 and ev.value == 0:
                         if ev.code == 28:  # enter key
                             await self._callbackFunction(presses)
+                            _logger.debug(f"Submitted scanned value: {presses}")
                             presses = ""
                         elif ev.code in self.codeToNum:
                             presses += self.codeToNum[ev.code]
+                            _logger.debug(f"Added {self.codeToNum[ev.code]} to presses: {presses}")
                         else:
-                            _logger.debug(f"unknown code from {ev.code}, {ev.code in evdev.ecodes.KEY and evdev.ecodes.KEY[ev.code] or "<unknown>"}")
+                            _logger.debug(f"unknown code from {ev.code}, {ev.code in evdev.ecodes.KEY and evdev.ecodes.KEY[ev.code] or '<unknown>'}")
 
         async def run_forever(self, stopEvent: threading.Event):
             _logger.info("Starting the 'evdev' loop")
@@ -129,18 +142,18 @@ elif sys.platform == "linux":
                 print(f"{i:02}: {dev.path}\t, {dev.name:50} ({dev.phys})")
                 if re.match(r"\bBarCode\b", dev.name):
                     preselected = i
+                    _logger.info(f"Preselected device {i}: {dev.name}")
 
             print("-----------------\nAvailable input devices:")
             while True:
-                if preselected > -1:
-                    inp = input(f"Select device (0-{i}): use {preselected}?")
-                else:
-                    inp = input(f"Select device (0-{i}): ")
+                inp = input(f"Select device (0-{i}): " + preselected > -1 and f"use {preselected}?" or "")
                 try:
                     device = devs[int(inp or str(preselected))]
+                    print(f"Selected device: {device.name}")
                     break
                 except:
                     print(f"Invalid input: {inp}, try again.")
+            del devs  # free memory
             try:
                 task = self._loop.create_task(self.innerLoop(device))
                 while not task.done():
@@ -153,9 +166,11 @@ elif sys.platform == "linux":
             except Exception as e:
                 _logger.error("in run_forever:", str(e))
 
+
 # Throw error on unsupported platforms
 else:
     raise RuntimeError(f"Unsupported platform: {sys.platform}")
+
 
 ######################################################################
 ############################## MAIN ##################################
@@ -173,6 +188,7 @@ async def _exiterFn(stopEvent: threading.Event):
 
 
 async def _main(stopEvent: threading.Event):
+    _logger.info("Starting main TaskGroup")
     async with asyncio.TaskGroup() as tg:
         loop = asyncio.get_event_loop()
         tg.create_task(Scanner(lambda x: print(f"Scanner: {x}"), loop).run_forever(stopEvent))

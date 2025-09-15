@@ -1,26 +1,30 @@
+import logging
+
+_logger = logging.getLogger(__name__)
+_logger.info(f"Importing {__name__}...")
+
+
 from aiohttp import web
 import asyncio
 import datetime
 import json
-import logging
 import printer
 import quizDBManager
 import utils
 import wsUtils
 
 
-router = web.RouteTableDef()
 _currentPrinter = printer.Printer()
 asyncio.run_coroutine_threadsafe(_currentPrinter.realInit(), asyncio.get_event_loop())
 
-_logger = logging.getLogger(__name__)
-_logger.info(f"Importing {__name__}...")
+router = web.RouteTableDef()
+
 _baseURL = "/api/admin"
 
 
 @router.get(_baseURL + "/getStates")
 async def getStatesHandler(request: web.Request):
-    print(f"API GET request incoming: admin/getStates")
+    _logger.info(f"API GET request incoming: getStates")
     return web.json_response(
         {
             "phase": utils.QuizState.phase.value,
@@ -32,50 +36,66 @@ async def getStatesHandler(request: web.Request):
 
 @router.get(_baseURL + "/getAllBuildingsData")
 async def getAllBuildingsDataHandler(request: web.Request):
-    print(f"API GET request incoming: admin/getAllBuildingsData")
-    return web.json_response(await quizDBManager.getAllBuildingData())
+    _logger.info(f"API GET request incoming: getAllBuildingsData")
+    data = await quizDBManager.getAllBuildingData()
+    _logger.debug(f"Retrieved building data: {len(data)} entries")
+    return web.json_response(data)
 
 
 @router.get(_baseURL + "/getLeaderboard")
 async def getLeaderboardHandler(request: web.Request):
-    print(f"API GET request incoming: admin/getLeaderboard")
+    _logger.info(f"API GET request incoming: getLeaderboard")
     try:
-        return web.json_response(await quizDBManager.getLeaderboard(size=request.query.get("size"), quizRound=request.query.get("round")))
+        data = await quizDBManager.getLeaderboard(size=request.query.get("size"), quizRound=request.query.get("round"))
+        _logger.debug(f"Leaderboard data: {len(data)} entries")
+        return web.json_response(data)
     except quizDBManager.InvalidParameterError as e:
+        _logger.warning(f"Invalid parameters for getLeaderboard: {e}")
         raise web.HTTPBadRequest(text=str(e))
 
 
 @router.get(_baseURL + "/getQuizDetails")
 async def getQuizdataHandler(request: web.Request):
-    print(f"API GET request incoming: admin/getQuizDetails")
+    _logger.info(f"API GET request incoming: getQuizDetails")
     try:
-        return web.json_response(await quizDBManager.getQuizDetails(request.query.get("teamID")))
+        data = await quizDBManager.getQuizDetails(request.query.get("teamID"))
+        _logger.debug(f"Quiz details retrieved: {({k: v for k, v in data.items() if k != 'answers'})}")
+        return web.json_response(data)
     except quizDBManager.InvalidParameterError as e:
+        _logger.warning(f"Invalid parameters for getQuizDetails: {e}")
         raise web.HTTPBadRequest(text=str(e))
 
 
 @router.post(_baseURL + "/uploadQuiz")
 async def uploadQuizHandler(request: web.Request):
-    print("API POST request incoming: admin/uploadQuiz")
+    _logger.info("API POST request incoming: uploadQuiz")
     data: dict[str, str | int | list[dict[str, str | int]]] = await request.json()
+    _logger.debug(f"Received uploadQuiz data: {data}")
     try:
         await quizDBManager.uploadAnswers("paper-uploadAnswers", teamID=data.get("teamID"), name=data.get("name"), answers=data.get("answers"))
+        _logger.debug(f"Successfully uploaded quiz answers for teamID: {data.get('teamID')}")
     except quizDBManager.InvalidParameterError as e:
+        _logger.warning(f"Invalid parameters for uploadQuiz: {e}")
         raise web.HTTPBadRequest(text=str(e))
     return web.HTTPOk()
 
 
 @router.post(_baseURL + "/queuePrint")
 async def queuePrintHandler(request: web.Request):
-    print(f"API POST request incoming: admin/queuePrint")
+    _logger.info(f"API POST request incoming: queuePrint")
     data: dict[str, str | int] = await request.json()
+    _logger.debug(f"QueuePrint data received: {data}")
     teamID = data.get("teamID")
     copyCount = data.get("copyCount")
     lang = utils.convertToQuizLanguage(data.get("language"))
     size = utils.convertToQuizSize(data.get("quizSize"))
-    if teamID and not copyCount and not lang and not size: # printing filled-out digital quiz
+    if teamID and not copyCount and not lang and not size:
+        # printing filled-out digital quiz
+        _logger.info(f"Printing filled-out digital quiz for teamID: {teamID}")
         await _currentPrinter.printQuiz(teamID)
-    elif not teamID and copyCount and isinstance(copyCount, int) and copyCount > 0 and lang and size: # printing empty paper quiz(zes)
+    elif not teamID and copyCount and isinstance(copyCount, int) and copyCount > 0 and lang and size:
+        # printing empty paper quiz(zes)
+        _logger.info(f"Printing {copyCount} empty paper quiz(zes) with language {lang} and size {size}")
         for _ in range(copyCount):
             teamID = utils.getNewTeamID(utils.QuizTypes.PAPER)
             await _currentPrinter.printQuiz(teamID, lang, size)
@@ -85,48 +105,44 @@ async def queuePrintHandler(request: web.Request):
 
 @router.post(_baseURL + "/nextPhase")
 async def nextPhaseHandler(request: web.Request):
-    print(f"API GET request incoming: admin/nextPhase")
+    _logger.info(f"API GET request incoming: nextPhase")
     data: dict[str, str] = await request.json()
-    currentPhase = utils.convertToQuizPhase(data.get("currentPhase"))
+    _logger.debug(f"NextPhase request data: {data}")
     nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=None) or None
-    if not currentPhase:
-        raise web.HTTPBadRequest(text=f"Value 'currentPhase' is invalid: {data.get('currentPhase', '<missing>')}")
-    if not nextPhaseChangeAt or nextPhaseChangeAt < datetime.datetime.now():
-        raise web.HTTPBadRequest(text=f"Value 'nextPhaseChangeAt' is invalid: {data.get('nextPhaseChangeAt', '<missing>')}")
-    if currentPhase != utils.QuizState.phase:
-        raise web.HTTPBadRequest(text=f"Value currentPhase is not the actual current phase: {currentPhase.value}")
     await utils.QuizState.updateState(nextPhase=utils.QuizState.getNextPhase(), nextPhaseChangeAt=nextPhaseChangeAt)
+    _logger.info(f"Updated quiz state from {utils.QuizState.phase} to {utils.QuizState.phase}, nextPhaseChangeAt: {nextPhaseChangeAt}")
     return web.HTTPOk()
 
 
 @router.post(_baseURL + "/setNextPhaseChangeAt")
 async def setNextPhaseChangeAtHandler(request: web.Request):
-    print(f"API GET request incoming: admin/setNextPhaseChangeAt")
+    _logger.info(f"API GET request incoming: setNextPhaseChangeAt")
     data: dict[str, str] = await request.json()
+    _logger.debug(f"setNextPhaseChangeAt request data: {data}")
     nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")) or None
-    if not nextPhaseChangeAt:
-        raise web.HTTPBadRequest(text=f"Value 'nextPhaseChangeAt' is invalid: {data.get('nextPhaseChangeAt', '<missing>')}")
     await utils.QuizState.updateState(nextPhaseChangeAt=nextPhaseChangeAt)
+    _logger.info(f"Updated nextPhaseChangeAt to: {nextPhaseChangeAt}")
     return web.HTTPOk()
 
 
-# websockets handler for incoming websocket connections at /api/admin/events
+# websockets handler for incoming websocket connections at /events
 @router.get(_baseURL + "/events")
 async def eventsHandler(request: web.Request):
-    print(f"API GET request incoming: events")
+    _logger.info(f"API GET request incoming: events")
+    clientIP = request.headers.get("X-Forwarded-For", request.remote)
+    clientPort = request.transport.get_extra_info("peername")[1] if request.transport else None
     ws = web.WebSocketResponse()
     await ws.prepare(request)
     wsUtils.adminCons.append(ws)
-    _logger.debug(f"New websocket client connected: {ws}\nTotal: {len(wsUtils.adminCons)}")
+    _logger.debug(f"New websocket client connected: {clientIP}:{clientPort}, total: {len(wsUtils.adminCons)}")
     try:
         async for msg in ws:
             if msg.type == web.WSMsgType.ERROR:
-                _logger.warning(f"WebSocket connection closed with error: {ws.exception()}")
-                print(f"WebSocket connection closed with error: {ws.exception()}")
+                _logger.info(f"WebSocket connection ({clientIP}:{clientPort}) closed with error: {ws.exception()}")
             elif msg.type == web.WSMsgType.TEXT:
-                # print("Received message on admin websocket.\nData is: " + str(msg.data))
                 try:
                     data = json.loads(msg.data)
+                    _logger.debug(f"Received websocket message: {data}")
                 except json.JSONDecodeError:
                     _logger.warning(f"WebSocket message is not a valid JSON object: {msg.data}")
                     continue
@@ -137,21 +153,24 @@ async def eventsHandler(request: web.Request):
                     _logger.warning(f"WebSocket message is missing 'data' field: {msg.data}")
                     continue
                 eventType = data["event"]
+                _logger.debug(f"Handling websocket event: {eventType}")
                 if eventType in wsUtils._adminMsgEventListeners:
                     for listener in wsUtils._adminMsgEventListeners[eventType]:
                         listener(data.get("data"))
     finally:
         wsUtils.adminCons.remove(ws)
-        _logger.debug(f"WebSocket client disconnected: {ws}\nTotal: {len(wsUtils.adminCons)}")
+        _logger.debug(f"Websocket client disconnected: {clientIP}:{clientPort}, total: {len(wsUtils.adminCons)}")
     return ws
 
 
 # ------- 404 Handlers -------
 @router.get(_baseURL + "/{fn}")
 async def GET_NotFound(request: web.Request) -> web.Response:
+    _logger.warning(f"API GET endpoint not found: {request.match_info.get('fn')}")
     raise web.HTTPNotFound(text=f"API GET endpoint '{request.match_info.get('fn')}' doesn't exist.")
 
 
 @router.post(_baseURL + "/{fn}")
 async def POST_NotFound(request: web.Request) -> web.Response:
+    _logger.warning(f"API POST endpoint not found: {request.match_info.get('fn')}")
     raise web.HTTPNotFound(text=f"API POST endpoint '{request.match_info.get('fn')}' doesn't exist.")

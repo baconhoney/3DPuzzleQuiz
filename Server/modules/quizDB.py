@@ -1,15 +1,14 @@
+import logging
+
+_logger = logging.getLogger(__name__)
+_logger.info(f"Importing {__name__}...")
+
+
 from os import makedirs
 from pathlib import Path
 import atexit
 import locale
-import logging
 import sqlite3
-
-
-__all__ = ["QuizDB"]
-
-_logger = logging.getLogger(__name__)
-_logger.info(f"Importing {__name__}...")
 
 
 _buildingsSQL = """
@@ -67,16 +66,18 @@ CREATE TABLE answers
 
 class QuizDB:
     def __init__(self, dataRoot: Path) -> None:
-        _logger.debug("Initializing QuizDB")
+        _logger.debug(f"Initializing QuizDB with dataRoot={dataRoot}")
         self._dataRoot = dataRoot
         if not self._dataRoot:
             raise ValueError("dataRoot is required")
         if not Path.exists(self._dataRoot):
+            _logger.info(f"Creating data root directory at {self._dataRoot}")
             makedirs(self._dataRoot)
 
         dbInitiatedFlagPath = self._dataRoot / "db_initiated"
 
         self._dbExisted = dbInitiatedFlagPath.exists()
+        _logger.debug(f"Database existed={self._dbExisted}")
         self.connection = sqlite3.connect(self._dataRoot / "quizData.sqlite")
         if not self.connection:
             raise RuntimeError("Database not found")
@@ -87,21 +88,26 @@ class QuizDB:
         if not self.cursor:
             raise RuntimeError("Database cursor cannot be created")
         if not self._dbExisted:
+            _logger.info("Creating fresh database tables")
             self._makeDBTable("buildings", _buildingsSQL)
             self._makeDBTable("quizzes", _quizzesSQL)
             self._makeDBTable("teams", _teamsSQL)
             self._makeDBTable("answers", _answersSQL)
             dbInitiatedFlagPath.touch()
+            _logger.info("Database initialization complete")
+        else:
+            _logger.info("Using existing database")
         atexit.register(lambda: self.connection.close())
 
     def _makeDBTable(self, tableName: str, tableSQL: str) -> None:
         try:
+            _logger.debug(f"Creating table {tableName}")
             self.cursor.execute(f"DROP TABLE IF EXISTS {tableName}")
             self.cursor.execute(tableSQL)
             res = self.cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{tableName}';").fetchone()
             if res and len(res) == 1 and res[0] == tableName:
-                print(f"Table '{tableName}' created successfully")
+                _logger.info(f"Table '{tableName}' created successfully")
             else:
-                print(f"Table '{tableName}' creation failed")
+                _logger.error(f"Table '{tableName}' creation failed")
         except Exception as e:
-            print(f"Table creation aborted: {e}")
+            _logger.error(f"Table creation aborted for '{tableName}': {e}")
