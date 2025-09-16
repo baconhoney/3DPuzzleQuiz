@@ -163,7 +163,9 @@ async def checkIfTeamExists(teamID: int) -> bool:
 
 async def getAllBuildingData() -> list[dict[str, str | int | None]]:
     _logger.debug("Fetching all building data")
-    colHeaders = ["id", "box", "answer", "type"] + [f"name_{lang.value}, location_{lang.value}" for lang in utils.QuizLanguages]
+    colHeaders = ["id", "box", "answer", "type"]
+    for lang in utils.QuizLanguages:
+        colHeaders.extend([f"name_{lang.value}", f"location_{lang.value}"])
     colsString = ", ".join(colHeaders)
     res = _quizDBcursor.execute(f"SELECT {colsString} FROM buildings ORDER BY id;").fetchall()
     _logger.debug(f"Fetched {len(res)} building entries")
