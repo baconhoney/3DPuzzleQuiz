@@ -134,10 +134,12 @@ class QuizState:
             _logger.debug(f"Updating currentQuizRound to {newQuizRound}")
             cls.currentQuizRound = newQuizRound
         # Signal the clients
-        if nextPhase or nextPhaseChangeAt:
-            event = nextPhase and ({QuizPhases.IDLE: "resultsReady", QuizPhases.RUNNING: "quizStarted", QuizPhases.SCORING: "quizEnded"}[nextPhase]) or "nextPhaseChangeAtChanged"
-            _logger.debug(f"Broadcasting event '{event}' to clients with nextPhaseChangeAt={cls.formatNextPhaseChangeAt()}")
-            await wsUtils.broadcastToClients(event, {"nextPhaseChangeAt": cls.formatNextPhaseChangeAt()})
+        if nextPhase: # or nextPhaseChangeAt:
+            event = nextPhase and ({QuizPhases.IDLE: "resultsReady", QuizPhases.RUNNING: "quizStarted", QuizPhases.SCORING: "quizEnded"}[nextPhase]) # or "nextPhaseChangeAtChanged"
+            # _logger.debug(f"Broadcasting event '{event}' to clients with nextPhaseChangeAt={cls.formatNextPhaseChangeAt()}")
+            # await wsUtils.broadcastToClients(event, {"nextPhaseChangeAt": cls.formatNextPhaseChangeAt()})
+            _logger.debug(f"Broadcasting event '{event}' to clients")
+            await wsUtils.broadcastToClients(event, {})
         if nextPhase or nextPhaseChangeAt or newQuizRound:
             _logger.debug("Broadcasting stateChanged to admins")
             await wsUtils.broadcastToAdmins("stateChanged", {})
