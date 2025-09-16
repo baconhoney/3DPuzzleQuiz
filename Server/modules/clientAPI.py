@@ -19,7 +19,8 @@ router = web.RouteTableDef()
 @router.get(_baseURL + "/getQuizPhase")
 async def getQuizPhaseHandler(request: web.Request):
     _logger.info(f"API GET request incoming: getQuizState")
-    return web.json_response({"phase": utils.QuizState.phase.value, "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt()})
+    # return web.json_response({"phase": utils.QuizState.phase.value, "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt()})
+    return web.json_response({"phase": utils.QuizState.phase.value})
 
 
 @router.get(_baseURL + "/getQuestions")
@@ -30,7 +31,7 @@ async def getQuestionsHandler(request: web.Request):
         _logger.debug(f"Fetched {len(questions)} questions for lang={request.query.get('lang')} size={request.query.get('size')}")
         return web.json_response(
             {
-                "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt(),
+                # "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt(),
                 "questions": questions,
             }
         )
@@ -50,7 +51,8 @@ async def uploadAnswersHandler(request: web.Request):
         _logger.debug(f"Uploaded answers for teamID={teamID}")
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
-    return web.json_response({"teamID": teamID, "codeword": codeword, "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt()})
+    # return web.json_response({"teamID": teamID, "codeword": codeword, "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt()})
+    return web.json_response({"teamID": teamID, "codeword": codeword})
 
 
 @router.get(_baseURL + "/getAnswers")
@@ -59,7 +61,8 @@ async def getAnswersHandler(request: web.Request):
     try:
         answers = await quizDBManager.getAnswers(request.query.get("teamID"))
         _logger.debug(f"Fetched {len(answers)} answers for teamID={request.query.get('teamID')}")
-        return web.json_response({"nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt(), "answers": answers})
+        # return web.json_response({"nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt(), "answers": answers})
+        return web.json_response({"answers": answers})
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
 

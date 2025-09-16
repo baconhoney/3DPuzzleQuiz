@@ -4,7 +4,6 @@ _logger = logging.getLogger(__name__)
 _logger.info(f"Importing {__name__}...")
 
 
-from aiohttp import web
 import datetime
 import utils
 import wsUtils
