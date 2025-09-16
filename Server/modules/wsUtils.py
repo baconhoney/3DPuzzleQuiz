@@ -21,7 +21,7 @@ async def broadcastToClients(eventType: str, data: dict[str, any]):
     """
     EventTypes: "quizStarted", "quizEnded", "resultsReady"
     """
-    if eventType not in ["quizStarted", "quizEnded", "resultsReady"]:
+    if eventType not in ["quizStarted", "quizEnded", "resultsReady", "nextPhaseChangeAtChanged"]:
         raise ValueError(f"Invalid event type: {eventType}")
     jsonStr = json.dumps({"event": eventType, "data": data}, ensure_ascii=False, separators=(",", ":"))
     _logger.debug(f"Broadcasting to clients: eventType={eventType}, numClients={len(clientCons)}, dataKeys={list(data.keys()) if isinstance(data, dict) else None}")

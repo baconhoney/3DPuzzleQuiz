@@ -66,7 +66,7 @@ from adminAPI import router as adminRouter
 
 async def callbackFn(value: str):
     logger.debug(f"Executing callbackFn with value: {value}")
-    if not value or not value.isdigit() or int(value) < utils.TeamIDLimits.PAPER_MIN or int(value) > utils.TeamIDLimits.PAPER_MAX:
+    if not value or not value.isdigit() or int(value) < utils.TeamIDLimits.PAPER_MIN.value or int(value) > utils.TeamIDLimits.PAPER_MAX.value:
         logger.info(f"Scanner input is not a valid teamID: {value}")
     try:
         if await quizDBManager.checkIfSubmittedAtIsPresent(int(value)):

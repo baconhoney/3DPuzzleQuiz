@@ -25,7 +25,7 @@ for i in range(num_teams):
     isDigital = random.random() < 0.75
     lang = random.choice(["en"] + ["hu"] * 3)
     name = f"Team {random.choice(['Hello', 'Alpha', 'Beta', 'Zeta', 'Rockets', 'Null', 'Testing', 'LongNameLoremIpsum'])} #{i+1}"
-    team_id = utils.getNewTeamID(isDigital and utils.QuizTypes.DIGITAL or utils.QuizTypes.PAPER)
+    team_id, codeword = utils.getNewTeamID(isDigital and utils.QuizTypes.DIGITAL or utils.QuizTypes.PAPER)
 
     q = []
     score = None

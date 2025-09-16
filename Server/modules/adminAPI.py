@@ -88,7 +88,7 @@ async def nextPhaseHandler(request: web.Request):
     nextPhase = utils.convertToQuizPhase(data.get("nextPhase"))
     if nextPhase != utils.QuizState.getNextPhase():
         raise web.HTTPBadRequest(text=f"Invalid nextPhase: {data.get('nextPhase', '<missing>')}, expected: {utils.QuizState.getNextPhase().value}")
-    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=None) or None
+    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=None, second=0, microsecond=0) or None
     if not nextPhaseChangeAt or nextPhaseChangeAt < utils.QuizState.nextPhaseChangeAt:
         raise web.HTTPBadRequest(text=f"Invalid nextPhaseChangeAt: {data.get('nextPhaseChangeAt', '<missing>')}, expected value later than {utils.QuizState.formatNextPhaseChangeAt()}")
     newQuizNumber = (utils.QuizState.phase == utils.QuizPhases.SCORING and nextPhase == utils.QuizPhases.IDLE and utils.QuizState.currentQuizRound + 1) or None
@@ -102,7 +102,7 @@ async def setNextPhaseChangeAtHandler(request: web.Request):
     _logger.info(f"API GET request incoming: setNextPhaseChangeAt")
     data: dict[str, str] = await request.json()
     _logger.debug(f"SetNextPhaseChangeAt request data: {data}")
-    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=None) or None
+    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=None, second=0, microsecond=0) or None
     if not nextPhaseChangeAt or nextPhaseChangeAt < utils.QuizState.nextPhaseChangeAt:
         raise web.HTTPBadRequest(text=f"Invalid nextPhaseChangeAt: {data.get('nextPhaseChangeAt', '<missing>')}, expected value later than {utils.QuizState.formatNextPhaseChangeAt()}")
     await utils.QuizState.updateState(nextPhaseChangeAt=nextPhaseChangeAt)
@@ -140,7 +140,7 @@ async def queuePrintHandler(request: web.Request):
         # printing empty paper quiz(zes)
         _logger.info(f"Printing {copyCount} empty paper quiz(zes) with language {lang} and size {size}")
         for _ in range(copyCount):
-            teamID = utils.getNewTeamID(utils.QuizTypes.PAPER)
+            teamID, _ = utils.getNewTeamID(utils.QuizTypes.PAPER)
             await _currentPrinter.printQuiz(teamID, lang, size)
             await quizDBManager.addEmptyTeamEntry(teamID, lang.value, size.value)
     return web.HTTPOk()

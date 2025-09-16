@@ -117,7 +117,7 @@ class QuizState:
     @classmethod
     def getNextPhase(cls) -> QuizPhases:
         next_phase = {QuizPhases.IDLE: QuizPhases.RUNNING, QuizPhases.RUNNING: QuizPhases.SCORING, QuizPhases.SCORING: QuizPhases.IDLE}[cls.phase]
-        _logger.debug(f"Current phase={cls.phase.value}, nextPhase={next_phase.value}")
+        _logger.debug(f"Getting next phase: current={cls.phase.value}, next={next_phase.value}")
         return next_phase
 
     @classmethod
@@ -267,7 +267,7 @@ def getNewTeamID(quizType: QuizTypes, lang: str = None, teamName: str = None):
         if not teamName:
             raise ValueError("Parameter teamName is required for digital quizzes")
         while True:
-            uuid = random.randint(TeamIDLimits.DIGITAL_MIN, TeamIDLimits.DIGITAL_MAX)
+            uuid = random.randint(TeamIDLimits.DIGITAL_MIN.value, TeamIDLimits.DIGITAL_MAX.value)
             codeword = random.choice(codewordParts[lang]["adjectives"]) + " " + random.choice(codewordParts[lang]["nouns"])
             count = quizDB.cursor.execute(
                 "SELECT count(id) FROM teams WHERE id=(?) OR (name=(?) AND codeword=(?));",
@@ -279,7 +279,7 @@ def getNewTeamID(quizType: QuizTypes, lang: str = None, teamName: str = None):
                 return (uuid, codeword)
     elif quizType == QuizTypes.PAPER:
         while True:
-            uuid = random.randint(TeamIDLimits.PAPER_MIN, TeamIDLimits.PAPER_MAX)
+            uuid = random.randint(TeamIDLimits.PAPER_MIN.value, TeamIDLimits.PAPER_MAX.value)
             count = quizDB.cursor.execute("SELECT count(id) FROM teams WHERE id=(?);", (uuid,)).fetchone()[0]
             _logger.debug(f"Trying uuid={uuid}, existingCount={count}")
             if count == 0:

@@ -155,7 +155,7 @@ async def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, st
 async def checkIfTeamExists(teamID: int) -> bool:
     _logger.debug(f"Checking if team exists for teamID={teamID}")
     if not teamID or not isinstance(teamID, int):
-        raise InvalidParameterError("TeamID missing or invalid")
+        raise InvalidParameterError(f"Invalid teamID parameter: '{teamID}' type {type(teamID)}")
     res = _quizDBcursor.execute("SELECT id FROM teams WHERE id = ?;", (teamID,)).fetchone()
     exists = bool(res and res[0] == teamID)
     _logger.debug(f"TeamID={teamID} exists={exists}")
