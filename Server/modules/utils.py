@@ -123,25 +123,21 @@ class QuizState:
     @classmethod
     async def updateState(cls, *, nextPhase: QuizPhases = None, nextPhaseChangeAt: datetime.datetime = None, newQuizRound: int = None):
         _logger.info(f"Updating state with nextPhase={nextPhase}, nextPhaseChangeAt={nextPhaseChangeAt}, newQuizRound={newQuizRound}")
-        # Validate incoming data
-        if nextPhase and nextPhase != cls.getNextPhase():
-            raise ValueError(f"Invalid phase change: {nextPhase.value} -> {cls.getNextPhase().value}")
-        if nextPhaseChangeAt and nextPhaseChangeAt < datetime.datetime.now():
-            raise ValueError(f"Invalid phase change: {nextPhaseChangeAt.isoformat(timespec='milliseconds')} -> {datetime.datetime.now().isoformat(timespec='milliseconds')}")
-        if newQuizRound and (not str(newQuizRound).isdigit() or newQuizRound < 1 or newQuizRound > 100):
-            raise ValueError(f"Invalid quiz round: {newQuizRound}")
-        # Make the requested change(s)
+        # Make the changes
         if nextPhase:
+            _logger.debug(f"Updating nextPhase to {nextPhase.value}")
             cls.phase = nextPhase
-            event = {QuizPhases.IDLE: "resultsReady", QuizPhases.RUNNING: "quizStarted", QuizPhases.SCORING: "quizEnded"}[nextPhase]
-            _logger.debug(f"Broadcasting event '{event}' to clients with nextPhaseChangeAt={cls.formatNextPhaseChangeAt()}")
-            await wsUtils.broadcastToClients(event, {"nextPhaseChangeAt": cls.formatNextPhaseChangeAt()})
         if nextPhaseChangeAt:
             _logger.debug(f"Updating nextPhaseChangeAt to {nextPhaseChangeAt.isoformat(timespec='milliseconds')}")
             cls.nextPhaseChangeAt = nextPhaseChangeAt
         if newQuizRound:
             _logger.debug(f"Updating currentQuizRound to {newQuizRound}")
             cls.currentQuizRound = newQuizRound
+        # Signal the clients
+        if nextPhase or nextPhaseChangeAt:
+            event = nextPhase and ({QuizPhases.IDLE: "resultsReady", QuizPhases.RUNNING: "quizStarted", QuizPhases.SCORING: "quizEnded"}[nextPhase]) or "nextPhaseChangeAtChanged"
+            _logger.debug(f"Broadcasting event '{event}' to clients with nextPhaseChangeAt={cls.formatNextPhaseChangeAt()}")
+            await wsUtils.broadcastToClients(event, {"nextPhaseChangeAt": cls.formatNextPhaseChangeAt()})
         if nextPhase or nextPhaseChangeAt or newQuizRound:
             _logger.debug("Broadcasting stateChanged to admins")
             await wsUtils.broadcastToAdmins("stateChanged", {})
