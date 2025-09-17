@@ -4,10 +4,13 @@ import i18n from "i18next";
 import ThemeToggle from "./ThemeToggle";
 
 const Register = () => {
-    const { changeLng, t, toQuiz, teamName, setTeamName } = useGlobalContext();
+    const { changeLng, t, toQuiz, setTeamName } = useGlobalContext();
     const [language, setLanguage] = useState(i18n.language);
     const [quizSize, setQuizSize] = useState(20);
     const [nameError, setNameError] = useState(false);
+
+    // ✅ local-only input state (does not touch localStorage/context until continue)
+    const [localName, setLocalName] = useState("");
 
     useEffect(() => {
         const onLangChanged = (lng) => setLanguage(lng);
@@ -19,18 +22,16 @@ const Register = () => {
 
     const isLanguageSelected = (lng) => (language === lng ? " btn-active" : "");
 
-    const handleInputChange = (e) => {
-        setTeamName(e.target.value);
-    };
-
     const handleButtonClick = (e) => {
         e.preventDefault();
-        if (teamName.trim() === "") {
+        if (localName.trim() === "") {
             setNameError(true);
             return;
         }
 
-        localStorage.setItem("teamName", teamName);
+        // ✅ Now store only when Continue is clicked
+        setTeamName(localName);
+        localStorage.setItem("teamName", localName);
         localStorage.setItem("quizSize", quizSize);
         localStorage.removeItem("teamID");
 
@@ -46,12 +47,14 @@ const Register = () => {
             <div className="flex flex-col items-center gap-2 mt-20">
                 <div className="flex items-center gap-2">
                     <button
+                        type="button"
                         className={"btn btn-info btn-outline" + isLanguageSelected("hu")}
                         onClick={() => changeLng("hu")}
                     >
                         🇭🇺 Magyar
                     </button>
                     <button
+                        type="button"
                         className={"btn btn-info btn-outline" + isLanguageSelected("en")}
                         onClick={() => changeLng("en")}
                     >
@@ -60,19 +63,16 @@ const Register = () => {
                 </div>
             </div>
 
-            <div
-                onSubmit={handleButtonClick}
-                className="flex flex-col items-center content-center gap-5 w-2/3"
-            >
+            <div className="flex flex-col items-center content-center gap-5 w-2/3">
                 <fieldset className="fieldset w-full max-w-sm">
                     <legend className="fieldset-legend">{t("team_name")}</legend>
                     <input
                         type="text"
                         className={"input w-full " + (nameError ? "input-error" : "")}
                         placeholder={t("type_here")}
-                        value={teamName}
+                        value={localName}
                         maxLength={200}
-                        onChange={handleInputChange}
+                        onChange={(e) => setLocalName(e.target.value)}
                     />
                     {nameError && (
                         <p className="label text-error">{t("team_name_required")}</p>
@@ -82,8 +82,12 @@ const Register = () => {
                     <div className="flex flex-row justify-between gap-2">
                         {quizSizes.map((type) => (
                             <button
+                                type="button"
                                 key={type}
-                                className={"btn btn-info btn-outline flex-1" + (type === quizSize ? " btn-active" : "")}
+                                className={
+                                    "btn btn-info btn-outline flex-1" +
+                                    (type === quizSize ? " btn-active" : "")
+                                }
                                 onClick={() => setQuizSize(type)}
                             >
                                 {type} {t("questions")}
@@ -93,8 +97,10 @@ const Register = () => {
                 </fieldset>
 
                 <button
+                    type="button"
                     onClick={handleButtonClick}
-                    className="btn btn-primary btn-wide">
+                    className="btn btn-primary btn-wide"
+                >
                     {t("continue")}
                 </button>
             </div>
