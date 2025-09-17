@@ -116,7 +116,7 @@
             }
 
             tr {
-                height: max(5.0vw, 30px);
+                height: max(min(calc(6vw + 5px), 55px), 30px);
                 position: relative;
             }
 

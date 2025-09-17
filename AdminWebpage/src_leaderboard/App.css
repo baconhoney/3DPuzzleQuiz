@@ -52,7 +52,7 @@ body,
     background-color: var(--backroundColor);
     color: var(--foregroundColor);
     width: 100vw;
-    height: 95vh;
+    height: calc(100vh - 30px);
     min-width: 360px;
     font-size: 14px;
 }
