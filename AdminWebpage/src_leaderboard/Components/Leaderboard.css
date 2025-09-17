@@ -2,7 +2,6 @@
     width: 100%;
     height: 100%;
     max-height: 100%;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -11,7 +10,7 @@
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
-        gap: 30px;
+        gap: 25px;
 
         margin-bottom: 5px;
 
@@ -42,18 +41,18 @@
         overflow-y: auto;
 
         table {
-            /* table is made so only the right and bottom cells have border to simulate collapsing, */
+            /* table is made so only the right and bottom borders exist to simulate collapsing, */
             /* this is needed for the stickied thead > ths */
             border-spacing: 0px;
             border-collapse: separate;
 
-            /* add background to all td */
             th {
                 position: sticky;
                 top: 0px;
                 z-index: 2;
             }
 
+            /* add background to all td */
             th,
             td {
                 background-color: var(--backroundColor);
@@ -111,7 +110,7 @@
             width: 100%;
             height: 100%;
 
-            
+
             * {
                 font-size: max(min(3.5vw, 36px), 12px);
             }
@@ -131,7 +130,6 @@
                 cursor: pointer;
                 overflow: hidden;
             }
-
 
             div.extra {
                 position: absolute;

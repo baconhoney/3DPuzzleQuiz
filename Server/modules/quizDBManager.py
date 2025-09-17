@@ -114,7 +114,7 @@ async def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, st
                 "name": str,
                 "location": str,
                 "answer": str,
-                "correct": bool
+                "correct": bool | None
             },
             ...
         ]
@@ -147,7 +147,7 @@ async def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, st
         "language": lang,
         "score": res["score"],
         "submittedAt": res["submitted_at"],
-        "questions": [{"id": entry[0], "name": entry[1], "location": entry[2], "answer": entry[3], "correct": bool(entry[4])} for entry in rawData],
+        "questions": [{"id": entry[0], "name": entry[1], "location": entry[2], "answer": entry[3], "correct": (bool(entry[4]) if entry[3] is not None else None )} for entry in rawData],
     }
 
 

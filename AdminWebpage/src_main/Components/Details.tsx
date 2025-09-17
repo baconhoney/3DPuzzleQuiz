@@ -6,8 +6,6 @@ import * as actions from "../Actions.ts";
 import { getDetailsData } from "../Testdata.ts";
 
 import "./Details.css";
-//import { addListener, removeListener } from "../websocketHandler.ts";
-
 
 interface Props {
     app: App;
@@ -20,7 +18,6 @@ interface State {
 
 export default class DetailsComponent extends Component<Props, State> {
     private inputRefs = new Map<number, HTMLInputElement | null>();
-    //private leaderboardUpdatedListener: number | null = null;
 
     constructor(props: Props) {
         super(props);
@@ -30,26 +27,29 @@ export default class DetailsComponent extends Component<Props, State> {
     }
 
     private updateState(newState: Partial<State>) {
+        console.log("updateState called", newState);
         this.setState({ ...this.state, ...newState });
-        //this.setState({details: newState.details});
     }
 
     componentDidMount() {
-        //this.leaderboardUpdatedListener = addListener("leaderboardUpdated", () => this.getQuizdata());
+        console.log("DetailsComponent mounted");
         this.getQuizdata();
     }
 
     componentWillUnmount() {
-        //removeListener(this.leaderboardUpdatedListener);
+        console.log("DetailsComponent will unmount");
     }
 
     componentDidUpdate(prevProps: Readonly<Props>): void {
         if (prevProps.teamID !== this.props.teamID) {
+            console.log("teamID changed from", prevProps.teamID, "to", this.props.teamID);
             this.getQuizdata();
         }
     }
 
     private getQuizdata() {
+        console.log("getQuizdata called for teamID:", this.props.teamID);
+        this.props.app.logsComponentRef.current?.addLog("debug", `getQuizdata called for team ${this.props.teamID}`);
         const convertFn = (json: JsonQuizDetails) => ({
             ...json,
             language: json.language as QuizLanguage,
@@ -59,24 +59,26 @@ export default class DetailsComponent extends Component<Props, State> {
             if (import.meta.env.MODE == "production") {
                 fetchData(`/api/admin/getQuizDetails?teamID=${this.props.teamID ?? 'null'}`, (data) => {
                     const res = convertFn(data as JsonQuizDetails);
-                    this.updateState({
-                        details: res,
-                    });
-                    //console.log("Received details:", res);
+                    this.updateState({ details: res });
+                    console.log("Received details:", res);
+                    this.props.app.logsComponentRef.current?.addLog("info", `Received quiz details for team ${this.props.teamID}`);
                 });
             } else {
-                // temp code for testing
                 const json = getDetailsData(this.props.teamID);
-                if (!json) throw new Error(`No details found for teamID ${this.props.teamID}`);
+                if (!json) {
+                    console.error(`No details found for teamID ${this.props.teamID}`);
+                    this.props.app.logsComponentRef.current?.addLog("error", `No quiz details found for team ${this.props.teamID}`);
+                    throw new Error(`No details found for teamID ${this.props.teamID}`);
+                }
                 const res = convertFn(json);
-                this.updateState({
-                    details: res,
-                });
+                this.updateState({ details: res });
+                console.log("Dev mode: loaded test data for team", this.props.teamID);
+                this.props.app.logsComponentRef.current?.addLog("debug", `Dev test data loaded for team ${this.props.teamID}`);
             }
         } else {
-            this.updateState({
-                details: undefined,
-            });
+            this.updateState({ details: undefined });
+            console.log("No teamID provided, details cleared");
+            this.props.app.logsComponentRef.current?.addLog("debug", "No teamID, cleared details");
         }
     }
 
@@ -87,15 +89,20 @@ export default class DetailsComponent extends Component<Props, State> {
                     <div className="teamname">
                         {this.props.teamID !== null && this.state.details !== undefined
                             ? (this.state.details.score !== null
-                                ? <span>{this.state.details.teamname}{
-                                    this.state.details.codeword
-                                        ? (("aeiouéáűőúüóí".includes(this.state.details.codeword[0]) ? ", az " : ", a ") + this.state.details.codeword)
-                                        : ""
-                                }</span>
-                                : <input id={this.props.teamID.toString() ?? "null"} value={this.state.details.teamname ?? ""}
-                                    onChange={
-                                        e => this.updateState({ details: { ...this.state.details!, teamname: e.target.value } })
+                                ? <span>
+                                    {this.state.details.codeword
+                                        ? (
+                                            this.state.details.teamname + (
+                                                this.state.details.language == "hu"
+                                                    ? ("aeiouéáűőúüóí".includes(this.state.details.codeword[0]) ? ", az " : ", a ")
+                                                    : ", the "
+                                            ) + this.state.details.codeword
+                                        )
+                                        : this.state.details.teamname
                                     }
+                                </span>
+                                : <input id={this.props.teamID.toString() ?? "null"} value={this.state.details.teamname ?? ""}
+                                    onChange={e => this.updateState({ details: { ...this.state.details!, teamname: e.target.value } })}
                                 />
                             )
                             : <span>Csapatnév</span>
@@ -104,24 +111,23 @@ export default class DetailsComponent extends Component<Props, State> {
                     <div className="button">
                         {this.props.teamID !== null && this.state.details !== undefined && this.state.details.submittedAt ? (
                             this.state.details.score !== null ? (
-                                // score present -> printable
                                 <button onClick={() => {
+                                    console.log("Print button clicked for team", this.props.teamID);
                                     this.props.app.promptConfirm(<h1>Biztosan kinyomtatja a kvízt?</h1>).then(
                                         () => actions.printQuiz(this.props.teamID!),
                                         () => { }
                                     )
                                 }}><img src="print_icon.svg" /></button>
                             ) : (
-                                // score present -> printable
                                 <button onClick={() => {
+                                    console.log("Save button clicked for team", this.props.teamID);
                                     if (this.state.details!.teamname == null) {
                                         this.props.app.showError(<h1>Csapatnév hiányzik</h1>);
                                     } else if (this.state.details!.questions.some(entry => entry.answer === null)) {
                                         this.props.app.showError(<>
                                             <h1>A következő válaszok hiányoznak:</h1>
                                             {this.state.details!.questions.map((entry, index) => entry.answer === null ? <p key={entry.id}>{index + 1}. válasz (id: {entry.id}) hiányzik</p> : "")}
-                                        </>
-                                        );
+                                        </>);
                                     } else {
                                         this.props.app.promptConfirm(<h1>Biztosan menti a kvízt?</h1>).then(
                                             () => {
@@ -179,7 +185,7 @@ export default class DetailsComponent extends Component<Props, State> {
                                                             onKeyUp={e => e.key == "Enter" && this.inputRefs.get(index + 1)?.select()}
                                                             onChange={(event) => {
                                                                 const val = event.target.value ? parseInt(event.target.value) : null;
-                                                                const newEntries = structuredClone(this.state.details!.questions); // deep-copy the whole array<objects>
+                                                                const newEntries = structuredClone(this.state.details!.questions);
                                                                 newEntries[index].answer = val;
                                                                 this.updateState({
                                                                     details: {
@@ -187,6 +193,7 @@ export default class DetailsComponent extends Component<Props, State> {
                                                                         questions: newEntries,
                                                                     }
                                                                 });
+                                                                console.log("Answer changed for question", question.id, "to", val);
                                                             }}
                                                         />
                                                     }

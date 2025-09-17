@@ -105,8 +105,8 @@ class QuizPhases(Enum):
 class QuizState:
     """Stores the state of the quiz."""
 
-    nextPhaseChangeAt: datetime.datetime = datetime.datetime.now()
-    currentQuizRound: int = 2
+    nextPhaseChangeAt: datetime.datetime = datetime.datetime.now().replace(tzinfo=None, minute=datetime.datetime.now().minute+1, second=0, microsecond=0)
+    currentQuizRound: int = 1
     phase: QuizPhases = QuizPhases.IDLE
 
     @classmethod

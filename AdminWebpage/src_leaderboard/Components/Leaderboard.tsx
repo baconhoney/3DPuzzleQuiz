@@ -16,7 +16,7 @@ interface Props {
 }
 
 interface State {
-    leaderboardItems: LeaderboardItems;
+    leaderboardItems: LeaderboardItems,
     sizeFilter: QuizSize | null,
     roundFilter: number | null,
 }
@@ -29,7 +29,7 @@ export default class LeaderboardComponent extends Component<Props, State> {
         this.state = {
             leaderboardItems: [],
             sizeFilter: null,
-            roundFilter: 1,
+            roundFilter: 0,
         };
     }
 

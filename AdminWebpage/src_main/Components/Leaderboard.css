@@ -11,10 +11,9 @@
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
-        gap: 30px;
+        gap: 25px;
 
-        margin-top: 5px;
-        margin-bottom: 5px;
+        margin: 5px;
 
         >div {
             display: flex;
@@ -49,13 +48,13 @@
             border-spacing: 0px;
             border-collapse: separate;
 
-            /* add background to all td */
             th {
                 position: sticky;
                 top: 0px;
                 z-index: 2;
             }
 
+            /* add background to all td */
             th,
             td {
                 background-color: var(--backroundColor);
@@ -143,8 +142,9 @@
                 position: absolute;
                 top: 3px;
                 left: 3px;
+                width: max-content;
+                z-index: 9999;
                 text-align: left;
-                z-index: 1;
                 padding: 5px;
                 background-color: var(--popupBGColor);
                 border: 3px outset var(--raisedBorderColor);

@@ -89,7 +89,7 @@ async def nextPhaseHandler(request: web.Request):
     if nextPhase != utils.QuizState.getNextPhase():
         raise web.HTTPBadRequest(text=f"Invalid nextPhase: {data.get('nextPhase', '<missing>')}, expected: {utils.QuizState.getNextPhase().value}")
     nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=None, second=0, microsecond=0) or None
-    if not nextPhaseChangeAt or nextPhaseChangeAt < utils.QuizState.nextPhaseChangeAt:
+    if not nextPhaseChangeAt:
         raise web.HTTPBadRequest(text=f"Invalid nextPhaseChangeAt: {data.get('nextPhaseChangeAt', '<missing>')}, expected value later than {utils.QuizState.formatNextPhaseChangeAt()}")
     newQuizNumber = (utils.QuizState.phase == utils.QuizPhases.SCORING and nextPhase == utils.QuizPhases.IDLE and utils.QuizState.currentQuizRound + 1) or None
     await utils.QuizState.updateState(nextPhase=utils.QuizState.getNextPhase(), nextPhaseChangeAt=nextPhaseChangeAt, newQuizRound=newQuizNumber)
@@ -103,7 +103,7 @@ async def setNextPhaseChangeAtHandler(request: web.Request):
     data: dict[str, str] = await request.json()
     _logger.debug(f"SetNextPhaseChangeAt request data: {data}")
     nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=None, second=0, microsecond=0) or None
-    if not nextPhaseChangeAt or nextPhaseChangeAt < utils.QuizState.nextPhaseChangeAt:
+    if not nextPhaseChangeAt:
         raise web.HTTPBadRequest(text=f"Invalid nextPhaseChangeAt: {data.get('nextPhaseChangeAt', '<missing>')}, expected value later than {utils.QuizState.formatNextPhaseChangeAt()}")
     await utils.QuizState.updateState(nextPhaseChangeAt=nextPhaseChangeAt)
     _logger.info(f"Updated nextPhaseChangeAt to: {utils.QuizState.formatNextPhaseChangeAt()}")
@@ -115,7 +115,7 @@ async def setQuizRoundHandler(request: web.Request):
     _logger.info(f"API GET request incoming: setQuizRound")
     data: dict[str, str] = await request.json()
     _logger.debug(f"setQuizRound request data: {data}")
-    newQuizRound = data.get("newQuizRound") and data.get("newQuizRound").isdigit() and int(data.get("newQuizRound")) or None
+    newQuizRound = isinstance(data.get("newQuizRound"), int) and data.get("newQuizRound") or None
     if not newQuizRound or not (0 < newQuizRound < 100):
         raise web.HTTPBadRequest(text=f"Invalid newQuizRound: {data.get('newQuizRound', '<missing>')}, expected value between 1 and 99")
     await utils.QuizState.updateState(newQuizRound=newQuizRound)
