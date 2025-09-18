@@ -37,7 +37,11 @@ import pathlib
 import threading
 
 # make new event loop and set it as default
-asyncio.set_event_loop(asyncio.new_event_loop())
+eventLoop = asyncio.new_event_loop()
+asyncio.set_event_loop(eventLoop)
+eventLoop.run_until_complete(asyncio.sleep(0))
+logger.debug("New event loop created and set as default")
+
 
 # add local modules to pythonpath (each top level file needs this)
 sys.path.insert(1, str(pathlib.Path("./modules").resolve()))
@@ -82,12 +86,12 @@ async def callbackFn(value: str):
 async def startScannerListener(_: web.Application):
     logger.info("Starting scanner listener...")
     stopEvent = threading.Event()
-    scannerTask = asyncio.create_task(Scanner(callbackFn, asyncio.get_event_loop()).run_forever(stopEvent))
+    scannerTask = asyncio.create_task(Scanner(callbackFn, eventLoop).run_forever(stopEvent))
     logger.info("Scanner listener started")
     yield
     logger.info("Stopping scanner listener...")
     stopEvent.set()
-    asyncio.get_event_loop().stop()
+    eventLoop.stop()
     await scannerTask
     logger.info("Scanner listener stopped")
 
@@ -104,8 +108,7 @@ def main():
     # fileserver has to be the very last, so API requests are not refused with 404
     app.add_routes(fileServerRouter)
     logger.debug("FileServer router added")
-    web.run_app(app, port=port, loop=asyncio.get_event_loop())
-    logger.info(f"Web application running on port {port}")
+    web.run_app(app, port=port, loop=eventLoop)
 
 
 # ------- Entrypoint -------

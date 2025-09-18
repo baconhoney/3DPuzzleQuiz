@@ -5,6 +5,7 @@ _logger.info(f"Importing {__name__}...")
 
 
 from aiohttp import web
+from pdfGenerator import generatePDF
 import json
 import quizDBManager
 import utils
@@ -63,6 +64,19 @@ async def getAnswersHandler(request: web.Request):
         _logger.debug(f"Fetched {len(answers)} answers for teamID={request.query.get('teamID')}")
         # return web.json_response({"nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt(), "answers": answers})
         return web.json_response({"answers": answers})
+    except quizDBManager.InvalidParameterError as e:
+        raise web.HTTPBadRequest(text=str(e))
+
+
+@router.get(_baseURL + "/getPDF")
+async def getPDFHandler(request: web.Request):
+    _logger.info(f"API GET request incoming: getPDF")
+    try:
+        _logger.debug(f"Generating PDF for teamID={request.query.get('teamID')}")
+        teamID = request.query.get("teamID") and str(request.query.get("teamID")).isdigit() and int(request.query.get("teamID")) or None
+        pdfPath = await generatePDF(teamID)
+        _logger.debug(f"Generated PDF for teamID={teamID}")
+        return web.FileResponse(pdfPath)
     except quizDBManager.InvalidParameterError as e:
         raise web.HTTPBadRequest(text=str(e))
 

@@ -5,17 +5,14 @@ _logger.info(f"Importing {__name__}...")
 
 
 from aiohttp import web
+from pdfGenerator import generatePDF
 import asyncio
 import datetime
 import json
-import printer
 import quizDBManager
 import utils
 import wsUtils
 
-
-_currentPrinter = printer.Printer()
-asyncio.run_coroutine_threadsafe(_currentPrinter.realInit(), asyncio.get_event_loop())
 
 router = web.RouteTableDef()
 
@@ -135,13 +132,13 @@ async def queuePrintHandler(request: web.Request):
     if teamID and not copyCount and not lang and not size:
         # printing filled-out digital quiz
         _logger.info(f"Printing filled-out digital quiz for teamID: {teamID}")
-        await _currentPrinter.printQuiz(teamID)
+        await generatePDF(teamID)
     elif not teamID and copyCount and isinstance(copyCount, int) and copyCount > 0 and lang and size:
         # printing empty paper quiz(zes)
         _logger.info(f"Printing {copyCount} empty paper quiz(zes) with language {lang} and size {size}")
         for _ in range(copyCount):
             teamID, _ = utils.getNewTeamID(utils.QuizTypes.PAPER)
-            await _currentPrinter.printQuiz(teamID, lang, size)
+            await generatePDF(teamID, lang, size)
             await quizDBManager.addEmptyTeamEntry(teamID, lang.value, size.value)
     return web.HTTPOk()
 
