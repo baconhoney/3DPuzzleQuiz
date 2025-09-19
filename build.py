@@ -75,6 +75,7 @@ if build_server:
     # Copy main.py and manageQuizdata.py
     shutil.copy(server_root / "main.py", build_root)
     shutil.copy(server_root / "manageQuizdata.py", build_root)
+    shutil.copy(server_root / "generateTestdata.py", build_root)
     # Copy only .py files in modules (non-recursive)
     for file in (server_root / "modules").glob("*.py"):
         shutil.copy(file, build_root / "modules" / file.name)
