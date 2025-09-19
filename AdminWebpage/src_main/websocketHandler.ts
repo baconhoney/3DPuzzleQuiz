@@ -1,10 +1,12 @@
 import { ArrayQueue, ConstantBackoff, Websocket, WebsocketBuilder, WebsocketEvent } from "websocket-ts";
 
+
 declare global {
     function sendLeaderboardUpdated(data: unknown): void;
     function sendStateChanged(data: unknown): void;
     function sendShowQuiz(data: number): void;
 }
+
 
 type eventType = "leaderboardUpdated" | "stateChanged" | "showQuiz";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -8,6 +8,7 @@
  * @returns ISO timestring
  */
 export function getISOStringFromDate(date: Date) {
+    console.log("getISOStringFromDate called with date:", date);
     const f = (n: number) => (n > 9 ? "" : "0") + n;
     const y = date.getFullYear();
     const m = f(date.getMonth() + 1);
@@ -15,7 +16,9 @@ export function getISOStringFromDate(date: Date) {
     const hour = f(date.getHours());
     const min = f(date.getMinutes());
     const sec = f(date.getSeconds());
-    return `${y}-${m}-${d}T${hour}:${min}:${sec}`;
+    const isoString = `${y}-${m}-${d}T${hour}:${min}:${sec}`;
+    console.log("ISO string generated:", isoString);
+    return isoString;
 }
 
 /**
@@ -24,11 +27,14 @@ export function getISOStringFromDate(date: Date) {
  * @returns string - The formatted time as HH:MM:SS
  */
 export function getTimeFromDate(date: Date) {
-    const f = (n: number) => (n > 9 ? "" : "0") + n;
+    console.log("getTimeFromDate called with date:", date);
     const hh = date.getHours();
     const mm = date.getMinutes();
     const ss = date.getSeconds();
-    return f(hh) + ":" + f(mm) + ":" + f(ss);
+    const timeString = (n: number) => (n > 9 ? "" : "0") + n;
+    const formatted = timeString(hh) + ":" + timeString(mm) + ":" + timeString(ss);
+    console.log("Time formatted to HH:MM:SS:", formatted);
+    return formatted;
 }
 
 /**
@@ -37,10 +43,13 @@ export function getTimeFromDate(date: Date) {
  * @returns string - The formatted time as HH:MM
  */
 export function getHHMMFromDate(date: Date) {
-    const f = (n: number) => (n > 9 ? "" : "0") + n;
+    console.log("getHHMMFromDate called with date:", date);
     const hh = date.getHours();
     const mm = date.getMinutes();
-    return f(hh) + ":" + f(mm);
+    const timeString = (n: number) => (n > 9 ? "" : "0") + n;
+    const formatted = timeString(hh) + ":" + timeString(mm);
+    console.log("Time formatted to HH:MM:", formatted);
+    return formatted;
 }
 
 /**
@@ -50,17 +59,26 @@ export function getHHMMFromDate(date: Date) {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function fetchData(url: string, callback: (data: any) => void) {
+    console.log("fetchData called for URL:", url);
     void fetch(url).then((response) => {
+        console.log("Fetch response received for URL:", url, response.status);
         if (response.status === 200) {
-            response.json().then((json: unknown) => {
-                callback(json);
-            }, (error: string) => console.error(`Failed to parse JSON from ${url}: ${error}`));
+            response.json().then(
+                (json: unknown) => {
+                    console.log("JSON parsed successfully for URL:", url);
+                    callback(json);
+                },
+                (error: string) => {
+                    console.error("JSON parse failed for URL:", url, error);
+                }
+            );
         } else {
-            console.error(`Failed to fetch data from ${url}: ${response.status} ${response.statusText}`);
+            console.error("Fetch failed for URL:", url, response.status);
         }
-    });
+    },
+        (error: string) => console.error("Fetch failed for URL:", url, error)
+    );
 }
-
 
 /* ------------------------------- */
 /* ----- TYPES and CONSTANTS ----- */
@@ -71,7 +89,6 @@ export const QuizSizes = [20, 100] as const;
 export type QuizSize = typeof QuizSizes[number];
 export const QuizPhases = { "idle": "Készenlét", "running": "Fut", "scoring": "Pontozás" } as const;
 export type QuizPhase = keyof typeof QuizPhases;
-
 
 export type QuizDetailQuestion = {
     id: number,
@@ -126,4 +143,3 @@ export type JsonLeaderboardItems = {
     score: number | null,
     submittedAt: string | null,
 }[]
-
