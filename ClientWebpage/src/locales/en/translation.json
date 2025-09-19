@@ -15,7 +15,7 @@
     "waiting_for_quiz": "The quiz has not started yet, please wait. Do not refresh the page!",
     "waiting_for_results": "The quiz results are not yet available, please wait. Do not refresh the page!",
     "waiting_error": "An unknown error occurred, please try again later.",
-    "want_to_play_late": "Are you sure you want to start the game? Less than 10 minutes are left in the quiz.",
+    "want_to_play_late": "Are you sure you want to start the game? If you start, you won't be able to see your previous result.",
     "want_to_play_yes": "Start quiz",
     "want_to_play_no": "Maybe later",
     "questions": "questions",

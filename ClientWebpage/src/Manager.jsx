@@ -250,7 +250,9 @@ const Manager = () => {
             // if ((minutesRemaining <= 10 && wantToPlay === "NA") && minutesRemaining > 0) {
             //     return <WantToStart setWantToPlay={setWantToPlay} />;
             // }
-
+            if (localStorage.getItem("teamID") !== null && wantToPlay === "NA") {
+                return <WantToStart setWantToPlay={setWantToPlay} />;
+            }
 
             return <Quiz data={quizData} setWantToPlay={setWantToPlay} />;
         }

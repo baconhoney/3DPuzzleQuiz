@@ -15,7 +15,7 @@
     "waiting_for_quiz": "A kvíz még nem indult el, kérjük várj. Ne frissítsd az oldalt!",
     "waiting_for_results": "A kvíz eredményei még nem állnak rendelkezésre, kérjük várj. Ne frissítsd az oldalt!",
     "waiting_error": "Ismeretlen hiba történt, kérjük próbáld újra később.",
-    "want_to_play_late": "Biztosan el szeretnéd kezdeni a játékot? Már kevesebb mint 10 perc van hátra a kvízből.",
+    "want_to_play": "Biztosan el szeretnéd kezdeni a játékot? Ha elkezded, nem tudod megnézni az előző eredményedet.",
     "want_to_play_yes": "Kvíz indítása",
     "want_to_play_no": "Majd később",
     "questions": "kérdés",
