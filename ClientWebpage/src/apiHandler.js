@@ -77,3 +77,16 @@ export async function getAnswers(teamID) {
     }
     return response.json()
 }
+
+export async function downloadResults(teamID) {
+    const response = await fetch(
+        `${DOMAIN}/api/client/getPDF?teamID=${teamID}`,
+        {
+            method: "GET",
+        }
+    )
+    if (!response.ok) {
+        throw new Error("Failed to download results")
+    }
+    return response.blob()
+}
