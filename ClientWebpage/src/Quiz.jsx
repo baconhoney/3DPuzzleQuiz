@@ -181,7 +181,7 @@ const Quiz = ({ data, setWantToPlay }) => {
                             onClick={sendQuiz}
                             disabled={loading}
                         >
-                            {loading ? '' : t("continue")}
+                            {loading ? '' : t("submit")}
                         </button>
                     </form>
                 </div>
