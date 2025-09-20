@@ -1,5 +1,13 @@
+import dotenv
 import logging
+import os
+import pathlib
 import sys
+
+
+specsFile = pathlib.Path("./server_specifics.env").resolve()
+if specsFile.exists():
+    dotenv.load_dotenv(str(specsFile))
 
 # set up logging before importing modules, so they can log
 logger = logging.getLogger(__name__)
@@ -9,12 +17,15 @@ logging.basicConfig(
     format="%(asctime)s %(name)-20s %(levelname)-7s> %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
-logger.setLevel(logging.DEBUG)
+
+# get logging level from environment
+loggingLevel = os.getenv("LOGGING_LEVEL", "DEBUG")
+
+# set level of logging for main module
+logger.setLevel(loggingLevel)
 logger.info("Logging configured for main module, started logging")
 
 # set level of logging for each module
-loggingLevel = logging.DEBUG
-
 logging.getLogger("quizDB").setLevel(loggingLevel)
 logging.getLogger("quizDBManager").setLevel(loggingLevel)
 logging.getLogger("utils").setLevel(loggingLevel)
@@ -31,10 +42,8 @@ logger.debug("Logging configured for all modules")
 
 from aiohttp import web
 import asyncio
-import dotenv
-import os
-import pathlib
 import threading
+
 
 # make new event loop and set it as default
 eventLoop = asyncio.new_event_loop()
@@ -49,11 +58,6 @@ os.environ["QUIZSERVER_ROOT"] = str(pathlib.Path(__file__).parent.resolve().as_p
 
 # dotenv can be loaded because we explicitly set the 'ROOT' path before calling load_dotenv()
 dotenv.load_dotenv()
-specsFile = pathlib.Path("./server_specifics.env").resolve()
-if specsFile.exists():
-    dotenv.load_dotenv(str(specsFile))
-
-port = int(os.getenv("QUIZSERVER_PORT", 80))
 
 
 #################### START OF MAIN ####################
@@ -108,6 +112,7 @@ def main():
     # fileserver has to be the very last, so API requests are not refused with 404
     app.add_routes(fileServerRouter)
     logger.debug("FileServer router added")
+    port = int(os.getenv("QUIZSERVER_PORT", 80))
     web.run_app(app, port=port, loop=eventLoop)
 
 

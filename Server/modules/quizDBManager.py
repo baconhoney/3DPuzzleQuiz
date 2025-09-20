@@ -64,13 +64,13 @@ async def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | 
     }
 
 
-async def getLeaderboard(*, size: str = None, quizRound: str = None) -> list[dict[str, str | int]]:
+async def getLeaderboard(*, size: str | None = None, quizRound: str | None = None) -> list[dict[str, str | int]]:
     _logger.debug(f"getLeaderboard called with size={size}, quizRound={quizRound}")
     if size and not utils.convertToQuizSize(size):
         raise InvalidParameterError(f"Invalid size parameter: '{size}' type {type(size)}")
     if quizRound and not (quizRound.isdigit() and int(quizRound) >= 0):
         raise InvalidParameterError(f"Invalid quizRound parameter: '{quizRound}' type {type(quizRound)}")
-    quizRound = int(quizRound) if quizRound else None
+    qRound = int(quizRound) if quizRound else None
     cols = {
         "id": "teamID",
         "name": "teamname",
@@ -81,8 +81,8 @@ async def getLeaderboard(*, size: str = None, quizRound: str = None) -> list[dic
         "submitted_at": "submittedAt",
     }
     conditions = []
-    if quizRound is not None:
-        current_round = utils.QuizState.currentQuizRound if quizRound == 0 else quizRound
+    if qRound is not None:
+        current_round = utils.QuizState.currentQuizRound if qRound == 0 else qRound
         conditions.append(f"quiz_round = {current_round}")
     if size:
         conditions.append(f"quiz_size = {size}")
@@ -92,35 +92,11 @@ async def getLeaderboard(*, size: str = None, quizRound: str = None) -> list[dic
             {('WHERE ' + ' AND '.join(conditions)) if conditions else ''} 
             ORDER BY score DESC NULLS LAST, submitted_at ASC NULLS LAST;"""
     ).fetchall()
-    _logger.debug(f"Data for size={size}, quizRound={quizRound}: {res}")
+    _logger.debug(f"Data for size={size}, quizRound={qRound}: {res}")
     return [dict(zip(cols.values(), entry)) for entry in res]
 
 
-async def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]:
-    """
-    Admin-side
-
-    Returns
-    ```
-    {
-        "teamname": str,
-        "codeword": str,
-        "language": str,
-        "score": int,
-        "submittedAt": str,
-        "questions": [
-            {
-                "id": int,
-                "name": str,
-                "location": str,
-                "answer": str,
-                "correct": bool | None
-            },
-            ...
-        ]
-    }
-    ```
-    """
+async def getQuizDetails(teamID: int):
     _logger.debug(f"getQuizDetails called with teamID={teamID}")
     if not teamID:
         raise InvalidParameterError(f"Missing teamID parameter")
@@ -147,7 +123,7 @@ async def getQuizDetails(teamID: int) -> dict[str, str | int | list[dict[str, st
         "language": lang,
         "score": res["score"],
         "submittedAt": res["submitted_at"],
-        "questions": [{"id": entry[0], "name": entry[1], "location": entry[2], "answer": entry[3], "correct": (bool(entry[4]) if entry[3] is not None else None )} for entry in rawData],
+        "questions": [{"id": entry[0], "name": entry[1], "location": entry[2], "answer": entry[3], "correct": (bool(entry[4]) if entry[3] is not None else None)} for entry in rawData],
     }
 
 
@@ -158,6 +134,18 @@ async def checkIfTeamExists(teamID: int) -> bool:
     res = _quizDBcursor.execute("SELECT id FROM teams WHERE id = ?;", (teamID,)).fetchone()
     exists = bool(res and res[0] == teamID)
     _logger.debug(f"TeamID={teamID} exists={exists}")
+    return exists
+
+
+async def checkIfSubmittedAtIsPresent(teamID: int) -> bool:
+    _logger.debug(f"Checking if submitted_at is present for teamID={teamID}")
+    if not teamID:
+        raise InvalidParameterError(f"Invalid teamID: {teamID}")
+    res: list[int | str | None] = _quizDBcursor.execute("SELECT id, submitted_at FROM teams WHERE id = (?);", (teamID,)).fetchone()
+    if not res or not res[0] == teamID:
+        raise InvalidParameterError(f"Team with ID {teamID} not found")
+    exists = bool(res[1])
+    _logger.debug(f"TeamID={teamID} submittedAt={exists}")
     return exists
 
 
@@ -194,7 +182,6 @@ async def addEmptyTeamEntry(teamID: int, lang: str, size: int):
 
 
 async def updateSubmittedAt(teamID: int):
-    """internal"""
     _logger.debug(f"Updating submitted_at for teamID={teamID}")
     if not teamID or teamID >= int(5e9):
         raise InvalidParameterError(f"Invalid teamID for paper-quiz: {teamID or '<missing>'}")
@@ -205,7 +192,9 @@ async def updateSubmittedAt(teamID: int):
     await wsUtils.broadcastToAdmins("leaderboardUpdated", {})
 
 
-async def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = None, codeword: str = None, lang: str = None, answers: list[dict[str, int]] = None):
+async def uploadAnswers(
+    mode: str | None = None, *, teamID: int | None = None, name: str | None = None, codeword: str | None = None, lang: str | None = None, answers: list[dict[str, int]] | None = None
+):
     """mode = `paper-uploadAnswers` or `digital-uploadFull` client+admin side"""
     _logger.debug(f"Uploading answers in mode={mode} for teamID={teamID}: name={name}, codeword={codeword}, lang={lang}, len(answers)={len(answers) if answers else None}")
     if mode not in {"paper-uploadAnswers", "digital-uploadFull"}:
@@ -257,4 +246,4 @@ async def uploadAnswers(mode: str = None, *, teamID: int = None, name: str = Non
         _logger.info(f"Team {teamID} successfully uploaded answers in mode={mode}: name={name}, codeword={codeword}, lang={lang}, score={score}, answers={len(answers)}")
         await wsUtils.broadcastToAdmins("leaderboardUpdated", {})
     else:
-        raise InvalidParameterError(f"Invalid parameters: teamID={teamID}, name={name}, codeword={codeword}, lang={lang}, len of answers={len(answers)}; all are required")
+        raise InvalidParameterError(f"Invalid parameters: teamID={teamID}, name={name}, codeword={codeword}, lang={lang}, len of answers={answers and len(answers) or 'None'}; all are required")
