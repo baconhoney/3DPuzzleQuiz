@@ -28,6 +28,8 @@ async def getQuizPhaseHandler(request: web.Request):
 @router.get(_baseURL + "/getQuestions")
 async def getQuestionsHandler(request: web.Request):
     _logger.info(f"API GET request incoming: getQuestions")
+    if utils.QuizState.phase != utils.QuizPhases.RUNNING:
+        raise web.HTTPForbidden(reason="Getting questions is only available in phase RUNNING")
     try:
         questions = await quizDBManager.getQuestions(request.query.get("lang"), request.query.get("size"))
         _logger.debug(f"Fetched {len(questions)} questions for lang={request.query.get('lang')} size={request.query.get('size')}")
@@ -44,6 +46,8 @@ async def getQuestionsHandler(request: web.Request):
 @router.post(_baseURL + "/uploadAnswers")
 async def uploadAnswersHandler(request: web.Request):
     _logger.info("API POST request incoming: uploadAnswers")
+    if utils.QuizState.phase != utils.QuizPhases.RUNNING:
+        raise web.HTTPForbidden(reason="Uploading answers is only available in phase RUNNING")
     data: dict[str, Any] = await request.json()
     _logger.debug(f"Received data: {data}")
     teamID, codeword = utils.getNewTeamID(utils.QuizTypes.DIGITAL, lang=data.get("lang"), teamName=data.get("name"))
@@ -60,6 +64,8 @@ async def uploadAnswersHandler(request: web.Request):
 @router.get(_baseURL + "/getAnswers")
 async def getAnswersHandler(request: web.Request):
     _logger.info(f"API GET request incoming: getAnswers")
+    if utils.QuizState.phase != utils.QuizPhases.IDLE:
+        raise web.HTTPForbidden(reason="Getting answers is only available in phase IDLE")
     try:
         answers = await quizDBManager.getAnswers(request.query.get("teamID"))
         _logger.debug(f"Fetched {len(answers)} answers for teamID={request.query.get('teamID')}")
@@ -72,6 +78,8 @@ async def getAnswersHandler(request: web.Request):
 @router.get(_baseURL + "/getPDF")
 async def getPDFHandler(request: web.Request):
     _logger.info(f"API GET request incoming: getPDF")
+    if utils.QuizState.phase != utils.QuizPhases.IDLE:
+        raise web.HTTPForbidden(reason="Getting PDF is only available in phase IDLE")
     try:
         _logger.debug(f"Generating PDF for teamID={request.query.get('teamID')}")
         teamID = request.query.get("teamID") and str(request.query.get("teamID")).isdigit() and int(request.query.get("teamID", "")) or None
