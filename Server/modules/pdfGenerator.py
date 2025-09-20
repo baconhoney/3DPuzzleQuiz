@@ -22,9 +22,11 @@ import quizDBManager
 import sys
 import utils
 
+
 def launchCallback(result: asyncio.Future):
     global _browser
     _browser = result.result()
+
 
 _locals = utils.Localisation()
 _logger.debug("Localisation initialized.")
@@ -34,7 +36,8 @@ _logger.info("Browser launch complete and atexit handler registered.")
 
 pdfPath = pathlib.Path("./temp.pdf").resolve()
 
-async def generatePDF(teamID: int, lang: utils.QuizLanguages = None, size: utils.QuizSizes = None) -> pathlib.Path:
+
+async def generatePDF(teamID: int | None, lang: utils.QuizLanguages | None = None, size: utils.QuizSizes | None = None) -> pathlib.Path:
     if await quizDBManager.checkIfTeamExists(teamID):
         _logger.debug(f"Generating filled-out digital quiz for team {teamID} with lang '{lang}' and size '{size}' (should be None)")
         if lang or size:
@@ -62,7 +65,9 @@ async def generatePDF(teamID: int, lang: utils.QuizLanguages = None, size: utils
             "questions": [{**row, "answer": "", "correct": ""} for row in questions_list],
         }
 
-    _locals.setlang(utils.convertToQuizLanguage(details["language"]))
+    lang = utils.convertToQuizLanguage(details["language"])
+    if not lang: raise RuntimeError(f"Invalid language: {details['language']}")
+    _locals.setlang(lang)
     _logger.debug(f"Language set for localisation: {details['language']}")
     questions = details["questions"]
     n = math.ceil(len(questions) / 25)
@@ -92,7 +97,7 @@ async def generatePDF(teamID: int, lang: utils.QuizLanguages = None, size: utils
     _logger.debug("Browser page created.")
     await page.setContent(html)
     _logger.debug("HTML content set in browser page.")
-    timeout = 10 # seconds
+    timeout = 10  # seconds
     while pdfPath.exists() and pdfPath.is_file():
         _logger.warning(f"PDF file already exists, waiting for {timeout} second(s) for removal...")
         timeout -= 1

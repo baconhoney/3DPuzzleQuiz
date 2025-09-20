@@ -15,7 +15,7 @@ import quizDB
 cwd = pathlib.Path(__file__).parent.resolve()
 DBRoot = cwd / "data"
 masterRoot = cwd / "masterdata"
-quizDB = quizDB.QuizDB(DBRoot)
+database = quizDB.QuizDB(DBRoot)
 
 
 txtHeaders = {
@@ -40,19 +40,19 @@ def JSON_to_DB():
     quizData = rawQuizData.get("entries")
     if not quizData:
         raise ValueError(f"Failed to load masterList.json: {rawQuizData}")
-    quizDB.cursor.execute("DELETE FROM buildings;")
-    quizDB.cursor.executemany(
+    database.cursor.execute("DELETE FROM buildings;")
+    database.cursor.executemany(
         f"INSERT INTO buildings ({', '.join(jsonHeaders)}) \
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
         [tuple(entry[k] for k in jsonHeaders) for entry in quizData],
     )
-    quizDB.connection.commit()
-    print(f"Loaded {quizDB.cursor.rowcount} entries into the database")
+    database.connection.commit()
+    print(f"Loaded {database.cursor.rowcount} entries into the database")
 
 
 def DB_to_JSON():
-    quizDB.cursor.execute(f"SELECT {', '.join(jsonHeaders)} FROM buildings ORDER BY name_hu;")
-    data = [dict(zip(jsonHeaders, row)) for row in quizDB.cursor.fetchall()]
+    database.cursor.execute(f"SELECT {', '.join(jsonHeaders)} FROM buildings ORDER BY name_hu;")
+    data = [dict(zip(jsonHeaders, row)) for row in database.cursor.fetchall()]
     jsonData = {"lastEdited": datetime.datetime.now().isoformat(timespec="milliseconds"), "entries": data}
     with open(masterRoot / "masterList.json", "w", encoding="utf-8") as f:
         json.dump(jsonData, f, indent=4, ensure_ascii=False)
@@ -61,12 +61,12 @@ def DB_to_JSON():
 
 def DB_to_XLSX():
     def getBuildingsDataSortedBy(order: str) -> list[dict[str, str | int | None]]:
-        return [dict(zip(jsonHeaders, row)) for row in quizDB.cursor.execute(f"SELECT {','.join(jsonHeaders)} FROM buildings ORDER BY ?;", (order,)).fetchall()]
+        return [dict(zip(jsonHeaders, row)) for row in database.cursor.execute(f"SELECT {','.join(jsonHeaders)} FROM buildings ORDER BY ?;", (order,)).fetchall()]
 
     def getQuizDataSortedBy(order: str, quiz_round: int) -> list[dict[str, str | int | None]]:
         return [
             dict(zip(jsonHeaders, row))
-            for row in quizDB.cursor.execute(
+            for row in database.cursor.execute(
                 f"SELECT {','.join([f"buildings.{v}" for v in jsonHeaders])} FROM buildings JOIN quizzes ON buildings.id = quizzes.building_id \
                     WHERE quizzes.quiz_round = ? \
                     ORDER BY buildings.{order};",
@@ -83,6 +83,8 @@ def DB_to_XLSX():
 
     print("Generating master lists...")
     wb_lists = load_workbook(templateDir / "MintaListák.xlsx", read_only=False)
+    if not wb_lists.active:
+        raise FileNotFoundError(f"Active worksheet not found in {templateDir / 'MintaListák.xlsx'}")
     for colindex, val in enumerate(txtHeaders.keys()):
         wb_lists.active.cell(2, colindex + 1, val)
     ws_name = wb_lists.copy_worksheet(wb_lists.active)
@@ -153,13 +155,15 @@ def DB_to_XLSX():
     print("Generating tests size 20...")
     wbTest = load_workbook(templateDir / "MintaTesztek.xlsx", read_only=False)
     wbSol = load_workbook(templateDir / "MintaMegoldókulcsok.xlsx", read_only=False)
+    if not wbSol.active:
+        raise FileNotFoundError(f"Active worksheet not found in {templateDir / 'MintaMegoldókulcsok.xlsx'}")
     wsTest_hu = wbTest["MintaHU"]
     wsTest_en = wbTest["MintaEN"]
     wsSol_hu = wbSol.active
     wsSol_en = wbSol.copy_worksheet(wsSol_hu)
     wsSol_hu.title = "Kulcs HU"
     wsSol_en.title = "Kulcs EN"
-    testnums: list[int] = [r[0] for r in quizDB.cursor.execute("SELECT quiz_round FROM quizzes WHERE quiz_round > 0 GROUP BY quiz_round;").fetchall()]
+    testnums: list[int] = [r[0] for r in database.cursor.execute("SELECT quiz_round FROM quizzes WHERE quiz_round > 0 GROUP BY quiz_round;").fetchall()]
     for testnum in testnums:
         print(f"Generating test {testnum}...")
         hu = wbTest.copy_worksheet(wsTest_hu)
@@ -214,37 +218,37 @@ def TXT_to_JSON():
 
 
 def regenerateQuizzes(quizCount: int = 8, questionsCount: int = 20):
-    res = quizDB.cursor.execute("SELECT id FROM buildings;").fetchall()
+    res = database.cursor.execute("SELECT id FROM buildings;").fetchall()
     availableBuildings = [row[0] for row in res]
     if len(availableBuildings) < questionsCount:
         raise RuntimeError(f"Too few questions in the database ({len(availableBuildings)}) to generate {questionsCount} questions")
     quizzes = [random.sample(availableBuildings, questionsCount) for _ in range(quizCount)]
-    quizDB.cursor.execute("DELETE FROM quizzes;")
-    quizDB.cursor.execute("DELETE FROM teams;")
-    quizDB.cursor.execute("DELETE FROM answers;")
-    quizDB.cursor.executemany("INSERT INTO quizzes (quiz_round, building_id) VALUES (?, ?);", [(-1, b) for b in availableBuildings])
-    print(f"Generated the 'SIZE_100' quiz with {quizDB.cursor.rowcount} questions")
+    database.cursor.execute("DELETE FROM quizzes;")
+    database.cursor.execute("DELETE FROM teams;")
+    database.cursor.execute("DELETE FROM answers;")
+    database.cursor.executemany("INSERT INTO quizzes (quiz_round, building_id) VALUES (?, ?);", [(-1, b) for b in availableBuildings])
+    print(f"Generated the 'SIZE_100' quiz with {database.cursor.rowcount} questions")
     for quizNum, quiz in enumerate(quizzes):
-        quizDB.cursor.executemany("INSERT INTO quizzes (quiz_round, building_id) VALUES (?, ?);", [(quizNum + 1, b) for b in quiz])
-    print(f"Generated {quizCount} quizzes with {quizDB.cursor.rowcount} questions each (taken from the last quiz)")
-    quizDB.connection.commit()
+        database.cursor.executemany("INSERT INTO quizzes (quiz_round, building_id) VALUES (?, ?);", [(quizNum + 1, b) for b in quiz])
+    print(f"Generated {quizCount} quizzes with {database.cursor.rowcount} questions each (taken from the last quiz)")
+    database.connection.commit()
 
 
 def generateAnswers():
-    if input("Are you sure? (YES)> ") != "YES":
+    if input("Are you sure? (YES) ") != "YES":
         return
-    res: list[tuple[int | str]] = quizDB.cursor.execute("SELECT id FROM buildings;").fetchall()
+    res: list[tuple[int]] = database.cursor.execute("SELECT id FROM buildings;").fetchall()
     availableBuildings: list[int] = [row[0] for row in res]
     availableAnswers = list(range(1, len(availableBuildings) + 1))
     random.shuffle(availableBuildings)
     random.shuffle(availableAnswers)
     newAnswers = list(zip(availableBuildings, availableAnswers))
     for id in availableBuildings:
-        quizDB.cursor.execute("UPDATE buildings SET answer=? WHERE id=?;", (None, id))
+        database.cursor.execute("UPDATE buildings SET answer=? WHERE id=?;", (None, id))
     for id, ans in newAnswers:
-        quizDB.cursor.execute("UPDATE buildings SET answer=? WHERE id=?;", (ans, id))
+        database.cursor.execute("UPDATE buildings SET answer=? WHERE id=?;", (ans, id))
     print(f"Generated {len(newAnswers)} answers")
-    quizDB.connection.commit()
+    database.connection.commit()
 
 
 # ------- MAIN -------

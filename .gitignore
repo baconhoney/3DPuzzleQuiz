@@ -11,6 +11,7 @@
 /ChecklistWebpage/scripts/masterList.json
 /ReactTest/
 /SearchWebpage/src/masterList.jsx
+/Server/data/*
 /Server/data/db_initiated
 /Server/server_specifics.env
 /Server/temp.pdf

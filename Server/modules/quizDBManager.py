@@ -23,11 +23,11 @@ class InvalidParameterError(Exception):
 # -------------------
 # ----- GETTERS -----
 # -------------------
-async def getQuestions(lang: str, size: int) -> list[dict[str, str | int]]:
+async def getQuestions(lang: str | None, size: int | str | None) -> list[dict[str, str | int]]:
     _logger.debug(f"getQuestions called with lang={lang}, size={size}")
     if utils.convertToQuizLanguage(lang) is None:
         raise InvalidParameterError(f"Invalid language: {lang or '<missing>'}")
-    if utils.convertToQuizSize(size) is None:
+    if not size or utils.convertToQuizSize(size) is None:
         raise InvalidParameterError(f"Invalid size: {size or '<missing>'}")
     quizRound = (int(size) == utils.QuizSizes.SIZE_20.value and utils.QuizState.currentQuizRound) or -1
     rawQuizdata: list[list[str | int]] = utils.quizDB.cursor.execute(
@@ -41,7 +41,7 @@ async def getQuestions(lang: str, size: int) -> list[dict[str, str | int]]:
     return [{"id": entry[0], "name": entry[1], "location": entry[2]} for entry in rawQuizdata]
 
 
-async def getAnswers(teamID: int) -> dict[str, str | int | list[dict[str, str | int]]]:
+async def getAnswers(teamID: str | None) -> dict[str, str | int | list[dict[str, str | int]]]:
     _logger.debug(f"getAnswers called with teamID={teamID}")
     if not teamID:
         raise InvalidParameterError("Missing teamID parameter")
@@ -96,7 +96,7 @@ async def getLeaderboard(*, size: str | None = None, quizRound: str | None = Non
     return [dict(zip(cols.values(), entry)) for entry in res]
 
 
-async def getQuizDetails(teamID: int):
+async def getQuizDetails(teamID: int | str | None):
     _logger.debug(f"getQuizDetails called with teamID={teamID}")
     if not teamID:
         raise InvalidParameterError(f"Missing teamID parameter")
@@ -127,7 +127,7 @@ async def getQuizDetails(teamID: int):
     }
 
 
-async def checkIfTeamExists(teamID: int) -> bool:
+async def checkIfTeamExists(teamID: int | None) -> bool:
     _logger.debug(f"Checking if team exists for teamID={teamID}")
     if not teamID or not isinstance(teamID, int):
         raise InvalidParameterError(f"Invalid teamID parameter: '{teamID}' type {type(teamID)}")
@@ -137,7 +137,7 @@ async def checkIfTeamExists(teamID: int) -> bool:
     return exists
 
 
-async def checkIfSubmittedAtIsPresent(teamID: int) -> bool:
+async def checkIfSubmittedAtIsPresent(teamID: int | None) -> bool:
     _logger.debug(f"Checking if submitted_at is present for teamID={teamID}")
     if not teamID:
         raise InvalidParameterError(f"Invalid teamID: {teamID}")
@@ -163,7 +163,7 @@ async def getAllBuildingData() -> list[dict[str, str | int | None]]:
 # -------------------
 # ----- POSTERS -----
 # -------------------
-async def addEmptyTeamEntry(teamID: int, lang: str, size: int):
+async def addEmptyTeamEntry(teamID: int | None, lang: str | None, size: int | None):
     """internal"""
     _logger.debug(f"Adding empty team entry for teamID={teamID}")
     if not teamID or not isinstance(teamID, int):
@@ -181,7 +181,7 @@ async def addEmptyTeamEntry(teamID: int, lang: str, size: int):
     await wsUtils.broadcastToAdmins("leaderboardUpdated", {})
 
 
-async def updateSubmittedAt(teamID: int):
+async def updateSubmittedAt(teamID: int | None):
     _logger.debug(f"Updating submitted_at for teamID={teamID}")
     if not teamID or teamID >= int(5e9):
         raise InvalidParameterError(f"Invalid teamID for paper-quiz: {teamID or '<missing>'}")

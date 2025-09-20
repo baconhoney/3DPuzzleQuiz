@@ -27,16 +27,20 @@ if sys.platform == "win32":
         - `asyncio.create_task(Scanner(callbackFunction).run_forever(stopEvent))`
         """
 
-        def __init__(self, callbackFn: Callable[[str], Any] = None, loop: asyncio.AbstractEventLoop = None):
+        def __init__(self, callbackFn: Callable[[str], Any] | None = None, loop: asyncio.AbstractEventLoop | None = None):
             self._callbackFunction = callbackFn or (lambda x: None)
             self._loop = loop
-            _logger.debug(f"Scanner initialized with callbackFn={callbackFn.__name__} loop={loop}")
+            if not loop:
+                raise ValueError("loop is required")
+            _logger.debug(f"Scanner initialized with callbackFn={callbackFn and callbackFn.__name__ or 'anonymous'} loop={loop}")
 
         def _callback(self):
             value = self._inputVar.get()
             if value:
                 _logger.debug(f"Calling cbf from scanner.py with value: {value}")
-                asyncio.run_coroutine_threadsafe(self._callbackFunction(value), self._loop)
+                if not self._loop:
+                    raise ValueError("loop is required")
+                asyncio.run_coroutine_threadsafe(self._callbackFunction(value), self._loop) # type: ignore
             self._inputVar.set("")
             self._inputbox.focus()
             _logger.debug("Input box cleared and focus set")
@@ -80,7 +84,7 @@ if sys.platform == "win32":
                     self._root.update()
                     time.sleep(0.1)
                 _logger.info("Closing window...")
-                self._root.after(0, self._root.destroy())
+                self._root.after(0, lambda: self._root.destroy())
             except tk.TclError as e:
                 stopEvent.set()
                 _logger.error(f"Tcl error caught in _innerLoop: {e}")

@@ -35,7 +35,7 @@ else:
     _logger.warning(f"Printing is not supported on {sys.platform}. Printing will be skipped.")
 
 
-async def printQuiz(teamID: int, lang: utils.QuizLanguages = None, size: utils.QuizSizes = None):
+async def printQuiz(teamID: int, lang: utils.QuizLanguages | None = None, size: utils.QuizSizes | None = None):
     pdfPath = await generatePDF(teamID, lang, size)
     if sys.platform == "linux" and _printerName:
         _logger.debug(f"Printing PDF to Linux printer {_printerName}.")

@@ -1,4 +1,5 @@
 import logging
+from typing import Any
 
 _logger = logging.getLogger(__name__)
 _logger.info(f"Importing {__name__}...")
@@ -66,7 +67,7 @@ async def getQuizdataHandler(request: web.Request):
 @router.post(_baseURL + "/uploadQuiz")
 async def uploadQuizHandler(request: web.Request):
     _logger.info("API POST request incoming: uploadQuiz")
-    data: dict[str, str | int | list[dict[str, str | int]]] = await request.json()
+    data: dict[str, Any] = await request.json()
     _logger.debug(f"Received uploadQuiz data: {data}")
     try:
         await quizDBManager.uploadAnswers("paper-uploadAnswers", teamID=data.get("teamID"), name=data.get("name"), answers=data.get("answers"))
@@ -85,7 +86,7 @@ async def nextPhaseHandler(request: web.Request):
     nextPhase = utils.convertToQuizPhase(data.get("nextPhase"))
     if nextPhase != utils.QuizState.getNextPhase():
         raise web.HTTPBadRequest(text=f"Invalid nextPhase: {data.get('nextPhase', '<missing>')}, expected: {utils.QuizState.getNextPhase().value}")
-    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=None, second=0, microsecond=0) or None
+    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt", "")).replace(tzinfo=None, second=0, microsecond=0) or None
     if not nextPhaseChangeAt:
         raise web.HTTPBadRequest(text=f"Invalid nextPhaseChangeAt: {data.get('nextPhaseChangeAt', '<missing>')}, expected value later than {utils.QuizState.formatNextPhaseChangeAt()}")
     newQuizNumber = (utils.QuizState.phase == utils.QuizPhases.SCORING and nextPhase == utils.QuizPhases.IDLE and utils.QuizState.currentQuizRound + 1) or None
@@ -99,7 +100,7 @@ async def setNextPhaseChangeAtHandler(request: web.Request):
     _logger.info(f"API GET request incoming: setNextPhaseChangeAt")
     data: dict[str, str] = await request.json()
     _logger.debug(f"SetNextPhaseChangeAt request data: {data}")
-    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt")).replace(tzinfo=None, second=0, microsecond=0) or None
+    nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt", "")).replace(tzinfo=None, second=0, microsecond=0) or None
     if not nextPhaseChangeAt:
         raise web.HTTPBadRequest(text=f"Invalid nextPhaseChangeAt: {data.get('nextPhaseChangeAt', '<missing>')}, expected value later than {utils.QuizState.formatNextPhaseChangeAt()}")
     await utils.QuizState.updateState(nextPhaseChangeAt=nextPhaseChangeAt)
@@ -110,9 +111,9 @@ async def setNextPhaseChangeAtHandler(request: web.Request):
 @router.post(_baseURL + "/setQuizRound")
 async def setQuizRoundHandler(request: web.Request):
     _logger.info(f"API GET request incoming: setQuizRound")
-    data: dict[str, str] = await request.json()
+    data: dict[str, Any] = await request.json()
     _logger.debug(f"setQuizRound request data: {data}")
-    newQuizRound = isinstance(data.get("newQuizRound"), int) and data.get("newQuizRound") or None
+    newQuizRound: int | None = isinstance(data.get("newQuizRound"), int) and data.get("newQuizRound") or None
     if not newQuizRound or not (0 < newQuizRound < 100):
         raise web.HTTPBadRequest(text=f"Invalid newQuizRound: {data.get('newQuizRound', '<missing>')}, expected value between 1 and 99")
     await utils.QuizState.updateState(newQuizRound=newQuizRound)
@@ -123,7 +124,7 @@ async def setQuizRoundHandler(request: web.Request):
 @router.post(_baseURL + "/queuePrint")
 async def queuePrintHandler(request: web.Request):
     _logger.info(f"API POST request incoming: queuePrint")
-    data: dict[str, str | int] = await request.json()
+    data: dict[str, Any] = await request.json()
     _logger.debug(f"QueuePrint data received: {data}")
     teamID = data.get("teamID")
     copyCount = data.get("copyCount")

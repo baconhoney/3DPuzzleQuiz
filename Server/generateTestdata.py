@@ -1,12 +1,12 @@
-import asyncio
-import random
 import pathlib
 import sys
 
 # add local modules to pythonpath (each top level file needs this)
 sys.path.insert(1, str(pathlib.Path("./modules").resolve()))
 
+import asyncio
 import quizDBManager
+import random
 import utils
 
 
@@ -79,7 +79,7 @@ names = {
 
 
 buildingData = asyncio.run(quizDBManager.getAllBuildingData())
-correctAnswers: dict[int, int] = {e["id"]: e["answer"] for e in buildingData}
+correctAnswers = {e["id"]: e["answer"] for e in buildingData}
 for quizRound in [1, 2, 3, 5, 6, 8]:
     asyncio.run(utils.QuizState.updateState(newQuizRound=quizRound))
     num_teams = random.randint(10, 20)

@@ -5,7 +5,7 @@ _logger.info(f"Importing {__name__}...")
 
 
 from aiohttp.web import WebSocketResponse
-from typing import Callable
+from typing import Any, Callable
 import asyncio
 import json
 
@@ -17,7 +17,7 @@ _clientMsgEventListeners: dict[str, list[Callable]] = {}
 _adminMsgEventListeners: dict[str, list[Callable]] = {}
 
 
-async def broadcastToClients(eventType: str, data: dict[str, any]):
+async def broadcastToClients(eventType: str, data: dict[str, Any]):
     """
     EventTypes: "quizStarted", "quizEnded", "resultsReady"
     """
@@ -29,7 +29,7 @@ async def broadcastToClients(eventType: str, data: dict[str, any]):
     _logger.info(f"Broadcasted event {eventType} to {len(clientCons)} clients")
 
 
-async def broadcastToAdmins(eventType: str, data: dict[str, any]):
+async def broadcastToAdmins(eventType: str, data: dict[str, Any]):
     """
     EventTypes: "leaderboardUpdated", "stateChanged", "showQuiz"
     """

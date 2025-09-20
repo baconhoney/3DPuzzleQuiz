@@ -6,6 +6,7 @@ _logger.info(f"Importing {__name__}...")
 
 from aiohttp import web
 from pdfGenerator import generatePDF
+from typing import Any
 import json
 import quizDBManager
 import utils
@@ -43,7 +44,7 @@ async def getQuestionsHandler(request: web.Request):
 @router.post(_baseURL + "/uploadAnswers")
 async def uploadAnswersHandler(request: web.Request):
     _logger.info("API POST request incoming: uploadAnswers")
-    data: dict[str, str | list[dict[str, int]]] = await request.json()
+    data: dict[str, Any] = await request.json()
     _logger.debug(f"Received data: {data}")
     teamID, codeword = utils.getNewTeamID(utils.QuizTypes.DIGITAL, lang=data.get("lang"), teamName=data.get("name"))
     _logger.debug(f"Generated teamID={teamID}, codeword={codeword}")
@@ -73,7 +74,7 @@ async def getPDFHandler(request: web.Request):
     _logger.info(f"API GET request incoming: getPDF")
     try:
         _logger.debug(f"Generating PDF for teamID={request.query.get('teamID')}")
-        teamID = request.query.get("teamID") and str(request.query.get("teamID")).isdigit() and int(request.query.get("teamID")) or None
+        teamID = request.query.get("teamID") and str(request.query.get("teamID")).isdigit() and int(request.query.get("teamID", "")) or None
         pdfPath = await generatePDF(teamID)
         _logger.debug(f"Generated PDF for teamID={teamID}")
         return web.FileResponse(pdfPath)

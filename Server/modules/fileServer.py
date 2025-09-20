@@ -47,20 +47,20 @@ def handleFile(request: web.Request, root: pathlib.Path) -> web.Response:
 
 # Search webpage
 @router.get("/search/{fn:.*}")
-async def GET_files(request: web.Request) -> web.Response:
+async def getSearchPageFiles(request: web.Request) -> web.Response:
     _logger.info(f"Serving search page request: {request.path}")
     return handleFile(request, utils.paths.searchRoot)
 
 
 # Admin webpage
 @router.get("/admin/{fn:.*}")
-async def GET_files(request: web.Request) -> web.Response:
+async def getAdminPageFiles(request: web.Request) -> web.Response:
     _logger.info(f"Serving admin page request: {request.path}")
     return handleFile(request, utils.paths.adminRoot)
 
 
 # Client webpage
 @router.get("/{fn:.*}")
-async def GET_files(request: web.Request) -> web.Response:
+async def getClientPageFiles(request: web.Request) -> web.Response:
     _logger.info(f"Serving client page request: {request.path}")
     return handleFile(request, utils.paths.clientRoot)

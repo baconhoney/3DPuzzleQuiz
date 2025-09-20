@@ -196,7 +196,7 @@ def render_ast(ast, context: dict, parents: list):
     return "".join(output)
 
 
-def render_template(template_str: str, context: dict, parents: list = None) -> str:
+def render_template(template_str: str, context: dict, parents: list | None = None) -> str:
     if parents is None:
         parents = []
     _logger.info("Rendering template started.")

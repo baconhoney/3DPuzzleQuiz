@@ -95,6 +95,9 @@ class QuizDB:
             self._makeDBTable("answers", _answersSQL)
             dbInitiatedFlagPath.touch()
             _logger.info("Database initialization complete")
+            print("\n\nWARNING: Database was wiped clean. Run 'python manageQuizdata.py j2d && python manageQuizdata.py regen' to repopulate it!")
+            if input("Press enter to exit...") == "":
+                exit(0)
         else:
             _logger.info("Using existing database")
         atexit.register(lambda: self.connection.close())

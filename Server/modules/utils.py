@@ -10,7 +10,7 @@ import dotenv
 import json
 import os
 import pathlib
-import quizDB
+import quizDB as qDB
 import random
 import wsUtils
 
@@ -25,17 +25,24 @@ dotenv.load_dotenv()
 
 # resolve paths
 class paths:
-    cwd = pathlib.Path(os.getenv("QUIZSERVER_ROOT")).resolve()
-    appRoot = pathlib.Path(os.getenv("QUIZSERVER_APP_ROOT")).resolve()
-    cfgRoot = pathlib.Path(os.getenv("QUIZSERVER_CFG_ROOT")).resolve()
-    dataRoot = pathlib.Path(os.getenv("QUIZSERVER_DATA_ROOT")).resolve()
-    clientRoot = pathlib.Path(os.getenv("QUIZSERVER_CLIENT_ROOT")).resolve()
-    searchRoot = pathlib.Path(os.getenv("QUIZSERVER_SEARCH_ROOT")).resolve()
-    adminRoot = pathlib.Path(os.getenv("QUIZSERVER_ADMIN_ROOT")).resolve()
+    if not os.getenv("QUIZSERVER_ROOT"): raise RuntimeError("Environment variable QUIZSERVER_ROOT not set")
+    if not os.getenv("QUIZSERVER_APP_ROOT"): raise RuntimeError("Environment variable QUIZSERVER_APP_ROOT not set")
+    if not os.getenv("QUIZSERVER_CFG_ROOT"): raise RuntimeError("Environment variable QUIZSERVER_CFG_ROOT not set")
+    if not os.getenv("QUIZSERVER_DATA_ROOT"): raise RuntimeError("Environment variable QUIZSERVER_DATA_ROOT not set")
+    if not os.getenv("QUIZSERVER_CLIENT_ROOT"): raise RuntimeError("Environment variable QUIZSERVER_CLIENT_ROOT not set")
+    if not os.getenv("QUIZSERVER_SEARCH_ROOT"): raise RuntimeError("Environment variable QUIZSERVER_SEARCH_ROOT not set")
+    if not os.getenv("QUIZSERVER_ADMIN_ROOT"): raise RuntimeError("Environment variable QUIZSERVER_ADMIN_ROOT not set")
+    cwd = pathlib.Path(os.getenv("QUIZSERVER_ROOT", "")).resolve()
+    appRoot = pathlib.Path(os.getenv("QUIZSERVER_APP_ROOT", "")).resolve()
+    cfgRoot = pathlib.Path(os.getenv("QUIZSERVER_CFG_ROOT", "")).resolve()
+    dataRoot = pathlib.Path(os.getenv("QUIZSERVER_DATA_ROOT", "")).resolve()
+    clientRoot = pathlib.Path(os.getenv("QUIZSERVER_CLIENT_ROOT", "")).resolve()
+    searchRoot = pathlib.Path(os.getenv("QUIZSERVER_SEARCH_ROOT", "")).resolve()
+    adminRoot = pathlib.Path(os.getenv("QUIZSERVER_ADMIN_ROOT", "")).resolve()
 
 
 # initialize database
-quizDB = quizDB.QuizDB(paths.dataRoot)
+quizDB = qDB.QuizDB(paths.dataRoot)
 _logger.info(f"quizDB initialized with dataRoot={paths.dataRoot}")
 
 
@@ -121,7 +128,7 @@ class QuizState:
         return next_phase
 
     @classmethod
-    async def updateState(cls, *, nextPhase: QuizPhases = None, nextPhaseChangeAt: datetime.datetime = None, newQuizRound: int = None):
+    async def updateState(cls, *, nextPhase: QuizPhases | None = None, nextPhaseChangeAt: datetime.datetime | None = None, newQuizRound: int | None = None):
         _logger.info(f"Updating state with nextPhase={nextPhase}, nextPhaseChangeAt={nextPhaseChangeAt}, newQuizRound={newQuizRound}")
         # Make the changes
         if nextPhase:
@@ -185,7 +192,7 @@ class Localisation:
         },
     }
 
-    def __init__(self) -> str:
+    def __init__(self):
         self._logger = logging.getLogger(__name__ + ".translator")
         self.lang = None
 
@@ -202,8 +209,12 @@ class Localisation:
         if not self._locals.get(key):
             self._logger.warning(f"Translator: unknown key: {key}")
             return f"<{key}>"
-        value = self._locals.get(key)[self.lang]
-        self._logger.debug(f"Translation found for key={key}, lang={self.lang}, value={value}")
+        value = self._locals.get(key, {}).get(self.lang)
+        if value is None:
+            self._logger.warning(f"Translator: missing translation for key={key}, lang={self.lang}")
+            return f"<{key}>"
+        else:
+            self._logger.debug(f"Translation for key={key}, lang={self.lang}, value={value}")
         return value
 
 
@@ -260,7 +271,7 @@ def convertToQuizPhase(phase) -> QuizPhases | None:
 
 
 # ----- Generators -----
-def getNewTeamID(quizType: QuizTypes, lang: str = None, teamName: str = None):
+def getNewTeamID(quizType: QuizTypes, lang: str | None = None, teamName: str | None = None):
     """Generate a new unique identifier and a codeword for digital quizzes."""
     _logger.debug(f"Generating new team ID for type={quizType}, lang={lang}, teamName={teamName}")
     if quizType == QuizTypes.DIGITAL:
