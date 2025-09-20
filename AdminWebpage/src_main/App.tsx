@@ -9,6 +9,7 @@ import "./App.css";
 import ControlsComponent from "./Components/Controls.tsx";
 import { ConfirmPopupComponent, ErrorPopupComponent, LogsComponent } from "./Components/Controllers.tsx";
 import { addListener, removeListener } from "./websocketHandler.ts";
+import { logger } from "./Logger.ts";
 
 interface AppState {
     openedQuizTeamID: number | null,
@@ -39,9 +40,9 @@ export default class App extends Component<unknown, AppState> {
             console.log("showQuiz event received for team", data.teamID);
             if (this.state.openedQuizTeamID == null) {
                 this.updateState({ openedQuizTeamID: data.teamID });
-                this.logsComponentRef.current?.addLog("info", `Opened quiz for team ${data.teamID}`);
+                logger.log("info", `Opened quiz for team ${data.teamID}`);
             } else {
-                this.logsComponentRef.current?.addLog("info", `Quiz already opened for team ${this.state.openedQuizTeamID}`);
+                logger.log("info", `Quiz already opened for team ${this.state.openedQuizTeamID}`);
             }
         })
     }
@@ -52,7 +53,7 @@ export default class App extends Component<unknown, AppState> {
     }
 
     promptConfirm(text?: React.ReactNode): Promise<void> {
-        this.logsComponentRef.current?.addLog("debug", "promptConfirm called");
+        console.log("debug", "promptConfirm called");
         return new Promise((resolve, reject) => {
             this.updateState({
                 currentModal: <ConfirmPopupComponent
@@ -74,7 +75,7 @@ export default class App extends Component<unknown, AppState> {
     }
 
     showError(text?: React.ReactNode): void {
-        this.logsComponentRef.current?.addLog("debug", "Error popup shown to user");
+        logger.log("error", "Error popup shown to user");
 
         this.updateState({
             currentModal: <ErrorPopupComponent

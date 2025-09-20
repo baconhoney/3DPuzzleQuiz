@@ -1,11 +1,12 @@
+import { logger } from "./Logger";
 import { getISOStringFromDate, type QuizLanguage, type QuizPhase, type QuizSize } from "./utils";
 
 function sendData(url: string, data: unknown) {
     console.log("sendData called for URL:", url, "data:", data);
     if (import.meta.env.MODE == "production") {
         fetch(url, { method: "POST", body: JSON.stringify(data) }).then(
-            () => console.log("Data sent successfully to", url),
-            (error: string) => console.error(`Failed to send data to ${url}: ${error}`)
+            () => logger.log("info", `Data sent successfully to ${url}`),
+            (error: string) => logger.log("error", `Failed to send data to ${url}: ${error}`)
         );
     } else {
         console.log("Dev mode: skipping actual sending");

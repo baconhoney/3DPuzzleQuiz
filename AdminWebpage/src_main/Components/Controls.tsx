@@ -8,6 +8,7 @@ import * as actions from "../Actions.ts";
 
 import "./Controls.css";
 import { LogsComponent } from "./Controllers.tsx";
+import { logger } from "../Logger.ts";
 
 interface TimeLeftProps {
     nextChangeAt: Date,
@@ -107,7 +108,7 @@ export default class ControlsComponent extends Component<Props, State> {
         console.log("Controls mounted");
         this.stateChangedListener = addListener("stateChanged", () => {
             console.log("stateChanged event");
-            this.props.app.logsComponentRef.current?.addLog("debug", "stateChanged event");
+            logger.log("debug", "stateChanged event");
             if (import.meta.env.MODE == "production") {
                 this.getStatesData();
             } else {
@@ -130,10 +131,10 @@ export default class ControlsComponent extends Component<Props, State> {
 
     private getStatesData() {
         console.log("Fetching states data");
-        this.props.app.logsComponentRef.current?.addLog("debug", "Fetching states data");
+        logger.log("debug", "Fetching states data");
         fetchData("/api/admin/getStates", (data: { nextPhaseChangeAt: string, currentQuizRound: number, phase: QuizPhase }) => {
             console.log("Received states data", data);
-            this.props.app.logsComponentRef.current?.addLog("info", "States data received");
+            logger.log("info", "States data received");
             this.updateState({
                 nextPhaseChangeAt: new Date(data.nextPhaseChangeAt),
                 currentQuizRound: data.currentQuizRound,
@@ -201,7 +202,7 @@ export default class ControlsComponent extends Component<Props, State> {
                                     () => void this.props.app.promptConfirm(<h1>Biztosan frissíti a következő fázisváltás várható idejét?</h1>).then(
                                         () => {
                                             console.log("Confirmed nextPhaseChangeAt", this.state.nextPhaseChangeAt);
-                                            this.props.app.logsComponentRef.current?.addLog("info", "Sent nextPhaseChangeAt request");
+                                            logger.log("info", "Sent nextPhaseChangeAt request");
                                             actions.sendNewNextPhaseChangeAt(this.state.nextPhaseChangeAt)
                                         },
                                         () => { console.log("Cancelled nextPhaseChangeAt change"); }
@@ -220,7 +221,7 @@ export default class ControlsComponent extends Component<Props, State> {
                                         const currPhase = this.state.phase;
                                         const nextPhase = actions.getNextPhase(currPhase);
                                         console.log("Phase change clicked", currPhase, nextPhase);
-                                        this.props.app.logsComponentRef.current?.addLog("debug", `Phase change ${currPhase}->${nextPhase}`);
+                                        logger.log("debug", `Phase change ${currPhase}->${nextPhase}`);
                                         this.props.app.promptConfirm(
                                             <>
                                                 <h1>Biztosan kvíz fázist vált?</h1>
@@ -231,7 +232,7 @@ export default class ControlsComponent extends Component<Props, State> {
                                         ).then(
                                             () => {
                                                 console.log("Confirmed phase change");
-                                                this.props.app.logsComponentRef.current?.addLog("info", "Sent nextPhase request");
+                                                logger.log("info", "Sent nextPhase request");
                                                 actions.sendNextPhase(currPhase, nextPhase, this.state.nextPhaseChangeAt)
                                             },
                                             () => { console.log("Cancelled phase change"); }
@@ -260,7 +261,7 @@ export default class ControlsComponent extends Component<Props, State> {
                                         ).then(
                                             () => {
                                                 console.log("Confirmed round change", this.state.currentQuizRound);
-                                                this.props.app.logsComponentRef.current?.addLog("info", "Sent setQuizRound request");
+                                                logger.log("info", "Sent setQuizRound request");
                                                 actions.setQuizRound(this.state.currentQuizRound)
                                             },
                                             () => { console.log("Cancelled round change"); }
@@ -342,7 +343,7 @@ export default class ControlsComponent extends Component<Props, State> {
                                         ).then(
                                             () => {
                                                 console.log("Confirmed print job", this.state.printingCopyCount, this.state.printingLanguage, this.state.printingSize);
-                                                this.props.app.logsComponentRef.current?.addLog("info", "Queued print job");
+                                                logger.log("info", "Queued print job");
                                                 actions.queuePrint(this.state.printingCopyCount, this.state.printingLanguage, this.state.printingSize)
                                             },
                                             () => { console.log("Cancelled print job"); }

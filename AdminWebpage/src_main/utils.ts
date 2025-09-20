@@ -76,7 +76,7 @@ export function fetchData(url: string, callback: (data: any) => void) {
             console.error("Fetch failed for URL:", url, response.status);
         }
     },
-        (error: string) => console.error("Fetch failed for URL:", url, error)
+        (error: string) => console.error("Fetch failed for URL:", url, "error:", error)
     );
 }
 

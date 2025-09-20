@@ -76,8 +76,8 @@ function handleMessage(_: Websocket | null, msgEvent: MessageEvent | { data: str
     }
     console.log("Event received:", eventData.event, eventData.data);
     if (listeners.has(eventData.event)) {
+        console.log("Calling listeners for event:", eventData.event);
         for (const listener of listeners.get(eventData.event)!.values()) {
-            console.log("Calling listener for event:", eventData.event);
             listener(eventData.data);
         }
     }

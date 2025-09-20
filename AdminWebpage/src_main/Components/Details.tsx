@@ -6,6 +6,7 @@ import * as actions from "../Actions.ts";
 import { getDetailsData } from "../Testdata.ts";
 
 import "./Details.css";
+import { logger } from "../Logger.ts";
 
 interface Props {
     app: App;
@@ -49,7 +50,7 @@ export default class DetailsComponent extends Component<Props, State> {
 
     private getQuizdata() {
         console.log("getQuizdata called for teamID:", this.props.teamID);
-        this.props.app.logsComponentRef.current?.addLog("debug", `getQuizdata called for team ${this.props.teamID}`);
+        logger.log("debug", `getQuizdata called for team ${this.props.teamID}`);
         const convertFn = (json: JsonQuizDetails) => ({
             ...json,
             language: json.language as QuizLanguage,
@@ -61,24 +62,24 @@ export default class DetailsComponent extends Component<Props, State> {
                     const res = convertFn(data as JsonQuizDetails);
                     this.updateState({ details: res });
                     console.log("Received details:", res);
-                    this.props.app.logsComponentRef.current?.addLog("info", `Received quiz details for team ${this.props.teamID}`);
+                    logger.log("info", `Received quiz details for team ${this.props.teamID}`);
                 });
             } else {
                 const json = getDetailsData(this.props.teamID);
                 if (!json) {
                     console.error(`No details found for teamID ${this.props.teamID}`);
-                    this.props.app.logsComponentRef.current?.addLog("error", `No quiz details found for team ${this.props.teamID}`);
+                    logger.log("error", `No quiz details found for team ${this.props.teamID}`);
                     throw new Error(`No details found for teamID ${this.props.teamID}`);
                 }
                 const res = convertFn(json);
                 this.updateState({ details: res });
                 console.log("Dev mode: loaded test data for team", this.props.teamID);
-                this.props.app.logsComponentRef.current?.addLog("debug", `Dev test data loaded for team ${this.props.teamID}`);
+                logger.log("debug", `Dev test data loaded for team ${this.props.teamID}`);
             }
         } else {
             this.updateState({ details: undefined });
             console.log("No teamID provided, details cleared");
-            this.props.app.logsComponentRef.current?.addLog("debug", "No teamID, cleared details");
+            logger.log("debug", "No teamID, cleared details");
         }
     }
 

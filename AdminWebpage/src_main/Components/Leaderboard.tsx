@@ -7,6 +7,7 @@ import "./Leaderboard.css";
 
 import { getResultsData } from "../Testdata.ts";
 import { addListener, removeListener } from "../websocketHandler.ts";
+import { logger } from "../Logger.ts";
 
 const _sizeFilters = [...QuizSizes, null];
 
@@ -43,7 +44,7 @@ export default class LeaderboardComponent extends Component<Props, State> {
         console.log("LeaderboardComponent mounted");
         this.leaderboardUpdatedListener = addListener("leaderboardUpdated", () => {
             console.log("leaderboardUpdated event received");
-            this.props.app.logsComponentRef.current?.addLog("info", "LeaderboardUpdated event received, updating leaderboard");
+            logger.log("info", "LeaderboardUpdated event received, updating leaderboard");
             this.updateLeaderboard();
         });
         this.updateLeaderboard();
@@ -53,7 +54,7 @@ export default class LeaderboardComponent extends Component<Props, State> {
                 console.log("Received states data", data);
                 if (data.currentQuizRound != this.currentQuizRound && this.state.roundFilter == 0) {
                     this.currentQuizRound = data.currentQuizRound;
-                    this.props.app.logsComponentRef.current?.addLog("info", "stateChanged event received, updating leaderboard");
+                    logger.log("info", "stateChanged event received, updating leaderboard");
                     this.updateLeaderboard();
                 }
             });
@@ -76,7 +77,6 @@ export default class LeaderboardComponent extends Component<Props, State> {
 
     private updateLeaderboard() {
         console.log("updateLeaderboard called");
-        this.props.app.logsComponentRef.current?.addLog("debug", "updateLeaderboard called");
         const convertFn = (json: JsonLeaderboardItems) =>
             json.map((item) => ({
                 ...item,
@@ -90,17 +90,17 @@ export default class LeaderboardComponent extends Component<Props, State> {
             if (this.state.roundFilter !== null) params.push(`round=${this.state.roundFilter}`);
             const url = "/api/admin/getLeaderboard" + (params.length > 0 ? "?" + params.join("&") : "");
             console.log("Fetching leaderboard from URL:", url);
-            this.props.app.logsComponentRef.current?.addLog("debug", `Fetching leaderboard from ${url}`);
+            logger.log("debug", `Fetching leaderboard from ${url}`);
             fetchData(url, data => {
                 console.log("Leaderboard data received", data);
-                this.props.app.logsComponentRef.current?.addLog("info", "Leaderboard data received");
+                logger.log("info", "Leaderboard data received");
                 this.updateState({
                     leaderboardItems: convertFn(data as JsonLeaderboardItems),
                 });
             });
         } else {
             console.log("Dev mode: using test data for leaderboard");
-            this.props.app.logsComponentRef.current?.addLog("debug", "Dev mode using test leaderboard data");
+            logger.log("debug", "Dev mode using test leaderboard data");
             this.updateState({
                 leaderboardItems: convertFn(getResultsData()),
             });

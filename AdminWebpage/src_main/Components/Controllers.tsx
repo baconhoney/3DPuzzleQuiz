@@ -1,6 +1,7 @@
 import { Component, createRef } from "react";
 
 import "./Controllers.css";
+import { logger, type LogStrings } from "../Logger";
 import type App from "../App";
 
 
@@ -14,7 +15,6 @@ export class ConfirmPopupComponent extends Component<ConfirmPopupProperties, unk
 
     constructor(properties: ConfirmPopupProperties) {
         super(properties);
-        console.log("ConfirmPopup ctor", properties);
     }
 
     render() {
@@ -71,60 +71,49 @@ interface LogsProps {
 }
 
 interface LogsState {
-    logStrings: Array<{ content: string, level: string }>;
+    logStrings: LogStrings;
 }
 
 export class LogsComponent extends Component<LogsProps, LogsState> {
     private containerRef = createRef<HTMLDivElement>();
-    
+
     constructor(props: LogsProps) {
         super(props);
         this.state = {
-            logStrings: [{content: "This is the start of the log", level: "info"}],
+            logStrings: logger.getLogs(),
         };
         this.props.app.logsComponentRef.current = this;
     }
 
-    componentDidMount(): void {
+    update = () => {
+        this.setState({ logStrings: logger.getLogs() });
+    };
+
+    componentDidMount() {
         console.log("LogsComponent mounted");
-        this.scrollToTop();
+        logger.subscribe(this.update);
+    }
+
+    componentWillUnmount() {
+        console.log("LogsComponent unmounted");
+        logger.unsubscribe(this.update);
     }
 
     componentDidUpdate(_: Readonly<LogsProps>, prevState: Readonly<LogsState>): void {
         console.log("LogsComponent updated");
         if (prevState.logStrings !== this.state.logStrings) {
             console.log("Logs changed, scrolling");
-            this.scrollToTop();
+            this.scrollToBottom();
         }
     }
 
-    private scrollToTop() {
-        console.log("ScrollToTop triggered");
+    private scrollToBottom() {
+        console.log("ScrollToBottom triggered");
         if (this.containerRef.current !== null) {
             this.containerRef.current.scrollTop = this.containerRef.current.scrollHeight;
             console.log("Scrolled logs to bottom");
         } else {
             console.error("No containerRef for logs");
-        }
-    }
-
-    addLog(level: "debug" | "info" | "warning" | "error", text: string) {
-        console.log("addLog called", level, text);
-        if (this.containerRef.current !== null) {
-            const loglevels = ["debug", "info", "warning", "error"];
-            if (loglevels.indexOf(this.props.app.loglevel) >= loglevels.indexOf(level)){
-                console.log("Adding log entry", level, text);
-                const currLogs = [...this.state.logStrings];
-                if (currLogs.push({level: level, content: `${level}: ${text.substring(0, 60)}`}) > 100) {
-                    console.log("Log limit exceeded, removing oldest");
-                    currLogs.shift();
-                }
-                this.setState({ logStrings: currLogs });
-            } else {
-                console.log("Log filtered out by level", level);
-            }
-        } else {
-            console.error("addLog skipped, no containerRef");
         }
     }
 
