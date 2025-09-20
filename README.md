@@ -3,11 +3,11 @@ This repository powers the **3D Puzzle Quiz**, an analog and digital quiz game d
 
 
 ## Project Structure
+**For demonstration purposes only**
 ```
 ClientWebpage/         # Participant-facing client interface
 SearchWebpage/         # Search utility interface
 AdminWebpage/          # Admin interface
-Build/                 # Output folder for the built app
 Server/                # aiohttp backend server
     cfg/                   # Configuration for the server
     data/                  # Data storage
@@ -15,10 +15,13 @@ Server/                # aiohttp backend server
     .env                   # Defines relative paths to components
     main.py                # The entry point of the Server root-module
     manageQuizdata.py      # Utility for managing quiz content
+    generateTestdata.py    # Utility for generating fake quizzes
 Wiki/                  # Developer documentation (Git submodule)
 build.bat              # Launcher for windows
 build.sh               # Launcher for linux
 build.py               # Build script
+start.bat              # Starter script for Windows
+start.sh               # Starter script for Linux
 ```
 
 ## Requirements
@@ -42,14 +45,25 @@ cd 3DPuzzleQuiz
 Download `poetry` from https://python-poetry.org/docs/#installing-with-the-official-installer and install it.
 2. Run the recommended PS script (by the installer) for adding `poetry` to your path.
 3. Run
-    ```bash
+   ```bash
     cd Server
     poetry config virtualenvs.in-project true
     poetry install --no-root
-    poetry env activate
-    <run the command printed out by the above line>
     cd ..
     ```
+
+#### For developing the Server, run the below code too
+
+```bash
+cd Server
+poetry env activate
+<run the command printed out by the above line>
+cd ..
+```
+
+This will activate the virtual environment, which is necessary for the server to run.
+
+You can freely add this venv (located at `.venv`) in your IDE for convinience.
 
 ### 3. Build the Project
 
@@ -65,13 +79,20 @@ build.bat
 ./build.sh
 ```
 
-This compiles the Frontends and places them in the `Build/` folder, which the server will serve, and also copies the necessary server files into the `Build/` folder.
+This compiles the Frontends and places them in the `<page>/Dist` folder, which the server will serve.
 
 ### 4. Run the Application
 
+#### On Windows:
+
+```cmd
+start.bat
+```
+
+#### On Linux:
+
 ```bash
-cd Build
-python main.py
+./start.sh
 ```
 
 After starting the server:
