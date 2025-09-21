@@ -45,6 +45,7 @@ async def generatePDF(teamID: int | None, lang: utils.QuizLanguages | None = Non
         details["questions"] = [{**row, "correct": row["correct"] and "✓" or "X"} for row in details["questions"]]
         quizLang = details["language"]
         quizSize = len(details["questions"])
+        filename = f"{details['teamname']} {datetime.datetime.fromisoformat(details['submittedAt']).strftime('%Y%m%d_%H%M%S')}.pdf"
     else:
         _logger.debug(f"Generating empty paper quiz for team {teamID} with lang '{lang}' and size '{size}' (should not be None)")
         if not lang:
@@ -62,6 +63,7 @@ async def generatePDF(teamID: int | None, lang: utils.QuizLanguages | None = Non
             "submittedAt": "",
             "questions": [{**row, "answer": "", "correct": ""} for row in questions_list],
         }
+        filename = f"PaperQuiz.pdf"
 
     lang = utils.convertToQuizLanguage(details["language"])
     if not lang: raise RuntimeError(f"Invalid language: {details['language']}")
@@ -95,7 +97,7 @@ async def generatePDF(teamID: int | None, lang: utils.QuizLanguages | None = Non
     _logger.debug("Browser page created.")
     await page.setContent(html)
     _logger.debug("HTML content set in browser page.")
-    pdfPath = utils.paths.dataRoot / f"{details['teamname']} {details['submittedAt']}.pdf"
+    pdfPath = utils.paths.dataRoot / filename
     timeout = 10  # seconds
     while pdfPath.exists() and pdfPath.is_file():
         _logger.warning(f"PDF file already exists, waiting for {timeout} second(s) for removal...")
