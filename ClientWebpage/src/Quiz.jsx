@@ -145,7 +145,7 @@ const Quiz = ({ data, setWantToPlay }) => {
 
                 <div className="flex flex-col gap-3 justify-center sticky bottom-0">
                     <div className="flex justify-center gap-3">
-                        <button className="btn btn-primary w-2/6" onClick={openModal}>
+                        <button className="btn btn-primary w-3/8 min-w-52" onClick={openModal}>
                             {t("finish")}
                         </button>
                         {/* <div className="btn btn-info w-20">
