@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Input = ({ id, type, className, min, max, defaultValue, onInput }) => {
+const Input = ({ id, type, className, defaultValue, onInput }) => {
 
     const defaultClass = "focus-visible:border-gray-400 border-gray-500 focus:border-gray-500 focus-visible:ring-0 focus:outline-none answer-input";
     const validateClass = "border-info focus:border-info focus-visible:ring-0 focus:outline-none answer-input";
@@ -22,8 +22,6 @@ const Input = ({ id, type, className, min, max, defaultValue, onInput }) => {
             id={id}
             type={type}
             className={className + ' ' + extraClass}
-            min={min}
-            max={max}
             defaultValue={defaultValue}
             onInput={onInput}
             onChange={handleInputChange}

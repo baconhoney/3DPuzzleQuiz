@@ -118,14 +118,14 @@ const Quiz = ({ data, setWantToPlay }) => {
                                     id={value.id}
                                     type={"number"}
                                     className={"w-18 text-xl text-center border-2 rounded-full h-10 cursor-text touch-manipulation"}
-                                    min={1}
-                                    max={100}
                                     defaultValue={
                                         localStorage.getItem("quizAnswers")
                                             ? JSON.parse(localStorage.getItem("quizAnswers"))[key]?.num || ""
                                             : ""
                                     }
                                     onInput={(e) => {
+                                        e.target.value = e.target.value.replace(/[^0-9]/g, "");
+
                                         if (e.target.value.length > 3) {
                                             e.target.value = e.target.value.slice(0, 3);
                                         }
