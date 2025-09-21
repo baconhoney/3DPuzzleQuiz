@@ -4,6 +4,7 @@
     "continue": "Folytatás",
     "submit": "Beküldés",
     "finish": "Kvíz befejezése",
+    "download_results": "Eredmény letöltése",
     "quiz_not_started": "A kvíz még nem kezdődött el",
     "team_name_required": "A csapatnév megadása kötelező",
     "finish_modal_message": "Biztos, hogy beküldöd a kvízt? Erre csak egyszer van lehetőséged és a válaszok utána nem módosíthatók!",
