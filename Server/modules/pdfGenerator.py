@@ -34,8 +34,6 @@ _logger.info("Launching browser...")
 _browser = asyncio.get_event_loop().run_until_complete(launch(args=["--no-sandbox"]))
 _logger.info("Browser launch complete and atexit handler registered.")
 
-pdfPath = pathlib.Path("./temp.pdf").resolve()
-
 
 async def generatePDF(teamID: int | None, lang: utils.QuizLanguages | None = None, size: utils.QuizSizes | None = None) -> pathlib.Path:
     if await quizDBManager.checkIfTeamExists(teamID):
@@ -97,6 +95,7 @@ async def generatePDF(teamID: int | None, lang: utils.QuizLanguages | None = Non
     _logger.debug("Browser page created.")
     await page.setContent(html)
     _logger.debug("HTML content set in browser page.")
+    pdfPath = utils.paths.dataRoot / f"{details['teamname']} {details['submittedAt']}.pdf"
     timeout = 10  # seconds
     while pdfPath.exists() and pdfPath.is_file():
         _logger.warning(f"PDF file already exists, waiting for {timeout} second(s) for removal...")
