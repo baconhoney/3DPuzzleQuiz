@@ -7,6 +7,7 @@ _logger.info(f"Importing {__name__}...")
 from aiohttp import web
 from pdfGenerator import generatePDF
 from typing import Any
+import aiofiles
 import json
 import quizDBManager
 import utils
@@ -29,6 +30,7 @@ async def getQuizPhaseHandler(request: web.Request):
 async def getQuestionsHandler(request: web.Request):
     _logger.info(f"API GET request incoming: getQuestions")
     if utils.QuizState.phase != utils.QuizPhases.RUNNING:
+        _logger.warning(f"getQuestions called in phase {utils.QuizState.phase} by {request.remote}, but its only available in phase RUNNING")
         raise web.HTTPForbidden(reason="Getting questions is only available in phase RUNNING")
     try:
         questions = await quizDBManager.getQuestions(request.query.get("lang"), request.query.get("size"))
@@ -40,6 +42,7 @@ async def getQuestionsHandler(request: web.Request):
             }
         )
     except quizDBManager.InvalidParameterError as e:
+        _logger.warning(f"getQuestions failed for lang={request.query.get('lang')} size={request.query.get('size')} by {request.remote}: {e}")
         raise web.HTTPBadRequest(text=str(e))
 
 
@@ -47,6 +50,7 @@ async def getQuestionsHandler(request: web.Request):
 async def uploadAnswersHandler(request: web.Request):
     _logger.info("API POST request incoming: uploadAnswers")
     if utils.QuizState.phase != utils.QuizPhases.RUNNING:
+        _logger.warning(f"uploadAnswers called in phase {utils.QuizState.phase} by {request.remote} but its only available in phase RUNNING")
         raise web.HTTPForbidden(reason="Uploading answers is only available in phase RUNNING")
     data: dict[str, Any] = await request.json()
     _logger.debug(f"Received data: {data}")
@@ -56,6 +60,7 @@ async def uploadAnswersHandler(request: web.Request):
         await quizDBManager.uploadAnswers("digital-uploadFull", teamID=teamID, name=data.get("name"), codeword=codeword, lang=data.get("lang"), answers=data.get("answers"))
         _logger.debug(f"Uploaded answers for teamID={teamID}")
     except quizDBManager.InvalidParameterError as e:
+        _logger.warning(f"uploadAnswers failed for teamID={teamID} by {request.remote}: {e}")
         raise web.HTTPBadRequest(text=str(e))
     # return web.json_response({"teamID": teamID, "codeword": codeword, "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt()})
     return web.json_response({"teamID": teamID, "codeword": codeword})
@@ -64,7 +69,9 @@ async def uploadAnswersHandler(request: web.Request):
 @router.get(_baseURL + "/getAnswers")
 async def getAnswersHandler(request: web.Request):
     _logger.info(f"API GET request incoming: getAnswers")
-    if utils.QuizState.phase != utils.QuizPhases.IDLE:
+    if await quizDBManager.checkIfTeamSubmittedInRound(request.query.get("teamID"), utils.QuizState.currentQuizRound) and utils.QuizState.phase != utils.QuizPhases.IDLE:
+        # team has submitted answers in *this* round, and the phase is not IDLE (second condition is not strictly necessary)
+        _logger.warning(f"getAnswers called for teamID={request.query.get('teamID')} by {request.remote} but they have submitted answers in this round")
         raise web.HTTPForbidden(reason="Getting answers is only available in phase IDLE")
     try:
         answers = await quizDBManager.getAnswers(request.query.get("teamID"))
@@ -72,21 +79,40 @@ async def getAnswersHandler(request: web.Request):
         # return web.json_response({"nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt(), "answers": answers})
         return web.json_response({"answers": answers})
     except quizDBManager.InvalidParameterError as e:
+        _logger.warning(f"getAnswers failed for teamID={request.query.get('teamID')} by {request.remote}: {e}")
         raise web.HTTPBadRequest(text=str(e))
 
 
 @router.get(_baseURL + "/getPDF")
 async def getPDFHandler(request: web.Request):
     _logger.info(f"API GET request incoming: getPDF")
-    if utils.QuizState.phase != utils.QuizPhases.IDLE:
+    if await quizDBManager.checkIfTeamSubmittedInRound(request.query.get("teamID"), utils.QuizState.currentQuizRound) and utils.QuizState.phase != utils.QuizPhases.IDLE:
+        # team has submitted answers in *this* round, and the phase is not IDLE (second condition is not strictly necessary)
+        _logger.warning(f"getPDF called for teamID={request.query.get('teamID')} by {request.remote} but they have submitted answers in this round")
         raise web.HTTPForbidden(reason="Getting PDF is only available in phase IDLE")
     try:
-        _logger.debug(f"Generating PDF for teamID={request.query.get('teamID')}")
         teamID = request.query.get("teamID") and str(request.query.get("teamID")).isdigit() and int(request.query.get("teamID", "")) or None
+        _logger.debug(f"Generating PDF for teamID={teamID}")
         pdfPath = await generatePDF(teamID)
-        _logger.debug(f"Generated PDF for teamID={teamID}")
-        return web.FileResponse(pdfPath)
+        _logger.debug(f"Generated PDF, preparing response")
+        resp = web.StreamResponse()
+        resp.headers["Content-Disposition"] = f'attachment; filename="{pdfPath.name}"'
+        resp.content_type = "application/octet-stream"
+        await resp.prepare(request)
+        _logger.debug(f"Response is prepared, starting sending files")
+        async with aiofiles.open(pdfPath, "rb") as f:
+            chunk = await f.read(8192)
+            while chunk:
+                await resp.write(chunk)
+                chunk = await f.read(8192)
+        await resp.write_eof()
+        # Delete file after sending
+        _logger.debug(f"Deleting PDF")
+        pdfPath.unlink()
+        _logger.debug(f"Sending PDF")
+        return resp
     except quizDBManager.InvalidParameterError as e:
+        _logger.warning(f"getPDF failed for teamID={request.query.get('teamID')} by {request.remote}: {e}")
         raise web.HTTPBadRequest(text=str(e))
 
 

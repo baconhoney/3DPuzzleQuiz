@@ -137,6 +137,18 @@ async def checkIfTeamExists(teamID: int | None) -> bool:
     return exists
 
 
+async def checkIfTeamSubmittedInRound(teamID: str | None, quizRound: int | None) -> bool:
+    _logger.debug(f"Checking if team submitted in round for teamID={teamID}, quizRound={quizRound}")
+    tID = teamID and str(teamID).isdigit() and int(teamID) or None
+    res: list[tuple[int]] = utils.quizDB.cursor.execute("SELECT id FROM teams WHERE id = ? AND quiz_round = ?", (tID, quizRound)).fetchall()
+    _logger.debug(f"Query result is: {res}")
+    if len(res) > 1:
+        raise RuntimeError(f"Multiple teams with id={tID} found in database")
+    exists = bool(res and res[0][0] == tID)
+    _logger.debug(f"TeamID={teamID} submittedInRound={exists}")
+    return exists
+
+
 async def checkIfSubmittedAtIsPresent(teamID: int | None) -> bool:
     _logger.debug(f"Checking if submitted_at is present for teamID={teamID}")
     if not teamID:

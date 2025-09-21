@@ -85,9 +85,11 @@ async def nextPhaseHandler(request: web.Request):
     _logger.debug(f"NextPhase request data: {data}")
     nextPhase = utils.convertToQuizPhase(data.get("nextPhase"))
     if nextPhase != utils.QuizState.getNextPhase():
+        _logger.warning(f"Invalid nextPhase: {data.get('nextPhase', '<missing>')}, expected: {utils.QuizState.getNextPhase().value}")
         raise web.HTTPBadRequest(text=f"Invalid nextPhase: {data.get('nextPhase', '<missing>')}, expected: {utils.QuizState.getNextPhase().value}")
     nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt", "")).replace(tzinfo=None, second=0, microsecond=0) or None
     if not nextPhaseChangeAt:
+        _logger.warning(f"Invalid nextPhaseChangeAt: {data.get('nextPhaseChangeAt', '<missing>')}, expected value later than {utils.QuizState.formatNextPhaseChangeAt()}")
         raise web.HTTPBadRequest(text=f"Invalid nextPhaseChangeAt: {data.get('nextPhaseChangeAt', '<missing>')}, expected value later than {utils.QuizState.formatNextPhaseChangeAt()}")
     newQuizNumber = (utils.QuizState.phase == utils.QuizPhases.SCORING and nextPhase == utils.QuizPhases.IDLE and utils.QuizState.currentQuizRound + 1) or None
     await utils.QuizState.updateState(nextPhase=utils.QuizState.getNextPhase(), nextPhaseChangeAt=nextPhaseChangeAt, newQuizRound=newQuizNumber)
@@ -102,6 +104,7 @@ async def setNextPhaseChangeAtHandler(request: web.Request):
     _logger.debug(f"SetNextPhaseChangeAt request data: {data}")
     nextPhaseChangeAt = data.get("nextPhaseChangeAt") and datetime.datetime.fromisoformat(data.get("nextPhaseChangeAt", "")).replace(tzinfo=None, second=0, microsecond=0) or None
     if not nextPhaseChangeAt:
+        _logger.warning(f"Invalid nextPhaseChangeAt: {data.get('nextPhaseChangeAt', '<missing>')}, expected value later than {utils.QuizState.formatNextPhaseChangeAt()}")
         raise web.HTTPBadRequest(text=f"Invalid nextPhaseChangeAt: {data.get('nextPhaseChangeAt', '<missing>')}, expected value later than {utils.QuizState.formatNextPhaseChangeAt()}")
     await utils.QuizState.updateState(nextPhaseChangeAt=nextPhaseChangeAt)
     _logger.info(f"Updated nextPhaseChangeAt to: {utils.QuizState.formatNextPhaseChangeAt()}")
@@ -115,6 +118,7 @@ async def setQuizRoundHandler(request: web.Request):
     _logger.debug(f"setQuizRound request data: {data}")
     newQuizRound: int | None = isinstance(data.get("newQuizRound"), int) and data.get("newQuizRound") or None
     if not newQuizRound or not (0 < newQuizRound < 100):
+        _logger.warning(f"Invalid newQuizRound: {data.get('newQuizRound', '<missing>')}, expected value between 1 and 99")
         raise web.HTTPBadRequest(text=f"Invalid newQuizRound: {data.get('newQuizRound', '<missing>')}, expected value between 1 and 99")
     await utils.QuizState.updateState(newQuizRound=newQuizRound)
     _logger.info(f"Updated currentQuizRound to: {utils.QuizState.currentQuizRound}")
@@ -141,6 +145,9 @@ async def queuePrintHandler(request: web.Request):
             teamID, _ = utils.getNewTeamID(utils.QuizTypes.PAPER)
             await generatePDF(teamID, lang, size)
             await quizDBManager.addEmptyTeamEntry(teamID, lang.value, size.value)
+    else:
+        _logger.warning(f"Invalid queuePrint request data: {data}")
+        raise web.HTTPBadRequest(text=f"Invalid queuePrint request data: {data}")
     return web.HTTPOk()
 
 
