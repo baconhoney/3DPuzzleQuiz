@@ -65,7 +65,7 @@ const Register = () => {
 
             <div className="flex flex-col items-center content-center gap-5 w-2/3">
                 <fieldset className="fieldset w-full max-w-sm">
-                    <legend className="fieldset-legend">{t("team_name")}</legend>
+                    <legend className="fieldset-legend inline-block whitespace-nowrap w-auto">{t("team_name")}</legend>
                     <input
                         type="text"
                         className={"input w-full " + (nameError ? "input-error" : "")}
@@ -78,7 +78,7 @@ const Register = () => {
                         <p className="label text-error">{t("team_name_required")}</p>
                     )}
 
-                    <legend className="fieldset-legend">{t("quiz_type")}</legend>
+                    <legend className="fieldset-legend inline-block whitespace-nowrap w-auto">{t("quiz_type")}</legend>
                     <div className="flex flex-row justify-between gap-2">
                         {quizSizes.map((type) => (
                             <button
