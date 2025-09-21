@@ -11,7 +11,7 @@ const Manager = () => {
 
     // running,     scoring,   idle
     // quizStarted, quizEnded, resultsReady
-    const [gameState, setGameState] = useState("idle");
+    const [gameState, setGameState] = useState("scoring");
     const [wantToPlay, setWantToPlay] = useState("NA"); // NA, Y, N
     const [teamID, setTeamID] = useState(localStorage.getItem("teamID"));
     const [loading, setLoading] = useState(true);

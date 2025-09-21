@@ -1,6 +1,7 @@
 import React from 'react'
 import { useGlobalContext } from './App';
 import { downloadResults as downloadResultsAPI } from './apiHandler';
+import DownloadPDF from './DownloadPDF';
 
 const Results = ({ data }) => {
 
@@ -47,7 +48,7 @@ const Results = ({ data }) => {
                     </div>
                 ))}
                 <div className='sticky bottom-20 flex gap-3 items-center'>
-                    <button className="btn btn-circle btn-info" onClick={downloadResults}>
+                    {/* <button className="btn btn-circle btn-info" onClick={downloadResults}>
                         <svg
                             viewBox="0 0 24 24"
                             width="24"
@@ -59,7 +60,8 @@ const Results = ({ data }) => {
                                 fill="currentColor"
                             />
                         </svg>
-                    </button>
+                    </button> */}
+                    <DownloadPDF mode={"icon"} />
                 </div>
             </div>
             <div className="navbar bottom-0 bg-base-200 shadow-sm px-8 sticky z-50">

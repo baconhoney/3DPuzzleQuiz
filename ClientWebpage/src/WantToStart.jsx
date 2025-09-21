@@ -1,6 +1,7 @@
 import React from 'react'
 import { useGlobalContext } from './App';
 import { downloadResults as downloadResultsAPI } from './apiHandler';
+import DownloadPDF from './DownloadPDF';
 
 const WantToStart = ({ setWantToPlay }) => {
 
@@ -36,8 +37,9 @@ const WantToStart = ({ setWantToPlay }) => {
     return (
         <div className='flex flex-col items-center justify-center h-full mt-10 gap-5'>
             <p className='p-4 text-center'>{t("want_to_play")}</p>
-            <button className='btn btn-info' onClick={downloadResults}>{t("download_results")}</button>
-            {error && <p className="bg-error rounded-full text-black p-2">{error}</p>}
+            {/* <button className='btn btn-info' onClick={downloadResults}>{t("download_results")}</button>
+            {error && <p className="bg-error rounded-full text-black p-2">{error}</p>} */}
+            <DownloadPDF />
             <div></div>
             <button className='btn btn-success' onClick={wantToPlay}>{t("want_to_play_yes")}</button>
             <button className='btn btn-error' onClick={() => setWantToPlay("N")}>{t("want_to_play_no")}</button>
