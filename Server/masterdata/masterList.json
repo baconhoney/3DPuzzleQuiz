@@ -1,5 +1,5 @@
 {
-    "lastEdited": "2025-08-17T10:02:34.861",
+    "lastEdited": "2025-09-22T23:37:00",
     "entries": [
         {
             "id": 7805,
@@ -582,14 +582,14 @@
             "type": "vallás/templom|vár"
         },
         {
-            "id": 6114,
-            "box": 1382,
+            "id": 5826,
+            "box": 1652,
             "answer": 56,
-            "name_hu": "Nagyboldogasszony-székesegyház",
-            "name_en": "The Assumption Cathedral",
-            "location_hu": "Oroszország, Szergijev Poszad",
-            "location_en": "Sergiyev Posad, Russia",
-            "type": "vallás/székesegyház"
+            "name_hu": "Nagy Iván-harangtorony",
+            "name_en": "Ivan The Great Bell tower",
+            "location_hu": "Oroszország, Moszkva",
+            "location_en": "Moscow, Russia",
+            "type": "torony"
         },
         {
             "id": 7310,
@@ -613,7 +613,7 @@
         },
         {
             "id": 2987,
-            "box": 1915,
+            "box": 1695,
             "answer": 45,
             "name_hu": "Oszakai várkastély",
             "name_en": "Osaka castle",
@@ -963,7 +963,7 @@
         },
         {
             "id": 3848,
-            "box": 1695,
+            "box": 1915,
             "answer": 47,
             "name_hu": "Waweli székesegyház",
             "name_en": "Wawel Cathedral",
