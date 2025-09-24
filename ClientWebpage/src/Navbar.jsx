@@ -15,6 +15,7 @@ const Navbar = ({ onGoBack, showBackButton = true, showThemeToggle = true }) => 
             localStorage.removeItem("teamID");
             localStorage.removeItem("quizSize");
             localStorage.removeItem("codeword");
+            localStorage.removeItem("adminData");
             location.reload();
         }
     };
