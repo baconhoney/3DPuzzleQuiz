@@ -22,7 +22,7 @@ _baseURL = "/api/admin"
 
 @router.get(_baseURL + "/getStates")
 async def getStatesHandler(request: web.Request):
-    _logger.info(f"API GET request incoming: getStates")
+    _logger.info(f"API GET request incoming: getStates, request data: '{request.query_string}'")
     return web.json_response(
         {
             "phase": utils.QuizState.phase.value,
@@ -34,7 +34,7 @@ async def getStatesHandler(request: web.Request):
 
 @router.get(_baseURL + "/getAllBuildingsData")
 async def getAllBuildingsDataHandler(request: web.Request):
-    _logger.info(f"API GET request incoming: getAllBuildingsData")
+    _logger.info(f"API GET request incoming: getAllBuildingsData, request data: '{request.query_string}'")
     data = await quizDBManager.getAllBuildingData()
     _logger.debug(f"Retrieved building data: {len(data)} entries")
     return web.json_response(data)
@@ -42,7 +42,7 @@ async def getAllBuildingsDataHandler(request: web.Request):
 
 @router.get(_baseURL + "/getLeaderboard")
 async def getLeaderboardHandler(request: web.Request):
-    _logger.info(f"API GET request incoming: getLeaderboard")
+    _logger.info(f"API GET request incoming: getLeaderboard, request data: '{request.query_string}'")
     try:
         data = await quizDBManager.getLeaderboard(size=request.query.get("size"), quizRound=request.query.get("round"))
         _logger.debug(f"Leaderboard data: {len(data)} entries")
@@ -54,7 +54,7 @@ async def getLeaderboardHandler(request: web.Request):
 
 @router.get(_baseURL + "/getQuizDetails")
 async def getQuizdataHandler(request: web.Request):
-    _logger.info(f"API GET request incoming: getQuizDetails")
+    _logger.info(f"API GET request incoming: getQuizDetails, request data: '{request.query_string}'")
     try:
         data = await quizDBManager.getQuizDetails(request.query.get("teamID"))
         _logger.debug(f"Quiz details retrieved: {({k: v for k, v in data.items() if k != 'answers'})}")

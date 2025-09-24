@@ -33,7 +33,7 @@ logging.getLogger("wsUtils").setLevel(loggingLevel)
 logging.getLogger("htmlReplacer").setLevel(logging.WARNING)
 logging.getLogger("printer").setLevel(loggingLevel)
 logging.getLogger("scanner").setLevel(loggingLevel)
-logging.getLogger("fileServer").setLevel(loggingLevel)
+logging.getLogger("fileServer").setLevel(logging.INFO)
 logging.getLogger("clientAPI").setLevel(loggingLevel)
 logging.getLogger("adminAPI").setLevel(loggingLevel)
 
