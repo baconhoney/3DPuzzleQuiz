@@ -21,14 +21,14 @@ router = web.RouteTableDef()
 
 @router.get(_baseURL + "/getQuizPhase")
 async def getQuizPhaseHandler(request: web.Request):
-    _logger.info(f"API GET request incoming: getQuizState")
+    _logger.info(f"API GET request incoming: getQuizState, request data: '{request.query_string}'")
     # return web.json_response({"phase": utils.QuizState.phase.value, "nextPhaseChangeAt": utils.QuizState.formatNextPhaseChangeAt()})
     return web.json_response({"phase": utils.QuizState.phase.value})
 
 
 @router.get(_baseURL + "/getQuestions")
 async def getQuestionsHandler(request: web.Request):
-    _logger.info(f"API GET request incoming: getQuestions")
+    _logger.info(f"API GET request incoming: getQuestions, request data: '{request.query_string}'")
     if utils.QuizState.phase != utils.QuizPhases.RUNNING:
         _logger.warning(f"getQuestions called in phase {utils.QuizState.phase} by {request.remote}, but its only available in phase RUNNING")
         raise web.HTTPForbidden(reason="Getting questions is only available in phase RUNNING")
@@ -68,7 +68,7 @@ async def uploadAnswersHandler(request: web.Request):
 
 @router.get(_baseURL + "/getAnswers")
 async def getAnswersHandler(request: web.Request):
-    _logger.info(f"API GET request incoming: getAnswers")
+    _logger.info(f"API GET request incoming: getAnswers, request data: '{request.query_string}'")
     if await quizDBManager.checkIfTeamSubmittedInRound(request.query.get("teamID"), utils.QuizState.currentQuizRound) and utils.QuizState.phase != utils.QuizPhases.IDLE:
         # team has submitted answers in *this* round, and the phase is not IDLE (second condition is not strictly necessary)
         _logger.warning(f"getAnswers called for teamID={request.query.get('teamID')} by {request.remote} but they have submitted answers in this round")
@@ -85,7 +85,7 @@ async def getAnswersHandler(request: web.Request):
 
 @router.get(_baseURL + "/getPDF")
 async def getPDFHandler(request: web.Request):
-    _logger.info(f"API GET request incoming: getPDF")
+    _logger.info(f"API GET request incoming: getPDF, request data: '{request.query_string}'")
     if await quizDBManager.checkIfTeamSubmittedInRound(request.query.get("teamID"), utils.QuizState.currentQuizRound) and utils.QuizState.phase != utils.QuizPhases.IDLE:
         # team has submitted answers in *this* round, and the phase is not IDLE (second condition is not strictly necessary)
         _logger.warning(f"getPDF called for teamID={request.query.get('teamID')} by {request.remote} but they have submitted answers in this round")
