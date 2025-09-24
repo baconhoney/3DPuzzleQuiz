@@ -18,7 +18,7 @@ def handleFile(request: web.Request, root: pathlib.Path) -> web.Response:
     url = request.match_info.get("fn", "").strip("/")
     _logger.debug(f"Requested URL: '{url}'")
     if url.startswith("api"):
-        raise RuntimeError(f"Unhandled API request received in file-server handler: {url}")
+        raise web.HTTPBadRequest(text=f"Unhandled API request received in file-server handler: {url}")
     if ".." in url:
         raise web.HTTPForbidden(text=f"URL contains '..': '{str(url)}'")
     filepath = root / url

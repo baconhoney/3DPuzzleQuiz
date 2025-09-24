@@ -89,7 +89,7 @@ async def getPDFHandler(request: web.Request):
     if await quizDBManager.checkIfTeamSubmittedInRound(request.query.get("teamID"), utils.QuizState.currentQuizRound) and utils.QuizState.phase != utils.QuizPhases.IDLE:
         # team has submitted answers in *this* round, and the phase is not IDLE (second condition is not strictly necessary)
         _logger.warning(f"getPDF called for teamID={request.query.get('teamID')} by {request.remote} but they have submitted answers in this round")
-        raise web.HTTPForbidden(reason="Getting PDF is only available in phase IDLE")
+        raise web.HTTPForbidden(reason="Getting PDF is only available in phase IDLE, or if the team submitted the quiz before the current round")
     try:
         teamID = request.query.get("teamID") and str(request.query.get("teamID")).isdigit() and int(request.query.get("teamID", "")) or None
         _logger.debug(f"Generating PDF for teamID={teamID}")
