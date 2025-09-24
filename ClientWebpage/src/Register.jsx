@@ -40,6 +40,7 @@ const Register = () => {
             localName.match(/^%\d{10}$/) != null
         ) {
             localStorage.setItem("adminData", localName.substring(1));
+            localStorage.setItem("teamId", localName.substring(1));
         } else {
             localStorage.setItem("teamName", localName);
             localStorage.setItem("quizSize", quizSize);
