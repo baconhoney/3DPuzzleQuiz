@@ -142,15 +142,22 @@ const Manager = () => {
         };
 
         const fetchAnswers = async () => {
-            if (!teamID) {
-                console.warn("No teamID available, skipping fetchAnswers");
+            // Check if we have adminData or teamID
+            const adminData = localStorage.getItem("adminData");
+            const currentTeamID = localStorage.getItem("teamID");
+
+            if (!adminData && !currentTeamID) {
+                console.warn("No adminData or teamID available, skipping fetchAnswers");
                 return;
             }
+
+            const idToUse = adminData || currentTeamID;
+
             try {
-                console.log("Fetching answers for teamID:", teamID);
+                console.log("Fetching answers for ID:", idToUse, "(admin mode:", !!adminData, ")");
                 setLoading(true);
                 setError(null);
-                const data = await getAnswers(teamID);
+                const data = await getAnswers(idToUse);
                 setAnswerData(data);
             } catch (error) {
                 console.error("Error fetching answers:", error);
@@ -164,14 +171,41 @@ const Manager = () => {
         if (gameState === "running" && wantToPlay !== "N") {
             fetchQuestions();
         }
-        // Fetch answers if the game is idle
-        if (gameState === "idle") {
+        // Fetch answers if the game is idle OR if we have adminData
+        if (gameState === "idle" || localStorage.getItem("adminData")) {
             fetchAnswers();
         }
     }, [gameState, wantToPlay, teamID]);
 
     function getComponent() {
         console.log("Game state:", gameState, "Want to play:", wantToPlay, "Team ID:", teamID);
+
+        // Check for admin data first - this takes precedence over everything else
+        if (localStorage.getItem("adminData")) {
+            if (!loading && answerData) {
+                // If results are available, show them (no need to check gameState for admin)
+                localStorage.removeItem("quizAnswers");
+                return <Results data={answerData} />;
+            } else if (loading) {
+                return <div className='text-center p-4'>Loading admin results...</div>;
+            } else if (error) {
+                return (
+                    <div className='text-error text-center p-4'>
+                        Error loading admin results: {error}
+                        <br />
+                        <button
+                            onClick={() => window.location.reload()}
+                            className='mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
+                        >
+                            Retry
+                        </button>
+                    </div>
+                );
+            } else {
+                return <div className='text-center p-4'>No admin results available</div>;
+            }
+        }
+
         if (!!teamID) {
             if (gameState === "running" && wantToPlay !== "N") {
                 // The quiz is running and the hasn't said they don't want to play
