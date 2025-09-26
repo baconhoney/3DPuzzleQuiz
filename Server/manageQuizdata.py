@@ -61,7 +61,7 @@ def DB_to_JSON():
 
 def DB_to_XLSX():
     def getBuildingsDataSortedBy(order: str) -> list[dict[str, str | int | None]]:
-        return [dict(zip(jsonHeaders, row)) for row in database.cursor.execute(f"SELECT {','.join(jsonHeaders)} FROM buildings ORDER BY ?;", (order,)).fetchall()]
+        return [dict(zip(jsonHeaders, row)) for row in database.cursor.execute(f"SELECT {','.join(jsonHeaders)} FROM buildings ORDER BY {order};").fetchall()]
 
     def getQuizDataSortedBy(order: str, quiz_round: int) -> list[dict[str, str | int | None]]:
         return [
