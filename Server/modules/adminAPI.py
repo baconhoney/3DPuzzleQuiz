@@ -10,6 +10,7 @@ from pdfGenerator import generatePDF
 import asyncio
 import datetime
 import json
+from printer import printQuiz
 import quizDBManager
 import utils
 import wsUtils
@@ -143,7 +144,7 @@ async def queuePrintHandler(request: web.Request):
         _logger.info(f"Printing {copyCount} empty paper quiz(zes) with language {lang} and size {size}")
         for _ in range(copyCount):
             teamID, _ = utils.getNewTeamID(utils.QuizTypes.PAPER)
-            await generatePDF(teamID, lang, size)
+            await printQuiz(teamID, lang, size)
             await quizDBManager.addEmptyTeamEntry(teamID, lang.value, size.value)
     else:
         _logger.warning(f"Invalid queuePrint request data: {data}")

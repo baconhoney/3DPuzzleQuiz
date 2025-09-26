@@ -103,7 +103,7 @@ async def startScannerListener(_: web.Application):
 def main():
     logger.info("Starting main web application")
     app = web.Application()
-    # app.cleanup_ctx.append(startScannerListener)
+    app.cleanup_ctx.append(startScannerListener)
     app.add_routes(adminRouter)
     logger.debug("Admin router added")
     # client has to be 2nd last, so sub-API requests are not refused with 404

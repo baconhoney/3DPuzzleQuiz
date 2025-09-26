@@ -139,7 +139,9 @@ elif sys.platform == "linux":
         async def run_forever(self, stopEvent: threading.Event):
             _logger.info("Starting the 'evdev' loop")
             devs: list[evdev.InputDevice] = []
+            i = -1
             preselected = -1
+            print("-----------------\nAvailable input devices:")
             for i, path in enumerate(evdev.list_devices()):
                 dev = evdev.InputDevice(path)
                 devs.append(dev)
@@ -148,9 +150,8 @@ elif sys.platform == "linux":
                     preselected = i
                     _logger.info(f"Preselected device {i}: {dev.name}")
 
-            print("-----------------\nAvailable input devices:")
             while True:
-                inp = input(f"Select device (0-{i}): " + preselected > -1 and f"use {preselected}?" or "")
+                inp = input(f"Select device (0-{i}): " + (preselected > -1 and f"use {preselected}?" or ""))
                 try:
                     device = devs[int(inp or str(preselected))]
                     print(f"Selected device: {device.name}")

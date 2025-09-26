@@ -17,13 +17,14 @@ if sys.platform == "linux":
     _logger.debug(f"Found {len(printers)} local printers on Linux.")
     # print all printers and ask for selecting one
     preselected = -1
+    index = -1
     print("-----------------\nAvailable printers:")
     for index, printer in enumerate(printers):
         print(f"{index:2}: {printer}")
         if printer == "DCPL2510D":
             preselected = index
     while True:
-        inp = input(f"Select device (0-{index}): " + preselected > -1 and f"use {preselected}?" or "")
+        inp = input(f"Select device (0-{index}): " + (preselected > -1 and f"use {preselected}?" or ""))
         try:
             _printerName = printers[int(inp or str(preselected))]
             print(f"Selected printer: {_printerName}")
